@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="_template.xhtml">
+	<ui:define name="conteudo">
+
+		<h:form id="formPesquisa">
+			<p:messages id="messages" autoUpdate="true" />
+			<p:growl autoUpdate="true" />
+
+			<p:fieldset>
+				<p:panelGrid columns="3">
+					<p:selectOneMenu>
+						<f:selectItems value="#{pesquisaObraBean.listaBuscaRapida}" />
+					</p:selectOneMenu>
+
+					<p:inputText id="txtPesquisa"
+						value="#{pesquisaObraBean.titulo}" required="true"
+						size="60"></p:inputText>
+
+					<p:commandButton value="Buscar" process="" update="tabelaObras" />
+				</p:panelGrid>
+			</p:fieldset>
+
+			<p:dataTable rows="10" paginator="true" paginatorPosition="bottom"
+				id="tabelaObras" value="#{pesquisaObraBean.obrasPorTitulo}" var="obra"
+				emptyMessage="Nenhuma Obra Cadastrado">
+
+				<p:column>
+					<f:facet name="header">Título</f:facet>
+					<h:outputText value="#{obra.titulo}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

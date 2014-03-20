@@ -1,0 +1,68 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Sistema de Controle de Acervo - EMEM</title>
+	<meta name="description"
+		content="acervo escola de música do estado do maranhão" />
+	<meta name="keywords" content="acervo, emem, escola de música" />
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<!-- modernizr enables HTML5 elements and feature detects -->
+</h:head>
+
+<h:body>
+	<div id="main">
+		<header>
+			<div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h1>
+						<a href="index.html">Secretaria de Cultura <span
+							class="logo_colour"> - EMEM</span></a>
+					</h1>
+					<h2>Escola de Música do Estado do Maranhão</h2>
+				</div>
+			</div>
+		</header>
+		<h:form>
+			<p:menubar>
+				<p:submenu label="Cadastros">
+					<p:menuitem value="Autores" action="autor" />
+					<p:menuitem value="Editora" action="editora" />
+					<p:menuitem value="Assunto" action="assunto" />
+					<p:separator />
+					<p:menuitem value="Livro" action="livro" />
+				</p:submenu>
+			</p:menubar>
+		</h:form>
+
+		<div id="cabecalho">
+			<p:themeSwitcher value="#{temaBean.tema}"
+				style="position: absolute; right: 10px;">
+				<f:selectItems value="#{temaBean.temas}" />
+				<f:ajax />
+			</p:themeSwitcher>
+			<h1>
+				<ui:insert name="titulo"></ui:insert>
+			</h1>
+		</div>
+
+		<div id="conteudo">
+			<ui:insert name="conteudo"></ui:insert>
+		</div>
+
+		<footer>
+			<p>
+				<a href="index.html">Livros/Métodos</a> | <a href="examples.html">Partituras</a>
+				| <a href="page.html">DVD-VHS</a> | <a href="another_page.html">Relatórios</a>
+				| <a href="contact.php">Fale Conosco</a>
+			</p>
+		</footer>
+	</div>
+</h:body>
+
+</html>

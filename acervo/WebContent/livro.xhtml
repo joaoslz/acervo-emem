@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="_template.xhtml">
+
+	<ui:define name="titulo">Novo Livro</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="formLivro">
+			<p:messages id="messages" autoUpdate="true" />
+			<p:growl autoUpdate="true" />
+			<p:fieldset legend="Dados do Livro">
+				<h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">
+
+					<p:outputLabel value="Titulo:" for="titulo" />
+					<p:inputText id="titulo" value="#{livroBean.livro.titulo}"
+						required="true" requiredMessage="Título obrigatório"
+						validatorMessage="Título não pode ser superior a 40">
+						<f:validateLength maximum="40" />
+						<f:ajax event="blur" render="messages" />
+					</p:inputText>
+
+					<p:outputLabel value="Subtitulo:" for="subtitulo" />
+					<p:inputText id="subtitulo" value="#{livroBean.livro.subtitulo}" />
+						
+					<p:outputLabel value="ISBN:" for="isbn" />
+
+					<p:inputMask id="isbn" value="#{livroBean.livro.isbn}"
+						mask="999-9-99-999999-9" />
+
+					<p:outputLabel value="Ano:" for="ano" />
+					<p:inputText id="ano" value="#{livroBean.livro.ano}" />
+
+					<p:outputLabel value="Nº DE Páginas:" for="numPaginas" />
+					<p:inputText id="numPaginas" value="#{livroBean.livro.numPaginas}" />
+
+					<p:outputLabel value="Preço:" for="preco" />
+					<p:inputText id="preco" value="#{livroBean.livro.preco}">
+						<f:validateDoubleRange minimum="1" maximum="5000" />
+					</p:inputText>
+				</h:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Dados do Autor">
+				<h:outputLabel value="Selecione" for="autor" />
+
+				<p:commandLink value=" ou Cadastrar novo autor" id="dlgNovoAutor"
+					onclick="dlgNovoAutor.show()" immediate="true" />
+
+				<p:selectOneMenu value="#{livroBean.autorId}" id="autor"
+					effect="fold">
+					<f:selectItems value="#{livroBean.autores}" var="autor"
+						itemLabel="#{autor.nome}" itemValue="#{autor.id}" />
+
+				</p:selectOneMenu>
+
+				<p:commandButton value="Gravar Autor"
+					action="#{livroBean.gravarAutor}" process="@this autor"
+					update="tabelaAutores" />
+
+				<p:commandButton id="showDialogButton" type="button"
+					value="Novo Autor" onclick="dlgNovoAutor.show()" />
+
+				<p:dataTable value="#{livroBean.autoresDoLivro}" var="autor"
+					id="tabelaAutores" emptyMessage="Nenhum autor associado">
+					<p:column>
+						<h:outputText value="#{autor.nome}" />
+					</p:column>
+				</p:dataTable>
+			</p:fieldset>
+
+			<p:commandButton value="Gravar" action="#{livroBean.gravar}"
+				process="@form" update="@form :tabelaLivros" />
+
+			<p:dialog header="Informe o nome do Autor" widgetVar="dlgNovoAutor"
+				resizable="false">
+				<h:panelGrid columns="2" style="margin-bottom:10px">
+					<h:outputLabel for="nome" value="Nome:" />
+					<p:inputText id="nome" value="#{autorBean.autor.nome}" />
+				</h:panelGrid>
+				<p:commandButton value="Gravar-Autor"
+					oncomplete="dlgNovoAutor.hide();" action="#{autorBean.gravar}"
+					process="@form" update="@form :tabelaLivros" />
+			</p:dialog>
+
+		</h:form>
+
+		<p:dataTable rows="10" paginator="true" paginatorPosition="bottom"
+			id="tabelaLivros" value="#{livroBean.livros}" var="livro"
+			emptyMessage="Nenhum Livro cadastrado">
+
+			<p:column resizable="true" filterBy="#{livro.titulo}">
+				<f:facet name="header">Título</f:facet>
+				<h:outputText value="#{livro.titulo}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">ISBN</f:facet>
+				<h:outputText value="#{livro.isbn}" />
+			</p:column>
+
+			<p:column sortBy="#{livro.preco}">
+				<f:facet name="header">Preço</f:facet>
+				<h:outputText value="#{livro.preco}">
+					<f:convertNumber type="currency" />
+				</h:outputText>
+			</p:column>
+			<p:column>
+				<f:facet name="header">Ano</f:facet>
+				<h:outputText value="#{livro.ano}" />
+			</p:column>
+
+		</p:dataTable>
+	</ui:define>
+	<ui:define name="texto">
+		Cadastro de Livros	
+	</ui:define>
+</ui:composition>
+
+</html>
