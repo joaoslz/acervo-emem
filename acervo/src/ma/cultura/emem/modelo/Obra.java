@@ -16,16 +16,15 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Obra {
 
 	@Id
 	@GeneratedValue
 	private Integer id;
-
+	
 	private String titulo;
 	private String subtitulo;
-	private double preco;
 	private short ano;
 
 	private short numPaginas;
@@ -41,6 +40,9 @@ public class Obra {
 
 	@ManyToOne
 	private Editora editora;
+
+	@ManyToOne
+	private Local local;
 
 	@Temporal(TemporalType.DATE)
 	private final Calendar dataCadastro = Calendar.getInstance();
@@ -59,14 +61,6 @@ public class Obra {
 
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
-	}
-
-	public double getPreco() {
-		return preco;
-	}
-
-	public void setPreco(double preco) {
-		this.preco = preco;
 	}
 
 	public short getAno() {
@@ -111,5 +105,13 @@ public class Obra {
 
 	public void setSubtitulo(String subtitulo) {
 		this.subtitulo = subtitulo;
+	}
+
+	public Local getLocal() {
+		return local;
+	}
+
+	public void setLocal(Local local) {
+		this.local = local;
 	}
 }

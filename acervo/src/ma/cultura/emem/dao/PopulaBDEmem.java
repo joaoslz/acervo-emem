@@ -67,7 +67,6 @@ public class PopulaBDEmem {
 		Livro livro = new Livro();
 		livro.setIsbn(isbn);
 		livro.setTitulo(titulo);
-		livro.setPreco(preco);
 		livro.adicionaAutor(autor);
 		return livro;
 	}
