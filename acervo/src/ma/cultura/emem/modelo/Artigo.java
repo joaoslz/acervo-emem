@@ -8,17 +8,17 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Artigo {
 
-	@Id
-	@GeneratedValue
-	private int id;
+    @Id
+    @GeneratedValue
+    private int id;
 
-	private String titulo;
-	private String assunto;
+    private String titulo;
+    private String assunto;
 
-	private short paginaInicial;
-	private short paginaFinal;
+    private short paginaInicial;
+    private short paginaFinal;
 
-	@ManyToOne
-	private Periodico periodico;
+    @ManyToOne
+    private Periodico periodico;
 
 }

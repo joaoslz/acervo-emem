@@ -3,48 +3,55 @@ package ma.cultura.emem.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 @Entity
+@DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue(value = "periodico")
 public class Periodico extends Obra {
 
-	private String issn;
-	private short volume;
+    private static final long serialVersionUID = -1L;
 
-	@OneToMany(mappedBy = "periodico")
-	private List<Artigo> artigos = new ArrayList<Artigo>();
+    private String issn;
+    private short volume;
 
-	public Periodico() {
-		// TODO Auto-generated constructor stub
-	}
+    @OneToMany(mappedBy = "periodico")
+    private List<Artigo> artigos = new ArrayList<Artigo>();
 
-	public String getIssn() {
-		return issn;
-	}
+    public Periodico() {
+	// TODO Auto-generated constructor stub
+    }
 
-	public void setIssn(String issn) {
-		this.issn = issn;
-	}
+    public String getIssn() {
+	return issn;
+    }
 
-	public short getVolume() {
-		return volume;
-	}
+    public void setIssn(String issn) {
+	this.issn = issn;
+    }
 
-	public void setVolume(short volume) {
-		this.volume = volume;
-	}
+    public short getVolume() {
+	return volume;
+    }
 
-	public List<Artigo> getArtigos() {
-		return artigos;
-	}
+    public void setVolume(short volume) {
+	this.volume = volume;
+    }
 
-	public void setArtigos(List<Artigo> artigos) {
-		this.artigos = artigos;
-	}
+    public List<Artigo> getArtigos() {
+	return artigos;
+    }
 
-	public void adicionaArtigo(Artigo artigo) {
-		artigos.add(artigo);
-	}
+    public void setArtigos(List<Artigo> artigos) {
+	this.artigos = artigos;
+    }
+
+    public void adicionaArtigo(Artigo artigo) {
+	artigos.add(artigo);
+    }
 
 }

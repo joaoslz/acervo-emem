@@ -11,38 +11,38 @@ import javax.persistence.OneToMany;
 @Entity
 public class Editora {
 
-	@Id
-	@GeneratedValue
-	private int id;
+    @Id
+    @GeneratedValue
+    private int id;
 
-	private String nome;
-	private String site;
+    private String nome;
+    private String site;
 
-	@OneToMany(mappedBy = "editora")
-	private final List<Obra> obras = new ArrayList<Obra>();
+    @OneToMany(mappedBy = "editora")
+    private final List<Obra> obras = new ArrayList<Obra>();
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+	return id;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public String getNome() {
+	return nome;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public void setNome(String nome) {
+	this.nome = nome;
+    }
 
-	public String getSite() {
-		return site;
-	}
+    public String getSite() {
+	return site;
+    }
 
-	public void setSite(String site) {
-		this.site = site;
-	}
+    public void setSite(String site) {
+	this.site = site;
+    }
 
-	public List<Obra> getObras() {
-		return obras;
-	}
+    public List<Obra> getObras() {
+	return obras;
+    }
 
 }

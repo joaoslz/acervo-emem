@@ -6,13 +6,13 @@ import javax.persistence.Persistence;
 
 public class JPAUtil {
 
-	private final static EntityManagerFactory emf = Persistence.createEntityManagerFactory("acervo_emem");
+    private final static EntityManagerFactory emf = Persistence.createEntityManagerFactory("acervo_emem");
 
-	public EntityManager getEntityManager() {
-		return emf.createEntityManager();
-	}
+    public EntityManager getEntityManager() {
+	return emf.createEntityManager();
+    }
 
-	public void close(EntityManager em) {
-		em.close();
-	}
+    public void close(EntityManager em) {
+	em.close();
+    }
 }

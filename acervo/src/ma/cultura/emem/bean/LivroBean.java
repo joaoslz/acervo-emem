@@ -17,50 +17,54 @@ import ma.cultura.emem.modelo.Obra;
 @ViewScoped
 public class LivroBean implements Serializable {
 
-	private Livro livro = new Livro();
-	private Integer autorId;
+    /**
+	 * 
+	 */
+    private static final long serialVersionUID = -861862195415276394L;
+    private Livro livro = new Livro();
+    private Integer autorId;
 
-	public Obra getLivro() {
-		return livro;
+    public Obra getLivro() {
+	return livro;
+    }
+
+    public void gravar() {
+	System.out.println("Gravando livro " + this.livro.getTitulo());
+
+	if (this.livro.getAutores().isEmpty()) {
+	    FacesContext.getCurrentInstance().addMessage("autor",
+		    new FacesMessage("Livro deve ter pelo menos um Autor"));
 	}
 
-	public void gravar() {
-		System.out.println("Gravando livro " + this.livro.getTitulo());
+	new DAO<Livro>(Livro.class).adiciona(this.livro);
+	this.livro = new Livro();
 
-		if (this.livro.getAutores().isEmpty()) {
-			FacesContext.getCurrentInstance().addMessage("autor",
-					new FacesMessage("Livro deve ter pelo menos um Autor"));
-		}
+    }
 
-		new DAO<Livro>(Livro.class).adiciona(this.livro);
-		this.livro = new Livro();
+    public List<Autor> getAutores() {
+	return new DAO<Autor>(Autor.class).listaTodos();
+    }
 
-	}
+    public void gravarAutor() {
 
-	public List<Autor> getAutores() {
-		return new DAO<Autor>(Autor.class).listaTodos();
-	}
+	Autor autor = new DAO<Autor>(Autor.class).buscaPorId(this.autorId);
+	this.livro.adicionarAutor(autor);
+    }
 
-	public void gravarAutor() {
+    public List<Autor> getAutoresDoLivro() {
+	return this.livro.getAutores();
+    }
 
-		Autor autor = new DAO<Autor>(Autor.class).buscaPorId(this.autorId);
-		this.livro.adicionaAutor(autor);
-	}
+    public List<Livro> getLivros() {
+	return new DAO<Livro>(Livro.class).listaTodos();
+    }
 
-	public List<Autor> getAutoresDoLivro() {
-		return this.livro.getAutores();
-	}
+    public Integer getAutorId() {
+	return autorId;
+    }
 
-	public List<Livro> getLivros() {
-		return new DAO<Livro>(Livro.class).listaTodos();
-	}
-
-	public Integer getAutorId() {
-		return autorId;
-	}
-
-	public void setAutorId(Integer autorId) {
-		this.autorId = autorId;
-	}
+    public void setAutorId(Integer autorId) {
+	this.autorId = autorId;
+    }
 
 }

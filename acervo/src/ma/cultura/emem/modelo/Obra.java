@@ -1,5 +1,6 @@
 package ma.cultura.emem.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -17,101 +18,128 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Obra {
+public class Obra implements Serializable {
 
-	@Id
-	@GeneratedValue
-	private Integer id;
-	
-	private String titulo;
-	private String subtitulo;
-	private short ano;
+    private static final long serialVersionUID = 1L;
 
-	private short numPaginas;
+    @Id
+    @GeneratedValue
+    private Integer id;
 
-	@ManyToMany
-	private final List<Autor> autores = new ArrayList<Autor>();
+    private String titulo;
+    private String subtitulo;
+    private short ano;
+    private short numPaginas;
 
-	@ManyToMany
-	private final List<Assunto> assuntos = new ArrayList<Assunto>();
+    @Temporal(TemporalType.DATE)
+    private Calendar dataCadastro = Calendar.getInstance();
 
-	@OneToMany(mappedBy = "obra")
-	private final List<Exemplar> exemplares = new ArrayList<Exemplar>();
+    @ManyToMany
+    private List<Autor> autores;
 
-	@ManyToOne
-	private Editora editora;
+    @ManyToMany
+    private List<Assunto> assuntos;
 
-	@ManyToOne
-	private Local local;
+    @OneToMany(mappedBy = "obra")
+    private List<Exemplar> exemplares;
 
-	@Temporal(TemporalType.DATE)
-	private final Calendar dataCadastro = Calendar.getInstance();
+    @ManyToOne
+    private Editora editora;
 
-	public Obra() {
-		super();
-	}
+    @ManyToOne
+    private Local local;
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId() {
+	return id;
+    }
 
-	public String getTitulo() {
-		return titulo;
-	}
+    public void setId(Integer id) {
+	this.id = id;
+    }
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
+    public String getTitulo() {
+	return titulo;
+    }
 
-	public short getAno() {
-		return ano;
-	}
+    public void setTitulo(String titulo) {
+	this.titulo = titulo;
+    }
 
-	public void setAno(short ano) {
-		this.ano = ano;
-	}
+    public String getSubtitulo() {
+	return subtitulo;
+    }
 
-	public List<Autor> getAutores() {
-		return autores;
-	}
+    public void setSubtitulo(String subtitulo) {
+	this.subtitulo = subtitulo;
+    }
 
-	public void adicionaAutor(Autor autor) {
-		this.autores.add(autor);
-	}
+    public short getAno() {
+	return ano;
+    }
 
-	public void adicionaAssunto(Assunto assunto) {
-		this.assuntos.add(assunto);
-	}
+    public void setAno(short ano) {
+	this.ano = ano;
+    }
 
-	public short getNumPaginas() {
-		return numPaginas;
-	}
+    public short getNumPaginas() {
+	return numPaginas;
+    }
 
-	public void setNumPaginas(short numPaginas) {
-		this.numPaginas = numPaginas;
-	}
+    public void setNumPaginas(short numPaginas) {
+	this.numPaginas = numPaginas;
+    }
 
-	public Editora getEditora() {
-		return editora;
-	}
+    public Calendar getDataCadastro() {
+	return dataCadastro;
+    }
 
-	public void setEditora(Editora editora) {
-		this.editora = editora;
-	}
+    public void setDataCadastro(Calendar dataCadastro) {
+	this.dataCadastro = dataCadastro;
+    }
 
-	public String getSubtitulo() {
-		return subtitulo;
-	}
+    public List<Autor> getAutores() {
+	return autores;
+    }
 
-	public void setSubtitulo(String subtitulo) {
-		this.subtitulo = subtitulo;
-	}
+    public void setAutores(List<Autor> autores) {
+	this.autores = autores;
+    }
 
-	public Local getLocal() {
-		return local;
-	}
+    public List<Assunto> getAssuntos() {
+	return assuntos;
+    }
 
-	public void setLocal(Local local) {
-		this.local = local;
-	}
+    public void setAssuntos(List<Assunto> assuntos) {
+	this.assuntos = assuntos;
+    }
+
+    public List<Exemplar> getExemplares() {
+	return exemplares;
+    }
+
+    public void setExemplares(List<Exemplar> exemplares) {
+	this.exemplares = exemplares;
+    }
+
+    public Editora getEditora() {
+	return editora;
+    }
+
+    public void setEditora(Editora editora) {
+	this.editora = editora;
+    }
+
+    public Local getLocal() {
+	return local;
+    }
+
+    public void setLocal(Local local) {
+	this.local = local;
+    }
+
+    public void adicionarAutor(Autor autor) {
+	if (autores == null)
+	    autores = new ArrayList<Autor>();
+	autores.add(autor);
+    }
 }

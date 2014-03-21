@@ -6,21 +6,21 @@ import javax.persistence.Id;
 
 @Entity
 public class Assunto {
-	@Id
-	@GeneratedValue
-	private int id;
-	private String assunto;
+    @Id
+    @GeneratedValue
+    private int id;
+    private String assunto;
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+	return id;
+    }
 
-	public String getAssunto() {
-		return assunto;
-	}
+    public String getAssunto() {
+	return assunto;
+    }
 
-	public void setAssunto(String assunto) {
-		this.assunto = assunto;
-	}
+    public void setAssunto(String assunto) {
+	this.assunto = assunto;
+    }
 
 }

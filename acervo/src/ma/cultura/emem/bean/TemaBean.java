@@ -12,22 +12,26 @@ import javax.faces.bean.SessionScoped;
 // vive dentro da sessão Http
 public class TemaBean implements Serializable {
 
-	private String tema = "aristo"; // tema padrão
+    /**
+	 * 
+	 */
+    private static final long serialVersionUID = 6524926347903947083L;
+    private String tema = "aristo"; // tema padrão
 
-	public String getTema() {
-		return tema;
-	}
+    public String getTema() {
+	return tema;
+    }
 
-	public void setTema(String tema) {
-		this.tema = tema;
-	}
+    public void setTema(String tema) {
+	this.tema = tema;
+    }
 
-	// temas disponíveis dentro do JAR
-	public List<String> getTemas() {
+    // temas disponíveis dentro do JAR
+    public List<String> getTemas() {
 
-		return Arrays.asList("aristo", "black-tie", "blitzer", "bluesky", "casablanca", "cupertino", "dark-hive",
-				"dot-luv", "eggplant", "excite-bike", "flick", "glass-x", "hot-sneaks", "humanity", "le-frog",
-				"midnight", "mint-choc", "overcast", "pepper-grinder", "redmond", "rocket", "sam", "smoothness",
-				"south-street", "start", "sunny", "swanky-purse", "trontastic", "ui-darkness", "ui-lightness", "vader");
-	}
+	return Arrays.asList("aristo", "black-tie", "blitzer", "bluesky", "casablanca", "cupertino", "dark-hive",
+		"dot-luv", "eggplant", "excite-bike", "flick", "glass-x", "hot-sneaks", "humanity", "le-frog",
+		"midnight", "mint-choc", "overcast", "pepper-grinder", "redmond", "rocket", "sam", "smoothness",
+		"south-street", "start", "sunny", "swanky-purse", "trontastic", "ui-darkness", "ui-lightness", "vader");
+    }
 }

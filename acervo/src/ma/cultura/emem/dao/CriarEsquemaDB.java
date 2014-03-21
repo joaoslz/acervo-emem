@@ -4,13 +4,13 @@ import javax.persistence.EntityManager;
 
 public class CriarEsquemaDB {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		JPAUtil jpaUtil = new JPAUtil();
-		EntityManager em = jpaUtil.getEntityManager();
+	JPAUtil jpaUtil = new JPAUtil();
+	EntityManager em = jpaUtil.getEntityManager();
 
-		jpaUtil.close(em);
+	jpaUtil.close(em);
 
-	}
+    }
 
 }

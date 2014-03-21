@@ -9,19 +9,19 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Exemplar {
 
-	@Id
-	@GeneratedValue
-	private int id;
-	private boolean ehDoacao;
+    @Id
+    @GeneratedValue
+    private int id;
+    private boolean ehDoacao;
 
-	@ManyToOne
-	private Obra obra;
+    @ManyToOne
+    private Obra obra;
 
-	@Column(columnDefinition = "text")
-	private String observacao;
+    @Column(columnDefinition = "text")
+    private String observacao;
 
-	public Obra getObra() {
-		return obra;
-	}
+    public Obra getObra() {
+	return obra;
+    }
 
 }
