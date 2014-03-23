@@ -37,11 +37,7 @@
 
 					<p:outputLabel value="Nº DE Páginas:" for="numPaginas" />
 					<p:inputText id="numPaginas" value="#{livroBean.livro.numPaginas}" />
-
-					<p:outputLabel value="Preço:" for="preco" />
-					<p:inputText id="preco" value="#{livroBean.livro.preco}">
-						<f:validateDoubleRange minimum="1" maximum="5000" />
-					</p:inputText>
+					
 				</h:panelGrid>
 			</p:fieldset>
 
