@@ -16,5 +16,4 @@ public class Local {
     public void setNome(String nome) {
 	this.nome = nome;
     }
-
 }
