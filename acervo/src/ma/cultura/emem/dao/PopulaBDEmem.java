@@ -15,7 +15,7 @@ public class PopulaBDEmem {
 
     public static void main(String[] args) {
 
-	EntityManager em = new JPAUtil().getEntityManager();
+	EntityManager em = JPAUtil.getInstance().getEntityManager();
 
 	em.getTransaction().begin();
 

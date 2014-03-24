@@ -6,11 +6,7 @@ public class CriarEsquemaDB {
 
     public static void main(String[] args) {
 
-	JPAUtil jpaUtil = new JPAUtil();
-	EntityManager em = jpaUtil.getEntityManager();
-
-	jpaUtil.close(em);
-
+	EntityManager em = JPAUtil.getInstance().getEntityManager();
+	em.close();
     }
-
 }

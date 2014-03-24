@@ -16,7 +16,7 @@ public class DAO<T> {
     public void adiciona(T t) {
 
 	// consegue a entity manager
-	EntityManager em = new JPAUtil().getEntityManager();
+	EntityManager em = JPAUtil.getInstance().getEntityManager();
 
 	// abre transacao
 	em.getTransaction().begin();
@@ -32,7 +32,7 @@ public class DAO<T> {
     }
 
     public void remove(T t) {
-	EntityManager em = new JPAUtil().getEntityManager();
+	EntityManager em = JPAUtil.getInstance().getEntityManager();
 	em.getTransaction().begin();
 
 	em.remove(em.merge(t));
@@ -42,7 +42,7 @@ public class DAO<T> {
     }
 
     public void atualiza(T t) {
-	EntityManager em = new JPAUtil().getEntityManager();
+	EntityManager em = JPAUtil.getInstance().getEntityManager();
 	em.getTransaction().begin();
 
 	em.merge(t);
@@ -52,7 +52,7 @@ public class DAO<T> {
     }
 
     public List<T> listaTodos() {
-	EntityManager em = new JPAUtil().getEntityManager();
+	EntityManager em = JPAUtil.getInstance().getEntityManager();
 	CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
 	query.select(query.from(classe));
 
@@ -63,14 +63,14 @@ public class DAO<T> {
     }
 
     public T buscaPorId(Integer id) {
-	EntityManager em = new JPAUtil().getEntityManager();
+	EntityManager em = JPAUtil.getInstance().getEntityManager();
 	T instancia = em.find(classe, id);
 	em.close();
 	return instancia;
     }
 
     public int contaTodos() {
-	EntityManager em = new JPAUtil().getEntityManager();
+	EntityManager em = JPAUtil.getInstance().getEntityManager();
 	long result = (Long) em.createQuery("select count(n) from livro n").getSingleResult();
 	em.close();
 
@@ -78,7 +78,7 @@ public class DAO<T> {
     }
 
     public List<T> listaTodosPaginada(int firstResult, int maxResults) {
-	EntityManager em = new JPAUtil().getEntityManager();
+	EntityManager em = JPAUtil.getInstance().getEntityManager();
 	CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
 	query.select(query.from(classe));
 

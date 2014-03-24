@@ -16,7 +16,7 @@ public class ObraDAO extends DAO<Obra> {
     public List<Obra> buscaPorTitulo(String titulo) {
 	String consulta = "select o from Obra o where o.titulo like :titulo";
 
-	EntityManager em = new JPAUtil().getEntityManager();
+	EntityManager em = JPAUtil.getInstance().getEntityManager();
 	TypedQuery<Obra> query = em.createQuery(consulta, Obra.class);
 	query.setParameter("titulo", "%" + titulo + "%");
 	List<Obra> listaObras = query.getResultList();
