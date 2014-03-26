@@ -15,14 +15,12 @@ public class EditoraConverter implements Converter {
     
     private EditoraDAO editoraDAO = new EditoraDAO();
 
-    public Object getAsObject(FacesContext facesContext, UIComponent component, String submittedValue) {
-        if (submittedValue.trim().equals("")) {
+    public Object getAsObject(FacesContext facesContext, UIComponent component, String id) {
+        if (id.trim().equals("")) {
             return null;
         } else {
             try {
-        	System.out.println(".........."+submittedValue);
-                int id = Integer.parseInt(submittedValue);
-                Editora editora = editoraDAO.buscaPorId(id);
+                Editora editora = editoraDAO.buscaPorId(Integer.valueOf(id));
                 return editora;
 
             } catch(NumberFormatException exception) {

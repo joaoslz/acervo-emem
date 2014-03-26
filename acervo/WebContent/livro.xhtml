@@ -48,10 +48,10 @@
 					
 					<p:outputLabel value="Local:" for="local" />
 					<p:autoComplete value="#{livroBean.livro.local}" id="local" completeMethod="#{livroBean.likeLocalByNome}"  
-                        var="l" itemLabel="#{l.nome}" itemValue="#{l}"  converter="localConverter" forceSelection="true" required="true"/>  
+                        var="l" itemLabel="#{l.nome}" itemValue="#{l}"  converter="localConverter" required="true"/>  
 					
 					<p:outputLabel value="Autores:" for="autores" />
-					<p:autoComplete value="#{livroBean.autoresSelecionados}" id="autores" completeMethod="#{livroBean.likeAutorByNome}"  
+					<p:autoComplete id="autores" value="#{livroBean.livro.autores}" completeMethod="#{livroBean.likeAutorByNome}"  
                         var="a" itemLabel="#{a.nome}" itemValue="#{a}"  converter="autorConverter" forceSelection="true" multiple="true" />  
 					
 				</h:panelGrid>
@@ -60,8 +60,7 @@
 			<p:commandButton value="Gravar" action="#{livroBean.gravar}"
 				process="@form" update="@form :tabelaLivros" />
 
-			<p:dialog header="Informe o nome do Autor" widgetVar="dlgNovoAutor"
-				resizable="false">
+			<p:dialog header="Informe o nome do Autor" widgetVar="dlgNovoAutor" resizable="false">
 				<h:panelGrid columns="2" style="margin-bottom:10px">
 					<h:outputLabel for="nome" value="Nome:" />
 					<p:inputText id="nome" value="#{autorBean.autor.nome}" />
@@ -73,7 +72,7 @@
 		</h:form>
 
 		<p:dataTable rows="10" paginator="true" paginatorPosition="bottom"
-			id="tabelaLivros" value="#{livroBean.livros}" var="livro"
+			id="tabelaLivros" value="#{livroBean.listaLivros}" var="livro"
 			emptyMessage="Nenhum Livro cadastrado">
 
 			<p:column resizable="true" filterBy="#{livro.titulo}">

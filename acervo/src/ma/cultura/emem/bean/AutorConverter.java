@@ -20,8 +20,9 @@ public class AutorConverter implements Converter {
             return null;
         } else {
             try {
+                System.out.println(">>>>>>>>>>>>>>>>>>>>IDAUTOR: " + id);
                 Autor autor = autorDAO.buscaPorId(Integer.valueOf(id));
-                System.out.println(">>>>>>>>>>>>>>>>>>>>" + autor);
+                System.out.println(">>>>>>>>>>>>>>>>>>>>AUTOR: " + autor);
                 return autor;
             } catch(NumberFormatException exception) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversão", "Autor Inválido"));

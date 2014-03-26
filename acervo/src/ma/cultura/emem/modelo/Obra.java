@@ -34,7 +34,7 @@ public class Obra implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar dataCadastro = Calendar.getInstance();
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany
     private List<Autor> autores;
 
     @ManyToMany

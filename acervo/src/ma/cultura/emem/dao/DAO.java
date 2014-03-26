@@ -14,7 +14,7 @@ public class DAO<T> {
 	this.classe = classe;
     }
 
-    public void adiciona(T t) {
+    public void adicionar(T t) {
 
 	// consegue a entity manager
 	EntityManager em = JPAUtil.getInstance().getEntityManager();

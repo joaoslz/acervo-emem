@@ -25,7 +25,7 @@ public class AutorBean implements Serializable {
 
     public void gravar() {
 	System.out.println("Gravando autor " + this.autor.getNome());
-	new DAO<Autor>(Autor.class).adiciona(this.autor);
+	new DAO<Autor>(Autor.class).adicionar(this.autor);
     }
 
     public void gravar(ActionEvent actionEvent) {
