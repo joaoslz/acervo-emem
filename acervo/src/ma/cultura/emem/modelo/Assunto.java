@@ -23,4 +23,8 @@ public class Assunto {
 	this.assunto = assunto;
     }
 
+    @Override
+    public String toString() {
+	return assunto;
+    }    
 }

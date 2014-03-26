@@ -10,8 +10,6 @@ import javax.persistence.Entity;
 @DiscriminatorValue(value = "livro")
 public class Livro extends Obra {
 
-    private static final long serialVersionUID = -1L;
-
     private String isbn;
     private short serie;
     private String classificacao;
@@ -51,5 +49,4 @@ public class Livro extends Obra {
     public void setCutter(String cutter) {
 	this.cutter = cutter;
     }
-
 }

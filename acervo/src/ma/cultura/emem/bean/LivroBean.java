@@ -8,63 +8,58 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import ma.cultura.emem.dao.DAO;
+import ma.cultura.emem.dao.AssuntoDAO;
+import ma.cultura.emem.dao.AutorDAO;
+import ma.cultura.emem.dao.EditoraDAO;
+import ma.cultura.emem.dao.LivroDAO;
+import ma.cultura.emem.dao.LocalDAO;
+import ma.cultura.emem.modelo.Assunto;
 import ma.cultura.emem.modelo.Autor;
+import ma.cultura.emem.modelo.Editora;
 import ma.cultura.emem.modelo.Livro;
-import ma.cultura.emem.modelo.Obra;
+import ma.cultura.emem.modelo.Local;
 
 @ManagedBean
 @ViewScoped
 public class LivroBean implements Serializable {
 
-    /**
-	 * 
-	 */
-    private static final long serialVersionUID = -861862195415276394L;
     private Livro livro = new Livro();
-    private Integer autorId;
-
-    public Obra getLivro() {
-	return livro;
+    
+    public String gravar() {
+	System.out.println("Gravando livro " + livro.getTitulo());
+	System.out.println("....:::::>>>autores: " + livro.getAutores());
+	System.out.println("....:::::>>>assuntos: " + livro.getAssuntos());
+	new LivroDAO().adicionar(livro);
+	livro = new Livro();
+//	 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome"));
+	return "livro?faces-redirect=true";
     }
 
-    public void gravar() {
-	System.out.println("Gravando livro " + this.livro.getTitulo());
-
-	if (this.livro.getAutores().isEmpty()) {
-	    FacesContext.getCurrentInstance().addMessage("autor",
-		    new FacesMessage("Livro deve ter pelo menos um Autor"));
-	}
-
-	new DAO<Livro>(Livro.class).adiciona(this.livro);
-	this.livro = new Livro();
-
+    public List<Livro> getListaLivros() {
+	return new LivroDAO().listarLivros();
     }
 
-    public List<Autor> getAutores() {
-	return new DAO<Autor>(Autor.class).listaTodos();
+    public List<Editora> likeEditoraByNome(String nome){
+	return  new EditoraDAO().likeByNome(nome);
     }
 
-    public void gravarAutor() {
-
-	Autor autor = new DAO<Autor>(Autor.class).buscaPorId(this.autorId);
-	this.livro.adicionarAutor(autor);
+    public List<Local> likeLocalByNome(String nome){
+	return  new LocalDAO().likeByNome(nome);
     }
 
-    public List<Autor> getAutoresDoLivro() {
-	return this.livro.getAutores();
+    public List<Autor> likeAutorByNome(String nome){
+	return  new AutorDAO().likeByNome(nome);
     }
 
-    public List<Livro> getLivros() {
-	return new DAO<Livro>(Livro.class).listaTodos();
+    public List<Assunto> likeAssuntoByNome(String nome){
+	return  new AssuntoDAO().likeByNome(nome);
+    }
+    
+    public Livro getLivro() {
+        return livro;
     }
 
-    public Integer getAutorId() {
-	return autorId;
+    public void setLivro(Livro livro) {
+        this.livro = livro;
     }
-
-    public void setAutorId(Integer autorId) {
-	this.autorId = autorId;
-    }
-
 }

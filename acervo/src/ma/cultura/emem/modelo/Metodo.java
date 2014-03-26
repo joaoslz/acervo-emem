@@ -8,9 +8,8 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue(value = "metodo")
-public class Metodo extends Obra {
+public class Metodo extends Livro {
 
-    private static final long serialVersionUID = -1L;
 
     //private String instrumento ?????
     //private String genero      ?????

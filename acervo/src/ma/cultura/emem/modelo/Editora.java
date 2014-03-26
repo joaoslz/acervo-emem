@@ -44,5 +44,4 @@ public class Editora {
     public List<Obra> getObras() {
 	return obras;
     }
-
 }

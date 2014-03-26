@@ -22,6 +22,6 @@ public class AssuntoBean implements Serializable {
 
 	public void gravar() {
 		System.out.println("Gravando assunto " + this.assunto.getAssunto());
-		new DAO<Assunto>(Assunto.class).adiciona(this.assunto);
+		new DAO<Assunto>(Assunto.class).adicionar(this.assunto);
 	}
 }

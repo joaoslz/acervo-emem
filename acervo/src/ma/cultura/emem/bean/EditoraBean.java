@@ -21,6 +21,6 @@ public class EditoraBean implements Serializable {
     }
 
     public void gravar() {
-	new DAO<Editora>(Editora.class).adiciona(this.editora);
+	new DAO<Editora>(Editora.class).adicionar(this.editora);
     }
 }
