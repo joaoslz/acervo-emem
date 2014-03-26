@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import ma.cultura.emem.modelo.Assunto;
 import ma.cultura.emem.modelo.Autor;
 import ma.cultura.emem.modelo.Livro;
 
@@ -18,8 +19,8 @@ public class LivroDAO extends DAO<Livro> {
     public void adicionar(Livro l) {
 	EntityManager em = JPAUtil.getInstance().getEntityManager();
 	em.getTransaction().begin();
-	List<Autor> autores = new ArrayList<Autor>();
 	//FIXME recupera novamente os autores do banco para que o JPA possa reconhece-los como entidades gerenciaveis.
+	List<Autor> autores = new ArrayList<Autor>();
 	if(l.getAutores() != null && l.getAutores().size() > 0){
 	    for(Autor autor: l.getAutores()){
 		autor = em.find(Autor.class, autor.getId());
@@ -27,6 +28,16 @@ public class LivroDAO extends DAO<Livro> {
 	    }
 	}
 	l.setAutores(autores);
+	//FIXME recupera novamente os assuntos do banco para que o JPA possa reconhece-los como entidades gerenciaveis.
+	List<Assunto> assuntos = new ArrayList<Assunto>();
+	if(l.getAssuntos() != null && l.getAssuntos().size() > 0){
+	    for(Assunto assunto: l.getAssuntos()){
+		assunto = em.find(Assunto.class, assunto.getId());
+		assuntos.add(assunto);
+	    }
+	}
+	l.setAssuntos(assuntos);
+	
 	em.persist(l);
 	em.getTransaction().commit();
 	em.close();
@@ -38,6 +49,7 @@ public class LivroDAO extends DAO<Livro> {
 
 	EntityManager em = JPAUtil.getInstance().getEntityManager();
 	TypedQuery<Livro> query = em.createQuery(consulta, Livro.class);
+	query.setMaxResults(7);
 	List<Livro> listaObras = query.getResultList();
 
 	em.close();

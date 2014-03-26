@@ -37,7 +37,8 @@ public class Obra implements Serializable {
     @ManyToMany
     private List<Autor> autores;
 
-    @ManyToMany
+    //FIXME fetch eager???? não consegui fazer via HQL pq ja tem fetch pro autor.
+    @ManyToMany(fetch=FetchType.EAGER)
     private List<Assunto> assuntos;
 
     @OneToMany(mappedBy = "obra")

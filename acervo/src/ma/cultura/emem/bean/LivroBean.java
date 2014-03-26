@@ -1,16 +1,19 @@
 package ma.cultura.emem.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
+import ma.cultura.emem.dao.AssuntoDAO;
 import ma.cultura.emem.dao.AutorDAO;
 import ma.cultura.emem.dao.EditoraDAO;
 import ma.cultura.emem.dao.LivroDAO;
 import ma.cultura.emem.dao.LocalDAO;
+import ma.cultura.emem.modelo.Assunto;
 import ma.cultura.emem.modelo.Autor;
 import ma.cultura.emem.modelo.Editora;
 import ma.cultura.emem.modelo.Livro;
@@ -22,11 +25,14 @@ public class LivroBean implements Serializable {
 
     private Livro livro = new Livro();
     
-    public void gravar() {
+    public String gravar() {
 	System.out.println("Gravando livro " + livro.getTitulo());
 	System.out.println("....:::::>>>autores: " + livro.getAutores());
+	System.out.println("....:::::>>>assuntos: " + livro.getAssuntos());
 	new LivroDAO().adicionar(livro);
 	livro = new Livro();
+//	 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome"));
+	return "livro?faces-redirect=true";
     }
 
     public List<Livro> getListaLivros() {
@@ -45,6 +51,10 @@ public class LivroBean implements Serializable {
 	return  new AutorDAO().likeByNome(nome);
     }
 
+    public List<Assunto> likeAssuntoByNome(String nome){
+	return  new AssuntoDAO().likeByNome(nome);
+    }
+    
     public Livro getLivro() {
         return livro;
     }
