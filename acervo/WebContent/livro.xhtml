@@ -6,9 +6,9 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="_template.xhtml">
+<ui:composition template="_template.xhtml">lo
 
-	<ui:define name="titulo">Novo Livro</ui:define>
+	<ui:define name="titulo">Cadastro de Livro</ui:define>
 	<ui:define name="conteudo">
 		<h:form id="formLivro">
 			<p:messages id="messages" autoUpdate="true" />
@@ -28,45 +28,33 @@
 					<p:inputText id="subtitulo" value="#{livroBean.livro.subtitulo}" />
 						
 					<p:outputLabel value="ISBN:" for="isbn" />
-
-					<p:inputMask id="isbn" value="#{livroBean.livro.isbn}"
-						mask="999-9-99-999999-9" />
+					<p:inputMask id="isbn" value="#{livroBean.livro.isbn}" mask="999-9-99-999999-9" />
+					
+					<p:outputLabel value="Cutter:" for="cutter" />
+					<p:inputText id="cutter" value="#{livroBean.livro.cutter}" />
 
 					<p:outputLabel value="Ano:" for="ano" />
 					<p:inputText id="ano" value="#{livroBean.livro.ano}" />
 
-					<p:outputLabel value="Nº DE Páginas:" for="numPaginas" />
+					<p:outputLabel value="Nº de Páginas:" for="numPaginas" />
 					<p:inputText id="numPaginas" value="#{livroBean.livro.numPaginas}" />
 					
+					<p:outputLabel value="Classificação:" for="classificacao" />
+					<p:inputText id="classificacao" value="#{livroBean.livro.classificacao}" />
+					
+					<p:outputLabel value="Editora:" for="editora" />
+					<p:autoComplete value="#{livroBean.livro.editora}" id="editora" completeMethod="#{livroBean.likeEditoraByNome}"  
+                        var="e" itemLabel="#{e.nome}" itemValue="#{e}"  converter="editoraConverter" forceSelection="true" required="true"/>  
+					
+					<p:outputLabel value="Local:" for="local" />
+					<p:autoComplete value="#{livroBean.livro.local}" id="local" completeMethod="#{livroBean.likeLocalByNome}"  
+                        var="l" itemLabel="#{l.nome}" itemValue="#{l}"  converter="localConverter" forceSelection="true" required="true"/>  
+					
+					<p:outputLabel value="Autores:" for="autores" />
+					<p:autoComplete value="#{livroBean.autoresSelecionados}" id="autores" completeMethod="#{livroBean.likeAutorByNome}"  
+                        var="a" itemLabel="#{a.nome}" itemValue="#{a}"  converter="autorConverter" forceSelection="true" multiple="true" />  
+					
 				</h:panelGrid>
-			</p:fieldset>
-
-			<p:fieldset legend="Dados do Autor">
-				<h:outputLabel value="Selecione" for="autor" />
-
-				<p:commandLink value=" ou Cadastrar novo autor" id="dlgNovoAutor"
-					onclick="dlgNovoAutor.show()" immediate="true" />
-
-				<p:selectOneMenu value="#{livroBean.autorId}" id="autor"
-					effect="fold">
-					<f:selectItems value="#{livroBean.autores}" var="autor"
-						itemLabel="#{autor.nome}" itemValue="#{autor.id}" />
-
-				</p:selectOneMenu>
-
-				<p:commandButton value="Gravar Autor"
-					action="#{livroBean.gravarAutor}" process="@this autor"
-					update="tabelaAutores" />
-
-				<p:commandButton id="showDialogButton" type="button"
-					value="Novo Autor" onclick="dlgNovoAutor.show()" />
-
-				<p:dataTable value="#{livroBean.autoresDoLivro}" var="autor"
-					id="tabelaAutores" emptyMessage="Nenhum autor associado">
-					<p:column>
-						<h:outputText value="#{autor.nome}" />
-					</p:column>
-				</p:dataTable>
 			</p:fieldset>
 
 			<p:commandButton value="Gravar" action="#{livroBean.gravar}"
@@ -82,7 +70,6 @@
 					oncomplete="dlgNovoAutor.hide();" action="#{autorBean.gravar}"
 					process="@form" update="@form :tabelaLivros" />
 			</p:dialog>
-
 		</h:form>
 
 		<p:dataTable rows="10" paginator="true" paginatorPosition="bottom"
@@ -102,7 +89,19 @@
 				<f:facet name="header">Ano</f:facet>
 				<h:outputText value="#{livro.ano}" />
 			</p:column>
+			<p:column>
+				<f:facet name="header">Editora</f:facet>
+				<h:outputText value="#{livro.editora.nome}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">Local</f:facet>
+				<h:outputText value="#{livro.local.nome}" />
+			</p:column>
 
+			<p:column>
+				<f:facet name="header">Autores</f:facet>
+				<h:outputText value="#{livro.autores}" />
+			</p:column>
 		</p:dataTable>
 	</ui:define>
 	<ui:define name="texto">

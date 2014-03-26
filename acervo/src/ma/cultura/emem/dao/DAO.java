@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
 
 public class DAO<T> {
 
@@ -62,7 +63,7 @@ public class DAO<T> {
 	return lista;
     }
 
-    public T buscaPorId(Integer id) {
+    public T buscaPorId(Object id) {
 	EntityManager em = JPAUtil.getInstance().getEntityManager();
 	T instancia = em.find(classe, id);
 	em.close();

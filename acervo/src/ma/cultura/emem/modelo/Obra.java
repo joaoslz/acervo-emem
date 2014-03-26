@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -20,8 +22,6 @@ import javax.persistence.TemporalType;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Obra implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue
     private Integer id;
@@ -31,10 +31,10 @@ public class Obra implements Serializable {
     private short ano;
     private short numPaginas;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar dataCadastro = Calendar.getInstance();
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     private List<Autor> autores;
 
     @ManyToMany
