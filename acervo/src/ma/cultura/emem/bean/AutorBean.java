@@ -1,11 +1,13 @@
 package ma.cultura.emem.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.event.ActionEvent;
 
+import ma.cultura.emem.dao.AutorDAO;
 import ma.cultura.emem.dao.DAO;
 import ma.cultura.emem.modelo.Autor;
 
@@ -29,21 +31,15 @@ public class AutorBean implements Serializable {
 		this.autor = new Autor();
 	}
 
+	// public List<Autor> getListaAutores() {
+	// return new DAO<Autor>(Autor.class).listaTodos();
+	// }
+
+	public List<Autor> getListaAutoresPorIdEmOrdemDec() {
+		return new AutorDAO().listarAutoresPorIdEmOrdemDec();
+	}
+
 	public void gravar(ActionEvent actionEvent) {
 		RequestContext.getCurrentInstance();
-
-		// if(username != null &&&& username.equals("admin") && password != null
-		// && password.equals("admin")) {
-		// loggedIn = true;
-		// msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome",
-		// username);
-		// } else {
-		// loggedIn = false;
-		// msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error",
-		// "Invalid credentials");
-		// }
-		//
-		// FacesContext.getCurrentInstance().addMessage(null, msg);
-		// context.addCallbackParam("loggedIn", loggedIn);
 	}
 }
