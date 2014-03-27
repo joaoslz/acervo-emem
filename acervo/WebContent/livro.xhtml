@@ -63,8 +63,9 @@
 						itemLabel="#{a.nome}" itemValue="#{a}" converter="autorConverter"
 						forceSelection="true" multiple="true" />
 
-					<p:outputLabel value=".." />
-					<p:outputLabel value=".." />
+					<p:outputLabel value="É Ilustrado?" for="ehIlustrado" />
+                    <p:selectBooleanCheckbox id="ehIlustrado" value="#{livroBean.livro.ehIlustrado}" /> 
+					
 
 					<p:outputLabel value="Assuntos" for="assuntos" />
 					<p:autoComplete id="assuntos" value="#{livroBean.livro.assuntos}"
