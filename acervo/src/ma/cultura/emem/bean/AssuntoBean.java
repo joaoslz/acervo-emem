@@ -14,7 +14,7 @@ public class AssuntoBean implements Serializable {
 
 	private static final long serialVersionUID = 3905906075866017417L;
 
-	private final Assunto assunto = new Assunto();
+	private Assunto assunto = new Assunto();
 
 	public Assunto getAssunto() {
 		return assunto;
@@ -23,5 +23,6 @@ public class AssuntoBean implements Serializable {
 	public void gravar() {
 		System.out.println("Gravando assunto " + this.assunto.getAssunto());
 		new DAO<Assunto>(Assunto.class).adicionar(this.assunto);
+		this.assunto = new Assunto();
 	}
 }
