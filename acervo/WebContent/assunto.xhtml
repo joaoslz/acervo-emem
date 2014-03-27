@@ -2,27 +2,44 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" >
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="_template.xhtml">
-	<ui:define 
-		name="titulo">Novo Assunto
+	<ui:define name="titulo">Novo Assunto
 	</ui:define>
 	<ui:define name="conteudo">
 		<h:form>
 			<p:fieldset>
 				<legend>Assunto</legend>
-				
+
 				<h:panelGrid columns="3">
 					<p:outputLabel value="Assunto:" for="assunto" />
-					<p:inputText id="assunto" value="#{assuntoBean.assunto.assunto}" 
-					 required="true" requiredMessage="Campo nome deve ser digitado"/>
-					 
-					<p:commandButton value="Gravar" action="#{assuntoBean.gravar}" />
+					<p:inputText id="assunto" value="#{assuntoBean.assunto.assunto}"
+						required="true" requiredMessage="Campo nome deve ser digitado" />
+
+					<p:commandButton value="Gravar" action="#{assuntoBean.gravar}"
+						process="@form" update="@form :tabelaAssunto" />
+
 				</h:panelGrid>
 			</p:fieldset>
 		</h:form>
+
+		<p:fieldset>
+			<p:outputLabel>Assuntos Cadastrados</p:outputLabel>
+			<p:dataTable rows="10" paginator="true" paginatorPosition="bottom"
+				id="tabelaAssunto"
+				value="#{assuntoBean.listaAssuntoPorIdEmOrdemDec}" var="assunto"
+				emptyMessage="Nenhum assunto cadastrado">
+
+				<p:column resizable="true">
+					<f:facet name="header">Assunto</f:facet>
+					<h:outputText value="#{assunto.assunto}" />
+				</p:column>
+			</p:dataTable>
+		</p:fieldset>
+
 	</ui:define>
 </ui:composition>
 </html>

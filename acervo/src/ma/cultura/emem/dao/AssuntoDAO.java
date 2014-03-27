@@ -6,25 +6,36 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import ma.cultura.emem.modelo.Assunto;
-import ma.cultura.emem.modelo.Autor;
 
 public class AssuntoDAO extends DAO<Assunto> {
 
-    public AssuntoDAO() {
-	super(Assunto.class);
-    }
+	public AssuntoDAO() {
+		super(Assunto.class);
+	}
 
-    public List<Assunto> likeByNome(String nome){
+	public List<Assunto> likeByNome(String nome) {
 
-	String consulta = "from Assunto a where a.assunto like :assunto order by a.assunto asc";
+		String consulta = "from Assunto a where a.assunto like :assunto order by a.assunto asc";
 
-	EntityManager em = JPAUtil.getInstance().getEntityManager();
-	TypedQuery<Assunto> query = em.createQuery(consulta, Assunto.class);
-	query.setParameter("assunto", "%" + nome + "%");
-	List<Assunto> lista = query.getResultList();
+		EntityManager em = JPAUtil.getInstance().getEntityManager();
+		TypedQuery<Assunto> query = em.createQuery(consulta, Assunto.class);
+		query.setParameter("assunto", "%" + nome + "%");
+		List<Assunto> lista = query.getResultList();
 
-	em.close();
+		em.close();
 
-	return lista;
-    }
+		return lista;
+	}
+
+	public List<Assunto> listarAutoresPorIdEmOrdemDec() {
+		String consulta = "select distinct a from Assunto a order by a.id desc";
+
+		EntityManager em = JPAUtil.getInstance().getEntityManager();
+		TypedQuery<Assunto> query = em.createQuery(consulta, Assunto.class);
+		List<Assunto> listaAssuntos = query.getResultList();
+
+		em.close();
+
+		return listaAssuntos;
+	}
 }

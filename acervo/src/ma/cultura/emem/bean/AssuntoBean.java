@@ -1,10 +1,12 @@
 package ma.cultura.emem.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
+import ma.cultura.emem.dao.AssuntoDAO;
 import ma.cultura.emem.dao.DAO;
 import ma.cultura.emem.modelo.Assunto;
 
@@ -25,4 +27,9 @@ public class AssuntoBean implements Serializable {
 		new DAO<Assunto>(Assunto.class).adicionar(this.assunto);
 		this.assunto = new Assunto();
 	}
+
+	public List<Assunto> getListaAssuntoPorIdEmOrdemDec() {
+		return new AssuntoDAO().listarAutoresPorIdEmOrdemDec();
+	}
+
 }
