@@ -15,34 +15,35 @@ import org.primefaces.context.RequestContext;
 @RequestScoped
 public class AutorBean implements Serializable {
 
-    private static final long serialVersionUID = 3905906075866017417L;
+	private static final long serialVersionUID = 3905906075866017417L;
 
-    private final Autor autor = new Autor();
+	private Autor autor = new Autor();
 
-    public Autor getAutor() {
-	return autor;
-    }
+	public Autor getAutor() {
+		return autor;
+	}
 
-    public void gravar() {
-	System.out.println("Gravando autor " + this.autor.getNome());
-	new DAO<Autor>(Autor.class).adicionar(this.autor);
-    }
+	public void gravar() {
+		System.out.println("Gravando autor " + this.autor.getNome());
+		new DAO<Autor>(Autor.class).adicionar(this.autor);
+		this.autor = new Autor();
+	}
 
-    public void gravar(ActionEvent actionEvent) {
-	RequestContext.getCurrentInstance();
+	public void gravar(ActionEvent actionEvent) {
+		RequestContext.getCurrentInstance();
 
-	// if(username != null &&&& username.equals("admin") && password != null
-	// && password.equals("admin")) {
-	// loggedIn = true;
-	// msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome",
-	// username);
-	// } else {
-	// loggedIn = false;
-	// msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error",
-	// "Invalid credentials");
-	// }
-	//
-	// FacesContext.getCurrentInstance().addMessage(null, msg);
-	// context.addCallbackParam("loggedIn", loggedIn);
-    }
+		// if(username != null &&&& username.equals("admin") && password != null
+		// && password.equals("admin")) {
+		// loggedIn = true;
+		// msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome",
+		// username);
+		// } else {
+		// loggedIn = false;
+		// msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error",
+		// "Invalid credentials");
+		// }
+		//
+		// FacesContext.getCurrentInstance().addMessage(null, msg);
+		// context.addCallbackParam("loggedIn", loggedIn);
+	}
 }
