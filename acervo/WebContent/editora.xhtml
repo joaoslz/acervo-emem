@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" >
 
@@ -26,6 +27,25 @@
 				</h:panelGrid>
 			</p:fieldset>
 		</h:form>
+		
+		
+		<br />
+		<p:fieldset>
+			<p:outputLabel value="Editoras Cadastradas" />
+			<p:dataTable rows="10" paginator="true" paginatorPosition="bottom"
+				id="tabelaLivros" value="#{editoraBean.listaEditoras}" var="editora"
+				emptyMessage="Nenhuma editora cadastrada">
+
+				<p:column resizable="false">
+					<f:facet name="header">Nome</f:facet>
+					<h:outputText value="#{editora.nome}" />
+				</p:column>
+				<p:column resizable="false">
+					<f:facet name="header">Site</f:facet>
+					<h:outputText value="#{editora.site}" />
+				</p:column>
+			</p:dataTable>
+		</p:fieldset>
 	</ui:define>
 </ui:composition>
 </html>
