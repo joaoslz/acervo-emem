@@ -14,14 +14,41 @@ public class Exemplar {
     private int id;
     private boolean ehDoacao;
 
-    @ManyToOne
-    private Obra obra;
-
     @Column(columnDefinition = "text")
     private String observacao;
 
-    public Obra getObra() {
-	return obra;
+    @ManyToOne
+    private Obra obra;
+
+    public int getId() {
+        return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isEhDoacao() {
+        return ehDoacao;
+    }
+
+    public void setEhDoacao(boolean ehDoacao) {
+        this.ehDoacao = ehDoacao;
+    }
+
+    public Obra getObra() {
+        return obra;
+    }
+
+    public void setObra(Obra obra) {
+        this.obra = obra;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
 }
