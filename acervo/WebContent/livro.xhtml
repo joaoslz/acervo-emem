@@ -10,13 +10,36 @@
 
 	<ui:define name="titulo">Cadastro de Livro</ui:define>
 	<ui:define name="conteudo">
+		
+		<h:form id="formExemplar">
+			<p:dialog header="Cadastro de Exemplar" widgetVar="dlgNovoExemplar" resizable="false">
+				<p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">  
+				    <f:facet name="start">  
+				        <h:graphicImage value="/images/ajaxloading.gif" />  
+				    </f:facet>  
+				      
+				    <f:facet name="complete">  
+				        <h:outputText value="" />  
+				    </f:facet>  
+				</p:ajaxStatus>  
+				<h:panelGrid columns="2" style="margin-bottom:10px">
+					<h:outputLabel for="ehDoacao" value="É Doação" />
+					<p:selectBooleanCheckbox id="ehDoacao" value="#{livroBean.exemplar.ehDoacao}" />
+					<p:outputLabel value="Observação: " for="observacao" />
+					<p:inputTextarea id="observacao" value="#{livroBean.exemplar.observacao}" />
+				</h:panelGrid>
+				<p:commandButton value="Adicionar Exemplar" 
+					oncomplete="dlgNovoExemplar.hide();" action="#{livroBean.adicionarExemplar}" 
+					process="@form" update="@form :formLivro"/>
+			</p:dialog>
+		</h:form>
 		<h:form id="formLivro">
 			<p:messages id="messages" autoUpdate="true" />
 			<p:growl autoUpdate="true" />
 			<p:fieldset>
-				<p:outputLabel >Dados do Livro</p:outputLabel>
 				<h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">
 
+					<f:facet name="header"> Dados do Livro </f:facet>
 					<p:outputLabel value="Titulo:" for="titulo" />
 					<p:inputText id="titulo" value="#{livroBean.livro.titulo}"
 						required="true" requiredMessage="Título obrigatório"
@@ -42,8 +65,7 @@
 					<p:inputText id="numPaginas" value="#{livroBean.livro.numPaginas}" />
 
 					<p:outputLabel value="Classificação:" for="classificacao" />
-					<p:inputText id="classificacao"
-						value="#{livroBean.livro.classificacao}" />
+					<p:inputText id="classificacao"	value="#{livroBean.livro.classificacao}" />
 
 					<p:outputLabel value="Editora:" for="editora" />
 					<p:autoComplete value="#{livroBean.livro.editora}" id="editora"
@@ -64,8 +86,9 @@
 						forceSelection="true" multiple="true" />
 
 					<p:outputLabel value="É Ilustrado?" for="ehIlustrado" />
-                    <p:selectBooleanCheckbox id="ehIlustrado" value="#{livroBean.livro.ehIlustrado}" /> 
-					
+					<p:selectBooleanCheckbox id="ehIlustrado"
+						value="#{livroBean.livro.ehIlustrado}" />
+
 
 					<p:outputLabel value="Assuntos" for="assuntos" />
 					<p:autoComplete id="assuntos" value="#{livroBean.livro.assuntos}"
@@ -73,23 +96,41 @@
 						itemLabel="#{a.assunto}" itemValue="#{a}"
 						converter="assuntoConverter" forceSelection="true" multiple="true" />
 
+					<p:outputLabel value="Exemplares" for="showDialogExemplarButton" />
+					<p:column colspan="2" rowspan="2">
+						<p:commandButton id="showDialogExemplarButton" type="button" value="Adicionar Exemplar" onclick="dlgNovoExemplar.show()" />
+						<p:dataTable rows="10" paginator="false" id="exemp"
+								value="#{livroBean.livro.exemplares}" var="exemplar"
+								emptyMessage="Nenhum Exemplar cadastrado">
+	
+								<p:column>
+									<f:facet name="header">É Doação?</f:facet>
+									<h:outputText value="#{exemplar.ehDoacao}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">Observação</f:facet>
+									<h:outputText value="#{exemplar.observacao}" />
+								</p:column>
+							</p:dataTable>
+					</p:column>
+					<p:outputLabel value=" " />
+					<p:outputLabel value=" " />
 				</h:panelGrid>
 
 				<p:commandButton value="Cadastrar" action="#{livroBean.gravar}"
 					process="@form" update="@form :tabelaLivros" />
 			</p:fieldset>
-
-
+			
 		</h:form>
-
-<br/>
+		
+		<br />
 		<p:fieldset>
-			<p:outputLabel >Últimos Livros Cadastrados</p:outputLabel>
+			<p:outputLabel value="Últimos Livros Cadastrados" />
 			<p:dataTable rows="10" paginator="false" paginatorPosition="bottom"
 				id="tabelaLivros" value="#{livroBean.listaLivros}" var="livro"
-				emptyMessage="Nenhum Livro cadastrado">
+				emptyMessage="Nenhum Livro cadastrado" style="margin:0px;">
 
-				<p:column resizable="true">
+				<p:column resizable="false">
 					<f:facet name="header">Título</f:facet>
 					<h:outputText value="#{livro.titulo}" />
 				</p:column>

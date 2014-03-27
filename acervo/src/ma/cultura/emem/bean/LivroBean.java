@@ -3,10 +3,8 @@ package ma.cultura.emem.bean;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import ma.cultura.emem.dao.AssuntoDAO;
 import ma.cultura.emem.dao.AutorDAO;
@@ -16,6 +14,7 @@ import ma.cultura.emem.dao.LocalDAO;
 import ma.cultura.emem.modelo.Assunto;
 import ma.cultura.emem.modelo.Autor;
 import ma.cultura.emem.modelo.Editora;
+import ma.cultura.emem.modelo.Exemplar;
 import ma.cultura.emem.modelo.Livro;
 import ma.cultura.emem.modelo.Local;
 
@@ -24,6 +23,12 @@ import ma.cultura.emem.modelo.Local;
 public class LivroBean implements Serializable {
 
     private Livro livro = new Livro();
+    private Exemplar exemplar = new Exemplar();
+    
+    public void adicionarExemplar(){
+	livro.adicionarExemplar(exemplar);
+	exemplar = new Exemplar();
+    }
     
     public String gravar() {
 	System.out.println("Gravando livro " + livro.getTitulo());
@@ -61,5 +66,13 @@ public class LivroBean implements Serializable {
 
     public void setLivro(Livro livro) {
         this.livro = livro;
+    }
+
+    public Exemplar getExemplar() {
+        return exemplar;
+    }
+
+    public void setExemplar(Exemplar exemplar) {
+        this.exemplar = exemplar;
     }
 }

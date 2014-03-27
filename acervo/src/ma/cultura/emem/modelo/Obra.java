@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -42,7 +43,7 @@ public class Obra implements Serializable {
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Assunto> assuntos;
 
-	@OneToMany(mappedBy = "obra")
+	@OneToMany(mappedBy = "obra", cascade=CascadeType.PERSIST)
 	private List<Exemplar> exemplares;
 
 	@ManyToOne
@@ -151,5 +152,11 @@ public class Obra implements Serializable {
 
 	public void setEhIlustrado(boolean ehIlustrado) {
 		this.ehIlustrado = ehIlustrado;
+	}
+	
+	public void adicionarExemplar(Exemplar exemplar){
+	    if(exemplares == null)
+		exemplares = new ArrayList<Exemplar>();
+	    exemplares.add(exemplar);
 	}
 }
