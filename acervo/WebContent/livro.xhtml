@@ -28,7 +28,7 @@
 					<p:outputLabel value="Observação: " for="observacao" />
 					<p:inputTextarea id="observacao" value="#{livroBean.exemplar.observacao}" />
 				</h:panelGrid>
-				<p:commandButton value="Gravar" 
+				<p:commandButton value="Adicionar Exemplar" 
 					oncomplete="dlgNovoExemplar.hide();" action="#{livroBean.adicionarExemplar}" 
 					process="@form" update="@form :formLivro"/>
 			</p:dialog>
@@ -68,12 +68,10 @@
 					<p:inputText id="classificacao"	value="#{livroBean.livro.classificacao}" />
 
 					<p:outputLabel value="Editora:" for="editora" />
-					<p:column>
 					<p:autoComplete value="#{livroBean.livro.editora}" id="editora"
 						completeMethod="#{livroBean.likeEditoraByNome}" var="e"
 						itemLabel="#{e.nome}" itemValue="#{e}"
 						converter="editoraConverter" forceSelection="true" required="true" />
-					</p:column>
 
 					<p:outputLabel value="Local:" for="local" />
 					<p:autoComplete value="#{livroBean.livro.local}" id="local"
@@ -119,7 +117,7 @@
 					<p:outputLabel value=" " />
 				</h:panelGrid>
 
-				<p:commandButton value="Gravar" action="#{livroBean.gravar}"
+				<p:commandButton value="Cadastrar" action="#{livroBean.gravar}"
 					process="@form" update="@form :tabelaLivros" />
 			</p:fieldset>
 			

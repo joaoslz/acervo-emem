@@ -26,17 +26,4 @@ public class EditoraDAO extends DAO<Editora> {
 
 	return lista;
     }
-    
-    public List<Editora> listarTodas(){
-
-	String consulta = "from Editora e order by e.id desc";
-
-	EntityManager em = JPAUtil.getInstance().getEntityManager();
-	TypedQuery<Editora> query = em.createQuery(consulta, Editora.class);
-	List<Editora> lista = query.getResultList();
-
-	em.close();
-
-	return lista;
-    }
 }

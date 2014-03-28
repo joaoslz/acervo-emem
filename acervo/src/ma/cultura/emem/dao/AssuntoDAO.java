@@ -27,7 +27,7 @@ public class AssuntoDAO extends DAO<Assunto> {
 		return lista;
 	}
 
-	public List<Assunto> listarAutoresPorIdEmOrdemDec() {
+	public List<Assunto> listarAssuntosPorIdEmOrdemDec() {
 		String consulta = "select distinct a from Assunto a order by a.id desc";
 
 		EntityManager em = JPAUtil.getInstance().getEntityManager();

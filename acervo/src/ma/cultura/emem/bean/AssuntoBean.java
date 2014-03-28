@@ -14,23 +14,22 @@ import ma.cultura.emem.modelo.Assunto;
 @RequestScoped
 public class AssuntoBean implements Serializable {
 
-    private static final long serialVersionUID = 3905906075866017417L;
+	private static final long serialVersionUID = 3905906075866017417L;
 
-    private Assunto assunto = new Assunto();
+	private Assunto assunto = new Assunto();
 
-    public Assunto getAssunto() {
-	return assunto;
-    }
+	public Assunto getAssunto() {
+		return assunto;
+	}
 
-    public String gravar() {
-	System.out.println("Gravando assunto " + this.assunto.getAssunto());
-	new DAO<Assunto>(Assunto.class).adicionar(this.assunto);
-	this.assunto = new Assunto();
-	return "assunto?faces-redirect=true";
-    }
+	public void gravar() {
+		System.out.println("Gravando assunto " + this.assunto.getAssunto());
+		new DAO<Assunto>(Assunto.class).adicionar(this.assunto);
+		this.assunto = new Assunto();
+	}
 
-    public List<Assunto> getListaAssuntoPorIdEmOrdemDec() {
-	return new AssuntoDAO().listarAutoresPorIdEmOrdemDec();
-    }
+	public List<Assunto> getListaAssuntoPorIdEmOrdemDec() {
+		return new AssuntoDAO().listarAssuntosPorIdEmOrdemDec();
+	}
 
 }
