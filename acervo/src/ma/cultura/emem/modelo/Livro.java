@@ -10,43 +10,44 @@ import javax.persistence.Entity;
 @DiscriminatorValue(value = "livro")
 public class Livro extends Obra {
 
-    private String isbn;
-    private short serie;
-    private String classificacao;
-    private String cutter;
+	private static final long serialVersionUID = -5247199056256533770L;
+	private String isbn;
+	private String serie;
+	private String classificacao;
+	private String cutter;
 
-    public Livro() {
-    }
+	public Livro() {
+	}
 
-    public String getIsbn() {
-	return isbn;
-    }
+	public String getIsbn() {
+		return isbn;
+	}
 
-    public void setIsbn(String isbn) {
-	this.isbn = isbn;
-    }
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
 
-    public short getSerie() {
-	return serie;
-    }
+	public String getClassificacao() {
+		return classificacao;
+	}
 
-    public void setSerie(short serie) {
-	this.serie = serie;
-    }
+	public void setClassificacao(String classificacao) {
+		this.classificacao = classificacao;
+	}
 
-    public String getClassificacao() {
-	return classificacao;
-    }
+	public String getCutter() {
+		return cutter;
+	}
 
-    public void setClassificacao(String classificacao) {
-	this.classificacao = classificacao;
-    }
+	public void setCutter(String cutter) {
+		this.cutter = cutter;
+	}
 
-    public String getCutter() {
-	return cutter;
-    }
+	public String getSerie() {
+		return serie;
+	}
 
-    public void setCutter(String cutter) {
-	this.cutter = cutter;
-    }
+	public void setSerie(String serie) {
+		this.serie = serie;
+	}
 }
