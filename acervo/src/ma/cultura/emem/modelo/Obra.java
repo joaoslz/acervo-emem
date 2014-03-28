@@ -22,6 +22,8 @@ import javax.persistence.TemporalType;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Obra implements Serializable {
 
+	private static final long serialVersionUID = 3049612542392248546L;
+
 	@Id
 	@GeneratedValue
 	private Integer id;
@@ -30,10 +32,14 @@ public class Obra implements Serializable {
 	private String subtitulo;
 	private short ano;
 	private short numPaginas;
+	private short edicao;
 	private boolean ehIlustrado;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dataCadastro = Calendar.getInstance();
+
+	@ManyToOne
+	private Idioma idioma;
 
 	@ManyToMany
 	private List<Autor> autores;
@@ -43,7 +49,7 @@ public class Obra implements Serializable {
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Assunto> assuntos;
 
-	@OneToMany(mappedBy = "obra", cascade=CascadeType.PERSIST)
+	@OneToMany(mappedBy = "obra", cascade = CascadeType.PERSIST)
 	private List<Exemplar> exemplares;
 
 	@ManyToOne
@@ -153,10 +159,18 @@ public class Obra implements Serializable {
 	public void setEhIlustrado(boolean ehIlustrado) {
 		this.ehIlustrado = ehIlustrado;
 	}
-	
-	public void adicionarExemplar(Exemplar exemplar){
-	    if(exemplares == null)
-		exemplares = new ArrayList<Exemplar>();
-	    exemplares.add(exemplar);
+
+	public void adicionarExemplar(Exemplar exemplar) {
+		if (exemplares == null)
+			exemplares = new ArrayList<Exemplar>();
+		exemplares.add(exemplar);
+	}
+
+	public short getEdicao() {
+		return edicao;
+	}
+
+	public void setEdicao(short edicao) {
+		this.edicao = edicao;
 	}
 }
