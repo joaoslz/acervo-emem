@@ -165,6 +165,12 @@ public class Obra implements Serializable {
 			exemplares = new ArrayList<Exemplar>();
 		exemplares.add(exemplar);
 	}
+	
+	public void adicionarAssunto(Assunto assunto){
+	    if(assuntos == null)
+		assuntos = new ArrayList<Assunto>();
+	    assuntos.add(assunto);
+	}
 
 	public short getEdicao() {
 		return edicao;
@@ -172,5 +178,9 @@ public class Obra implements Serializable {
 
 	public void setEdicao(short edicao) {
 		this.edicao = edicao;
+	}
+	
+	public boolean isIdNull(){
+	    return id == null || id.intValue() == 0;
 	}
 }

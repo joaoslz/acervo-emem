@@ -1,10 +1,14 @@
 package ma.cultura.emem.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.AjaxBehaviorEvent;
+
+import org.primefaces.component.inputtext.InputText;
 
 import ma.cultura.emem.dao.AssuntoDAO;
 import ma.cultura.emem.dao.AutorDAO;
@@ -24,62 +28,161 @@ import ma.cultura.emem.modelo.Local;
 @ViewScoped
 public class LivroBean implements Serializable {
 
-	private Livro livro = new Livro();
-	private Exemplar exemplar = new Exemplar();
+    // Campos para pesquisa
+    private String tituloFilter;
+    private String isbnFilter;
+    //
+    private Livro livro = new Livro();
+    private Editora editoraAdd = new Editora();
+    private Local localAdd = new Local();
+    private Assunto assuntoAdd = new Assunto();
+    private Autor autorAdd = new Autor();
+    private Exemplar exemplar = new Exemplar();
+    private List<Livro> livros = new ArrayList<Livro>();
 
-	public void adicionarExemplar() {
-		livro.adicionarExemplar(exemplar);
-		exemplar = new Exemplar();
-	}
+    public void adicionarExemplar() {
+	livro.adicionarExemplar(exemplar);
+	exemplar = new Exemplar();
+    }
 
-	public String gravar() {
-		System.out.println("Gravando livro " + livro.getTitulo());
-		System.out.println("....:::::>>>autores: " + livro.getAutores());
-		System.out.println("....:::::>>>assuntos: " + livro.getAssuntos());
-		new LivroDAO().adicionar(livro);
-		livro = new Livro();
-		// FacesContext.getCurrentInstance().addMessage(null, new
-		// FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome"));
-		return "livro?faces-redirect=true";
-	}
+    public String pesquisar() {
+	System.out.println("*****..." + tituloFilter);
+	return "livro";
+    }
 
-	public List<Livro> getListaLivros() {
-		return new LivroDAO().listarLivros();
-	}
+    public void gravarAutor() {
+	AutorDAO dao = new AutorDAO();
+	dao.adicionar(autorAdd);
+	livro.adicionarAutor(autorAdd);
+	autorAdd = new Autor();
+    }
 
-	public List<Editora> likeEditoraByNome(String nome) {
-		return new EditoraDAO().likeByNome(nome);
-	}
+    public void gravarAssunto() {
+	AssuntoDAO dao = new AssuntoDAO();
+	dao.adicionar(assuntoAdd);
+	livro.adicionarAssunto(assuntoAdd);
+	assuntoAdd = new Assunto();
+    }
 
-	public List<Local> likeLocalByNome(String nome) {
-		return new LocalDAO().likeByNome(nome);
-	}
+    public void gravarLocal() {
+	LocalDAO dao = new LocalDAO();
+	dao.adicionar(localAdd);
+	livro.setLocal(localAdd);
+	localAdd = new Local();
+    }
 
-	public List<Autor> likeAutorByNome(String nome) {
-		return new AutorDAO().likeByNome(nome);
-	}
+    public void gravarEditora() {
+	EditoraDAO dao = new EditoraDAO();
+	dao.adicionar(editoraAdd);
+	livro.setEditora(editoraAdd);
+	editoraAdd = new Editora();
+    }
 
-	public List<Assunto> likeAssuntoByNome(String nome) {
-		return new AssuntoDAO().likeByNome(nome);
+    public String gravar() {
+	if (!livro.isIdNull()){
+	    livros.clear();
+	    livros.add(livro);//adiciona na tabela o livro editado.
+	}else{
+	    livros.add(livros.size(), livro);//adiciona no fim daa tabela o livro.
 	}
+	new LivroDAO().merge(livro);
 
-	public Livro getLivro() {
-		return livro;
-	}
+	return "livro";
+    }
 
-	public void setLivro(Livro livro) {
-		this.livro = livro;
-	}
+    public List<Livro> getListaLivros() {
+	System.out.println("oaaaaaaaaaaa" + tituloFilter);
 
-	public Exemplar getExemplar() {
-		return exemplar;
-	}
+	if (isbnFilter != null && isbnFilter.length() > 0)
+	    livros = new LivroDAO().likeByISBN(isbnFilter);
+	else if (tituloFilter != null && tituloFilter.length() > 0)
+	    livros = new LivroDAO().likeByTitulo(tituloFilter);
+	else if(livros.isEmpty())
+	    livros = new LivroDAO().listarLivros();
+	return livros;
+    }
 
-	public void setExemplar(Exemplar exemplar) {
-		this.exemplar = exemplar;
-	}
+    public List<Editora> likeEditoraByNome(String nome) {
+	return new EditoraDAO().likeByNome(nome);
+    }
 
-	public List<Idioma> getIdiomas() {
-		return new DAO<Idioma>(Idioma.class).listaTodos();
-	}
+    public List<Local> likeLocalByNome(String nome) {
+	return new LocalDAO().likeByNome(nome);
+    }
+
+    public List<Autor> likeAutorByNome(String nome) {
+	return new AutorDAO().likeByNome(nome);
+    }
+
+    public List<Assunto> likeAssuntoByNome(String nome) {
+	return new AssuntoDAO().likeByNome(nome);
+    }
+
+    public Livro getLivro() {
+	return livro;
+    }
+
+    public void setLivro(Livro livro) {
+	this.livro = livro;
+    }
+
+    public Exemplar getExemplar() {
+	return exemplar;
+    }
+
+    public void setExemplar(Exemplar exemplar) {
+	this.exemplar = exemplar;
+    }
+
+    public List<Idioma> getIdiomas() {
+	return new DAO<Idioma>(Idioma.class).listaTodos();
+    }
+
+    public Editora getEditoraAdd() {
+	return editoraAdd;
+    }
+
+    public void setEditoraAdd(Editora editoraAdd) {
+	this.editoraAdd = editoraAdd;
+    }
+
+    public Local getLocalAdd() {
+	return localAdd;
+    }
+
+    public void setLocalAdd(Local localAdd) {
+	this.localAdd = localAdd;
+    }
+
+    public Assunto getAssuntoAdd() {
+	return assuntoAdd;
+    }
+
+    public void setAssuntoAdd(Assunto assuntoAdd) {
+	this.assuntoAdd = assuntoAdd;
+    }
+
+    public Autor getAutorAdd() {
+	return autorAdd;
+    }
+
+    public void setAutorAdd(Autor autorAdd) {
+	this.autorAdd = autorAdd;
+    }
+
+    public String getTituloFilter() {
+	return tituloFilter;
+    }
+
+    public void setTituloFilter(String tituloFilter) {
+	this.tituloFilter = tituloFilter;
+    }
+
+    public String getIsbnFilter() {
+	return isbnFilter;
+    }
+
+    public void setIsbnFilter(String isbnFilter) {
+	this.isbnFilter = isbnFilter;
+    }
 }

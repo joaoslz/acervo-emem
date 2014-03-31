@@ -4,6 +4,11 @@
     src: local("Yanone Kaffeesatz"), url('../fonts/YanoneKaffeesatz-Regular.ttf'); 
 } 
 
+/*elimina o header dos datatable*/
+.hide-column-names table thead tr {
+    display: none;
+}
+
 html { 
   height: 100%;
 }

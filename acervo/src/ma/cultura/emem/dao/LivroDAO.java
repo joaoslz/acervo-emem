@@ -16,7 +16,7 @@ public class LivroDAO extends DAO<Livro> {
 	super(Livro.class);
     }
     
-    public void adicionar(Livro l) {
+    public void merge(Livro l) {
 	EntityManager em = JPAUtil.getInstance().getEntityManager();
 	em.getTransaction().begin();
 	//FIXME recupera novamente os autores do banco para que o JPA possa reconhece-los como entidades gerenciaveis.
@@ -38,7 +38,7 @@ public class LivroDAO extends DAO<Livro> {
 	}
 	l.setAssuntos(assuntos);
 	
-	em.persist(l);
+	em.merge(l);
 	em.getTransaction().commit();
 	em.close();
     }
@@ -49,7 +49,36 @@ public class LivroDAO extends DAO<Livro> {
 
 	EntityManager em = JPAUtil.getInstance().getEntityManager();
 	TypedQuery<Livro> query = em.createQuery(consulta, Livro.class);
-	query.setMaxResults(7);
+	query.setMaxResults(5);
+	List<Livro> listaObras = query.getResultList();
+
+	em.close();
+
+	return listaObras;
+    }
+
+    public List<Livro> likeByISBN(String isbn){
+
+	String consulta = "select distinct l from Livro l left join fetch l.autores where l.isbn like :isbn order by l.id desc";
+
+	EntityManager em = JPAUtil.getInstance().getEntityManager();
+	TypedQuery<Livro> query = em.createQuery(consulta, Livro.class);
+	query.setMaxResults(5);
+	query.setParameter("isbn", "%"+isbn+"%");
+	List<Livro> listaObras = query.getResultList();
+
+	em.close();
+
+	return listaObras;
+    }
+    public List<Livro> likeByTitulo(String titulo){
+
+	String consulta = "select distinct l from Livro l left join fetch l.autores where l.titulo like :titulo order by l.id desc";
+
+	EntityManager em = JPAUtil.getInstance().getEntityManager();
+	TypedQuery<Livro> query = em.createQuery(consulta, Livro.class);
+	query.setMaxResults(5);
+	query.setParameter("titulo", "%"+titulo+"%");
 	List<Livro> listaObras = query.getResultList();
 
 	em.close();

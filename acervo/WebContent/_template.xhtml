@@ -16,18 +16,7 @@
 
 <h:body>
 	<div id="main">
-		<header>
-			<div id="logo">
-				<div id="logo_text">
-					<!-- class="logo_colour", allows you to change the colour of the text -->
-					<h1>
-						<a href="index.html">Secretaria de Cultura <span
-							class="logo_colour"> - EMEM</span></a>
-					</h1>
-					<h2>Escola de Música do Estado do Maranhão</h2>
-				</div>
-			</div>
-		</header>
+		
 		<h:form>
 			<p:menubar>
 				<p:submenu label="Cadastros">
@@ -39,17 +28,6 @@
 				</p:submenu>
 			</p:menubar>
 		</h:form>
-
-		<div id="cabecalho">
-			<p:themeSwitcher value="#{temaBean.tema}"
-				style="position: absolute; right: 10px;">
-				<f:selectItems value="#{temaBean.temas}" />
-				<f:ajax />
-			</p:themeSwitcher>
-			<h1>
-				<ui:insert name="titulo"></ui:insert>
-			</h1>
-		</div>
 
 		<div id="conteudo">
 			<ui:insert name="conteudo"></ui:insert>

@@ -50,4 +50,9 @@ public class Livro extends Obra {
 	public void setSerie(String serie) {
 		this.serie = serie;
 	}
+
+	@Override
+	public String toString() {
+	    return super.getTitulo();
+	}
 }
