@@ -14,48 +14,56 @@ import javax.persistence.TemporalType;
 @Entity
 public class Exemplar implements Serializable {
 
-	@Id
-	@GeneratedValue
-	private int id;
-	private boolean ehDoacao;
-	@Temporal(TemporalType.DATE)
-	private Calendar dataAquisicao;
+    @Id
+    @GeneratedValue
+    private int id;
+    private boolean ehDoacao;
+    @Temporal(TemporalType.DATE)
+    private Calendar dataAquisicao;
 
-	@Column(columnDefinition = "text")
-	private String observacao;
+    @Column(columnDefinition = "text")
+    private String observacao;
 
-	@ManyToOne
-	private Obra obra;
+    @ManyToOne
+    private Obra obra;
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+	return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+	this.id = id;
+    }
 
-	public boolean isEhDoacao() {
-		return ehDoacao;
-	}
+    public boolean isEhDoacao() {
+	return ehDoacao;
+    }
 
-	public void setEhDoacao(boolean ehDoacao) {
-		this.ehDoacao = ehDoacao;
-	}
+    public void setEhDoacao(boolean ehDoacao) {
+	this.ehDoacao = ehDoacao;
+    }
 
-	public Obra getObra() {
-		return obra;
-	}
+    public Obra getObra() {
+	return obra;
+    }
 
-	public void setObra(Obra obra) {
-		this.obra = obra;
-	}
+    public void setObra(Obra obra) {
+	this.obra = obra;
+    }
 
-	public String getObservacao() {
-		return observacao;
-	}
+    public String getObservacao() {
+	return observacao;
+    }
 
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
-	}
+    public void setObservacao(String observacao) {
+	this.observacao = observacao;
+    }
+
+    public Calendar getDataAquisicao() {
+        return dataAquisicao;
+    }
+
+    public void setDataAquisicao(Calendar dataAquisicao) {
+        this.dataAquisicao = dataAquisicao;
+    }
 }

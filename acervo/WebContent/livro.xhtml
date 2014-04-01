@@ -77,20 +77,20 @@
 
 				<p:column>
 					<h:form>
-						<p:commandButton id="selectEditButton" icon="ui-icon-pencil"
-							title="Alterar" oncomplete="dlgNovoLivro.show()"
-							update="@form :formLivro">
-							<f:setPropertyActionListener value="#{livro}"
-								target="#{livroBean.livro}" />
+						<p:commandButton icon="ui-icon-pencil"
+							title="Alterar" oncomplete="dlgNovoLivro.show()" update="@form :formLivro">
+							<f:setPropertyActionListener value="#{livro}" target="#{livroBean.livro}" />
 						</p:commandButton>
-						<p:commandButton id="selectButton" icon="ui-icon-tag" title="Exemplares">
-							<f:setPropertyActionListener value="#{livro}"
-								target="#{livroBean.livro}" />
+						<p:commandButton icon="ui-icon-tag"
+							title="Alterar" oncomplete="dlgExemplares.show()" update="@form :formExemplares :tabelaExemplares">
+							<f:setPropertyActionListener value="#{livro}" target="#{livroBean.livro}" />
 						</p:commandButton>
 					</h:form>
 				</p:column>
 			</p:dataTable>
 		</p:fieldset>
+
+
 
 <!-- ............................................................................................................... -->
 		<p:dialog header="Cadastro de Editora" widgetVar="dlgNovaEditora" resizable="false">
@@ -163,7 +163,53 @@
 				</p:fieldset>
 			</h:form>
 		</p:dialog>	
-<!-- ............................................................................................................... -->		
+		
+		
+<!-- ............................................................................................................... -->
+		<p:dialog header="Cadastro de Exemplares" widgetVar="dlgExemplares" resizable="false">
+			
+				
+			<h:form id="formExemplares">
+					<h:outputText value="Título: " />
+					<h:outputText value="#{livroBean.livro.titulo}" />
+					<br/>
+					<h:outputText value="ISBN: " />
+					<h:outputText value="#{livroBean.livro.isbn}" />
+				
+				<p:panelGrid columns="2">
+					<f:facet name="header"> Dados do Exemplar</f:facet>
+					<h:outputText value="Quantidade: " />
+					<p:spinner value="#{livroBean.quantidade}" max="300" min="1"/>
+					<h:outputText value="Data de Aquisição: " />
+					<p:calendar value="#{livroBean.dataAquisicao}" />
+					<h:outputText value="É Doaçao? " />
+					<p:selectBooleanCheckbox value="#{livroBean.ehDoacao}" />
+					<p:commandButton value="Cadastrar Exemplares"
+						action="#{livroBean.cadastrarExemplares}" update="@form :tabelaExemplares"/>
+				</p:panelGrid>
+
+			</h:form>
+				<p:dataTable id="tabelaExemplares"
+					value="#{livroBean.exemplares}" var="exemplar"
+					emptyMessage="Nenhum Exemplar cadastrado">
+					<f:facet name="header"> Exemplares Cadastrados </f:facet>
+					<p:column>
+						<f:facet name="header">ID</f:facet>
+						<h:outputText value="#{exemplar.id}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">É Doação</f:facet>
+						<h:selectBooleanCheckbox value="#{exemplar.ehDoacao}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">Data de Aquisição</f:facet>
+						<h:outputText value="#{exemplar.dataAquisicao.time}" >
+							<f:convertDateTime pattern="DD/MM/YYYY"  />
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+		</p:dialog>
+		<!-- ............................................................................................................... -->		
 		<p:dialog header="Cadastro de Livro" widgetVar="dlgNovoLivro"
 			resizable="false" closeOnEscape="true" >
 			<h:form id="formLivro">
@@ -257,12 +303,12 @@
 					<p:commandButton value="Atualizar Dados"
 						action="#{livroBean.gravar}" oncomplete="dlgNovoLivro.hide();"
 						process="@form" update="@form :tabelaLivros"
-						rendered="#{!livroBean.livro.idNull}" />
+						rendered="#{not empty livroBean.livro.id}" />
 
 					<p:commandButton value="Cadastrar Livro"
 						action="#{livroBean.gravar}" oncomplete="dlgNovoLivro.hide();"
 						process="@form" update="@form :tabelaLivros"
-						rendered="#{livroBean.livro.idNull}" />
+						rendered="#{empty livroBean.livro.id}" />
 				</p:fieldset>
 			</h:form>
 		</p:dialog>

@@ -2,18 +2,19 @@ package ma.cultura.emem.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.AjaxBehaviorEvent;
-
-import org.primefaces.component.inputtext.InputText;
 
 import ma.cultura.emem.dao.AssuntoDAO;
 import ma.cultura.emem.dao.AutorDAO;
 import ma.cultura.emem.dao.DAO;
 import ma.cultura.emem.dao.EditoraDAO;
+import ma.cultura.emem.dao.ExemplarDAO;
 import ma.cultura.emem.dao.LivroDAO;
 import ma.cultura.emem.dao.LocalDAO;
 import ma.cultura.emem.modelo.Assunto;
@@ -31,7 +32,12 @@ public class LivroBean implements Serializable {
     // Campos para pesquisa
     private String tituloFilter;
     private String isbnFilter;
-    //
+    //Campos para cadastro de Exemplar
+
+    private int quantidade;
+    private boolean ehDoacao;
+    private Date dataAquisicao;
+//    -------------------------------------------------
     private Livro livro = new Livro();
     private Editora editoraAdd = new Editora();
     private Local localAdd = new Local();
@@ -40,9 +46,27 @@ public class LivroBean implements Serializable {
     private Exemplar exemplar = new Exemplar();
     private List<Livro> livros = new ArrayList<Livro>();
 
-    public void adicionarExemplar() {
-	livro.adicionarExemplar(exemplar);
-	exemplar = new Exemplar();
+    public List<Exemplar> getExemplares(){
+	return new ExemplarDAO().listarExemplaresByLivroId(livro.getId());
+    }
+    
+    public void cadastrarExemplares(){
+	System.out.println("iiidddd livroooo: " + livro.getId());
+	System.out.println("mmmmmmmmmmmmnnnnnnnnn"+quantidade);
+	List<Exemplar> exemplares = new ArrayList<Exemplar>();
+	for(int i = 0; i < quantidade; i++){
+	    Exemplar exemplar = new Exemplar();
+	    exemplar.setObra(livro);
+	    exemplar.setEhDoacao(ehDoacao);
+	    Calendar c = GregorianCalendar.getInstance();
+	    c.setTime(dataAquisicao);
+	    exemplar.setDataAquisicao(c);
+	    exemplares.add(exemplar);
+	}
+	new ExemplarDAO().cadastrarExemplares(exemplares);
+	ehDoacao = false;
+	dataAquisicao = null;
+	quantidade = 0;
     }
 
     public String pesquisar() {
@@ -184,5 +208,29 @@ public class LivroBean implements Serializable {
 
     public void setIsbnFilter(String isbnFilter) {
 	this.isbnFilter = isbnFilter;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public boolean isEhDoacao() {
+        return ehDoacao;
+    }
+
+    public void setEhDoacao(boolean ehDoacao) {
+        this.ehDoacao = ehDoacao;
+    }
+
+    public Date getDataAquisicao() {
+        return dataAquisicao;
+    }
+
+    public void setDataAquisicao(Date dataAquisicao) {
+        this.dataAquisicao = dataAquisicao;
     }
 }

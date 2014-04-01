@@ -16,6 +16,15 @@ public class LivroDAO extends DAO<Livro> {
 	super(Livro.class);
     }
     
+    public Livro buscarLivroFetchExemplares(Integer id){
+	EntityManager em = JPAUtil.getInstance().getEntityManager();
+	TypedQuery<Livro> query = em.createQuery("from Livro l left join fetch l.exemplares e where livro.id = :id", Livro.class);
+	query.setParameter("id", id);
+	Livro livro = query.getSingleResult();
+	em.close();
+	return livro;
+    }
+    
     public void merge(Livro l) {
 	EntityManager em = JPAUtil.getInstance().getEntityManager();
 	em.getTransaction().begin();
