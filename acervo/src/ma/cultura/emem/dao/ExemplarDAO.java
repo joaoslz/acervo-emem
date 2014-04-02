@@ -13,6 +13,14 @@ public class ExemplarDAO extends DAO<Exemplar> {
 	super(Exemplar.class);
     }
     
+    public void merge(Exemplar exemplar){
+	EntityManager em = JPAUtil.getInstance().getEntityManager();
+	em.getTransaction().begin();
+	em.merge(exemplar);
+	em.getTransaction().commit();
+	em.close();
+    }
+    
     public void cadastrarExemplares(List<Exemplar> exemplares){
 	EntityManager em = JPAUtil.getInstance().getEntityManager();
 	em.getTransaction().begin();

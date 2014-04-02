@@ -26,6 +26,7 @@ import ma.cultura.emem.modelo.Livro;
 import ma.cultura.emem.modelo.Local;
 
 import org.primefaces.event.CloseEvent;
+import org.primefaces.event.RowEditEvent;
 
 @ManagedBean
 @ViewScoped
@@ -39,6 +40,7 @@ public class LivroBean implements Serializable {
     private int quantidade;
     private boolean ehDoacao;
     private Date dataAquisicao;
+    private List<Exemplar> exemplares = new ArrayList<Exemplar>();
     
 //  POJO para os cadastros auxiliares
     private Editora editoraAdd = new Editora();
@@ -52,15 +54,29 @@ public class LivroBean implements Serializable {
 //  livros para o datatable.   
     private List<Livro> livros = new ArrayList<Livro>();
 
+    
+    public List<Exemplar> getExemplares(){
+	return exemplares;
+    }
+    
+    public void updateListaExemplares(){
+	exemplares = new ExemplarDAO().listarExemplaresByLivroId(livro.getId());
+    }
+    
+    /**
+     * Método para editar o exemplar direto da tabela.
+     * @param event
+     */
+    public void editExempar(RowEditEvent event) {  
+	Exemplar e = (Exemplar) event.getObject(); 
+	new ExemplarDAO().merge(e);
+    }  
+    
     /**
      * Método para limpar o formulário de cadastro de livro no momento da abertura.
      */
     public void novoLivroOnClose(CloseEvent event){
 	livro = new Livro();
-    }
-    
-    public List<Exemplar> getExemplares(){
-	return new ExemplarDAO().listarExemplaresByLivroId(livro.getId());
     }
     
     public void cadastrarExemplares(){
@@ -78,6 +94,7 @@ public class LivroBean implements Serializable {
 	ehDoacao = false;
 	dataAquisicao = null;
 	quantidade = 0;
+	updateListaExemplares();
     }
 
     public void gravarAutor() {

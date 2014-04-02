@@ -9,6 +9,7 @@
 <ui:composition template="_template.xhtml">
 
 	<ui:define name="conteudo">
+		<!--PESQUISA DE LIVROS........................................................................................ -->
 		<p:fieldset>
 
 			<h:form id="formPesquisa">
@@ -76,8 +77,8 @@
 							<f:setPropertyActionListener value="#{livro}" target="#{livroBean.livro}" />
 						</p:commandButton>
 						<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
-							oncomplete="dlgExemplares.show()"
-							update="@form :formExemplares :tabelaExemplares">
+							oncomplete="dlgExemplares.show()" action="#{livroBean.updateListaExemplares}"
+							update="@form :formExemplares :formExemplares">
 							<f:setPropertyActionListener value="#{livro}" target="#{livroBean.livro}" />
 						</p:commandButton>
 					</h:form>
@@ -171,44 +172,75 @@
 		<!-- DIALOG EXEMPLARES...................................................................................... -->
 		<p:dialog header="Cadastro de Exemplares" widgetVar="dlgExemplares" resizable="false">
 			<h:form id="formExemplares">
-				<h:outputText value="Título: " />
+										
+				<b><h:outputText value="Título: " /></b>
 				<h:outputText value="#{livroBean.livro.titulo}" />
 				<br />
-				<h:outputText value="ISBN: " />
+				<b><h:outputText value="ISBN: " /></b>
 				<h:outputText value="#{livroBean.livro.isbn}" />
 
 				<p:panelGrid columns="2">
 					<f:facet name="header"> Dados do Exemplar</f:facet>
 					<h:outputText value="Quantidade: " />
 					<p:spinner value="#{livroBean.quantidade}" max="300" min="1" />
-					<h:outputText value="Data de Aquisição: " />
+					<h:outputText value="Data de Aquisição: *" />
 					<p:calendar value="#{livroBean.dataAquisicao}" required="true" />
 					<h:outputText value="É Doaçao? " />
 					<p:selectBooleanCheckbox value="#{livroBean.ehDoacao}" />
 					<p:commandButton value="Cadastrar Exemplares"
 						action="#{livroBean.cadastrarExemplares}"
-						update="@form :tabelaExemplares" />
+						update="@form :formExemplares:tabelaExemplares" />
 				</p:panelGrid>
+			
+				<p:dataTable id="tabelaExemplares" value="#{livroBean.exemplares}"
+					var="exemplar" emptyMessage="Nenhum Exemplar cadastrado" editable="true">
+					<f:facet name="header"> Exemplares Cadastrados </f:facet>
+	        		<p:ajax event="rowEdit" listener="#{livroBean.editExempar}" update=":formExemplares:tabelaExemplares"/>
+					<p:column>
+						<f:facet name="header">ID</f:facet>
+						<h:outputText value="#{exemplar.id}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">É Doação</f:facet>
+          			  	<p:cellEditor>
+		               		<f:facet name="output">
+								<h:outputText rendered="#{exemplar.ehDoacao}" value="Sim" />
+								<h:outputText rendered="#{!exemplar.ehDoacao}" value="Não" />
+		               		</f:facet>
+		               		<f:facet name="input">
+		               			<p:selectBooleanCheckbox value="#{exemplar.ehDoacao}"/>
+		               		</f:facet>
+	               		</p:cellEditor>
+					</p:column>
+					<p:column>
+						<f:facet name="header">Data de Aquisição</f:facet>
+          			  	<p:cellEditor>
+		               		<f:facet name="output">
+								<h:outputText value="#{exemplar.dataAquisicao.time}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+		               		</f:facet>
+		               		<f:facet name="input">
+		               			<p:calendar value="#{exemplar.dataAquisicao.time}" pattern="dd/MM/yyyy"/>
+		               		</f:facet>
+	               		</p:cellEditor>
+					</p:column>
+					<p:column>
+						<f:facet name="header">Observação</f:facet>
+          			  	<p:cellEditor>
+		               		<f:facet name="output">
+		               			<h:outputText value="#{exemplar.observacao}" />
+		               		</f:facet>
+		               		<f:facet name="input">
+		               			<p:inputText value="#{exemplar.observacao}" />
+		               		</f:facet>
+	               		</p:cellEditor>
+					</p:column>
+			        <p:column>
+			            <p:rowEditor />
+			        </p:column>
+				</p:dataTable>
 			</h:form>
-			<p:dataTable id="tabelaExemplares" value="#{livroBean.exemplares}"
-				var="exemplar" emptyMessage="Nenhum Exemplar cadastrado">
-				<f:facet name="header"> Exemplares Cadastrados </f:facet>
-				<p:column>
-					<f:facet name="header">ID</f:facet>
-					<h:outputText value="#{exemplar.id}" />
-				</p:column>
-				<p:column>
-					<f:facet name="header">É Doação</f:facet>
-					<h:outputText rendered="#{exemplar.ehDoacao}" value="Sim" />
-					<h:outputText rendered="#{!exemplar.ehDoacao}" value="Não" />
-				</p:column>
-				<p:column>
-					<f:facet name="header">Data de Aquisição</f:facet>
-					<h:outputText value="#{exemplar.dataAquisicao.time}">
-						<f:convertDateTime pattern="DD/MM/YYYY" />
-					</h:outputText>
-				</p:column>
-			</p:dataTable>
 		</p:dialog>
 		
 		
@@ -221,12 +253,11 @@
 	        		<!-- ....LIMPA O FORMULARIO AO FECHAR A CAIXA DE DIALOGO.... -->
 	        		<p:ajax event="close" update=":formLivro" listener="#{livroBean.novoLivroOnClose}"/>  
 					
-					<!-- .............CÓDIGO PARA EXIVIR TEMPORIZADOR DO AJAX..................................... -->
+					<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
 					<p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
 						<f:facet name="start">
 							<h:graphicImage value="/images/ajaxloading.gif" />
 						</f:facet>
-	
 						<f:facet name="complete">
 							<h:outputText value="" />
 						</f:facet>
@@ -246,8 +277,7 @@
 							<p:inputText id="subtitulo" value="#{livroBean.livro.subtitulo}" />
 	
 							<p:outputLabel value="ISBN:" for="isbn" />
-							<p:inputMask id="isbn" value="#{livroBean.livro.isbn}"
-								mask="999-99-9999-999-9" />
+							<p:inputMask id="isbn" value="#{livroBean.livro.isbn}" mask="999-99-9999-999-9" />
 	
 							<p:outputLabel value="Cutter:" for="cutter" />
 							<p:inputText id="cutter" value="#{livroBean.livro.cutter}" validatorMessage="Cutter não pode ser superio a 5 caracteres" >
@@ -260,7 +290,6 @@
 							<p:outputLabel value="Série:" for="serie" />
 							<p:inputText id="serie" value="#{livroBean.livro.serie}" />
 	
-	
 							<p:outputLabel value="Ano:" for="ano" />
 							<p:inputText id="ano" value="#{livroBean.livro.ano}" />
 	
@@ -268,8 +297,7 @@
 							<p:inputText id="numPaginas" value="#{livroBean.livro.numPaginas}" />
 	
 							<p:outputLabel value="Classificação:" for="classificacao" />
-							<p:inputText id="classificacao"
-								value="#{livroBean.livro.classificacao}" />
+							<p:inputText id="classificacao" value="#{livroBean.livro.classificacao}" />
 	
 							<p:outputLabel value="Editora:" for="editora" />
 							<p:column>
