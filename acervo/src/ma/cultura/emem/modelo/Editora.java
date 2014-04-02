@@ -1,5 +1,6 @@
 package ma.cultura.emem.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Editora {
+public class Editora implements Serializable{
 
-    @Id
+	private static final long serialVersionUID = -8643309639406399619L;
+
+	@Id
     @GeneratedValue
     private int id;
 
