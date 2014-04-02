@@ -26,20 +26,13 @@ public class AutorBean implements Serializable {
 	}
 
 	public void gravar() {
-		System.out.println("Gravando autor " + this.autor.getNome());
 		new DAO<Autor>(Autor.class).adicionar(this.autor);
 		this.autor = new Autor();
 	}
 
-	// public List<Autor> getListaAutores() {
-	// return new DAO<Autor>(Autor.class).listaTodos();
-	// }
 
 	public List<Autor> getListaAutoresPorIdEmOrdemDec() {
 		return new AutorDAO().listarAutoresPorIdEmOrdemDec();
 	}
 
-	public void gravar(ActionEvent actionEvent) {
-		RequestContext.getCurrentInstance();
-	}
 }
