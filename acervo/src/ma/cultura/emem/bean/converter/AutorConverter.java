@@ -1,4 +1,4 @@
-package ma.cultura.emem.bean;
+package ma.cultura.emem.bean.converter;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;

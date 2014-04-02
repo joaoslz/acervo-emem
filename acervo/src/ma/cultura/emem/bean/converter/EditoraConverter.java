@@ -1,4 +1,4 @@
-package ma.cultura.emem.bean;
+package ma.cultura.emem.bean.converter;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -7,23 +7,24 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
-import ma.cultura.emem.dao.AssuntoDAO;
-import ma.cultura.emem.modelo.Assunto;
+import ma.cultura.emem.dao.EditoraDAO;
+import ma.cultura.emem.modelo.Editora;
 
-@FacesConverter(value="assuntoConverter")
-public class AssuntoConverter implements Converter {
+@FacesConverter(value="editoraConverter")
+public class EditoraConverter implements Converter {
     
+    private EditoraDAO editoraDAO = new EditoraDAO();
+
     public Object getAsObject(FacesContext facesContext, UIComponent component, String id) {
         if (id.trim().equals("")) {
             return null;
         } else {
             try {
-                System.out.println(">>>>>>>>>>>>>>>>>>>>IDASSUNTO: " + id);
-                Assunto assunto = new AssuntoDAO().buscaPorId(Integer.valueOf(id));
-                System.out.println(">>>>>>>>>>>>>>>>>>>>assunto: " + assunto);
-                return assunto;
+                Editora editora = editoraDAO.buscaPorId(Integer.valueOf(id));
+                return editora;
+
             } catch(NumberFormatException exception) {
-                throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversão", "Assunto Inválido"));
+                throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversão", "Editora Inválida"));
             }
         }
     }
@@ -32,7 +33,7 @@ public class AssuntoConverter implements Converter {
         if (value == null || value.equals("")) {
             return "";
         } else {
-            return String.valueOf(((Assunto) value).getId());
+            return String.valueOf(((Editora) value).getId());
         }
     }
 }          
