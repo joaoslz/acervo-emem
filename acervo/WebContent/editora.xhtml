@@ -3,17 +3,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" >
 
 <ui:composition template="_template.xhtml">
-	<ui:define 
-		name="titulo">Nova Editora
-	</ui:define>
+	<ui:define name="titulo">Nova Editora </ui:define>
 	<ui:define name="conteudo">
 		<h:form>
 			<p:fieldset>
 				<legend>Dados da Editora</legend>
 				<h:panelGrid columns="2">
+				
 					<p:outputLabel value="Nome:" for="nome" />
 					<p:inputText id="nome" value="#{editoraBean.editora.nome}" 
 					 required="true" requiredMessage="Campo nome deve ser digitado"/>
@@ -21,11 +21,26 @@
 					<p:outputLabel value="Site:" for="site" />
 					<p:inputText id="site" value="#{editoraBean.editora.site}"  />
 					 
-					 
 					<p:commandButton value="Gravar" action="#{editoraBean.gravar}" />
 				</h:panelGrid>
 			</p:fieldset>
 		</h:form>
+		
+		<p:fieldset>
+			<p:outputLabel>Editoras Cadastradas</p:outputLabel>
+			<p:dataTable rows="10" paginator="true" paginatorPosition="bottom"
+				id="tabelaEditoras" value="#{editoraBean.editoras}" var="editora" 
+				emptyMessage="Nenhuma editora cadastrada">
+				<p:column>
+					<f:facet name="header">Nome</f:facet>
+					<h:outputText value="#{editora.nome}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">Site</f:facet>
+					<h:outputText value="#{editora.site}" />
+				</p:column>
+			</p:dataTable>
+		</p:fieldset>
 	</ui:define>
 </ui:composition>
 </html>
