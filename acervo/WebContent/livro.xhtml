@@ -254,7 +254,9 @@
 							mask="999-99-9999-999-9" />
 
 						<p:outputLabel value="Cutter:" for="cutter" />
-						<p:inputText id="cutter" value="#{livroBean.livro.cutter}" />
+						<p:inputText id="cutter" value="#{livroBean.livro.cutter}" validatorMessage="Cutter não pode ser superio a 5 caracteres" >
+							<f:validateLength maximum="5" />
+						</p:inputText>
 						
 						<p:outputLabel value="Edição:" for="edicao" />
 						<p:spinner id="edicao" value="#{livroBean.livro.edicao}" max="99" min="1" />
