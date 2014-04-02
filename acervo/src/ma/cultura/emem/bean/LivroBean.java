@@ -25,34 +25,45 @@ import ma.cultura.emem.modelo.Idioma;
 import ma.cultura.emem.modelo.Livro;
 import ma.cultura.emem.modelo.Local;
 
+import org.primefaces.event.CloseEvent;
+
 @ManagedBean
 @ViewScoped
 public class LivroBean implements Serializable {
 
-    // Campos para pesquisa
+//    Campos para pesquisa
     private String tituloFilter;
     private String isbnFilter;
-    //Campos para cadastro de Exemplar
-
+    
+//  Campos para cadastro de Exemplar
     private int quantidade;
     private boolean ehDoacao;
     private Date dataAquisicao;
-//    -------------------------------------------------
-    private Livro livro = new Livro();
+    
+//  POJO para os cadastros auxiliares
     private Editora editoraAdd = new Editora();
     private Local localAdd = new Local();
     private Assunto assuntoAdd = new Assunto();
     private Autor autorAdd = new Autor();
-    private Exemplar exemplar = new Exemplar();
+    
+// POJO para o cadastro de livro
+    private Livro livro = new Livro();
+    
+//  livros para o datatable.   
     private List<Livro> livros = new ArrayList<Livro>();
 
+    /**
+     * Método para limpar o formulário de cadastro de livro no momento da abertura.
+     */
+    public void novoLivroOnClose(CloseEvent event){
+	livro = new Livro();
+    }
+    
     public List<Exemplar> getExemplares(){
 	return new ExemplarDAO().listarExemplaresByLivroId(livro.getId());
     }
     
     public void cadastrarExemplares(){
-	System.out.println("iiidddd livroooo: " + livro.getId());
-	System.out.println("mmmmmmmmmmmmnnnnnnnnn"+quantidade);
 	List<Exemplar> exemplares = new ArrayList<Exemplar>();
 	for(int i = 0; i < quantidade; i++){
 	    Exemplar exemplar = new Exemplar();
@@ -67,11 +78,6 @@ public class LivroBean implements Serializable {
 	ehDoacao = false;
 	dataAquisicao = null;
 	quantidade = 0;
-    }
-
-    public String pesquisar() {
-	System.out.println("*****..." + tituloFilter);
-	return "livro";
     }
 
     public void gravarAutor() {
@@ -115,8 +121,6 @@ public class LivroBean implements Serializable {
     }
 
     public List<Livro> getListaLivros() {
-	System.out.println("oaaaaaaaaaaa" + tituloFilter);
-
 	if (isbnFilter != null && isbnFilter.length() > 0)
 	    livros = new LivroDAO().likeByISBN(isbnFilter);
 	else if (tituloFilter != null && tituloFilter.length() > 0)
@@ -126,19 +130,19 @@ public class LivroBean implements Serializable {
 	return livros;
     }
 
-    public List<Editora> likeEditoraByNome(String nome) {
+    public List<Editora> autocompleteEditoraByNome(String nome) {
 	return new EditoraDAO().likeByNome(nome);
     }
 
-    public List<Local> likeLocalByNome(String nome) {
+    public List<Local> autocompleteLocalByNome(String nome) {
 	return new LocalDAO().likeByNome(nome);
     }
 
-    public List<Autor> likeAutorByNome(String nome) {
+    public List<Autor> autocompleteAutorByNome(String nome) {
 	return new AutorDAO().likeByNome(nome);
     }
 
-    public List<Assunto> likeAssuntoByNome(String nome) {
+    public List<Assunto> autocompleteAssuntoByNome(String nome) {
 	return new AssuntoDAO().likeByNome(nome);
     }
 
@@ -148,14 +152,6 @@ public class LivroBean implements Serializable {
 
     public void setLivro(Livro livro) {
 	this.livro = livro;
-    }
-
-    public Exemplar getExemplar() {
-	return exemplar;
-    }
-
-    public void setExemplar(Exemplar exemplar) {
-	this.exemplar = exemplar;
     }
 
     public List<Idioma> getIdiomas() {
