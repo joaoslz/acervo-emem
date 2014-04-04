@@ -184,7 +184,7 @@
 					<h:outputText value="Quantidade: " />
 					<p:spinner value="#{livroBean.quantidade}" max="300" min="1" />
 					<h:outputText value="Data de Aquisição: *" />
-					<p:calendar value="#{livroBean.dataAquisicao}" required="true" />
+					<p:calendar value="#{livroBean.dataAquisicao}" />
 					<h:outputText value="É Doaçao? " />
 					<p:selectBooleanCheckbox value="#{livroBean.ehDoacao}" />
 					<p:commandButton value="Cadastrar Exemplares"
