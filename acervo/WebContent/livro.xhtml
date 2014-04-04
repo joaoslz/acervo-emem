@@ -20,7 +20,7 @@
 					<p:inputText value="#{livroBean.isbnFilter}" />
 					<p:commandButton icon="ui-icon-search" value="Pesquisar Livro"
 						process="@form" update="@form :tabelaLivros" />
-					<p:commandButton id="showAddLivroButton" type="button" 
+					<p:commandButton id="showAddLivroButton" type="button"
 						immediate="true" icon="ui-icon-plus" onclick="dlgNovoLivro.show()"
 						value="Adicionar Livro" >
 					</p:commandButton>
@@ -104,7 +104,7 @@
 						<p:commandButton value="Gravar"
 							action="#{livroBean.gravarEditora}"
 							oncomplete="dlgNovaEditora.hide();" process="@form"
-							update="@form :formLivro:panelGridLivro" />
+							update="@form :formLivro:editora" />
 					</h:panelGrid>
 				</p:fieldset>
 			</h:form>
@@ -123,7 +123,7 @@
 
 						<p:commandButton value="Gravar" action="#{livroBean.gravarLocal}"
 							oncomplete="dlgNovoLocal.hide();" process="@form"
-							update="@form :formLivro:panelGridLivro" />
+							update="@form :formLivro:local" />
 					</h:panelGrid>
 				</p:fieldset>
 			</h:form>
@@ -143,7 +143,7 @@
 						<p:commandButton value="Gravar"
 							action="#{livroBean.gravarAssunto}"
 							oncomplete="dlgNovoAssunto.hide();" process="@form"
-							update="@form :formLivro:panelGridLivro" />
+							update="@form :formLivro:assuntos" />
 					</h:panelGrid>
 				</p:fieldset>
 			</h:form>
@@ -162,7 +162,7 @@
 
 						<p:commandButton value="Gravar" action="#{livroBean.gravarAutor}"
 							oncomplete="dlgNovoAutor.hide();" process="@form"
-							update="@form :formLivro:panelGridLivro" />
+							update="@form :formLivro:autores" />
 					</h:panelGrid>
 				</p:fieldset>
 			</h:form>
@@ -170,8 +170,9 @@
 
 
 		<!-- DIALOG EXEMPLARES...................................................................................... -->
+		
 		<p:dialog header="Cadastro de Exemplares" widgetVar="dlgExemplares" resizable="false">
-			<h:form id="formExemplares">
+			<h:form id="formExemplares">	
 										
 				<b><h:outputText value="Título: " /></b>
 				<h:outputText value="#{livroBean.livro.titulo}" />
@@ -184,7 +185,7 @@
 					<h:outputText value="Quantidade: " />
 					<p:spinner value="#{livroBean.quantidade}" max="300" min="1" />
 					<h:outputText value="Data de Aquisição: *" />
-					<p:calendar value="#{livroBean.dataAquisicao}" required="true" />
+					<p:calendar value="#{livroBean.dataAquisicao}" />
 					<h:outputText value="É Doaçao? " />
 					<p:selectBooleanCheckbox value="#{livroBean.ehDoacao}" />
 					<p:commandButton value="Cadastrar Exemplares"
@@ -246,8 +247,8 @@
 		
 		<!-- DIALOG CADASTRO DE LIVRO................................................................................ -->
 		<h:form id="formLivro">
-			<p:dialog header="Cadastro de Livro" widgetVar="dlgNovoLivro" resizable="false" showEffect="clip" hideEffect="clip" closable="true">
-				
+			<p:dialog header="Cadastro de Livro" widgetVar="dlgNovoLivro" resizable="false">
+						
 					<p:messages id="messages" autoUpdate="true" />
 					
 	        		<!-- ....LIMPA O FORMULARIO AO FECHAR A CAIXA DE DIALOGO.... -->
@@ -355,6 +356,7 @@
 							process="@form" update="@form :tabelaLivros"
 							rendered="#{empty livroBean.livro.id}" />
 					</p:fieldset>
+				
 			</p:dialog>
 		</h:form>
 		<!-- ............................................................................................................... -->
