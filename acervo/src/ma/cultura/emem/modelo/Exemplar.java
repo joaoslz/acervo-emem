@@ -2,6 +2,8 @@ package ma.cultura.emem.modelo;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 public class Exemplar implements Serializable {

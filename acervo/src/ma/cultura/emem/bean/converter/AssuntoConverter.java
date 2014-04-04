@@ -18,9 +18,7 @@ public class AssuntoConverter implements Converter {
             return null;
         } else {
             try {
-                System.out.println(">>>>>>>>>>>>>>>>>>>>IDASSUNTO: " + id);
                 Assunto assunto = new AssuntoDAO().buscaPorId(Integer.valueOf(id));
-                System.out.println(">>>>>>>>>>>>>>>>>>>>assunto: " + assunto);
                 return assunto;
             } catch(NumberFormatException exception) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversão", "Assunto Inválido"));

@@ -30,9 +30,9 @@ public class Obra implements Serializable {
 
 	private String titulo;
 	private String subtitulo;
-	private short ano;
-	private short numPaginas;
-	private short edicao;
+	private Short ano;
+	private Short numPaginas;
+	private Short edicao;
 	private boolean ehIlustrado;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -82,19 +82,19 @@ public class Obra implements Serializable {
 		this.subtitulo = subtitulo;
 	}
 
-	public short getAno() {
+	public Short getAno() {
 		return ano;
 	}
 
-	public void setAno(short ano) {
+	public void setAno(Short ano) {
 		this.ano = ano;
 	}
 
-	public short getNumPaginas() {
+	public Short getNumPaginas() {
 		return numPaginas;
 	}
 
-	public void setNumPaginas(short numPaginas) {
+	public void setNumPaginas(Short numPaginas) {
 		this.numPaginas = numPaginas;
 	}
 
@@ -172,11 +172,11 @@ public class Obra implements Serializable {
 	    assuntos.add(assunto);
 	}
 
-	public short getEdicao() {
+	public Short getEdicao() {
 		return edicao;
 	}
 
-	public void setEdicao(short edicao) {
+	public void setEdicao(Short edicao) {
 		this.edicao = edicao;
 	}
 	

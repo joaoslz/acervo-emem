@@ -85,9 +85,11 @@ public class LivroBean implements Serializable {
 	    Exemplar exemplar = new Exemplar();
 	    exemplar.setObra(livro);
 	    exemplar.setEhDoacao(ehDoacao);
-	    Calendar c = GregorianCalendar.getInstance();
-	    c.setTime(dataAquisicao);
-	    exemplar.setDataAquisicao(c);
+	    if(dataAquisicao != null){
+		Calendar c = GregorianCalendar.getInstance();
+		c.setTime(dataAquisicao);
+		exemplar.setDataAquisicao(c);
+	    }
 	    exemplares.add(exemplar);
 	}
 	new ExemplarDAO().cadastrarExemplares(exemplares);
