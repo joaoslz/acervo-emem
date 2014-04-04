@@ -91,22 +91,19 @@
 		<!--DIALOG EDITORA........................................................................................... -->
 		<p:dialog header="Cadastro de Editora" widgetVar="dlgNovaEditora" resizable="false">
 			<h:form>
-				<p:fieldset>
-					<legend>Dados da Editora</legend>
-					<h:panelGrid columns="2">
-						<p:outputLabel value="Nome:" for="nome" />
-						<p:inputText id="nome" value="#{livroBean.editoraAdd.nome}"
-							required="true" requiredMessage="Campo nome deve ser digitado" />
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{livroBean.editoraAdd.nome}"
+						required="true" requiredMessage="O campo nome da editora deve ser digitado" />
 
-						<p:outputLabel value="Site:" for="site" />
-						<p:inputText id="site" value="#{livroBean.editoraAdd.site}" />
+					<p:outputLabel value="Site:" for="site" />
+					<p:inputText id="site" value="#{livroBean.editoraAdd.site}" />
 
-						<p:commandButton value="Gravar"
-							action="#{livroBean.gravarEditora}"
-							oncomplete="dlgNovaEditora.hide();" process="@form"
-							update="@form :formLivro:editora" />
-					</h:panelGrid>
-				</p:fieldset>
+					<p:commandButton value="Gravar"
+						action="#{livroBean.gravarEditora}"
+						oncomplete="dlgNovaEditora.hide();" process="@form"
+						update="@form :formLivro:editora" />
+				</h:panelGrid>
 			</h:form>
 		</p:dialog>
 		
@@ -114,18 +111,15 @@
 		<!-- DIALOG LOCAL............................................................................................ -->
 		<p:dialog header="Cadastro de Local" widgetVar="dlgNovoLocal" resizable="false">
 			<h:form>
-				<p:fieldset>
-					<legend>Dados do Local</legend>
-					<h:panelGrid columns="2">
-						<p:outputLabel value="Nome:" for="nome" />
-						<p:inputText id="nome" value="#{livroBean.localAdd.nome}"
-							required="true" requiredMessage="Campo nome deve ser digitado" />
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{livroBean.localAdd.nome}"
+						required="true" requiredMessage="Campo nome do local deve ser digitado" />
 
-						<p:commandButton value="Gravar" action="#{livroBean.gravarLocal}"
-							oncomplete="dlgNovoLocal.hide();" process="@form"
-							update="@form :formLivro:local" />
-					</h:panelGrid>
-				</p:fieldset>
+					<p:commandButton value="Gravar" action="#{livroBean.gravarLocal}"
+						oncomplete="dlgNovoLocal.hide();" process="@form"
+						update="@form :formLivro:local" />
+				</h:panelGrid>
 			</h:form>
 		</p:dialog>
 		
@@ -133,8 +127,6 @@
 		<!-- DIALOG AUTOR............................................................................................ -->
 		<p:dialog header="Cadastro de Autor" widgetVar="dlgNovoAutor" resizable="false">
 			<h:form>
-				<p:fieldset>
-					<legend>Cadastro de Autor</legend>
 					<h:panelGrid columns="2">
 						<p:outputLabel value="Nome:" for="nome" />
 						<p:inputText id="nome" value="#{livroBean.autorAdd.nome}"
@@ -144,7 +136,6 @@
 							oncomplete="dlgNovoAutor.hide();" process="@form"
 							update="@form :formLivro:autores" />
 					</h:panelGrid>
-				</p:fieldset>
 			</h:form>
 		</p:dialog>
 		
@@ -152,8 +143,7 @@
 		<!-- DIALOG ASSUNTO.......................................................................................... -->
 		<p:dialog header="Cadastro de Assunto" widgetVar="dlgNovoAssunto" resizable="false">
 			<h:form>
-				<p:fieldset>
-					<legend>Assunto</legend>
+				<p:messages id="messages" autoUpdate="true" />
 					<h:panelGrid columns="2">
 						<p:outputLabel value="Assunto:" for="assunto" />
 						<p:inputText id="assunto" value="#{livroBean.assuntoAdd.assunto}"
@@ -164,7 +154,6 @@
 							oncomplete="dlgNovoAssunto.hide();" process="@form"
 							update="@form :formLivro:assuntos" />
 					</h:panelGrid>
-				</p:fieldset>
 			</h:form>
 		</p:dialog>
 		
@@ -264,7 +253,7 @@
 						</f:facet>
 					</p:ajaxStatus>
 					<!-- ......................................................................................... -->
-					<p:fieldset>
+					
 						<h:panelGrid id="panelGridLivro" columns="4" style="margin-bottom:10px">
 	
 							<f:facet name="header"> Dados do Livro </f:facet>
@@ -355,8 +344,7 @@
 							action="#{livroBean.gravar}" oncomplete="dlgNovoLivro.hide();"
 							process="@form" update="@form :tabelaLivros"
 							rendered="#{empty livroBean.livro.id}" />
-					</p:fieldset>
-				
+					
 			</p:dialog>
 		</h:form>
 		<!-- ............................................................................................................... -->
