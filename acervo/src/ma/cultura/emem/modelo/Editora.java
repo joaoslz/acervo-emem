@@ -33,7 +33,9 @@ public class Editora implements Serializable{
     }
 
     public void setNome(String nome) {
-	this.nome = nome;
+    	if(nome != null) {
+    		this.nome = nome.toUpperCase();
+    	}
     }
 
     public String getSite() {

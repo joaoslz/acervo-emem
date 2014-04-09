@@ -21,7 +21,8 @@
 					<p:outputLabel value="Site:" for="site" />
 					<p:inputText id="site" value="#{editoraBean.editora.site}"  />
 					 
-					<p:commandButton value="Gravar" action="#{editoraBean.gravar}" />
+					<p:commandButton value="Gravar" action="#{editoraBean.gravar}" 
+					process="@form" update="@form :tabelaEditoras" />
 				</h:panelGrid>
 			</p:fieldset>
 		</h:form>
