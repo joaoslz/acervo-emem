@@ -267,7 +267,7 @@
 							<p:inputText id="subtitulo" value="#{livroBean.livro.subtitulo}" />
 	
 							<p:outputLabel value="ISBN:" for="isbn" />
-							<p:inputMask id="isbn" value="#{livroBean.livro.isbn}" mask="999-99-9999-999-9" />
+							<p:inputText id="isbn" value="#{livroBean.livro.isbn}" />
 	
 							<p:outputLabel value="Cutter:" for="cutter" />
 							<p:inputText id="cutter" value="#{livroBean.livro.cutter}" validatorMessage="Cutter não pode ser superio a 5 caracteres" >
@@ -275,7 +275,7 @@
 							</p:inputText>
 							
 							<p:outputLabel value="Edição:" for="edicao" />
-							<p:spinner id="edicao" value="#{livroBean.livro.edicao}" max="99" min="1" />
+							<p:inputText id="edicao" value="#{livroBean.livro.edicao}" />
 							
 							<p:outputLabel value="Série:" for="serie" />
 							<p:inputText id="serie" value="#{livroBean.livro.serie}" />
