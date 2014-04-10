@@ -11,8 +11,9 @@
 	</ui:define>
 	<ui:define name="conteudo">
 		<h:form>
+			<p:messages />
 			<p:fieldset>
-				<legend>Dados do Autor</legend>
+				<b>Dados do Autor</b>
 				<h:panelGrid columns="3">
 					<p:outputLabel value="Nome:" for="nome" />
 					<p:inputText id="nome" value="#{autorBean.autor.nome}"
@@ -27,12 +28,10 @@
 		</h:form>
 
 		<p:fieldset>
-			<p:outputLabel>Autores Cadastrados</p:outputLabel>
 			<p:dataTable rows="10" paginator="true" paginatorPosition="bottom"
 				id="tabelaAutores" value="#{autorBean.listaAutoresPorIdEmOrdemDec}" var="autor" 
-				
-				emptyMessage="Nenhum autor cadastrado">
-
+				emptyMessage="Nenhum autor cadastrado" style="width:60%">
+				<f:facet name="header">Autores Cadastrados </f:facet>
 				<p:column resizable="true" width="200">
 					<f:facet name="header">Nome</f:facet>
 					<h:outputText value="#{autor.nome}" />

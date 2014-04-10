@@ -11,8 +11,9 @@
 	</ui:define>
 	<ui:define name="conteudo">
 		<h:form>
+			<p:messages />
 			<p:fieldset>
-				<legend>Assunto</legend>
+				<b>Assunto</b>
 
 				<h:panelGrid columns="3">
 					<p:outputLabel value="Assunto:" for="assunto" />
@@ -27,12 +28,10 @@
 		</h:form>
 
 		<p:fieldset>
-			<p:outputLabel>Assuntos Cadastrados</p:outputLabel>
 			<p:dataTable rows="10" paginator="true" paginatorPosition="bottom"
-				id="tabelaAssunto"
-				value="#{assuntoBean.listaAssuntoPorIdEmOrdemDec}" var="assunto"
-				emptyMessage="Nenhum assunto cadastrado">
-
+				id="tabelaAssunto" value="#{assuntoBean.listaAssuntoPorIdEmOrdemDec}" var="assunto"
+				emptyMessage="Nenhum assunto cadastrado" style="width:60%">
+				<f:facet name="header">Assuntos Cadastrados</f:facet>
 				<p:column resizable="true">
 					<f:facet name="header">Assunto</f:facet>
 					<h:outputText value="#{assunto.assunto}" />

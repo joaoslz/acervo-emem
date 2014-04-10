@@ -504,3 +504,8 @@ ul#nav li a {
 ul#nav li a:hover, ul#nav li a:focus, ul#nav li.selected { 
   background: #FFF;
 }
+#conteudo{
+	padding: 15px;	
+}
+
+
