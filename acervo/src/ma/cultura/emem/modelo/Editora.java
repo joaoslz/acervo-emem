@@ -12,9 +12,9 @@ import javax.persistence.OneToMany;
 @Entity
 public class Editora implements Serializable{
 
-	private static final long serialVersionUID = -8643309639406399619L;
+    private static final long serialVersionUID = -8643309639406399619L;
 
-	@Id
+    @Id
     @GeneratedValue
     private int id;
 
@@ -22,31 +22,49 @@ public class Editora implements Serializable{
     private String site;
 
     @OneToMany(mappedBy = "editora")
-    private final List<Obra> obras = new ArrayList<Obra>();
+    private List<Obra> obras = new ArrayList<Obra>();
 
     public int getId() {
-	return id;
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
-	return nome;
+        return nome;
     }
-
+    
     public void setNome(String nome) {
-    	if(nome != null) {
-    		this.nome = nome.toUpperCase();
-    	}
+	if(nome != null) {
+	    this.nome = nome.toUpperCase();
+	}else{
+	    this.nome = null;
+	}
     }
 
     public String getSite() {
-	return site;
+        return site;
     }
 
     public void setSite(String site) {
-	this.site = site;
+        this.site = site;
     }
 
     public List<Obra> getObras() {
-	return obras;
+        return obras;
+    }
+
+    public void setObras(List<Obra> obras) {
+        this.obras = obras;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if(!(obj instanceof Editora))
+	    return false;
+	Editora ed = (Editora) obj;
+	return this.id == ed.id;
     }
 }

@@ -12,6 +12,20 @@ public class EditoraDAO extends DAO<Editora> {
     public EditoraDAO() {
 	super(Editora.class);
     }
+    
+    public void merge(Editora editora){
+	EntityManager em = JPAUtil.getInstance().getEntityManager();
+	em.getTransaction().begin();
+
+	System.out.println(editora.getId() + "..." + editora.getNome() + "..." + editora.getSite());
+
+	em.merge(editora);
+	
+	System.out.println("merge: " + editora);
+	
+	em.getTransaction().commit();
+	em.close();
+    }
 
     public List<Editora> likeByNome(String nome){
 

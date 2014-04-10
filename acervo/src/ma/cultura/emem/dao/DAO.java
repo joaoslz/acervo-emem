@@ -47,7 +47,7 @@ public class DAO<T> {
 	em.getTransaction().begin();
 
 	em.merge(t);
-
+	System.out.println("merge: " + t);
 	em.getTransaction().commit();
 	em.close();
     }
