@@ -33,7 +33,8 @@ public class AutorBean implements Serializable {
 
 	public void gravar() {
 		autorDAO.adicionar(autor);
-//		Após o cadastro o autor é adicionado direto no ArrayList para evitar atualizar a lista com outro select
+//		Após o cadastro o autor é adicionado direto no ArrayList 
+//		para evitar ter  que atualizar a lista com outra consulta no banco.
 		autores.add(0, autor);
 		autor = new Autor();
 	}
