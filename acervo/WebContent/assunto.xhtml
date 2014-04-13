@@ -10,22 +10,21 @@
 	<ui:define name="titulo">Novo Assunto
 	</ui:define>
 	<ui:define name="conteudo">
-		<h:form>
+	
+		<h:form id="formAssunto">
 			<p:messages />
 			<p:fieldset>
 				<b>Assunto</b>
-
 				<h:panelGrid columns="3">
 					<p:outputLabel value="Assunto:" for="assunto" />
 					<p:inputText id="assunto" value="#{assuntoBean.assunto.assunto}"
 						required="true" requiredMessage="Campo nome deve ser digitado" />
-
 					<p:commandButton value="Gravar" action="#{assuntoBean.gravar}"
 						process="@form" update="@form :formTabelaAssuntos:tabelaAssuntos" />
-
 				</h:panelGrid>
 			</p:fieldset>
 		</h:form>
+
 		<h:form id="formTabelaAssuntos">
 			<p:fieldset>
 				<p:dataTable editable="true" rows="10" paginator="true"
