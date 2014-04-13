@@ -9,6 +9,8 @@
 <ui:composition template="_template.xhtml">
 
 	<ui:define name="conteudo">
+	
+		<script type="text/javascript" src="js/traducaoCalendario.js"></script>
 		<!--PESQUISA DE LIVROS........................................................................................ -->
 		<p:fieldset>
 
@@ -22,12 +24,13 @@
 						process="@form" update="@form :tabelaLivros" />
 					<p:commandButton id="showAddLivroButton" type="button"
 						immediate="true" icon="ui-icon-plus" onclick="dlgNovoLivro.show()"
-						value="Adicionar Livro" >
+						value="Adicionar Livro">
 					</p:commandButton>
 				</p:panelGrid>
 			</h:form>
 
-			<p:dataTable id="tabelaLivros" value="#{livroBean.listaLivros}" var="livro" emptyMessage="Nenhum Livro cadastrado">
+			<p:dataTable id="tabelaLivros" value="#{livroBean.listaLivros}"
+				var="livro" emptyMessage="Nenhum Livro cadastrado">
 				<f:facet name="header"> Últimos Livros Cadastrados </f:facet>
 				<p:column>
 					<f:facet name="header"> Título </f:facet>
@@ -63,7 +66,8 @@
 				<p:column>
 					<f:facet name="header">Assuntos</f:facet>
 					<p:dataTable value="#{livro.assuntos}" var="assunto"
-						styleClass="hide-column-names" emptyMessage="Assunto Não Cadastrado">
+						styleClass="hide-column-names"
+						emptyMessage="Assunto Não Cadastrado">
 						<p:column>
 							<h:outputText value="#{assunto.assunto}" />
 						</p:column>
@@ -74,12 +78,15 @@
 					<h:form>
 						<p:commandButton icon="ui-icon-pencil" title="Alterar Livro"
 							oncomplete="dlgNovoLivro.show()" update="@form :formLivro">
-							<f:setPropertyActionListener value="#{livro}" target="#{livroBean.livro}" />
+							<f:setPropertyActionListener value="#{livro}"
+								target="#{livroBean.livro}" />
 						</p:commandButton>
 						<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
-							oncomplete="dlgExemplares.show()" action="#{livroBean.updateListaExemplares}"
+							oncomplete="dlgExemplares.show()"
+							action="#{livroBean.updateListaExemplares}"
 							update="@form :formExemplares :formExemplares">
-							<f:setPropertyActionListener value="#{livro}" target="#{livroBean.livro}" />
+							<f:setPropertyActionListener value="#{livro}"
+								target="#{livroBean.livro}" />
 						</p:commandButton>
 					</h:form>
 				</p:column>
@@ -89,32 +96,35 @@
 
 
 		<!--DIALOG EDITORA........................................................................................... -->
-		<p:dialog header="Cadastro de Editora" widgetVar="dlgNovaEditora" resizable="false">
+		<p:dialog header="Cadastro de Editora" widgetVar="dlgNovaEditora"
+			resizable="false">
 			<h:form>
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Nome:" for="nome" />
 					<p:inputText id="nome" value="#{livroBean.editoraAdd.nome}"
-						required="true" requiredMessage="O campo nome da editora deve ser digitado" />
+						required="true"
+						requiredMessage="O campo nome da editora deve ser digitado" />
 
 					<p:outputLabel value="Site:" for="site" />
 					<p:inputText id="site" value="#{livroBean.editoraAdd.site}" />
 
-					<p:commandButton value="Gravar"
-						action="#{livroBean.gravarEditora}"
+					<p:commandButton value="Gravar" action="#{livroBean.gravarEditora}"
 						oncomplete="dlgNovaEditora.hide();" process="@form"
 						update="@form :formLivro:editora" />
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
-		
-		
+
+
 		<!-- DIALOG LOCAL............................................................................................ -->
-		<p:dialog header="Cadastro de Local" widgetVar="dlgNovoLocal" resizable="false">
+		<p:dialog header="Cadastro de Local" widgetVar="dlgNovoLocal"
+			resizable="false">
 			<h:form>
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Nome:" for="nome" />
 					<p:inputText id="nome" value="#{livroBean.localAdd.nome}"
-						required="true" requiredMessage="Campo nome do local deve ser digitado" />
+						required="true"
+						requiredMessage="Campo nome do local deve ser digitado" />
 
 					<p:commandButton value="Gravar" action="#{livroBean.gravarLocal}"
 						oncomplete="dlgNovoLocal.hide();" process="@form"
@@ -122,47 +132,49 @@
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
-		
-		
-		<!-- DIALOG AUTOR............................................................................................ -->
-		<p:dialog header="Cadastro de Autor" widgetVar="dlgNovoAutor" resizable="false">
-			<h:form>
-					<h:panelGrid columns="2">
-						<p:outputLabel value="Nome:" for="nome" />
-						<p:inputText id="nome" value="#{livroBean.autorAdd.nome}"
-							required="true" requiredMessage="Campo nome deve ser digitado" />
 
-						<p:commandButton value="Gravar" action="#{livroBean.gravarAutor}"
-							oncomplete="dlgNovoAutor.hide();" process="@form"
-							update="@form :formLivro:autores" />
-					</h:panelGrid>
+
+		<!-- DIALOG AUTOR............................................................................................ -->
+		<p:dialog header="Cadastro de Autor" widgetVar="dlgNovoAutor"
+			resizable="false">
+			<h:form>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{livroBean.autorAdd.nome}"
+						required="true" requiredMessage="Campo nome deve ser digitado" />
+
+					<p:commandButton value="Gravar" action="#{livroBean.gravarAutor}"
+						oncomplete="dlgNovoAutor.hide();" process="@form"
+						update="@form :formLivro:autores" />
+				</h:panelGrid>
 			</h:form>
 		</p:dialog>
-		
-		
+
+
 		<!-- DIALOG ASSUNTO.......................................................................................... -->
-		<p:dialog header="Cadastro de Assunto" widgetVar="dlgNovoAssunto" resizable="false">
+		<p:dialog header="Cadastro de Assunto" widgetVar="dlgNovoAssunto"
+			resizable="false">
 			<h:form>
 				<p:messages id="messages" autoUpdate="true" />
-					<h:panelGrid columns="2">
-						<p:outputLabel value="Assunto:" for="assunto" />
-						<p:inputText id="assunto" value="#{livroBean.assuntoAdd.assunto}"
-							required="true" requiredMessage="Campo assunto deve ser digitado" />
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Assunto:" for="assunto" />
+					<p:inputText id="assunto" value="#{livroBean.assuntoAdd.assunto}"
+						required="true" requiredMessage="Campo assunto deve ser digitado" />
 
-						<p:commandButton value="Gravar"
-							action="#{livroBean.gravarAssunto}"
-							oncomplete="dlgNovoAssunto.hide();" process="@form"
-							update="@form :formLivro:assuntos" />
-					</h:panelGrid>
+					<p:commandButton value="Gravar" action="#{livroBean.gravarAssunto}"
+						oncomplete="dlgNovoAssunto.hide();" process="@form"
+						update="@form :formLivro:assuntos" />
+				</h:panelGrid>
 			</h:form>
 		</p:dialog>
-		
+
 
 		<!-- DIALOG EXEMPLARES...................................................................................... -->
-		
-		<p:dialog header="Cadastro de Exemplares" widgetVar="dlgExemplares" resizable="false">
-			<h:form id="formExemplares">	
-										
+
+		<p:dialog header="Cadastro de Exemplares" widgetVar="dlgExemplares"
+			resizable="false">
+			<h:form id="formExemplares">
+
 				<b><h:outputText value="Título: " /></b>
 				<h:outputText value="#{livroBean.livro.titulo}" />
 				<br />
@@ -174,177 +186,189 @@
 					<h:outputText value="Quantidade: " />
 					<p:spinner value="#{livroBean.quantidade}" max="300" min="1" />
 					<h:outputText value="Data de Aquisição: *" />
-					<p:calendar value="#{livroBean.dataAquisicao}" />
+					<p:calendar value="#{livroBean.dataAquisicao}" locale="pt_BR"
+					            display="inline" navigator="true"  />
+
 					<h:outputText value="É Doaçao? " />
 					<p:selectBooleanCheckbox value="#{livroBean.ehDoacao}" />
 					<p:commandButton value="Gravar"
 						action="#{livroBean.cadastrarExemplares}"
 						update="@form :formExemplares:tabelaExemplares" />
 				</p:panelGrid>
-			
+
 				<p:dataTable id="tabelaExemplares" value="#{livroBean.exemplares}"
-					var="exemplar" emptyMessage="Nenhum Exemplar cadastrado" editable="true">
+					var="exemplar" emptyMessage="Nenhum Exemplar cadastrado"
+					editable="true">
 					<f:facet name="header"> Exemplares Cadastrados </f:facet>
-	        		<p:ajax event="rowEdit" listener="#{livroBean.editExempar}" update=":formExemplares:tabelaExemplares"/>
+					<p:ajax event="rowEdit" listener="#{livroBean.editExempar}"
+						update=":formExemplares:tabelaExemplares" />
 					<p:column>
 						<f:facet name="header">ID</f:facet>
 						<h:outputText value="#{exemplar.id}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">É Doação</f:facet>
-          			  	<p:cellEditor>
-		               		<f:facet name="output">
+						<p:cellEditor>
+							<f:facet name="output">
 								<h:outputText rendered="#{exemplar.ehDoacao}" value="Sim" />
 								<h:outputText rendered="#{!exemplar.ehDoacao}" value="Não" />
-		               		</f:facet>
-		               		<f:facet name="input">
-		               			<p:selectBooleanCheckbox value="#{exemplar.ehDoacao}"/>
-		               		</f:facet>
-	               		</p:cellEditor>
+							</f:facet>
+							<f:facet name="input">
+								<p:selectBooleanCheckbox value="#{exemplar.ehDoacao}" />
+							</f:facet>
+						</p:cellEditor>
 					</p:column>
 					<p:column>
 						<f:facet name="header">Data de Aquisição</f:facet>
-          			  	<p:cellEditor>
-		               		<f:facet name="output">
+						<p:cellEditor>
+							<f:facet name="output">
 								<h:outputText value="#{exemplar.dataAquisicao.time}">
 									<f:convertDateTime pattern="dd/MM/yyyy" />
 								</h:outputText>
-		               		</f:facet>
-		               		<f:facet name="input">
-		               			<p:calendar value="#{exemplar.dataAquisicao}" converter="calendarConverter" pattern="dd/MM/yyyy"/>
-		               		</f:facet>
-	               		</p:cellEditor>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar value="#{exemplar.dataAquisicao}"
+									converter="calendarConverter" pattern="dd/MM/yyyy" />
+							</f:facet>
+						</p:cellEditor>
 					</p:column>
 					<p:column>
 						<f:facet name="header">Observação</f:facet>
-          			  	<p:cellEditor>
-		               		<f:facet name="output">
-		               			<h:outputText value="#{exemplar.observacao}" />
-		               		</f:facet>
-		               		<f:facet name="input">
-		               			<p:inputText value="#{exemplar.observacao}" />
-		               		</f:facet>
-	               		</p:cellEditor>
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{exemplar.observacao}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{exemplar.observacao}" />
+							</f:facet>
+						</p:cellEditor>
 					</p:column>
-			        <p:column>
-			            <p:rowEditor />
-			        </p:column>
+					<p:column>
+						<p:rowEditor />
+					</p:column>
 				</p:dataTable>
 			</h:form>
 		</p:dialog>
-		
-		
+
+
 		<!-- DIALOG CADASTRO DE LIVRO................................................................................ -->
 		<h:form id="formLivro">
-			<p:dialog header="Cadastro de Livro" widgetVar="dlgNovoLivro" resizable="false">
-						
-					<p:messages id="messages" autoUpdate="true" />
-					
-	        		<!-- ....LIMPA O FORMULARIO AO FECHAR A CAIXA DE DIALOGO.... -->
-	        		<p:ajax event="close" update=":formLivro" listener="#{livroBean.novoLivroOnClose}"/>  
-					
-					<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
-					<p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
-						<f:facet name="start">
-							<h:graphicImage value="/images/ajaxloading.gif" />
-						</f:facet>
-						<f:facet name="complete">
-							<h:outputText value="" />
-						</f:facet>
-					</p:ajaxStatus>
-					<!-- ......................................................................................... -->
-					
-						<h:panelGrid id="panelGridLivro" columns="4" style="margin-bottom:10px">
-	
-							<f:facet name="header"> Dados do Livro </f:facet>
-							<p:outputLabel value="Titulo:" for="titulo" />
-							<p:inputText id="titulo" value="#{livroBean.livro.titulo}"
-								required="true" requiredMessage="Título obrigatório">
-								<f:ajax event="blur" render="messages" />
-							</p:inputText>
-	
-							<p:outputLabel value="Subtitulo:" for="subtitulo" />
-							<p:inputText id="subtitulo" value="#{livroBean.livro.subtitulo}" />
-	
-							<p:outputLabel value="ISBN:" for="isbn" />
-							<p:inputText id="isbn" value="#{livroBean.livro.isbn}" />
-	
-							<p:outputLabel value="Cutter:" for="cutter" />
-							<p:inputText id="cutter" value="#{livroBean.livro.cutter}" validatorMessage="Cutter não pode ser superio a 5 caracteres" >
-								<f:validateLength maximum="5" />
-							</p:inputText>
-							
-							<p:outputLabel value="Edição:" for="edicao" />
-							<p:inputText id="edicao" value="#{livroBean.livro.edicao}" />
-							
-							<p:outputLabel value="Série:" for="serie" />
-							<p:inputText id="serie" value="#{livroBean.livro.serie}" />
-	
-							<p:outputLabel value="Ano:" for="ano" />
-							<p:inputText id="ano" value="#{livroBean.livro.ano}" />
-	
-							<p:outputLabel value="Nº de Páginas:" for="numPaginas" />
-							<p:inputText id="numPaginas" value="#{livroBean.livro.numPaginas}" />
-	
-							<p:outputLabel value="Classificação:" for="classificacao" />
-							<p:inputText id="classificacao" value="#{livroBean.livro.classificacao}" />
-	
-							<p:outputLabel value="Editora:" for="editora" />
-							<p:column>
-								<p:autoComplete value="#{livroBean.livro.editora}" id="editora"
-									completeMethod="#{livroBean.autocompleteEditoraByNome}" var="e"
-									itemLabel="#{e.nome}" itemValue="#{e}"
-									converter="editoraConverter" forceSelection="true" />
-								<p:commandButton type="button" id="showAddEditoraButton" icon="ui-icon-plus" immediate="true"
-									title="Adicionar Editora" onclick="dlgNovaEditora.show();" />
-							</p:column>
-	
-							<p:outputLabel value="Local:" for="local" />
-							<p:column>
-								<p:autoComplete value="#{livroBean.livro.local}" id="local"
-									completeMethod="#{livroBean.autocompleteLocalByNome}" var="l"
-									itemLabel="#{l.nome}" itemValue="#{l}"
-									converter="localConverter" />
-								<p:commandButton id="showAddLocalButton" icon="ui-icon-plus" immediate="true"
-									title="Adicionar Local" onclick="dlgNovoLocal.show()" />
-							</p:column>
-	
-							<p:outputLabel value="Autores:" for="autores" />
-							<p:column>
-								<p:autoComplete id="autores" value="#{livroBean.livro.autores}"
-									completeMethod="#{livroBean.autocompleteAutorByNome}" var="a"
-									itemLabel="#{a.nome}" itemValue="#{a}"
-									converter="autorConverter" forceSelection="true" multiple="true" />
-								<p:commandButton id="showAddAutorButton" icon="ui-icon-plus" process="formLivro:autores"
-									title="Adicionar Autor" onclick="dlgNovoAutor.show()" />
-							</p:column>
-	
-							<p:outputLabel value="É Ilustrado?" for="ehIlustrado" />
-							<p:selectBooleanCheckbox id="ehIlustrado"
-								value="#{livroBean.livro.ehIlustrado}" />
-	
-							<p:outputLabel value="Assuntos" for="assuntos" />
-							<p:column>
-								<p:autoComplete id="assuntos" value="#{livroBean.livro.assuntos}"
-									completeMethod="#{livroBean.autocompleteAssuntoByNome}" var="a"
-									itemLabel="#{a.assunto}" itemValue="#{a}"
-									converter="assuntoConverter" forceSelection="true"
-									multiple="true" />
-								<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus" process="formLivro:assuntos"
-									title="Adicionar Assunto" onclick="dlgNovoAssunto.show()" />
-							</p:column>
-						</h:panelGrid>
-	
-						<p:commandButton value="Gravar Alterações"
-							action="#{livroBean.gravar}" oncomplete="dlgNovoLivro.hide();"
-							process="@form" update="@form :tabelaLivros"
-							rendered="#{not empty livroBean.livro.id}" />
-	
-						<p:commandButton value="Gravar"
-							action="#{livroBean.gravar}" oncomplete="dlgNovoLivro.hide();"
-							process="@form" update="@form :tabelaLivros"
-							rendered="#{empty livroBean.livro.id}" />
-					
+			<p:dialog header="Cadastro de Livro" widgetVar="dlgNovoLivro"
+				resizable="false">
+
+				<p:messages id="messages" autoUpdate="true" />
+
+				<!-- ....LIMPA O FORMULARIO AO FECHAR A CAIXA DE DIALOGO.... -->
+				<p:ajax event="close" update=":formLivro"
+					listener="#{livroBean.novoLivroOnClose}" />
+
+				<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
+				<p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+					<f:facet name="start">
+						<h:graphicImage value="/images/ajaxloading.gif" />
+					</f:facet>
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+				<!-- ......................................................................................... -->
+
+				<h:panelGrid id="panelGridLivro" columns="4"
+					style="margin-bottom:10px">
+
+					<f:facet name="header"> Dados do Livro </f:facet>
+					<p:outputLabel value="Titulo:" for="titulo" />
+					<p:inputText id="titulo" value="#{livroBean.livro.titulo}"
+						required="true" requiredMessage="Título obrigatório">
+						<f:ajax event="blur" render="messages" />
+					</p:inputText>
+
+					<p:outputLabel value="Subtitulo:" for="subtitulo" />
+					<p:inputText id="subtitulo" value="#{livroBean.livro.subtitulo}" />
+
+					<p:outputLabel value="ISBN:" for="isbn" />
+					<p:inputText id="isbn" value="#{livroBean.livro.isbn}" />
+
+					<p:outputLabel value="Cutter:" for="cutter" />
+					<p:inputText id="cutter" value="#{livroBean.livro.cutter}"
+						validatorMessage="Cutter não pode ser superio a 5 caracteres">
+						<f:validateLength maximum="5" />
+					</p:inputText>
+
+					<p:outputLabel value="Edição:" for="edicao" />
+					<p:inputText id="edicao" value="#{livroBean.livro.edicao}" />
+
+					<p:outputLabel value="Série:" for="serie" />
+					<p:inputText id="serie" value="#{livroBean.livro.serie}" />
+
+					<p:outputLabel value="Ano:" for="ano" />
+					<p:inputText id="ano" value="#{livroBean.livro.ano}" />
+
+					<p:outputLabel value="Nº de Páginas:" for="numPaginas" />
+					<p:inputText id="numPaginas" value="#{livroBean.livro.numPaginas}" />
+
+					<p:outputLabel value="Classificação:" for="classificacao" />
+					<p:inputText id="classificacao"
+						value="#{livroBean.livro.classificacao}" />
+
+					<p:outputLabel value="Editora:" for="editora" />
+					<p:column>
+						<p:autoComplete value="#{livroBean.livro.editora}" id="editora"
+							completeMethod="#{livroBean.autocompleteEditoraByNome}" var="e"
+							itemLabel="#{e.nome}" itemValue="#{e}"
+							converter="editoraConverter" forceSelection="true" />
+						<p:commandButton type="button" id="showAddEditoraButton"
+							icon="ui-icon-plus" immediate="true" title="Adicionar Editora"
+							onclick="dlgNovaEditora.show();" />
+					</p:column>
+
+					<p:outputLabel value="Local:" for="local" />
+					<p:column>
+						<p:autoComplete value="#{livroBean.livro.local}" id="local"
+							completeMethod="#{livroBean.autocompleteLocalByNome}" var="l"
+							itemLabel="#{l.nome}" itemValue="#{l}" converter="localConverter" />
+						<p:commandButton id="showAddLocalButton" icon="ui-icon-plus"
+							immediate="true" title="Adicionar Local"
+							onclick="dlgNovoLocal.show()" />
+					</p:column>
+
+					<p:outputLabel value="Autores:" for="autores" />
+					<p:column>
+						<p:autoComplete id="autores" value="#{livroBean.livro.autores}"
+							completeMethod="#{livroBean.autocompleteAutorByNome}" var="a"
+							itemLabel="#{a.nome}" itemValue="#{a}" converter="autorConverter"
+							forceSelection="true" multiple="true" />
+						<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
+							process="formLivro:autores" title="Adicionar Autor"
+							onclick="dlgNovoAutor.show()" />
+					</p:column>
+
+					<p:outputLabel value="É Ilustrado?" for="ehIlustrado" />
+					<p:selectBooleanCheckbox id="ehIlustrado"
+						value="#{livroBean.livro.ehIlustrado}" />
+
+					<p:outputLabel value="Assuntos" for="assuntos" />
+					<p:column>
+						<p:autoComplete id="assuntos" value="#{livroBean.livro.assuntos}"
+							completeMethod="#{livroBean.autocompleteAssuntoByNome}" var="a"
+							itemLabel="#{a.assunto}" itemValue="#{a}"
+							converter="assuntoConverter" forceSelection="true"
+							multiple="true" />
+						<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
+							process="formLivro:assuntos" title="Adicionar Assunto"
+							onclick="dlgNovoAssunto.show()" />
+					</p:column>
+				</h:panelGrid>
+
+				<p:commandButton value="Gravar Alterações"
+					action="#{livroBean.gravar}" oncomplete="dlgNovoLivro.hide();"
+					process="@form" update="@form :tabelaLivros"
+					rendered="#{not empty livroBean.livro.id}" />
+
+				<p:commandButton value="Gravar" action="#{livroBean.gravar}"
+					oncomplete="dlgNovoLivro.hide();" process="@form"
+					update="@form :tabelaLivros" rendered="#{empty livroBean.livro.id}" />
+
 			</p:dialog>
 		</h:form>
 		<!-- ............................................................................................................... -->
