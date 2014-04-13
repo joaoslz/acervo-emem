@@ -8,6 +8,8 @@ import javax.persistence.TypedQuery;
 import ma.cultura.emem.modelo.Assunto;
 
 public class AssuntoDAO extends DAO<Assunto> {
+	
+	
 
 	public AssuntoDAO() {
 		super(Assunto.class);

@@ -21,24 +21,35 @@
 						required="true" requiredMessage="Campo nome deve ser digitado" />
 
 					<p:commandButton value="Gravar" action="#{assuntoBean.gravar}"
-						process="@form" update="@form :tabelaAssunto" />
+						process="@form" update="@form :formTabelaAssuntos:tabelaAssuntos" />
 
 				</h:panelGrid>
 			</p:fieldset>
 		</h:form>
-
-		<p:fieldset>
-			<p:dataTable rows="10" paginator="true" paginatorPosition="bottom"
-				id="tabelaAssunto" value="#{assuntoBean.listaAssuntoPorIdEmOrdemDec}" var="assunto"
-				emptyMessage="Nenhum assunto cadastrado" style="width:60%">
-				<f:facet name="header">Assuntos Cadastrados</f:facet>
-				<p:column resizable="true">
-					<f:facet name="header">Assunto</f:facet>
-					<h:outputText value="#{assunto.assunto}" />
-				</p:column>
-			</p:dataTable>
-		</p:fieldset>
-
+		<h:form id="formTabelaAssuntos">
+			<p:fieldset>
+				<p:dataTable editable="true" rows="10" paginator="true"
+					paginatorPosition="bottom" id="tabelaAssuntos"
+					value="#{assuntoBean.assuntos}" var="assunto"
+					emptyMessage="Nenhum assunto cadastrado" style="width:60%">
+					<f:facet name="header">Assuntos Cadastrados</f:facet>
+					<p:ajax event="rowEdit" listener="#{assuntoBean.editAssunto}" />
+					<p:column resizable="true" width="200" headerText="Assunto">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{assunto.assunto}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{assunto.assunto}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column>
+						<p:rowEditor />
+					</p:column>
+				</p:dataTable>
+			</p:fieldset>
+		</h:form>
 	</ui:define>
 </ui:composition>
 </html>
