@@ -12,86 +12,93 @@ import ma.cultura.emem.modelo.Livro;
 
 public class LivroDAO extends DAO<Livro> {
 
-    public LivroDAO() {
-	super(Livro.class);
-    }
-    
-    public Livro buscarLivroFetchExemplares(Integer id){
-	EntityManager em = JPAUtil.getInstance().getEntityManager();
-	TypedQuery<Livro> query = em.createQuery("from Livro l left join fetch l.exemplares e where livro.id = :id", Livro.class);
-	query.setParameter("id", id);
-	Livro livro = query.getSingleResult();
-	em.close();
-	return livro;
-    }
-    
-    public void merge(Livro l) {
-	EntityManager em = JPAUtil.getInstance().getEntityManager();
-	em.getTransaction().begin();
-	//FIXME recupera novamente os autores do banco para que o JPA possa reconhece-los como entidades gerenciaveis.
-	List<Autor> autores = new ArrayList<Autor>();
-	if(l.getAutores() != null && l.getAutores().size() > 0){
-	    for(Autor autor: l.getAutores()){
-		autor = em.find(Autor.class, autor.getId());
-		autores.add(autor);
-	    }
+	public LivroDAO() {
+		super(Livro.class);
 	}
-	l.setAutores(autores);
-	//FIXME recupera novamente os assuntos do banco para que o JPA possa reconhece-los como entidades gerenciaveis.
-	List<Assunto> assuntos = new ArrayList<Assunto>();
-	if(l.getAssuntos() != null && l.getAssuntos().size() > 0){
-	    for(Assunto assunto: l.getAssuntos()){
-		assunto = em.find(Assunto.class, assunto.getId());
-		assuntos.add(assunto);
-	    }
+
+	public Livro buscarLivroFetchExemplares(Integer id) {
+		EntityManager em = JPAUtil.getInstance().getEntityManager();
+		TypedQuery<Livro> query = em
+				.createQuery(
+						"from Livro l left join fetch l.exemplares e where livro.id = :id",
+						Livro.class);
+		query.setParameter("id", id);
+		Livro livro = query.getSingleResult();
+		em.close();
+		return livro;
 	}
-	l.setAssuntos(assuntos);
-	
-	em.merge(l);
-	em.getTransaction().commit();
-	em.close();
-    }
 
-    public List<Livro> listarLivros(){
+	public Livro merge(Livro l) {
+		EntityManager em = JPAUtil.getInstance().getEntityManager();
+		em.getTransaction().begin();
+		// FIXME recupera novamente os autores do banco para que o JPA possa
+		// reconhece-los como entidades gerenciaveis.
+		List<Autor> autores = new ArrayList<Autor>();
+		if (l.getAutores() != null && l.getAutores().size() > 0) {
+			for (Autor autor : l.getAutores()) {
+				autor = em.find(Autor.class, autor.getId());
+				autores.add(autor);
+			}
+		}
+		l.setAutores(autores);
+		// FIXME recupera novamente os assuntos do banco para que o JPA possa
+		// reconhece-los como entidades gerenciaveis.
+		List<Assunto> assuntos = new ArrayList<Assunto>();
+		if (l.getAssuntos() != null && l.getAssuntos().size() > 0) {
+			for (Assunto assunto : l.getAssuntos()) {
+				assunto = em.find(Assunto.class, assunto.getId());
+				assuntos.add(assunto);
+			}
+		}
+		l.setAssuntos(assuntos);
 
-	String consulta = "select distinct l from Livro l left join fetch l.autores order by l.id desc";
+		l = em.merge(l);
+		em.getTransaction().commit();
+		em.close();
+		return l;
+	}
 
-	EntityManager em = JPAUtil.getInstance().getEntityManager();
-	TypedQuery<Livro> query = em.createQuery(consulta, Livro.class);
-	query.setMaxResults(5);
-	List<Livro> listaObras = query.getResultList();
+	public List<Livro> listarLivros() {
 
-	em.close();
+		String consulta = "select distinct l from Livro l left join fetch l.autores order by l.id desc";
 
-	return listaObras;
-    }
+		EntityManager em = JPAUtil.getInstance().getEntityManager();
+		TypedQuery<Livro> query = em.createQuery(consulta, Livro.class);
+		query.setMaxResults(5);
+		List<Livro> listaObras = query.getResultList();
 
-    public List<Livro> likeByISBN(String isbn){
+		em.close();
 
-	String consulta = "select distinct l from Livro l left join fetch l.autores where l.isbn like :isbn order by l.id desc";
+		return listaObras;
+	}
 
-	EntityManager em = JPAUtil.getInstance().getEntityManager();
-	TypedQuery<Livro> query = em.createQuery(consulta, Livro.class);
-	query.setMaxResults(5);
-	query.setParameter("isbn", "%"+isbn+"%");
-	List<Livro> listaObras = query.getResultList();
+	public List<Livro> likeByISBN(String isbn) {
 
-	em.close();
+		String consulta = "select distinct l from Livro l left join fetch l.autores where l.isbn like :isbn order by l.id desc";
 
-	return listaObras;
-    }
-    public List<Livro> likeByTitulo(String titulo){
+		EntityManager em = JPAUtil.getInstance().getEntityManager();
+		TypedQuery<Livro> query = em.createQuery(consulta, Livro.class);
+		query.setMaxResults(5);
+		query.setParameter("isbn", "%" + isbn + "%");
+		List<Livro> listaObras = query.getResultList();
 
-	String consulta = "select distinct l from Livro l left join fetch l.autores where l.titulo like :titulo order by l.id desc";
+		em.close();
 
-	EntityManager em = JPAUtil.getInstance().getEntityManager();
-	TypedQuery<Livro> query = em.createQuery(consulta, Livro.class);
-	query.setMaxResults(5);
-	query.setParameter("titulo", "%"+titulo+"%");
-	List<Livro> listaObras = query.getResultList();
+		return listaObras;
+	}
 
-	em.close();
+	public List<Livro> likeByTitulo(String titulo) {
 
-	return listaObras;
-    }
+		String consulta = "select distinct l from Livro l left join fetch l.autores where l.titulo like :titulo order by l.id desc";
+
+		EntityManager em = JPAUtil.getInstance().getEntityManager();
+		TypedQuery<Livro> query = em.createQuery(consulta, Livro.class);
+		query.setMaxResults(5);
+		query.setParameter("titulo", "%" + titulo + "%");
+		List<Livro> listaObras = query.getResultList();
+
+		em.close();
+
+		return listaObras;
+	}
 }

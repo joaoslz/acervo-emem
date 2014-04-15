@@ -25,227 +25,241 @@ import ma.cultura.emem.modelo.Idioma;
 import ma.cultura.emem.modelo.Livro;
 import ma.cultura.emem.modelo.Local;
 
-import org.primefaces.event.CloseEvent;
 import org.primefaces.event.RowEditEvent;
 
 @ManagedBean
 @ViewScoped
 public class LivroBean implements Serializable {
 
-//    Campos para pesquisa
-    private String tituloFilter;
-    private String isbnFilter;
-    
-//  Campos para cadastro de Exemplar
-    private int quantidade;
-    private boolean ehDoacao;
-    private Date dataAquisicao;
-    private List<Exemplar> exemplares = new ArrayList<Exemplar>();
-    
-//  POJO para os cadastros auxiliares
-    private Editora editoraAdd = new Editora();
-    private Local localAdd = new Local();
-    private Assunto assuntoAdd = new Assunto();
-    private Autor autorAdd = new Autor();
-    
-// POJO para o cadastro de livro
-    private Livro livro = new Livro();
-    
-//  livros para o datatable.   
-    private List<Livro> livros = new ArrayList<Livro>();
+	private static final long serialVersionUID = 8700247630376010790L;
+	
+//	DAOs
+	private LivroDAO livroDAO = new LivroDAO();
+	private ExemplarDAO exemplarDAO = new ExemplarDAO();
+	// Campos para pesquisa
+	private String tituloFilter;
+	private String isbnFilter;
 
-    
-    public List<Exemplar> getExemplares(){
-	return exemplares;
-    }
-    
-    public void updateListaExemplares(){
-	exemplares = new ExemplarDAO().listarExemplaresByLivroId(livro.getId());
-    }
-    
-    /**
-     * Método para editar o exemplar direto da tabela.
-     * @param event
-     */
-    public void editExempar(RowEditEvent event) {  
-	Exemplar e = (Exemplar) event.getObject(); 
-	new ExemplarDAO().merge(e);
-    }  
-    
-    /**
-     * Método para limpar o formulário de cadastro de livro no momento da abertura.
-     */
-    public void novoLivroOnClose(CloseEvent event){
-	livro = new Livro();
-    }
-    
-    public void cadastrarExemplares(){
-	List<Exemplar> exemplares = new ArrayList<Exemplar>();
-	for(int i = 0; i < quantidade; i++){
-	    Exemplar exemplar = new Exemplar();
-	    exemplar.setObra(livro);
-	    exemplar.setEhDoacao(ehDoacao);
-	    if(dataAquisicao != null){
-		Calendar c = GregorianCalendar.getInstance();
-		c.setTime(dataAquisicao);
-		exemplar.setDataAquisicao(c);
-	    }
-	    exemplares.add(exemplar);
+	// Campos para cadastro de Exemplar
+	private int quantidade;
+	private boolean ehDoacao;
+	private Date dataAquisicao;
+	private List<Exemplar> exemplares = new ArrayList<Exemplar>();
+
+	// POJO para os cadastros auxiliares
+	private Editora editoraAdd = new Editora();
+	private Local localAdd = new Local();
+	private Assunto assuntoAdd = new Assunto();
+	private Autor autorAdd = new Autor();
+
+	// POJO para o cadastro de livro
+	private Livro livro = new Livro();
+
+	// livros para o datatable.
+	private List<Livro> livros = new ArrayList<Livro>();
+
+	public LivroBean(){
+		System.out.println("...LivroBean criado!");
 	}
-	new ExemplarDAO().cadastrarExemplares(exemplares);
-	ehDoacao = false;
-	dataAquisicao = null;
-	quantidade = 0;
-	updateListaExemplares();
-    }
-
-    public void gravarAutor() {
-	AutorDAO dao = new AutorDAO();
-	dao.adicionar(autorAdd);
-	livro.adicionarAutor(autorAdd);
-	autorAdd = new Autor();
-    }
-
-    public void gravarAssunto() {
-	AssuntoDAO dao = new AssuntoDAO();
-	dao.adicionar(assuntoAdd);
-	livro.adicionarAssunto(assuntoAdd);
-	assuntoAdd = new Assunto();
-    }
-
-    public void gravarLocal() {
-	LocalDAO dao = new LocalDAO();
-	dao.adicionar(localAdd);
-	livro.setLocal(localAdd);
-	localAdd = new Local();
-    }
-
-    public void gravarEditora() {
-	EditoraDAO dao = new EditoraDAO();
-	dao.adicionar(editoraAdd);
-	livro.setEditora(editoraAdd);
-	editoraAdd = new Editora();
-    }
-
-    public String gravar() {
-	if (!livro.isIdNull()){
-	    livros.clear();
-	    livros.add(livro);//adiciona na tabela o livro editado.
-	}else{
-	    livros.add(livros.size(), livro);//adiciona no fim daa tabela o livro.
+	
+	@Override
+	protected void finalize() throws Throwable {
+		System.out.println("...LivroBean destruído!");
+		super.finalize();
 	}
-	new LivroDAO().merge(livro);
 
-	return "livro";
-    }
 
-    public List<Livro> getListaLivros() {
-	if (isbnFilter != null && isbnFilter.length() > 0)
-	    livros = new LivroDAO().likeByISBN(isbnFilter);
-	else if (tituloFilter != null && tituloFilter.length() > 0)
-	    livros = new LivroDAO().likeByTitulo(tituloFilter);
-	else if(livros.isEmpty())
-	    livros = new LivroDAO().listarLivros();
-	return livros;
-    }
 
-    public List<Editora> autocompleteEditoraByNome(String nome) {
-	return new EditoraDAO().likeByNome(nome);
-    }
+	public void updateListaExemplares() {
+		exemplares = exemplarDAO.listarExemplaresByLivroId(livro.getId());
+	}
 
-    public List<Local> autocompleteLocalByNome(String nome) {
-	return new LocalDAO().likeByNome(nome);
-    }
+	/**
+	 * Método para editar o exemplar direto da tabela.
+	 * 
+	 * @param event
+	 */
+	public void editExempar(RowEditEvent event) {
+		Exemplar e = (Exemplar) event.getObject();
+		exemplarDAO.merge(e);
+	}
 
-    public List<Autor> autocompleteAutorByNome(String nome) {
-	return new AutorDAO().likeByNome(nome);
-    }
+	/**
+	 * Método para limpar o formulário de cadastro de livro no momento da
+	 * abertura.
+	 */
+	public void limparFormLivro() {
+		livro = new Livro();
+	}
 
-    public List<Assunto> autocompleteAssuntoByNome(String nome) {
-	return new AssuntoDAO().likeByNome(nome);
-    }
+	public void cadastrarExemplares() {
+		List<Exemplar> exemplares = new ArrayList<Exemplar>();
+		for (int i = 0; i < quantidade; i++) {
+			Exemplar exemplar = new Exemplar();
+			exemplar.setObra(livro);
+			exemplar.setEhDoacao(ehDoacao);
+			if (dataAquisicao != null) {
+				Calendar c = GregorianCalendar.getInstance();
+				c.setTime(dataAquisicao);
+				exemplar.setDataAquisicao(c);
+			}
+			exemplares.add(exemplar);
+		}
+		exemplarDAO.cadastrarExemplares(exemplares);
+		ehDoacao = false;
+		dataAquisicao = null;
+		quantidade = 0;
+		updateListaExemplares();
+	}
 
-    public Livro getLivro() {
-	return livro;
-    }
+	public void gravarAutor() {
+		AutorDAO dao = new AutorDAO();
+		dao.adicionar(autorAdd);
+		livro.adicionarAutor(autorAdd);
+		autorAdd = new Autor();
+	}
 
-    public void setLivro(Livro livro) {
-	this.livro = livro;
-    }
+	public void gravarAssunto() {
+		AssuntoDAO dao = new AssuntoDAO();
+		dao.adicionar(assuntoAdd);
+		livro.adicionarAssunto(assuntoAdd);
+		assuntoAdd = new Assunto();
+	}
 
-    public List<Idioma> getIdiomas() {
-	return new DAO<Idioma>(Idioma.class).listaTodos();
-    }
+	public void gravarLocal() {
+		LocalDAO dao = new LocalDAO();
+		dao.adicionar(localAdd);
+		livro.setLocal(localAdd);
+		localAdd = new Local();
+	}
 
-    public Editora getEditoraAdd() {
-	return editoraAdd;
-    }
+	public void gravarEditora() {
+		EditoraDAO dao = new EditoraDAO();
+		dao.adicionar(editoraAdd);
+		livro.setEditora(editoraAdd);
+		editoraAdd = new Editora();
+	}
 
-    public void setEditoraAdd(Editora editoraAdd) {
-	this.editoraAdd = editoraAdd;
-    }
+	public void gravar() {
+		if (!livro.isIdNull()) {
+			livros.clear();
+		}
+		livro = livroDAO.merge(livro);
+		livros.add(0, livro);// adiciona o livro no topo da tabela.
+	}
 
-    public Local getLocalAdd() {
-	return localAdd;
-    }
+	public List<Livro> getListaLivros() {
+//		if (isbnFilter != null && isbnFilter.length() > 0)
+//			livros = livroDAO.likeByISBN(isbnFilter);
+//		else if (tituloFilter != null && tituloFilter.length() > 0)
+//			livros = livroDAO.likeByTitulo(tituloFilter);
+//		else
+			if (livros.isEmpty())
+			livros = livroDAO.listarLivros();
+		return livros;
+	}
 
-    public void setLocalAdd(Local localAdd) {
-	this.localAdd = localAdd;
-    }
+	public List<Editora> autocompleteEditoraByNome(String nome) {
+		return new EditoraDAO().likeByNome(nome);
+	}
 
-    public Assunto getAssuntoAdd() {
-	return assuntoAdd;
-    }
+	public List<Local> autocompleteLocalByNome(String nome) {
+		return new LocalDAO().likeByNome(nome);
+	}
 
-    public void setAssuntoAdd(Assunto assuntoAdd) {
-	this.assuntoAdd = assuntoAdd;
-    }
+	public List<Autor> autocompleteAutorByNome(String nome) {
+		return new AutorDAO().likeByNome(nome);
+	}
 
-    public Autor getAutorAdd() {
-	return autorAdd;
-    }
+	public List<Assunto> autocompleteAssuntoByNome(String nome) {
+		return new AssuntoDAO().likeByNome(nome);
+	}
 
-    public void setAutorAdd(Autor autorAdd) {
-	this.autorAdd = autorAdd;
-    }
+	public List<Exemplar> getExemplares() {
+		return exemplares;
+	}
+	
+	public Livro getLivro() {
+		return livro;
+	}
 
-    public String getTituloFilter() {
-	return tituloFilter;
-    }
+	public void setLivro(Livro livro) {
+		this.livro = livro;
+	}
 
-    public void setTituloFilter(String tituloFilter) {
-	this.tituloFilter = tituloFilter;
-    }
+	public List<Idioma> getIdiomas() {
+		return new DAO<Idioma>(Idioma.class).listaTodos();
+	}
 
-    public String getIsbnFilter() {
-	return isbnFilter;
-    }
+	public Editora getEditoraAdd() {
+		return editoraAdd;
+	}
 
-    public void setIsbnFilter(String isbnFilter) {
-	this.isbnFilter = isbnFilter;
-    }
+	public void setEditoraAdd(Editora editoraAdd) {
+		this.editoraAdd = editoraAdd;
+	}
 
-    public int getQuantidade() {
-        return quantidade;
-    }
+	public Local getLocalAdd() {
+		return localAdd;
+	}
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
+	public void setLocalAdd(Local localAdd) {
+		this.localAdd = localAdd;
+	}
 
-    public boolean isEhDoacao() {
-        return ehDoacao;
-    }
+	public Assunto getAssuntoAdd() {
+		return assuntoAdd;
+	}
 
-    public void setEhDoacao(boolean ehDoacao) {
-        this.ehDoacao = ehDoacao;
-    }
+	public void setAssuntoAdd(Assunto assuntoAdd) {
+		this.assuntoAdd = assuntoAdd;
+	}
 
-    public Date getDataAquisicao() {
-        return dataAquisicao;
-    }
+	public Autor getAutorAdd() {
+		return autorAdd;
+	}
 
-    public void setDataAquisicao(Date dataAquisicao) {
-        this.dataAquisicao = dataAquisicao;
-    }
+	public void setAutorAdd(Autor autorAdd) {
+		this.autorAdd = autorAdd;
+	}
+
+	public String getTituloFilter() {
+		return tituloFilter;
+	}
+
+	public void setTituloFilter(String tituloFilter) {
+		this.tituloFilter = tituloFilter;
+	}
+
+	public String getIsbnFilter() {
+		return isbnFilter;
+	}
+
+	public void setIsbnFilter(String isbnFilter) {
+		this.isbnFilter = isbnFilter;
+	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public boolean isEhDoacao() {
+		return ehDoacao;
+	}
+
+	public void setEhDoacao(boolean ehDoacao) {
+		this.ehDoacao = ehDoacao;
+	}
+
+	public Date getDataAquisicao() {
+		return dataAquisicao;
+	}
+
+	public void setDataAquisicao(Date dataAquisicao) {
+		this.dataAquisicao = dataAquisicao;
+	}
 }

@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import ma.cultura.emem.modelo.Exemplar;
+import ma.cultura.emem.modelo.Obra;
 
 public class ExemplarDAO extends DAO<Exemplar> {
 
@@ -26,6 +27,7 @@ public class ExemplarDAO extends DAO<Exemplar> {
 	em.getTransaction().begin();
 	
 	for(Exemplar ex: exemplares){
+		System.out.println("...id obra "+ex.getObra().getId());
 	    em.persist(ex);
 	    System.out.println("................persist exemplar");
 	}

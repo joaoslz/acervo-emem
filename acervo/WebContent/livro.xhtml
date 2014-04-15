@@ -97,7 +97,7 @@
 
 		<!--DIALOG EDITORA........................................................................................... -->
 		<p:dialog header="Cadastro de Editora" widgetVar="dlgNovaEditora"
-			resizable="false">
+			resizable="false" modal="true">
 			<h:form>
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Nome:" for="nome" />
@@ -118,7 +118,7 @@
 
 		<!-- DIALOG LOCAL............................................................................................ -->
 		<p:dialog header="Cadastro de Local" widgetVar="dlgNovoLocal"
-			resizable="false">
+			resizable="false" modal="true">
 			<h:form>
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Nome:" for="nome" />
@@ -136,7 +136,7 @@
 
 		<!-- DIALOG AUTOR............................................................................................ -->
 		<p:dialog header="Cadastro de Autor" widgetVar="dlgNovoAutor"
-			resizable="false">
+			resizable="false" modal="true">
 			<h:form>
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Nome:" for="nome" />
@@ -153,7 +153,7 @@
 
 		<!-- DIALOG ASSUNTO.......................................................................................... -->
 		<p:dialog header="Cadastro de Assunto" widgetVar="dlgNovoAssunto"
-			resizable="false">
+			resizable="false" modal="true">
 			<h:form>
 				<p:messages id="messages" autoUpdate="true" />
 				<h:panelGrid columns="2">
@@ -171,8 +171,7 @@
 
 		<!-- DIALOG EXEMPLARES...................................................................................... -->
 
-		<p:dialog header="Cadastro de Exemplares" widgetVar="dlgExemplares"
-			resizable="false">
+		<p:dialog header="Cadastro de Exemplares" widgetVar="dlgExemplares" resizable="false" closable="false" modal="true">
 			<h:form id="formExemplares">
 
 				<b><h:outputText value="Título: " /></b>
@@ -181,7 +180,7 @@
 				<b><h:outputText value="ISBN: " /></b>
 				<h:outputText value="#{livroBean.livro.isbn}" />
 
-				<p:panelGrid columns="2">
+				<p:panelGrid columns="2" style="margin-bottom:2px;">
 					<f:facet name="header"> Dados do Exemplar</f:facet>
 					<h:outputText value="Quantidade: " />
 					<p:spinner value="#{livroBean.quantidade}" max="300" min="1" />
@@ -191,11 +190,17 @@
 
 					<h:outputText value="É Doaçao? " />
 					<p:selectBooleanCheckbox value="#{livroBean.ehDoacao}" />
-					<p:commandButton value="Gravar"
-						action="#{livroBean.cadastrarExemplares}"
-						update="@form :formExemplares:tabelaExemplares" />
 				</p:panelGrid>
 
+				<p:commandButton value="Gravar"
+						action="#{livroBean.cadastrarExemplares}"
+						update="@form :formExemplares:tabelaExemplares" />
+				<p:commandButton value="Sair"
+						action="#{livroBean.limparFormLivro}"
+						oncomplete="dlgExemplares.hide()"
+						update=":formLivro" />
+						
+				<br /><br />
 				<p:dataTable id="tabelaExemplares" value="#{livroBean.exemplares}"
 					var="exemplar" emptyMessage="Nenhum Exemplar cadastrado"
 					editable="true">
@@ -250,17 +255,26 @@
 			</h:form>
 		</p:dialog>
 
+		<!-- DIALOG DESEJA CADASTRAR EXEMPLARES...................................................................... -->
+		<p:dialog header="Deseja cadastrar algum exemplar?" widgetVar="dlgConfirmaExemplares" closable="false" modal="true" resizable="false">
+			<h:form>
+				<h:panelGrid columns="3">
+					<p:outputLabel value="Deseja cadastrar algum exemplar? " />
 
+					<p:commandButton value="Sim" oncomplete="dlgConfirmaExemplares.hide();dlgExemplares.show()"  process="@form" update=":formExemplares"/>
+					<p:commandButton value="Não" oncomplete="dlgConfirmaExemplares.hide();" actionListener="#{livroBean.limparFormLivro}" process="@form" update=":formLivro"/>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		
 		<!-- DIALOG CADASTRO DE LIVRO................................................................................ -->
 		<h:form id="formLivro">
 			<p:dialog header="Cadastro de Livro" widgetVar="dlgNovoLivro"
-				resizable="false">
+				resizable="false" modal="true" closable="false">
 
 				<p:messages id="messages" autoUpdate="true" />
 
 				<!-- ....LIMPA O FORMULARIO AO FECHAR A CAIXA DE DIALOGO.... -->
-				<p:ajax event="close" update=":formLivro"
-					listener="#{livroBean.novoLivroOnClose}" />
 
 				<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
 				<p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
@@ -366,8 +380,12 @@
 					rendered="#{not empty livroBean.livro.id}" />
 
 				<p:commandButton value="Gravar" action="#{livroBean.gravar}"
-					oncomplete="dlgNovoLivro.hide();" process="@form"
+					oncomplete="dlgNovoLivro.hide();dlgConfirmaExemplares.show()" process="@form"
 					update="@form :tabelaLivros" rendered="#{empty livroBean.livro.id}" />
+				<p:commandButton value="Sair" immediate="true"
+						action="#{livroBean.limparFormLivro}"
+						onclick="dlgExemplares.hide()"
+						update="@form" />
 
 			</p:dialog>
 		</h:form>
