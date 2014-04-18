@@ -22,8 +22,8 @@
 					<p:inputText value="#{livroBean.isbnFilter}" />
 					<p:commandButton icon="ui-icon-search" value="Pesquisar Livro"
 						process="@form" update="@form :tabelaLivros" />
-					<p:commandButton id="showAddLivroButton" type="button"
-						immediate="true" icon="ui-icon-plus" onclick="dlgNovoLivro.show()"
+					<p:commandButton id="showAddLivroButton" type="button" immediate="true" 
+						icon="ui-icon-plus" onclick="dlgNovoLivro.show()"
 						value="Adicionar Livro">
 					</p:commandButton>
 				</p:panelGrid>
@@ -383,7 +383,7 @@
 					oncomplete="dlgNovoLivro.hide();dlgConfirmaExemplares.show()" process="@form"
 					update="@form :tabelaLivros" rendered="#{empty livroBean.livro.id}" />
 				<p:commandButton value="Sair" immediate="true"
-						action="#{livroBean.limparFormLivro}"
+				        action="#{livroBean.limparFormLivro}"
 						onclick="dlgExemplares.hide()"
 						update="@form" />
 

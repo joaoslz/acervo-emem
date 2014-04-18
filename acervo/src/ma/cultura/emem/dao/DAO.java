@@ -1,14 +1,16 @@
 package ma.cultura.emem.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Order;
 
-public class DAO<T> {
-
-    private final Class<T> classe;
+public class DAO<T> implements Serializable {
+  
+	private static final long serialVersionUID = -9031198792219176964L;
+	
+	private final Class<T> classe;
 
     public DAO(Class<T> classe) {
 	this.classe = classe;

@@ -34,6 +34,7 @@ public class Obra implements Serializable {
 	private Short numPaginas;
 	private Short edicao;
 	private boolean ehIlustrado;
+	private Short volume;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dataCadastro = Calendar.getInstance();
@@ -57,6 +58,7 @@ public class Obra implements Serializable {
 
 	@ManyToOne
 	private Local local;
+
 
 	public Integer getId() {
 		return id;
@@ -182,5 +184,13 @@ public class Obra implements Serializable {
 	
 	public boolean isIdNull(){
 	    return id == null || id.intValue() == 0;
+	}
+
+	public Short getVolume() {
+	return volume;
+	}
+
+	public void setVolume(Short volume) {
+	this.volume = volume;
 	}
 }

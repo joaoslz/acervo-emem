@@ -14,11 +14,13 @@ import javax.persistence.OneToMany;
 @DiscriminatorValue(value = "periodico")
 public class Periodico extends Obra {
 
-    private static final long serialVersionUID = -1L;
-
-    private String issn;
-    private short volume;
-
+   
+	private static final long serialVersionUID = -112232541131788319L;
+	
+	private String issn;
+	
+	private Boolean ehAssinado;
+	
     @OneToMany(mappedBy = "periodico")
     private List<Artigo> artigos = new ArrayList<Artigo>();
 
@@ -34,14 +36,6 @@ public class Periodico extends Obra {
 	this.issn = issn;
     }
 
-    public short getVolume() {
-	return volume;
-    }
-
-    public void setVolume(short volume) {
-	this.volume = volume;
-    }
-
     public List<Artigo> getArtigos() {
 	return artigos;
     }
@@ -53,5 +47,13 @@ public class Periodico extends Obra {
     public void adicionaArtigo(Artigo artigo) {
 	artigos.add(artigo);
     }
+
+	public Boolean getEhAssinado() {
+		return ehAssinado;
+	}
+
+	public void setEhAssinado(Boolean ehAssinado) {
+		this.ehAssinado = ehAssinado;
+	}
 
 }

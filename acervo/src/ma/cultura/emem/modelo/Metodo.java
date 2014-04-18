@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 @DiscriminatorValue(value = "metodo")
 public class Metodo extends Livro {
 
+	private static final long serialVersionUID = 4617237052504448138L;
 
-    //private String instrumento ?????
-    //private String genero      ?????
 }
