@@ -12,9 +12,6 @@ import javax.faces.bean.SessionScoped;
 // vive dentro da sessão Http
 public class TemaBean implements Serializable {
 
-    /**
-	 * 
-	 */
     private static final long serialVersionUID = 6524926347903947083L;
     private String tema = "aristo"; // tema padrão
 

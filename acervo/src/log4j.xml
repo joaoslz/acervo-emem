@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<!--
+	Notas de Esclarecimento:	
+	
+	threshold: Este atributo define quais níveis de log serão disponibilizados para
+	cada "logador", os loggers. Porém ele pode ser definido para cada Appender através
+	do parâmetro "<param name="threshold" value="[Nível]"/>". Se não for definido um
+	threshold para o appender ele usará o que está definido na tag 
+	"<log4j:configuration>". Se não for definido um threshold nesta tag, 
+	todos os níveis de log estarão disponíveis.	
+	
+	debug: Este atributo, quando verdadeiro(true), ativa os logs de debug do 
+	próprio log4j. Se ele não for definido, por default fica como "false".
+	
+	
+	<appender>: esta tag define um dispositivo de saída de log, como Console, arquivo...
+	<layout>: esta tag define o formato do texto de saída, Simples, Html, xml...
+	
+	<logger>: esta tag permite fazer configurações específicas para cada logador 
+	da aplicação, como definir um nível para cada um deles. O logador é identificado
+	pelo nome que foi definido na criação do objeto 
+	(geralmente é o nome do pacote onde ele está). Se esta tag não for definia, 
+	o logador usará as configuraçõe do logador root.
+	
+	<root>: Define as configurações defaults dos logadores, pois este é um logar raíz,
+	ou seja, todos os outros herdam suas características.
+	
+	<appender-ref>: define quais os dispositivos de saída os logadores utilizarão. 
+	Esta tag pode ser usada na tag <logger>, ou seja, cada logador pode ter um
+	dispositivo de saída diferente.
+	
+	Expressões de Layout:
+	%c = nome do logador; 
+	%C = nome da classe onde o logador foi chamado;
+	%d = data/hora; 
+	%F = Nome do arquivo onde o logador foi chamado;
+	%L = Linha em que o logador foi chamado; 
+	%m = mensagem do logador;
+	%M = nome do método onde o logador foi chamado;
+	%n = Quebra de linha;
+	%p = níveis da mensagem; 
+	%r = milisegundos desde o inicio da aplicação até o momento do log.
+	%t = Nome da linha(thread) de execução que gerou o log;
+	%x = 
+	%X = 
+-->
+<log4j:configuration threshold="debug" debug="false" xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+		<param name="threshold" value="debug" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="LOGGER: %c%nDATA : %d%n%p : %l%nMSG : %m%n%n" />
+		</layout>
+	</appender>
+
+<!-- Coloquei debug apenas para o pacote emem. -->
+	<logger name="ma.cultura.emem">
+		<level value="debug" />
+	</logger>
+	
+<!-- Para qualquer outra classe ficará como warn. (logs de outros pacotes, ou libs) -->
+	<root>
+		<level value="warn" />
+		<appender-ref ref="STDOUT" />		
+	</root>
+
+</log4j:configuration>
