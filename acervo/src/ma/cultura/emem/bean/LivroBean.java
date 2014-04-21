@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import ma.cultura.emem.dao.AssuntoDAO;
 import ma.cultura.emem.dao.AutorDAO;
@@ -25,15 +26,18 @@ import ma.cultura.emem.modelo.Idioma;
 import ma.cultura.emem.modelo.Livro;
 import ma.cultura.emem.modelo.Local;
 
+import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
 @ManagedBean
 @ViewScoped
 public class LivroBean implements Serializable {
 
+	private static final Logger LOGGER = Logger.getLogger(LivroBean.class);
 	private static final long serialVersionUID = 8700247630376010790L;
-	
-//	DAOs
+
+	//	DAOs
 	private LivroDAO livroDAO = new LivroDAO();
 	private ExemplarDAO exemplarDAO = new ExemplarDAO();
 	// Campos para pesquisa
@@ -55,21 +59,24 @@ public class LivroBean implements Serializable {
 	// POJO para o cadastro de livro
 	private Livro livro = new Livro();
 
-	// livros para o datatable.
+	// livros para o datatable
 	private List<Livro> livros = new ArrayList<Livro>();
 
 	public LivroBean(){
-		System.out.println("...LivroBean criado!");
+		LOGGER.debug("...LivroBean criado!");
+	}
+
+	public void pesquisarLivros(){
+		if (isbnFilter != null && isbnFilter.length() > 0)
+			livros = livroDAO.likeByISBN(isbnFilter);
+		else if (tituloFilter != null && tituloFilter.length() > 0)
+			livros = livroDAO.likeByTitulo(tituloFilter);
+	}
+
+	public void limparListaExemplares(){
+		exemplares.clear();
 	}
 	
-	@Override
-	protected void finalize() throws Throwable {
-		System.out.println("...LivroBean destruído!");
-		super.finalize();
-	}
-
-
-
 	public void updateListaExemplares() {
 		exemplares = exemplarDAO.listarExemplaresByLivroId(livro.getId());
 	}
@@ -90,6 +97,10 @@ public class LivroBean implements Serializable {
 	 */
 	public void limparFormLivro() {
 		livro = new Livro();
+		//Limpa os dados do SubmmitedValue. (Ver pag. 145 apostila da caelum jsf+cdi)
+		//Ao usar o immediate=true
+//		FacesContext.getCurrentInstance().getViewRoot().getChildren().clear();
+		LOGGER.debug("limparFormLivro...");
 	}
 
 	public void cadastrarExemplares() {
@@ -141,21 +152,41 @@ public class LivroBean implements Serializable {
 	}
 
 	public void gravar() {
-		if (!livro.isIdNull()) {
-			livros.clear();
-		}
+		//se já possui um id é uma edição de livro(autalização), senão é um novo livro sendo cadastrado.
+		boolean isEdicao = !livro.isIdNull();
+		
 		livro = livroDAO.merge(livro);
-		livros.add(0, livro);// adiciona o livro no topo da tabela.
+
+		if (isEdicao) {
+			//Replace em caso de edição de livro.
+			int index = livros.indexOf(livro);
+			livros.remove(index);
+			livros.add(index, livro);
+			limparFormLivro();
+		}else{
+			//add em caso de novo livro.
+			livros.add(0, livro);
+			//XXX Chamando o dialogo aqui para correção de um bug.
+			//BUG: Ao chamar o dialogo direto do <p:commandButton há uma falha com relação a validação.
+			//Pois mesmo que haja erro de validação, ele continua executando a exibição do dialogo.
+			//SOLUÇÃO: Ao chamar o dialogo aqui no bean o problema é corrigido, pois o JSF não executa 
+			//o método gravar caso haja erro de validação.
+			RequestContext.getCurrentInstance().execute("dlgConfirmaExemplares.show()");
+		}
+	}
+	
+	public String getStringBotaoGravar(){
+		if(livro.isIdNull())
+			return "Gravar";
+		else
+			return "Gravar Alterações";
 	}
 
 	public List<Livro> getListaLivros() {
-//		if (isbnFilter != null && isbnFilter.length() > 0)
-//			livros = livroDAO.likeByISBN(isbnFilter);
-//		else if (tituloFilter != null && tituloFilter.length() > 0)
-//			livros = livroDAO.likeByTitulo(tituloFilter);
-//		else
-			if (livros.isEmpty())
+		if (livros.isEmpty()){
 			livros = livroDAO.listarLivros();
+			LOGGER.debug("buscando lista de livros... size: " + livros.size());
+		}
 		return livros;
 	}
 
@@ -178,7 +209,7 @@ public class LivroBean implements Serializable {
 	public List<Exemplar> getExemplares() {
 		return exemplares;
 	}
-	
+
 	public Livro getLivro() {
 		return livro;
 	}

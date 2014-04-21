@@ -10,7 +10,12 @@ import ma.cultura.emem.modelo.Assunto;
 import ma.cultura.emem.modelo.Autor;
 import ma.cultura.emem.modelo.Livro;
 
+import org.apache.log4j.Logger;
+
 public class LivroDAO extends DAO<Livro> {
+	
+	private static final long serialVersionUID = -3418373953576656728L;
+	private static final Logger LOGGER = Logger.getLogger(LivroDAO.class);
 
 	public LivroDAO() {
 		super(Livro.class);
@@ -66,7 +71,7 @@ public class LivroDAO extends DAO<Livro> {
 		TypedQuery<Livro> query = em.createQuery(consulta, Livro.class);
 		query.setMaxResults(5);
 		List<Livro> listaObras = query.getResultList();
-
+		LOGGER.debug("RESULT SIZE: " + listaObras.size());
 		em.close();
 
 		return listaObras;

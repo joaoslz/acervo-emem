@@ -47,7 +47,7 @@ public class Autor implements Serializable {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof Autor))
 			return false;
 		Autor other = (Autor) obj;
 		if (id == null) {

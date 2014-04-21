@@ -1,5 +1,7 @@
 package ma.cultura.emem.modelo;
 
+import java.util.Iterator;
+
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
@@ -50,9 +52,48 @@ public class Livro extends Obra {
 	public void setSerie(String serie) {
 		this.serie = serie;
 	}
+	
+	public String getAutoresToString(){
+		StringBuilder builder = new StringBuilder();
+		if(getAutores() != null){
+			Iterator<Autor> it = getAutores().iterator();
+			while(it.hasNext()){
+				Autor a = it.next();
+				builder.append(a.getNome());
+				if(it.hasNext()){
+					builder.append(", ");
+				}
+			}
+		}
+		return builder.toString();
+	}
 
+	public String getAssuntosToString(){
+		StringBuilder builder = new StringBuilder();
+		if(getAssuntos() != null){
+			Iterator<Assunto> it = getAssuntos().iterator();
+			while(it.hasNext()){
+				Assunto a = it.next();
+				builder.append(a.getAssunto());
+				if(it.hasNext()){
+					builder.append(", ");
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
 	@Override
 	public String toString() {
 	    return super.getTitulo();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Livro){
+			Livro livro = (Livro) obj;
+			return this.getId().equals(livro.getId());
+		}else
+			return false;
 	}
 }
