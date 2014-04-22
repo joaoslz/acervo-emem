@@ -20,7 +20,7 @@
 					</p:selectOneMenu>
 
 					<p:inputText id="txtPesquisa"
-						value="#{pesquisaObraBean.titulo}" required="true"
+						value="#{pesquisaObraBean.titulo}" required="true" requiredMessage="Você deve digitar algum texto para pesquisa"
 						size="60"></p:inputText>
 
 					<p:commandButton value="Buscar" process="" update="tabelaObras" />

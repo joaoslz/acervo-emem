@@ -3,6 +3,8 @@ package ma.cultura.emem.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -10,87 +12,82 @@ import org.apache.log4j.Logger;
 
 public class DAO<T> implements Serializable {
 
+	private static final long serialVersionUID = -4361432740747336731L;
+
 	private static final Logger LOGGER = Logger.getLogger(DAO.class);
-	private static final long serialVersionUID = -9031198792219176964L;
 
 	private final Class<T> classe;
+
+	@Inject
+	@SessionScoped //FIXME remover este session scoped (apenas teste)
+	protected EntityManager em;
 
 	public DAO(Class<T> classe) {
 		this.classe = classe;
 	}
 
 	public void adicionar(T t) {
-
-		// consegue a entity manager
-		EntityManager em = JPAUtil.getInstance().getEntityManager();
-
-		// abre transacao
 		em.getTransaction().begin();
-
-		// persiste o objeto
 		em.persist(t);
-
-		// commita a transacao
 		em.getTransaction().commit();
-
-		// fecha a entity manager
-		em.close();
 	}
 
-	public void remove(T t) {
-		EntityManager em = JPAUtil.getInstance().getEntityManager();
+	public T atualizar(T t) {
 		em.getTransaction().begin();
-
-		em.remove(em.merge(t));
-
-		em.getTransaction().commit();
-		em.close();
-	}
-
-	public void atualiza(T t) {
-		EntityManager em = JPAUtil.getInstance().getEntityManager();
-		em.getTransaction().begin();
-
 		em.merge(t);
-		LOGGER.debug("merge: " + t);
 		em.getTransaction().commit();
-		em.close();
+		return t;
 	}
 
-	public List<T> listaTodos() {
-		EntityManager em = JPAUtil.getInstance().getEntityManager();
-		CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
-		query.select(query.from(classe));
+	public void remover(T t) {
+		em.getTransaction().begin();
+		em.remove(em.merge(t));
+		em.getTransaction().commit();
+	}
 
-		List<T> lista = em.createQuery(query).getResultList();
-
-		em.close();
+	public List<T> listarTodos() {
+		// IMPORTANTE:Cada entidade deve implementar a named query listarTodos 
+		// com um atributo estatico NAMED_QUERY_LISTAR_TODOS para o nome da query.
+		List<T> lista = null;
+		try {
+			// pega o valor do atributo NAMED_QUERY_LISTAR_TODOS.
+			String namedQuery = classe.getField("NAMED_QUERY_LISTAR_TODOS").get(null).toString();
+			lista = em.createNamedQuery(namedQuery, classe).getResultList();
+		} catch (Exception e) {
+			LOGGER.error("Erro ao criar named query NAMED_QUERY_LISTAR_TODOS para a classe" + classe.getName(), e);
+		}
 		return lista;
 	}
 
-	public T buscaPorId(Object id) {
-		EntityManager em = JPAUtil.getInstance().getEntityManager();
-		T instancia = em.find(classe, id);
-		em.close();
-		return instancia;
+	public List<T> listarTodos(int maxResult) {
+		// IMPORTANTE:Cada entidade deve implementar a named query listarTodos 
+		// com um atributo estatico NAMED_QUERY_LISTAR_TODOS para o nome da query.
+		List<T> lista = null;
+		try {
+			// pega o valor do atributo NAMED_QUERY_LISTAR_TODOS.
+			String namedQuery = classe.getField("NAMED_QUERY_LISTAR_TODOS").get(null).toString();
+			lista = em.createNamedQuery(namedQuery, classe).setMaxResults(maxResult).getResultList();
+			LOGGER.debug("lista com max result: " + maxResult);
+		} catch (Exception e) {
+			LOGGER.error("Erro ao criar named query NAMED_QUERY_LISTAR_TODOS para a classe" + classe.getName(), e);
+		}
+		return lista;
 	}
 
-	public int contaTodos() {
-		EntityManager em = JPAUtil.getInstance().getEntityManager();
-		long result = (Long) em.createQuery("select count(n) from livro n").getSingleResult();
-		em.close();
-
-		return (int) result;
-	}
-
-	public List<T> listaTodosPaginada(int firstResult, int maxResults) {
-		EntityManager em = JPAUtil.getInstance().getEntityManager();
+	public List<T> listarPorPagina(int firstResult, int maxResultsByPage) {
 		CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
 		query.select(query.from(classe));
-
-		List<T> lista = em.createQuery(query).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
-
-		em.close();
+		List<T> lista = em.createQuery(query).setFirstResult(firstResult).setMaxResults(maxResultsByPage).getResultList();
+		LOGGER.debug("utilizando lista paginada...");
 		return lista;
+	}
+
+	public T buscarPorId(Object id) {
+		return em.find(classe, id);
+	}
+
+	public int contarTodos() {
+		String hql = "select count(n) from " + classe.getSimpleName() + " n";
+		return Integer.parseInt(em.createQuery(hql).getSingleResult().toString());
 	}
 }

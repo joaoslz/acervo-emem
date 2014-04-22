@@ -4,24 +4,27 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
+import javax.enterprise.context.ConversationScoped;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import ma.cultura.emem.dao.AssuntoDAO;
 import ma.cultura.emem.modelo.Assunto;
 
 import org.primefaces.event.RowEditEvent;
 
-@ManagedBean
-@ViewScoped
+@Named
+@ConversationScoped
 public class AssuntoBean implements Serializable {
 
 	private static final long serialVersionUID = 3905906075866017417L;
 
-	private AssuntoDAO assuntoDAO = new AssuntoDAO();
+	@Inject
+	private AssuntoDAO assuntoDAO;
 	private Assunto assunto = new Assunto();
 	private List<Assunto> assuntos = new ArrayList<Assunto>();
-
+	
 
 	/**
 	 * Método para editar o assunto direto da tabela.
@@ -30,11 +33,11 @@ public class AssuntoBean implements Serializable {
 	 */
 	public void editAssunto(RowEditEvent event) {
 		Assunto a = (Assunto) event.getObject();
-		assuntoDAO.atualiza(a);
+		assuntoDAO.atualizar(a);
 	}
 
 	public void updateListaAssuntos(){
-		assuntos = assuntoDAO.listarAssuntosPorIdEmOrdemDec();
+		assuntos = assuntoDAO.listarTodos();
 	}
 
 	public void gravar() {

@@ -2,27 +2,22 @@ package ma.cultura.emem.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import ma.cultura.emem.modelo.Obra;
 
 public class ObraDAO extends DAO<Obra> {
 
-    public ObraDAO(Class<Obra> classe) {
-	super(classe);
-    }
+	private static final long serialVersionUID = 4643738850166344000L;
 
-    public List<Obra> buscaPorTitulo(String titulo) {
-	String consulta = "select o from Obra o where o.titulo like :titulo";
+	
+	public ObraDAO() {
+		super(Obra.class);
+	}
 
-	EntityManager em = JPAUtil.getInstance().getEntityManager();
-	TypedQuery<Obra> query = em.createQuery(consulta, Obra.class);
-	query.setParameter("titulo", "%" + titulo + "%");
-	List<Obra> listaObras = query.getResultList();
-
-	em.close();
-
-	return listaObras;
-    }
+	public List<Obra> pesquisarPorTitulo(String titulo) {
+		TypedQuery<Obra> query = em.createNamedQuery(Obra.NAMED_QUERY_PESQUISAR_POR_TITULO, Obra.class);
+		query.setParameter("titulo", "%" + titulo + "%");
+		return query.getResultList();
+	}
 }

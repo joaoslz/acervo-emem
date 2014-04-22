@@ -74,7 +74,7 @@
 							<p:autoComplete value="#{livroBean.livro.editora}" id="editora"
 								completeMethod="#{livroBean.autocompleteEditoraByNome}" var="e"
 								itemLabel="#{e.nome}" itemValue="#{e}"
-								converter="editoraConverter" forceSelection="true" />
+								converter="#{editoraConverter}" forceSelection="true" />
 							<p:commandButton type="button" id="showAddEditoraButton"
 								icon="ui-icon-plus" immediate="true" title="Adicionar Editora"
 								onclick="dlgNovaEditora.show();" />
@@ -84,7 +84,7 @@
 						<p:column>
 							<p:autoComplete id="autores" value="#{livroBean.livro.autores}"
 								completeMethod="#{livroBean.autocompleteAutorByNome}" var="a"
-								itemLabel="#{a.nome}" itemValue="#{a}" converter="autorConverter"
+								itemLabel="#{a.nome}" itemValue="#{a}" converter="#{autorConverter}"
 								forceSelection="true" multiple="true" />
 							<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
 								process="formLivro:autores" title="Adicionar Autor"
@@ -98,7 +98,7 @@
 						<p:column>
 							<p:autoComplete value="#{livroBean.livro.local}" id="local"
 								completeMethod="#{livroBean.autocompleteLocalByNome}" var="l"
-								itemLabel="#{l.nome}" itemValue="#{l}" converter="localConverter" />
+								itemLabel="#{l.nome}" itemValue="#{l}" converter="#{localConverter}" />
 							<p:commandButton id="showAddLocalButton" icon="ui-icon-plus"
 								immediate="true" title="Adicionar Local"
 								onclick="dlgNovoLocal.show()" />
@@ -107,9 +107,9 @@
 						<p:outputLabel value="Assuntos" for="assuntos" />
 						<p:column>
 							<p:autoComplete id="assuntos" value="#{livroBean.livro.assuntos}"
-								completeMethod="#{livroBean.autocompleteAssuntoByNome}" var="a"
+								completeMethod="#{livroBean.autocompleteAssuntoByAssunto}" var="a"
 								itemLabel="#{a.assunto}" itemValue="#{a}"
-								converter="assuntoConverter" forceSelection="true"
+								converter="#{assuntoConverter}" forceSelection="true"
 								multiple="true" />
 							<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
 								process="formLivro:assuntos" title="Adicionar Assunto"

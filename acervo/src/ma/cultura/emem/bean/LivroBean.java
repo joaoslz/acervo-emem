@@ -7,13 +7,12 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
+import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import ma.cultura.emem.dao.AssuntoDAO;
 import ma.cultura.emem.dao.AutorDAO;
-import ma.cultura.emem.dao.DAO;
 import ma.cultura.emem.dao.EditoraDAO;
 import ma.cultura.emem.dao.ExemplarDAO;
 import ma.cultura.emem.dao.LivroDAO;
@@ -22,7 +21,6 @@ import ma.cultura.emem.modelo.Assunto;
 import ma.cultura.emem.modelo.Autor;
 import ma.cultura.emem.modelo.Editora;
 import ma.cultura.emem.modelo.Exemplar;
-import ma.cultura.emem.modelo.Idioma;
 import ma.cultura.emem.modelo.Livro;
 import ma.cultura.emem.modelo.Local;
 
@@ -30,16 +28,27 @@ import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
-@ManagedBean
-@ViewScoped
+@Named
+@ConversationScoped
 public class LivroBean implements Serializable {
 
 	private static final Logger LOGGER = Logger.getLogger(LivroBean.class);
 	private static final long serialVersionUID = 8700247630376010790L;
 
 	//	DAOs
-	private LivroDAO livroDAO = new LivroDAO();
-	private ExemplarDAO exemplarDAO = new ExemplarDAO();
+	@Inject
+	private LivroDAO livroDAO;
+	@Inject
+	private AutorDAO autorDAO;
+	@Inject
+	private EditoraDAO editoraDAO;
+	@Inject
+	private AssuntoDAO assuntoDAO;
+	@Inject
+	private LocalDAO localDAO;
+	@Inject
+	private ExemplarDAO exemplarDAO;
+	
 	// Campos para pesquisa
 	private String tituloFilter;
 	private String isbnFilter;
@@ -68,17 +77,22 @@ public class LivroBean implements Serializable {
 
 	public void pesquisarLivros(){
 		if (isbnFilter != null && isbnFilter.length() > 0)
-			livros = livroDAO.likeByISBN(isbnFilter);
-		else if (tituloFilter != null && tituloFilter.length() > 0)
-			livros = livroDAO.likeByTitulo(tituloFilter);
+			livros = livroDAO.pesquisarPorISBN(isbnFilter);
+//		TODO implementar consulta por título no DAO.
+//		else if (tituloFilter != null && tituloFilter.length() > 0)
+//			livros = livroDAO.likeByTitulo(tituloFilter);
 	}
 
+	public void limparFormLivro() {
+		livro = new Livro();
+		LOGGER.debug("limparFormLivro...");
+	}
 	public void limparListaExemplares(){
 		exemplares.clear();
 	}
 	
 	public void updateListaExemplares() {
-		exemplares = exemplarDAO.listarExemplaresByLivroId(livro.getId());
+		exemplares = exemplarDAO.pesquisarExemplaresPorObra(livro.getId());
 	}
 
 	/**
@@ -88,19 +102,7 @@ public class LivroBean implements Serializable {
 	 */
 	public void editExempar(RowEditEvent event) {
 		Exemplar e = (Exemplar) event.getObject();
-		exemplarDAO.merge(e);
-	}
-
-	/**
-	 * Método para limpar o formulário de cadastro de livro no momento da
-	 * abertura.
-	 */
-	public void limparFormLivro() {
-		livro = new Livro();
-		//Limpa os dados do SubmmitedValue. (Ver pag. 145 apostila da caelum jsf+cdi)
-		//Ao usar o immediate=true
-//		FacesContext.getCurrentInstance().getViewRoot().getChildren().clear();
-		LOGGER.debug("limparFormLivro...");
+		exemplarDAO.atualizar(e);
 	}
 
 	public void cadastrarExemplares() {
@@ -116,7 +118,7 @@ public class LivroBean implements Serializable {
 			}
 			exemplares.add(exemplar);
 		}
-		exemplarDAO.cadastrarExemplares(exemplares);
+		exemplarDAO.adicionarExemplares(exemplares);
 		ehDoacao = false;
 		dataAquisicao = null;
 		quantidade = 0;
@@ -124,29 +126,25 @@ public class LivroBean implements Serializable {
 	}
 
 	public void gravarAutor() {
-		AutorDAO dao = new AutorDAO();
-		dao.adicionar(autorAdd);
+		autorDAO.adicionar(autorAdd);
 		livro.adicionarAutor(autorAdd);
 		autorAdd = new Autor();
 	}
 
 	public void gravarAssunto() {
-		AssuntoDAO dao = new AssuntoDAO();
-		dao.adicionar(assuntoAdd);
+		assuntoDAO.adicionar(assuntoAdd);
 		livro.adicionarAssunto(assuntoAdd);
 		assuntoAdd = new Assunto();
 	}
 
 	public void gravarLocal() {
-		LocalDAO dao = new LocalDAO();
-		dao.adicionar(localAdd);
+		localDAO.adicionar(localAdd);
 		livro.setLocal(localAdd);
 		localAdd = new Local();
 	}
 
 	public void gravarEditora() {
-		EditoraDAO dao = new EditoraDAO();
-		dao.adicionar(editoraAdd);
+		editoraDAO.adicionar(editoraAdd);
 		livro.setEditora(editoraAdd);
 		editoraAdd = new Editora();
 	}
@@ -155,7 +153,7 @@ public class LivroBean implements Serializable {
 		//se já possui um id é uma edição de livro(autalização), senão é um novo livro sendo cadastrado.
 		boolean isEdicao = !livro.isIdNull();
 		
-		livro = livroDAO.merge(livro);
+		livro = livroDAO.atualizar(livro);
 
 		if (isEdicao) {
 			//Replace em caso de edição de livro.
@@ -184,26 +182,26 @@ public class LivroBean implements Serializable {
 
 	public List<Livro> getListaLivros() {
 		if (livros.isEmpty()){
-			livros = livroDAO.listarLivros();
+			livros = livroDAO.listarTodos(5);
 			LOGGER.debug("buscando lista de livros... size: " + livros.size());
 		}
 		return livros;
 	}
 
 	public List<Editora> autocompleteEditoraByNome(String nome) {
-		return new EditoraDAO().likeByNome(nome);
+		return editoraDAO.pesquisarPorNome(nome);
 	}
 
 	public List<Local> autocompleteLocalByNome(String nome) {
-		return new LocalDAO().likeByNome(nome);
+		return localDAO.pesquisarPorNome(nome);
 	}
 
 	public List<Autor> autocompleteAutorByNome(String nome) {
-		return new AutorDAO().likeByNome(nome);
+		return autorDAO.pesquisarPorNome(nome);
 	}
 
-	public List<Assunto> autocompleteAssuntoByNome(String nome) {
-		return new AssuntoDAO().likeByNome(nome);
+	public List<Assunto> autocompleteAssuntoByAssunto(String assunto) {
+		return assuntoDAO.pesquisarPorAssunto(assunto);
 	}
 
 	public List<Exemplar> getExemplares() {
@@ -216,10 +214,6 @@ public class LivroBean implements Serializable {
 
 	public void setLivro(Livro livro) {
 		this.livro = livro;
-	}
-
-	public List<Idioma> getIdiomas() {
-		return new DAO<Idioma>(Idioma.class).listaTodos();
 	}
 
 	public Editora getEditoraAdd() {

@@ -4,55 +4,58 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import ma.cultura.emem.dao.EditoraDAO;
 import ma.cultura.emem.modelo.Editora;
 
 import org.primefaces.event.RowEditEvent;
 
-@ManagedBean
-@ViewScoped
+@Named
+@ConversationScoped
 public class EditoraBean implements Serializable {
 
-    private static final long serialVersionUID = -4804077138249718146L;
-    private Editora editora = new Editora();
-    private EditoraDAO editoraDAO = new EditoraDAO();
-    private List<Editora> editoras = new ArrayList<Editora>();
-    
+	private static final long serialVersionUID = -4804077138249718146L;
 
-    public void updateListaEditoras(){
-	editoras = editoraDAO.listarTodasEditoras();
-    }
+	@Inject
+	private EditoraDAO editoraDAO;
 
-    /**
-     * Método para editar a editora direto da tabela.
-     * @param event
-     */
-    public void editEditora(RowEditEvent event) {  
-	Editora e = (Editora) event.getObject();
-	editoraDAO.merge(e);
-    }  
-    
-    public void gravar() {
-	editoraDAO.adicionar(this.editora);
-	editoras.add(0,editora);
-	this.editora = new Editora();
-    }
+	private Editora editora = new Editora();
+	private List<Editora> editoras = new ArrayList<Editora>();
 
-    public List<Editora> getEditoras(){
-	if(editoras.isEmpty())
-	    updateListaEditoras();
-	return editoras;
-    }
+	public void updateListaEditoras() {
+		editoras = editoraDAO.listarTodos();
+	}
 
-    public Editora getEditora() {
-	return editora;
-    }
+	/**
+	 * Método para editar a editora direto da tabela.
+	 * @param event
+	 */
+	public void editEditora(RowEditEvent event) {
+		Editora e = (Editora) event.getObject();
+		editoraDAO.atualizar(e);
+	}
 
-    public void setEditora(Editora editora) {
-	this.editora = editora;
-    }
+	public void gravar() {
+		editoraDAO.adicionar(this.editora);
+		editoras.add(0, editora);
+		editora = new Editora();
+	}
+
+	public List<Editora> getEditoras() {
+		if (editoras.isEmpty())
+			updateListaEditoras();
+		return editoras;
+	}
+
+	public Editora getEditora() {
+		return editora;
+	}
+
+	public void setEditora(Editora editora) {
+		this.editora = editora;
+	}
 
 }

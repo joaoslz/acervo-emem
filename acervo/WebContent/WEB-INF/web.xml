@@ -5,6 +5,9 @@
 	version="3.0">
 	<display-name>acervo</display-name>
 
+	<listener>
+		<listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
+	</listener>
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
 <!-- 		<param-value>afternoon</param-value> -->

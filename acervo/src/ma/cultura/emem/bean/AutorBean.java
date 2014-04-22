@@ -4,21 +4,23 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import ma.cultura.emem.dao.AutorDAO;
 import ma.cultura.emem.modelo.Autor;
 
 import org.primefaces.event.RowEditEvent;
 
-@ManagedBean
-@ViewScoped
+@Named
+@ConversationScoped
 public class AutorBean implements Serializable {
 
 	private static final long serialVersionUID = 3905906075866017417L;
 
-	private AutorDAO autorDAO = new AutorDAO();
+	@Inject
+	private AutorDAO autorDAO;
 	private Autor autor = new Autor();
 	private List<Autor> autores = new ArrayList<Autor>();
 
@@ -28,7 +30,7 @@ public class AutorBean implements Serializable {
      */
 	public void editAutor(RowEditEvent event) {  
 		Autor a = (Autor) event.getObject();
-		autorDAO.atualiza(a);
+		autorDAO.atualizar(a);
 	}  
 
 	public void gravar() {
@@ -40,7 +42,7 @@ public class AutorBean implements Serializable {
 	}
 
 	public void updateListaAutores() {
-		autores = autorDAO.listarAutoresPorIdEmOrdemDec();
+		autores = autorDAO.listarTodos();
 	}
 
 	public List<Autor> getAutores() {

@@ -8,13 +8,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
+@NamedQueries({ 
+	@NamedQuery(name = Exemplar.NAMED_QUERY_LISTAR_TODOS, query = "from Exemplar e order by e.id desc"),
+	@NamedQuery(name = Exemplar.NAMED_QUERY_LISTAR_POR_OBRA, query = "from Exemplar e where e.obra.id = :idObra") })
 public class Exemplar implements Serializable {
 
-    @Id
+	public static final String NAMED_QUERY_LISTAR_TODOS = "Exemplar.listarTodos";
+	public static final String NAMED_QUERY_LISTAR_POR_OBRA = "Exemplar.listarPorObra";
+	
+	private static final long serialVersionUID = 8689410871717711520L;
+	@Id
     @GeneratedValue
     private int id;
     private boolean ehDoacao;

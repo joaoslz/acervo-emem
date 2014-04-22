@@ -15,7 +15,7 @@ public class PopulaBDEmem {
 
 	public static void main(String[] args) {
 
-		EntityManager em = JPAUtil.getInstance().getEntityManager();
+		EntityManager em = new JPAUtil().getEntityManager();
 
 		em.getTransaction().begin();
 
@@ -28,9 +28,9 @@ public class PopulaBDEmem {
 		Autor coelho = geraAutor("Paulo Coelho");
 		em.persist(coelho);
 
-		Obra casmurro = geraLivro("978-8-52-504464-8", "Dom Casmurro", "10/01/1899", assis);
-		Obra memorias = geraLivro("978-8-50-815415-9", "Memorias Postumas de Bras Cubas", "01/01/1881", assis);
-		Obra quincas = geraLivro("978-8-50-804084-1", "Quincas Borba", "01/01/1891", assis);
+		Livro casmurro = geraLivro("978-8-52-504464-8", "Dom Casmurro", "10/01/1899", assis);
+		Livro memorias = geraLivro("978-8-50-815415-9", "Memorias Postumas de Bras Cubas", "01/01/1881", assis);
+		Livro quincas = geraLivro("978-8-50-804084-1", "Quincas Borba", "01/01/1891", assis);
 
 		em.persist(casmurro);
 		em.persist(memorias);
@@ -63,7 +63,7 @@ public class PopulaBDEmem {
 		return autor;
 	}
 
-	private static Obra geraLivro(String isbn, String titulo, String data, Autor autor) {
+	private static Livro geraLivro(String isbn, String titulo, String data, Autor autor) {
 		Livro livro = new Livro();
 		livro.setIsbn(isbn);
 		livro.setTitulo(titulo);

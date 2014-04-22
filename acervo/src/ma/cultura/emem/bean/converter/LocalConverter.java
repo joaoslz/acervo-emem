@@ -6,22 +6,24 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import ma.cultura.emem.dao.LocalDAO;
 import ma.cultura.emem.modelo.Local;
 
-@FacesConverter(value="localConverter")
+@Named
 public class LocalConverter implements Converter {
     
-    private LocalDAO localDAO = new LocalDAO();
+	@Inject
+    private LocalDAO localDAO;
 
     public Object getAsObject(FacesContext facesContext, UIComponent component, String nome) {
         if (nome.trim().equals("")) {
             return null;
         } else {
             try {
-                Local local = localDAO.buscaPorId(nome);
-                return local;
+                return localDAO.buscarPorId(nome);
             } catch(NumberFormatException exception) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversão", "Local Inválido"));
             }
@@ -29,7 +31,7 @@ public class LocalConverter implements Converter {
     }
 
     public String getAsString(FacesContext facesContext, UIComponent component, Object value) {
-        if (value == null || value.equals("")) {
+        if (value == null) {
             return "";
         } else {
             return String.valueOf(((Local) value).getNome());

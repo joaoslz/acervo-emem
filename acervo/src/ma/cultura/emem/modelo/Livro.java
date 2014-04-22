@@ -6,11 +6,20 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
 @DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue(value = "livro")
+@NamedQueries({ 
+	@NamedQuery(name = Livro.NAMED_QUERY_LISTAR_TODOS, query = "from Livro a order by a.id desc"),
+	@NamedQuery(name = Livro.NAMED_QUERY_PESQUISAR_POR_ISBN, query = "from Livro l where l.isbn like :isbn")
+})
 public class Livro extends Obra {
+	
+	public static final String NAMED_QUERY_LISTAR_TODOS = "Livro.listarTodos";
+	public static final String NAMED_QUERY_PESQUISAR_POR_ISBN = "Livro.pesquisarPorISBN";
 
 	private static final long serialVersionUID = -5247199056256533770L;
 	private String isbn;

@@ -6,24 +6,28 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
 import ma.cultura.emem.dao.AutorDAO;
 import ma.cultura.emem.modelo.Autor;
 
-@FacesConverter(value="autorConverter")
+@Named
 public class AutorConverter implements Converter {
 
 	private static final Logger LOGGER = Logger.getLogger(AutorConverter.class);
-    private AutorDAO autorDAO = new AutorDAO();
+	
+	@Inject
+    private AutorDAO autorDAO;
 
     public Object getAsObject(FacesContext facesContext, UIComponent component, String id) {
         if (id.isEmpty()) {
             return null;
         } else {
             try {
-                return autorDAO.buscaPorId(Integer.valueOf(id));
+                return autorDAO.buscarPorId(Integer.valueOf(id));
             } catch(NumberFormatException exception) {
             	LOGGER.error("Erro ao converter autor.", exception);
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversão", "Autor Inválido"));

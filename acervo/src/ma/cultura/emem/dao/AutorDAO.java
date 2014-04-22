@@ -2,42 +2,21 @@ package ma.cultura.emem.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import ma.cultura.emem.modelo.Autor;
 
 public class AutorDAO extends DAO<Autor> {
 
+	private static final long serialVersionUID = 8780779436249062614L;
+
 	public AutorDAO() {
 		super(Autor.class);
 	}
 
-	public List<Autor> likeByNome(String nome) {
-
-		String consulta = "from Autor a where a.nome like :nome order by a.nome asc";
-
-		EntityManager em = JPAUtil.getInstance().getEntityManager();
-		TypedQuery<Autor> query = em.createQuery(consulta, Autor.class);
+	public List<Autor> pesquisarPorNome(String nome) {
+		TypedQuery<Autor> query = em.createNamedQuery(Autor.NAMED_QUERY_PESQUISAR_POR_NOME, Autor.class);
 		query.setParameter("nome", "%" + nome + "%");
-		List<Autor> lista = query.getResultList();
-
-		em.close();
-
-		return lista;
+		return query.getResultList();
 	}
-
-	public List<Autor> listarAutoresPorIdEmOrdemDec() {
-
-		String consulta = "select distinct a from Autor a order by a.id desc";
-
-		EntityManager em = JPAUtil.getInstance().getEntityManager();
-		TypedQuery<Autor> query = em.createQuery(consulta, Autor.class);
-		List<Autor> listaAutores = query.getResultList();
-
-		em.close();
-
-		return listaAutores;
-	}
-
 }
