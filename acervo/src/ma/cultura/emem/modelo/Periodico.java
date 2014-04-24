@@ -3,8 +3,6 @@ package ma.cultura.emem.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
@@ -12,7 +10,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @Entity
-@DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue(value = "periodico")
 @NamedQueries({ 
 	@NamedQuery(name = "Periodico.listarTodos", query = "from Periodico p order by p.id desc")

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.ConversationScoped;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,7 +14,7 @@ import ma.cultura.emem.modelo.Assunto;
 import org.primefaces.event.RowEditEvent;
 
 @Named
-@ConversationScoped
+@ViewScoped
 public class AssuntoBean implements Serializable {
 
 	private static final long serialVersionUID = 3905906075866017417L;

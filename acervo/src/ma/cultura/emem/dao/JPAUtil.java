@@ -1,5 +1,6 @@
 package ma.cultura.emem.dao;
 
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
@@ -14,6 +15,7 @@ public class JPAUtil {
 
 	// Anotação para que o CDI reconheca este método com um produto para o EntityManager
 	@Produces
+	@RequestScoped
 	public EntityManager getEntityManager() {
 		EntityManager em = emf.createEntityManager(); 
 		LOGGER.debug("Criando EntityManager >> " + em.hashCode());

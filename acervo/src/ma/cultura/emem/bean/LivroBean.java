@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.enterprise.context.ConversationScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -29,7 +29,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
 @Named
-@ConversationScoped
+@ViewScoped
 public class LivroBean implements Serializable {
 
 	private static final Logger LOGGER = Logger.getLogger(LivroBean.class);

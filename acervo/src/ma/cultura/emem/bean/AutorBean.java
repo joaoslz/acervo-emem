@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.ConversationScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -14,11 +14,11 @@ import ma.cultura.emem.modelo.Autor;
 import org.primefaces.event.RowEditEvent;
 
 @Named
-@ConversationScoped
+@ViewScoped
 public class AutorBean implements Serializable {
 
 	private static final long serialVersionUID = 3905906075866017417L;
-
+    
 	@Inject
 	private AutorDAO autorDAO;
 	private Autor autor = new Autor();

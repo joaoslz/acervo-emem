@@ -3,7 +3,6 @@ package ma.cultura.emem.dao;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
@@ -19,7 +18,6 @@ public class DAO<T> implements Serializable {
 	private final Class<T> classe;
 
 	@Inject
-	@SessionScoped //FIXME remover este session scoped (apenas teste)
 	protected EntityManager em;
 
 	public DAO(Class<T> classe) {

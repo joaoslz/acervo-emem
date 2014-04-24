@@ -2,15 +2,12 @@ package ma.cultura.emem.modelo;
 
 import java.util.Iterator;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
-@DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue(value = "livro")
 @NamedQueries({ 
 	@NamedQuery(name = Livro.NAMED_QUERY_LISTAR_TODOS, query = "from Livro a order by a.id desc"),
