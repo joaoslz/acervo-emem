@@ -144,19 +144,23 @@ header {
   height: 165px;
 }
 
-#logo {  
-  width: 875px;
+#logo {
+  margin:0;
+  padding:0;
   position: relative;
-  height: 120px;
-  background: url(../images/logo.png) no-repeat bottom right;
+  vertical-align: middle;
+  height:  120px;
+  background: url(../images/logo.gif) no-repeat top left;
 }
 
-#logo h1, #logo h2 { 
+#logo h1 { 
   font: normal 220% arial, sans-serif;
   border-bottom: 0;
   text-transform: none;
   text-shadow: none;
-  margin: 0;
+  text-align: left;
+  padding-left: 250px;
+  padding-top: 30px;
 }
 
 #logo h2 { 

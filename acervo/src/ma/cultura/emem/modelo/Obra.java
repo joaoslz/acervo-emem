@@ -33,7 +33,7 @@ import javax.persistence.TemporalType;
 	@NamedQuery(name = Obra.NAMED_QUERY_PESQUISAR_POR_EDITORA, query = "from Obra a where a.editora.nome like :editora")
 
 })
-public class Obra implements Serializable {
+public abstract class Obra implements Serializable {
 
 	public static final String NAMED_QUERY_LISTAR_TODOS = "Obra.listarTodos";
 	public static final String NAMED_QUERY_PESQUISAR_POR_TITULO = "Obra.pesquisarPorTitulo";

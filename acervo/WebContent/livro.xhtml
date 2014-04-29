@@ -71,7 +71,7 @@
 	
 						<p:outputLabel value="Editora:" for="editora" />
 						<p:column>
-							<p:autoComplete value="#{livroBean.livro.editora}" id="editora"
+							<p:autoComplete minQueryLength="2" value="#{livroBean.livro.editora}" id="editora"
 								completeMethod="#{livroBean.autocompleteEditoraByNome}" var="e"
 								itemLabel="#{e.nome}" itemValue="#{e}"
 								converter="#{editoraConverter}" forceSelection="true" />
@@ -82,7 +82,7 @@
 	
 						<p:outputLabel value="Autores:" for="autores" />
 						<p:column>
-							<p:autoComplete id="autores" value="#{livroBean.livro.autores}"
+							<p:autoComplete minQueryLength="2" id="autores" value="#{livroBean.livro.autores}"
 								completeMethod="#{livroBean.autocompleteAutorByNome}" var="a"
 								itemLabel="#{a.nome}" itemValue="#{a}" converter="#{autorConverter}"
 								forceSelection="true" multiple="true" />
@@ -96,7 +96,7 @@
 	
 						<p:outputLabel value="Local:" for="local" />
 						<p:column>
-							<p:autoComplete value="#{livroBean.livro.local}" id="local"
+							<p:autoComplete minQueryLength="2" value="#{livroBean.livro.local}" id="local"
 								completeMethod="#{livroBean.autocompleteLocalByNome}" var="l"
 								itemLabel="#{l.nome}" itemValue="#{l}" converter="#{localConverter}" />
 							<p:commandButton id="showAddLocalButton" icon="ui-icon-plus"
@@ -106,7 +106,7 @@
 							
 						<p:outputLabel value="Assuntos" for="assuntos" />
 						<p:column>
-							<p:autoComplete id="assuntos" value="#{livroBean.livro.assuntos}"
+							<p:autoComplete minQueryLength="2" id="assuntos" value="#{livroBean.livro.assuntos}"
 								completeMethod="#{livroBean.autocompleteAssuntoByAssunto}" var="a"
 								itemLabel="#{a.assunto}" itemValue="#{a}"
 								converter="#{assuntoConverter}" forceSelection="true"
