@@ -146,10 +146,8 @@
 			<p:dataTable id="tabelaLivros" value="#{livroBean.listaLivros}"
 				var="livro" emptyMessage="Nenhum Livro cadastrado">
 				
+				<f:facet name="header"> Livros Cadastrados </f:facet>
        			<p:columnGroup type="header"> 
-       				<p:row>
-						<p:column colspan="7" headerText="Livros Cadastrados"/>
-       				</p:row>
        				<p:row>
 						<p:column headerText="Título"/>
 						<p:column headerText="ISBN"/>

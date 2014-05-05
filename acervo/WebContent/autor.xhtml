@@ -13,8 +13,8 @@
 		<h:form id="formAutor">
 			<p:messages />
 			<p:fieldset>
-				<b>Dados do Autor</b>
 				<h:panelGrid columns="3">
+					<f:facet name="header"> Dados do Autor </f:facet>
 					<p:outputLabel value="Nome:" for="nome" />
 					<p:inputText id="nome" value="#{autorBean.autor.nome}"
 						required="true" requiredMessage="Campo nome deve ser digitado" />
