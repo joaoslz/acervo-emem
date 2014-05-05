@@ -83,3 +83,6 @@ fieldset{
 #conteudo{
 	padding: 15px;	
 }
+.ajaxStatusPanel{
+	display: inline;
+}

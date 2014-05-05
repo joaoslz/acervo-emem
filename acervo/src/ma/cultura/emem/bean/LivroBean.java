@@ -86,7 +86,7 @@ public class LivroBean extends AbstractObraBean implements Serializable {
 
 	public List<Livro> getListaLivros() {
 		if (livros.isEmpty()){
-			livros = livroDAO.listarTodos(5);
+			livros = livroDAO.listarTodos();
 		}
 		return livros;
 	}

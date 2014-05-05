@@ -36,34 +36,23 @@
 						<f:facet name="header"> Dados do Livro </f:facet>
 						
        					 <ui:include src="/WEB-INF/includes/dadosObraForm.xhtml" >
-   							<ui:param name="obraBean" value="#{livroBean}" />
+   							<ui:param name="obraBean" value="#{periodicoBean}" />
        					 </ui:include>
 						
-<!-- 					Campos referente ao Livro.................................................. -->
-						<p:outputLabel value="ISBN:" for="isbn" />
-						<p:inputText id="isbn" value="#{livroBean.livro.isbn}" />
+<!-- 					Campos referente ao Periódico.............................................. -->
+						<p:outputLabel value="ISSN:" for="issn" />
+						<p:inputText id="issn" value="#{periodicoBean.periodico.issn}" />
 						<h:outputText value=""/>
 						
-						<p:outputLabel value="Cutter:" for="cutter" />
-						<p:inputText id="cutter" value="#{livroBean.livro.cutter}"
-							validatorMessage="Cutter não pode ser superio a 5 caracteres">
-							<f:validateLength maximum="5" />
-						</p:inputText>
-						<h:outputText value=""/>
-	
-						<p:outputLabel value="Série:" for="serie" />
-						<p:inputText id="serie" value="#{livroBean.livro.serie}" />
-						<h:outputText value=""/>
-	
-						<p:outputLabel value="Classificação:" for="classificacao" />
-						<p:inputText id="classificacao"
-							value="#{livroBean.livro.classificacao}" />
-						<h:outputText value=""/>
+						<p:outputLabel value="É assinado?" for="ehAssinado" />
+						<p:selectBooleanCheckbox id="ehAssinado"
+							value="#{periodicoBean.periodico.ehAssinado}" />
 <!-- 					........................................................................... -->
+
 						<f:facet name="footer"> 
-							<p:commandButton value="#{livroBean.stringBotaoGravar}"
-								action="#{livroBean.gravar}" 
-								process="@form" update="@form :tabelaLivros" />
+							<p:commandButton value="#{periodicoBean.stringBotaoGravar}"
+								action="#{periodicoBean.gravar}" 
+								process="@form" update="@form :tabelaPeriodicos" />
 
 						<p:commandButton value="Limpar Formulário" action="livro?faces-redirect=true"
 							immediate="true" />
@@ -76,14 +65,13 @@
 		
 		<!--TABELA DE LIVROS........................................................................................ -->
 		<p:fieldset>
-			<p:dataTable id="tabelaLivros" value="#{livroBean.listaLivros}"
-				var="livro" emptyMessage="Nenhum Livro cadastrado">
+			<p:dataTable id="tabelaPeriodicos" value="#{periodicoBean.periodicos}"
+				var="livro" emptyMessage="Nenhum Periódico cadastrado">
 				
-				<f:facet name="header"> Livros Cadastrados </f:facet>
+				<f:facet name="header"> Periódico Cadastrados </f:facet>
        			<p:columnGroup type="header"> 
        				<p:row>
 						<p:column headerText="Título"/>
-						<p:column headerText="ISBN"/>
 						<p:column headerText="Editora"/>
 						<p:column headerText="Local"/>
 						<p:column headerText="Autores"/>
@@ -94,9 +82,6 @@
         			
 				<p:column>
 					<h:outputText value="#{livro.titulo}" />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{livro.isbn}" />
 				</p:column>
 				<p:column>
 					<h:outputText value="#{livro.editora.nome}" />
@@ -117,14 +102,14 @@
 					<h:form>
 						<p:commandButton icon="ui-icon-pencil" title="Alterar Livro"
 							update="@form :formLivro">
-							<f:setPropertyActionListener value="#{livro}" target="#{livroBean.livro}" />
+							<f:setPropertyActionListener value="#{livro}" target="#{periodicoBean.periodico}" />
 						</p:commandButton>
 						<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
 							oncomplete="dlgExemplares.show()"
-							action="#{livroBean.updateListaExemplares}"
+							action="#{periodicoBean.updateListaExemplares}"
 							update="@form :formExemplares :formExemplares">
 							<f:setPropertyActionListener value="#{livro}"
-								target="#{livroBean.livro}" />
+								target="#{periodicoBean.periodico}" />
 						</p:commandButton>
 					</h:form>
 				</p:column>
@@ -140,38 +125,36 @@
 			<h:form id="formExemplares">
 
 				<b><h:outputText value="Título: " /></b>
-				<h:outputText value="#{livroBean.livro.titulo}" />
+				<h:outputText value="#{periodicoBean.periodico.titulo}" />
 				<br />
-				<b><h:outputText value="ISBN: " /></b>
-				<h:outputText value="#{livroBean.livro.isbn}" />
 
 				<p:panelGrid columns="2">
 					<f:facet name="header"> Dados do Exemplar</f:facet>
 					<h:outputText value="Quantidade: " />
-					<p:spinner value="#{livroBean.quantidade}" max="300" min="1" />
+					<p:spinner value="#{periodicoBean.quantidade}" max="300" min="1" />
 					<h:outputText value="Data de Aquisição: *" />
-					<p:calendar value="#{livroBean.dataAquisicao}" locale="pt_BR"
+					<p:calendar value="#{periodicoBean.dataAquisicao}" locale="pt_BR"
 					            display="inline" navigator="true"  />
 
 					<h:outputText value="É Doaçao? " />
-					<p:selectBooleanCheckbox value="#{livroBean.ehDoacao}" />
+					<p:selectBooleanCheckbox value="#{periodicoBean.ehDoacao}" />
 					
 					
 					<f:facet name="footer"> 
 						<p:commandButton value="Gravar"
-								action="#{livroBean.cadastrarExemplares}"
+								action="#{periodicoBean.cadastrarExemplares}"
 								update="@form :formExemplares:tabelaExemplares" />
 <!--............Ao sair da tela de exemplares é preciso limpar o objeto livro e a lista de exemplares....-->
-						<p:commandButton value="Sair" action="#{livroBean.limparFormLivro}" 
-								actionListener="#{livroBean.limparListaExemplares}"
-								oncomplete="dlgExemplares.hide()"  update=":formLivro :tabelaLivros"/>
+						<p:commandButton value="Sair" action="#{periodicoBean.limparFormLivro}" 
+								actionListener="#{periodicoBean.limparListaExemplares}"
+								oncomplete="dlgExemplares.hide()"  update=":formLivro :tabelaPeriodicos"/>
 					</f:facet>
 				</p:panelGrid>
 						
-				<p:dataTable id="tabelaExemplares" value="#{livroBean.exemplares}"
+				<p:dataTable id="tabelaExemplares" value="#{periodicoBean.exemplares}"
 					var="exemplar" emptyMessage="Nenhum Exemplar cadastrado"
 					editable="true">
-					<p:ajax event="rowEdit" listener="#{livroBean.editExempar}"
+					<p:ajax event="rowEdit" listener="#{periodicoBean.editExempar}"
 						update=":formExemplares:tabelaExemplares" />
 						
         			<p:columnGroup type="header"> 
@@ -238,7 +221,7 @@
 					<p:outputLabel value="Deseja cadastrar algum exemplar? " />
 
 					<p:commandButton value="Sim" oncomplete="dlgConfirmaExemplares.hide();dlgExemplares.show()"  process="@form" update=":formExemplares :formExemplares:tabelaExemplares"/>
-					<p:commandButton value="Não" oncomplete="dlgConfirmaExemplares.hide();" action="#{livroBean.limparFormLivro}" process="@form" update=":formLivro :tabelaLivros"/>
+					<p:commandButton value="Não" oncomplete="dlgConfirmaExemplares.hide();" action="#{periodicoBean.limparForm}" process="@form" update=":formLivro :tabelaPeriodicos"/>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

@@ -1,0 +1,98 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+		<!--DIALOG EDITORA........................................................................................... -->
+		<p:dialog header="Cadastro de Editora" widgetVar="dlgNovaEditora"
+			resizable="false" modal="true">
+			<h:form>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{livroBean.editoraAdd.nome}"
+						required="true"
+						requiredMessage="O campo nome da editora deve ser digitado" />
+
+					<p:outputLabel value="Site:" for="site" />
+					<p:inputText id="site" value="#{livroBean.editoraAdd.site}" />
+
+					<p:commandButton value="Gravar" action="#{livroBean.gravarEditora}"
+						oncomplete="dlgNovaEditora.hide();" process="@form"
+						update="@form :formLivro:editora" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+
+		<!-- DIALOG LOCAL............................................................................................ -->
+		<p:dialog header="Cadastro de Idioma" widgetVar="dlgNovoIdioma"
+			resizable="false" modal="true">
+			<h:form>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{livroBean.idiomaAdd.nome}" required="true"
+						requiredMessage="Campo nome do idioma deve ser digitado" />
+
+					<p:commandButton value="Gravar" action="#{livroBean.gravarIdioma}"
+						oncomplete="dlgNovoIdioma.hide();" process="@form"
+						update="@form :formLivro:idioma" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- DIALOG LOCAL............................................................................................ -->
+		<p:dialog header="Cadastro de Local" widgetVar="dlgNovoLocal"
+			resizable="false" modal="true">
+			<h:form>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{livroBean.localAdd.nome}"
+						required="true"
+						requiredMessage="Campo nome do local deve ser digitado" />
+
+					<p:commandButton value="Gravar" action="#{livroBean.gravarLocal}"
+						oncomplete="dlgNovoLocal.hide();" process="@form"
+						update="@form :formLivro:local" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+
+		<!-- DIALOG AUTOR............................................................................................ -->
+		<p:dialog header="Cadastro de Autor" widgetVar="dlgNovoAutor"
+			resizable="false" modal="true">
+			<h:form>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{livroBean.autorAdd.nome}"
+						required="true" requiredMessage="Campo nome deve ser digitado" />
+
+					<p:commandButton value="Gravar" action="#{livroBean.gravarAutor}"
+						oncomplete="dlgNovoAutor.hide();" process="@form"
+						update="@form :formLivro:autores" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+
+		<!-- DIALOG ASSUNTO.......................................................................................... -->
+		<p:dialog header="Cadastro de Assunto" widgetVar="dlgNovoAssunto"
+			resizable="false" modal="true">
+			<h:form>
+				<p:messages id="messages" autoUpdate="true" />
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Assunto:" for="assunto" />
+					<p:inputText id="assunto" value="#{livroBean.assuntoAdd.assunto}"
+						required="true" requiredMessage="Campo assunto deve ser digitado" />
+
+					<p:commandButton value="Gravar" action="#{livroBean.gravarAssunto}"
+						oncomplete="dlgNovoAssunto.hide();" process="@form"
+						update="@form :formLivro:assuntos" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+
+</ui:composition>

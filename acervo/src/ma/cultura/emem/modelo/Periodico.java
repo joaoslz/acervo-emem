@@ -12,10 +12,11 @@ import javax.persistence.OneToMany;
 @Entity
 @DiscriminatorValue(value = "periodico")
 @NamedQueries({ 
-	@NamedQuery(name = "Periodico.listarTodos", query = "from Periodico p order by p.id desc")
+	@NamedQuery(name = Periodico.NAMED_QUERY_LISTAR_TODOS, query = "from Periodico p order by p.id desc")
 })
 public class Periodico extends Obra {
 
+	public static final String NAMED_QUERY_LISTAR_TODOS = "Periodico.listarTodos";
    
 	private static final long serialVersionUID = -112232541131788319L;
 	
