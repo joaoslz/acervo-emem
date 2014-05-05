@@ -10,11 +10,13 @@ import ma.cultura.emem.dao.AssuntoDAO;
 import ma.cultura.emem.dao.AutorDAO;
 import ma.cultura.emem.dao.EditoraDAO;
 import ma.cultura.emem.dao.ExemplarDAO;
+import ma.cultura.emem.dao.IdiomaDAO;
 import ma.cultura.emem.dao.LocalDAO;
 import ma.cultura.emem.modelo.Assunto;
 import ma.cultura.emem.modelo.Autor;
 import ma.cultura.emem.modelo.Editora;
 import ma.cultura.emem.modelo.Exemplar;
+import ma.cultura.emem.modelo.Idioma;
 import ma.cultura.emem.modelo.Local;
 import ma.cultura.emem.modelo.Obra;
 
@@ -22,6 +24,8 @@ import org.primefaces.event.RowEditEvent;
 
 public abstract class AbstractObraBean {
 
+	@Inject
+	private IdiomaDAO idiomaDAO;
 	@Inject
 	private AutorDAO autorDAO;
 	@Inject
@@ -34,6 +38,7 @@ public abstract class AbstractObraBean {
 	private ExemplarDAO exemplarDAO;
 
 	// POJO para os cadastros auxiliares
+	private Idioma idiomaAdd = new Idioma();
 	private Editora editoraAdd = new Editora();
 	private Local localAdd = new Local();
 	private Assunto assuntoAdd = new Assunto();
@@ -77,6 +82,12 @@ public abstract class AbstractObraBean {
 		updateListaExemplares();
 	}
 
+	public void gravarIdioma() {
+		idiomaDAO.adicionar(idiomaAdd);
+		getObra().setIdioma(idiomaAdd);
+		idiomaAdd = new Idioma();
+	}
+	
 	public void gravarAutor() {
 		autorDAO.adicionar(autorAdd);
 		getObra().adicionarAutor(autorAdd);
@@ -99,6 +110,10 @@ public abstract class AbstractObraBean {
 		editoraDAO.adicionar(editoraAdd);
 		getObra().setEditora(editoraAdd);
 		editoraAdd = new Editora();
+	}
+	
+	public List<Idioma> getListaIdiomas(){
+		return idiomaDAO.listarTodos();
 	}
 
 	public List<Editora> autocompleteEditoraByNome(String nome) {
@@ -179,5 +194,13 @@ public abstract class AbstractObraBean {
 
 	public void setExemplares(List<Exemplar> exemplares) {
 		this.exemplares = exemplares;
+	}
+
+	public Idioma getIdiomaAdd() {
+		return idiomaAdd;
+	}
+
+	public void setIdiomaAdd(Idioma idiomaAdd) {
+		this.idiomaAdd = idiomaAdd;
 	}	
 }

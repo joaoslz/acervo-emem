@@ -32,7 +32,7 @@
 					emptyMessage="Nenhum autor cadastrado" style="width:60%">
 					<f:facet name="header">Autores Cadastrados </f:facet>
 	        		<p:ajax event="rowEdit" listener="#{autorBean.editAutor}" />
-					<p:column resizable="true" width="200" headerText="Nome">
+					<p:column resizable="true" headerText="Nome">
 						<p:cellEditor>
 		               		<f:facet name="output">
 								<h:outputText value="#{autor.nome}" />

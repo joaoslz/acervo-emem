@@ -33,7 +33,7 @@
 					emptyMessage="Nenhum assunto cadastrado" style="width:60%">
 					<f:facet name="header">Assuntos Cadastrados</f:facet>
 					<p:ajax event="rowEdit" listener="#{assuntoBean.editAssunto}" />
-					<p:column resizable="true" width="200" headerText="Assunto">
+					<p:column resizable="true" headerText="Assunto">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{assunto.assunto}" />

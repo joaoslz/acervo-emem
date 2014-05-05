@@ -27,8 +27,8 @@
 						</f:facet>
 					</p:ajaxStatus>
 					<!-- ......................................................................................... -->
-	
-					<h:panelGrid id="panelGridLivro" columns="6">
+
+					<h:panelGrid id="panelGridLivro" columns="9" style="width:100%">
 	
 						<f:facet name="header"> Dados do Livro </f:facet>
 						<p:outputLabel value="Titulo:" for="titulo" />
@@ -36,86 +36,97 @@
 							required="true" requiredMessage="Título obrigatório">
 							<f:ajax event="blur" render="messages" />
 						</p:inputText>
+						<h:outputText value=""/>
 	
 						<p:outputLabel value="Subtitulo:" for="subtitulo" />
 						<p:inputText id="subtitulo" value="#{livroBean.livro.subtitulo}" />
+						<h:outputText value=""/>
 	
 						<p:outputLabel value="ISBN:" for="isbn" />
 						<p:inputText id="isbn" value="#{livroBean.livro.isbn}" />
+						<h:outputText value=""/>
 	
 						<p:outputLabel value="Cutter:" for="cutter" />
 						<p:inputText id="cutter" value="#{livroBean.livro.cutter}"
 							validatorMessage="Cutter não pode ser superio a 5 caracteres">
 							<f:validateLength maximum="5" />
 						</p:inputText>
+						<h:outputText value=""/>
 	
 						<p:outputLabel value="Edição:" for="edicao" />
 						<p:inputText id="edicao" value="#{livroBean.livro.edicao}" />
+						<h:outputText value=""/>
 	
 						<p:outputLabel value="Série:" for="serie" />
 						<p:inputText id="serie" value="#{livroBean.livro.serie}" />
+						<h:outputText value=""/>
 	
 						<p:outputLabel value="Ano:" for="ano" />
 						<p:inputText id="ano" value="#{livroBean.livro.ano}" />
+						<h:outputText value=""/>
 	
 						<p:outputLabel value="Nº de Páginas:" for="numPaginas" />
 						<p:inputText id="numPaginas" value="#{livroBean.livro.numPaginas}" />
+						<h:outputText value=""/>
 	
 						<p:outputLabel value="Classificação:" for="classificacao" />
 						<p:inputText id="classificacao"
 							value="#{livroBean.livro.classificacao}" />
+						<h:outputText value=""/>
+	
+						<p:outputLabel value="Idioma:" for="idioma" />
+						<p:selectOneMenu id="idioma" value="#{livroBean.livro.idioma}" converter="#{idiomaConverter}">  
+       						<f:selectItem itemLabel="Selecione o Idioma" itemValue="#{null}" />           						
+				            <f:selectItems value="#{livroBean.listaIdiomas}" var="i" itemLabel="#{i.nome}" itemValue="#{i}" />  
+	      				</p:selectOneMenu>  
+						<p:commandButton type="button" id="showAddIdiomaButton"
+							icon="ui-icon-plus" immediate="true" title="Adicionar Idioma"
+							onclick="dlgNovoIdioma.show();" />
+						
+						<p:outputLabel value="Editora:" for="editora" />
+						<p:autoComplete minQueryLength="2" value="#{livroBean.livro.editora}" id="editora"
+							completeMethod="#{livroBean.autocompleteEditoraByNome}" var="e"
+							itemLabel="#{e.nome}" itemValue="#{e}"
+							converter="#{editoraConverter}" forceSelection="true" />
+						<p:commandButton type="button" id="showAddEditoraButton"
+							icon="ui-icon-plus" immediate="true" title="Adicionar Editora"
+							onclick="dlgNovaEditora.show();" />
+	
+						<p:outputLabel value="Autores:" for="autores" />
+						<p:autoComplete minQueryLength="2" id="autores" value="#{livroBean.livro.autores}"
+							completeMethod="#{livroBean.autocompleteAutorByNome}" var="a"
+							itemLabel="#{a.nome}" itemValue="#{a}" converter="#{autorConverter}"
+							forceSelection="true" multiple="true" />
+						<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
+							process="formLivro:autores" title="Adicionar Autor"
+							onclick="dlgNovoAutor.show()" />
+
+						<p:outputLabel value="Volume: " for="volume" />
+						<p:inputText id="volume" value="#{livroBean.livro.volume}" />
+						<h:outputText value=""/>
+
+						<p:outputLabel value="Local:" for="local" />
+						<p:autoComplete minQueryLength="2" value="#{livroBean.livro.local}" id="local"
+							completeMethod="#{livroBean.autocompleteLocalByNome}" var="l"
+							itemLabel="#{l.nome}" itemValue="#{l}" converter="#{localConverter}" />
+						<p:commandButton id="showAddLocalButton" icon="ui-icon-plus"
+							immediate="true" title="Adicionar Local"
+							onclick="dlgNovoLocal.show()" />
+
+						<p:outputLabel value="Assuntos" for="assuntos" />
+						<p:autoComplete minQueryLength="2" id="assuntos" value="#{livroBean.livro.assuntos}"
+							completeMethod="#{livroBean.autocompleteAssuntoByAssunto}" var="a"
+							itemLabel="#{a.assunto}" itemValue="#{a}"
+							converter="#{assuntoConverter}" forceSelection="true"
+							multiple="true" />
+						<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
+							process="formLivro:assuntos" title="Adicionar Assunto"
+							onclick="dlgNovoAssunto.show()" />
 	
 						<p:outputLabel value="É Ilustrado?" for="ehIlustrado" />
 						<p:selectBooleanCheckbox id="ehIlustrado"
 							value="#{livroBean.livro.ehIlustrado}" />
-	
-						<p:outputLabel value="Editora:" for="editora" />
-						<p:column>
-							<p:autoComplete minQueryLength="2" value="#{livroBean.livro.editora}" id="editora"
-								completeMethod="#{livroBean.autocompleteEditoraByNome}" var="e"
-								itemLabel="#{e.nome}" itemValue="#{e}"
-								converter="#{editoraConverter}" forceSelection="true" />
-							<p:commandButton type="button" id="showAddEditoraButton"
-								icon="ui-icon-plus" immediate="true" title="Adicionar Editora"
-								onclick="dlgNovaEditora.show();" />
-						</p:column>
-	
-						<p:outputLabel value="Autores:" for="autores" />
-						<p:column>
-							<p:autoComplete minQueryLength="2" id="autores" value="#{livroBean.livro.autores}"
-								completeMethod="#{livroBean.autocompleteAutorByNome}" var="a"
-								itemLabel="#{a.nome}" itemValue="#{a}" converter="#{autorConverter}"
-								forceSelection="true" multiple="true" />
-							<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
-								process="formLivro:autores" title="Adicionar Autor"
-								onclick="dlgNovoAutor.show()" />
-						</p:column>
-	
-						<p:outputLabel value="Volume: " for="volume" />
-						<p:inputText id="volume" value="#{livroBean.livro.volume}" />
-	
-						<p:outputLabel value="Local:" for="local" />
-						<p:column>
-							<p:autoComplete minQueryLength="2" value="#{livroBean.livro.local}" id="local"
-								completeMethod="#{livroBean.autocompleteLocalByNome}" var="l"
-								itemLabel="#{l.nome}" itemValue="#{l}" converter="#{localConverter}" />
-							<p:commandButton id="showAddLocalButton" icon="ui-icon-plus"
-								immediate="true" title="Adicionar Local"
-								onclick="dlgNovoLocal.show()" />
-						</p:column>
 							
-						<p:outputLabel value="Assuntos" for="assuntos" />
-						<p:column>
-							<p:autoComplete minQueryLength="2" id="assuntos" value="#{livroBean.livro.assuntos}"
-								completeMethod="#{livroBean.autocompleteAssuntoByAssunto}" var="a"
-								itemLabel="#{a.assunto}" itemValue="#{a}"
-								converter="#{assuntoConverter}" forceSelection="true"
-								multiple="true" />
-							<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
-								process="formLivro:assuntos" title="Adicionar Assunto"
-								onclick="dlgNovoAssunto.show()" />
-						</p:column>
-						
 						<f:facet name="footer"> 
 							<p:commandButton value="#{livroBean.stringBotaoGravar}"
 								action="#{livroBean.gravar}" 
@@ -125,8 +136,7 @@
 							immediate="true" />
 					</f:facet>
 					</h:panelGrid>
-	
-				
+
 			</h:form>
 		
 		</p:fieldset>
@@ -212,6 +222,22 @@
 			</h:form>
 		</p:dialog>
 
+
+		<!-- DIALOG LOCAL............................................................................................ -->
+		<p:dialog header="Cadastro de Idioma" widgetVar="dlgNovoIdioma"
+			resizable="false" modal="true">
+			<h:form>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{livroBean.idiomaAdd.nome}" required="true"
+						requiredMessage="Campo nome do idioma deve ser digitado" />
+
+					<p:commandButton value="Gravar" action="#{livroBean.gravarIdioma}"
+						oncomplete="dlgNovoIdioma.hide();" process="@form"
+						update="@form :formLivro:idioma" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
 
 		<!-- DIALOG LOCAL............................................................................................ -->
 		<p:dialog header="Cadastro de Local" widgetVar="dlgNovoLocal"

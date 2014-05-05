@@ -212,4 +212,12 @@ public abstract class Obra implements Serializable {
 	public void setVolume(Short volume) {
 	this.volume = volume;
 	}
+
+	public Idioma getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(Idioma idioma) {
+		this.idioma = idioma;
+	}
 }

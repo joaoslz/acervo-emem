@@ -28,7 +28,6 @@ body {
   background: #F9F9F9;
   color: #555;
 }
-
 p {  
   padding: 0 0 20px 0;
   line-height: 1.7em;
@@ -149,7 +148,7 @@ header {
   padding:0;
   position: relative;
   vertical-align: middle;
-  height:  120px;
+  height:  80px;
   background: url(../images/logo.gif) no-repeat top left;
 }
 
