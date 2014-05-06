@@ -34,8 +34,16 @@ img {
   padding:0;
   position: relative;
   vertical-align: middle;
-  height:  80px;
-  background: url(../images/logo.gif) no-repeat top left;
+  height:  50px;
+  background: url(../images/logoEmem.png) no-repeat top left;
+  background-color: background;
+}
+
+
+h2 {
+	font-size: 18px;
+	font-weight: 550px;
+	color: white;
 }
 
 footer {  
@@ -69,7 +77,7 @@ table tr th {
   border: 1px solid #cccccc;
 }
 
-/*Coloca a cor acinzentada dos formulários e das tabelas.*/
+/*Coloca a cor acinzentada dos formulï¿½rios e das tabelas.*/
 table tr td { 
   background: #E5E5DB;
   color: #47433F;
