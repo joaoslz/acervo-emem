@@ -3,6 +3,7 @@ package ma.cultura.emem.modelo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -219,5 +220,35 @@ public abstract class Obra implements Serializable {
 
 	public void setIdioma(Idioma idioma) {
 		this.idioma = idioma;
+	}
+	
+	public String getAutoresToString(){
+		StringBuilder builder = new StringBuilder();
+		if(getAutores() != null){
+			Iterator<Autor> it = getAutores().iterator();
+			while(it.hasNext()){
+				Autor a = it.next();
+				builder.append(a.getNome());
+				if(it.hasNext()){
+					builder.append(", ");
+				}
+			}
+		}
+		return builder.toString();
+	}
+
+	public String getAssuntosToString(){
+		StringBuilder builder = new StringBuilder();
+		if(getAssuntos() != null){
+			Iterator<Assunto> it = getAssuntos().iterator();
+			while(it.hasNext()){
+				Assunto a = it.next();
+				builder.append(a.getAssunto());
+				if(it.hasNext()){
+					builder.append(", ");
+				}
+			}
+		}
+		return builder.toString();
 	}
 }

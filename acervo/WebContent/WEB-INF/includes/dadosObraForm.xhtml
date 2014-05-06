@@ -46,7 +46,7 @@
 			itemLabel="#{a.nome}" itemValue="#{a}" converter="#{autorConverter}"
 			forceSelection="true" multiple="true" />
 		<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
-			process="formLivro:autores" title="Adicionar Autor"
+			process="form:autores" title="Adicionar Autor"
 			onclick="dlgNovoAutor.show()" />
 
 		<p:outputLabel value="Idioma:" for="idioma" />
@@ -73,7 +73,7 @@
 			converter="#{assuntoConverter}" forceSelection="true"
 			multiple="true" />
 		<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
-			process="formLivro:assuntos" title="Adicionar Assunto"
+			process="form:assuntos" title="Adicionar Assunto"
 			onclick="dlgNovoAssunto.show()" />
 
 		<p:outputLabel value="É Ilustrado?" for="ehIlustrado" />

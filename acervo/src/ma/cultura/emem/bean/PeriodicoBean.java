@@ -90,8 +90,4 @@ public class PeriodicoBean extends AbstractObraBean implements Serializable {
 			updateListaPeriodicos();
 		return periodicos;
 	}
-
-	public void setPeriodicos(List<Periodico> periodicos) {
-		this.periodicos = periodicos;
-	}
 }

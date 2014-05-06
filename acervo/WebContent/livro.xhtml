@@ -15,7 +15,7 @@
 		<script type="text/javascript" src="js/traducaoCalendario.js"></script>
 		
 		<p:fieldset>
-			<h:form id="formLivro">
+			<h:form id="form">
 	
 					<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
 					<p:ajaxStatus id="ajaxStatusPanel" styleClass="ajaxStatusPanel">
@@ -116,7 +116,7 @@
 				<p:column>
 					<h:form>
 						<p:commandButton icon="ui-icon-pencil" title="Alterar Livro"
-							update="@form :formLivro">
+							update="@form :form">
 							<f:setPropertyActionListener value="#{livro}" target="#{livroBean.livro}" />
 						</p:commandButton>
 						<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
@@ -164,7 +164,7 @@
 <!--............Ao sair da tela de exemplares é preciso limpar o objeto livro e a lista de exemplares....-->
 						<p:commandButton value="Sair" action="#{livroBean.limparFormLivro}" 
 								actionListener="#{livroBean.limparListaExemplares}"
-								oncomplete="dlgExemplares.hide()"  update=":formLivro :tabelaLivros"/>
+								oncomplete="dlgExemplares.hide()"  update=":form :tabelaLivros"/>
 					</f:facet>
 				</p:panelGrid>
 						
@@ -238,7 +238,7 @@
 					<p:outputLabel value="Deseja cadastrar algum exemplar? " />
 
 					<p:commandButton value="Sim" oncomplete="dlgConfirmaExemplares.hide();dlgExemplares.show()"  process="@form" update=":formExemplares :formExemplares:tabelaExemplares"/>
-					<p:commandButton value="Não" oncomplete="dlgConfirmaExemplares.hide();" action="#{livroBean.limparFormLivro}" process="@form" update=":formLivro :tabelaLivros"/>
+					<p:commandButton value="Não" oncomplete="dlgConfirmaExemplares.hide();" action="#{livroBean.limparFormLivro}" process="@form" update=":form :tabelaLivros"/>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

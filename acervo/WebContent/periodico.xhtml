@@ -10,12 +10,14 @@
 
 	<ui:define name="conteudo">
 	
-        <ui:include src="/WEB-INF/includes/dialogs_aux.xhtml" />
+        <ui:include src="/WEB-INF/includes/dialogs_aux.xhtml" >
+			<ui:param name="obraBean" value="#{periodicoBean}" />
+		</ui:include>
 	
 		<script type="text/javascript" src="js/traducaoCalendario.js"></script>
 		
 		<p:fieldset>
-			<h:form id="formLivro">
+			<h:form id="form">
 	
 					<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
 					<p:ajaxStatus id="ajaxStatusPanel" styleClass="ajaxStatusPanel">
@@ -33,7 +35,7 @@
 
 					<h:panelGrid id="panelGridLivro" columns="9" style="width:100%">
 	
-						<f:facet name="header"> Dados do Livro </f:facet>
+						<f:facet name="header"> Dados do Periódico </f:facet>
 						
        					 <ui:include src="/WEB-INF/includes/dadosObraForm.xhtml" >
    							<ui:param name="obraBean" value="#{periodicoBean}" />
@@ -54,8 +56,8 @@
 								action="#{periodicoBean.gravar}" 
 								process="@form" update="@form :tabelaPeriodicos" />
 
-						<p:commandButton value="Limpar Formulário" action="livro?faces-redirect=true"
-							immediate="true" />
+						<p:commandButton value="Limpar Formulário" 
+								action="periodico?faces-redirect=true" immediate="true" />
 					</f:facet>
 					</h:panelGrid>
 
@@ -63,10 +65,10 @@
 		
 		</p:fieldset>
 		
-		<!--TABELA DE LIVROS........................................................................................ -->
+		<!--LISTA ........................................................................................ -->
 		<p:fieldset>
 			<p:dataTable id="tabelaPeriodicos" value="#{periodicoBean.periodicos}"
-				var="livro" emptyMessage="Nenhum Periódico cadastrado">
+				var="periodico" emptyMessage="Nenhum Periódico cadastrado">
 				
 				<f:facet name="header"> Periódico Cadastrados </f:facet>
        			<p:columnGroup type="header"> 
@@ -81,151 +83,29 @@
        			</p:columnGroup>
         			
 				<p:column>
-					<h:outputText value="#{livro.titulo}" />
+					<h:outputText value="#{periodico.titulo}" />
 				</p:column>
 				<p:column>
-					<h:outputText value="#{livro.editora.nome}" />
+					<h:outputText value="#{periodico.editora.nome}" />
 				</p:column>
 				<p:column>
-					<h:outputText value="#{livro.local.nome}" />
+					<h:outputText value="#{periodico.local.nome}" />
 				</p:column>
-
 				<p:column>
-					<h:outputText value="#{livro.autoresToString}" />
+					<h:outputText value="#{periodico.autoresToString}" />
 				</p:column>
-
 				<p:column>
-					<h:outputText value="#{livro.assuntosToString}" />
+					<h:outputText value="#{periodico.assuntosToString}" />
 				</p:column>
-
 				<p:column>
 					<h:form>
-						<p:commandButton icon="ui-icon-pencil" title="Alterar Livro"
-							update="@form :formLivro">
-							<f:setPropertyActionListener value="#{livro}" target="#{periodicoBean.periodico}" />
-						</p:commandButton>
-						<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
-							oncomplete="dlgExemplares.show()"
-							action="#{periodicoBean.updateListaExemplares}"
-							update="@form :formExemplares :formExemplares">
-							<f:setPropertyActionListener value="#{livro}"
-								target="#{periodicoBean.periodico}" />
+						<p:commandButton icon="ui-icon-pencil" title="Alterar Livro" update=":form">
+							<f:setPropertyActionListener value="#{periodico}" target="#{periodicoBean.periodico}" />
 						</p:commandButton>
 					</h:form>
 				</p:column>
 			</p:dataTable>
 		</p:fieldset>
-
-
-
-
-		<!-- DIALOG EXEMPLARES...................................................................................... -->
-
-		<p:dialog header="Cadastro de Exemplares" widgetVar="dlgExemplares" resizable="false" closable="false" modal="true">
-			<h:form id="formExemplares">
-
-				<b><h:outputText value="Título: " /></b>
-				<h:outputText value="#{periodicoBean.periodico.titulo}" />
-				<br />
-
-				<p:panelGrid columns="2">
-					<f:facet name="header"> Dados do Exemplar</f:facet>
-					<h:outputText value="Quantidade: " />
-					<p:spinner value="#{periodicoBean.quantidade}" max="300" min="1" />
-					<h:outputText value="Data de Aquisição: *" />
-					<p:calendar value="#{periodicoBean.dataAquisicao}" locale="pt_BR"
-					            display="inline" navigator="true"  />
-
-					<h:outputText value="É Doaçao? " />
-					<p:selectBooleanCheckbox value="#{periodicoBean.ehDoacao}" />
-					
-					
-					<f:facet name="footer"> 
-						<p:commandButton value="Gravar"
-								action="#{periodicoBean.cadastrarExemplares}"
-								update="@form :formExemplares:tabelaExemplares" />
-<!--............Ao sair da tela de exemplares é preciso limpar o objeto livro e a lista de exemplares....-->
-						<p:commandButton value="Sair" action="#{periodicoBean.limparFormLivro}" 
-								actionListener="#{periodicoBean.limparListaExemplares}"
-								oncomplete="dlgExemplares.hide()"  update=":formLivro :tabelaPeriodicos"/>
-					</f:facet>
-				</p:panelGrid>
-						
-				<p:dataTable id="tabelaExemplares" value="#{periodicoBean.exemplares}"
-					var="exemplar" emptyMessage="Nenhum Exemplar cadastrado"
-					editable="true">
-					<p:ajax event="rowEdit" listener="#{periodicoBean.editExempar}"
-						update=":formExemplares:tabelaExemplares" />
-						
-        			<p:columnGroup type="header"> 
-        				<p:row>
-							<p:column colspan="5" headerText="Exemplares Cadastrados"/>
-        				</p:row>
-        				<p:row>
-							<p:column headerText="ID"/>
-							<p:column headerText="É Doação"/>
-							<p:column headerText="Data de Aquisição"/>
-							<p:column headerText="Observação"/>
-							<p:column headerText="Alterar"/>
-        				</p:row>
-        			</p:columnGroup>
-        			
-					<p:column>
-						<h:outputText value="#{exemplar.id}" />
-					</p:column>
-					<p:column>
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText rendered="#{exemplar.ehDoacao}" value="Sim" />
-								<h:outputText rendered="#{!exemplar.ehDoacao}" value="Não" />
-							</f:facet>
-							<f:facet name="input">
-								<p:selectBooleanCheckbox value="#{exemplar.ehDoacao}" />
-							</f:facet>
-						</p:cellEditor>
-					</p:column>
-					<p:column>
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{exemplar.dataAquisicao.time}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</f:facet>
-							<f:facet name="input">
-								<p:calendar value="#{exemplar.dataAquisicao}"
-									converter="calendarConverter" pattern="dd/MM/yyyy" />
-							</f:facet>
-						</p:cellEditor>
-					</p:column>
-					<p:column>
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{exemplar.observacao}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText value="#{exemplar.observacao}" />
-							</f:facet>
-						</p:cellEditor>
-					</p:column>
-					<p:column>
-						<p:rowEditor />
-					</p:column>
-				</p:dataTable>
-			</h:form>
-		</p:dialog>
-
-		<!-- DIALOG DESEJA CADASTRAR EXEMPLARES...................................................................... -->
-		<p:dialog header="Deseja cadastrar algum exemplar?" widgetVar="dlgConfirmaExemplares" closable="false" modal="true" resizable="false">
-			<h:form>
-				<h:panelGrid columns="3">
-					<p:outputLabel value="Deseja cadastrar algum exemplar? " />
-
-					<p:commandButton value="Sim" oncomplete="dlgConfirmaExemplares.hide();dlgExemplares.show()"  process="@form" update=":formExemplares :formExemplares:tabelaExemplares"/>
-					<p:commandButton value="Não" oncomplete="dlgConfirmaExemplares.hide();" action="#{periodicoBean.limparForm}" process="@form" update=":formLivro :tabelaPeriodicos"/>
-				</h:panelGrid>
-			</h:form>
-		</p:dialog>
-		
 	
 	</ui:define>
 </ui:composition>

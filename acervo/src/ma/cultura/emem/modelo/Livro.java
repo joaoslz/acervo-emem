@@ -59,36 +59,6 @@ public class Livro extends Obra {
 		this.serie = serie;
 	}
 	
-	public String getAutoresToString(){
-		StringBuilder builder = new StringBuilder();
-		if(getAutores() != null){
-			Iterator<Autor> it = getAutores().iterator();
-			while(it.hasNext()){
-				Autor a = it.next();
-				builder.append(a.getNome());
-				if(it.hasNext()){
-					builder.append(", ");
-				}
-			}
-		}
-		return builder.toString();
-	}
-
-	public String getAssuntosToString(){
-		StringBuilder builder = new StringBuilder();
-		if(getAssuntos() != null){
-			Iterator<Assunto> it = getAssuntos().iterator();
-			while(it.hasNext()){
-				Assunto a = it.next();
-				builder.append(a.getAssunto());
-				if(it.hasNext()){
-					builder.append(", ");
-				}
-			}
-		}
-		return builder.toString();
-	}
-	
 	@Override
 	public String toString() {
 	    return super.getTitulo();
