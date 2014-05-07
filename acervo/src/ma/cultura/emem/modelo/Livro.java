@@ -1,7 +1,5 @@
 package ma.cultura.emem.modelo;
 
-import java.util.Iterator;
-
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;

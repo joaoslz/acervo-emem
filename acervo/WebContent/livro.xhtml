@@ -39,7 +39,6 @@
    							<ui:param name="obraBean" value="#{livroBean}" />
        					 </ui:include>
 						
-<!-- 					Campos referente ao Livro.................................................. -->
 						<p:outputLabel value="ISBN:" for="isbn" />
 						<p:inputText id="isbn" value="#{livroBean.livro.isbn}" />
 						<h:outputText value=""/>
@@ -59,7 +58,7 @@
 						<p:inputText id="classificacao"
 							value="#{livroBean.livro.classificacao}" />
 						<h:outputText value=""/>
-<!-- 					........................................................................... -->
+						
 						<f:facet name="footer"> 
 							<p:commandButton value="#{livroBean.stringBotaoGravar}"
 								action="#{livroBean.gravar}" 

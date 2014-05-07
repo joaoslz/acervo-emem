@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ma.cultura.emem.dao.PeriodicoDAO;
+import ma.cultura.emem.modelo.Artigo;
 import ma.cultura.emem.modelo.Obra;
 import ma.cultura.emem.modelo.Periodico;
 
@@ -29,6 +30,8 @@ public class PeriodicoBean extends AbstractObraBean implements Serializable {
 	private Periodico periodico = new Periodico();
 	// livros para o datatable
 	private List<Periodico> periodicos = new ArrayList<Periodico>();
+	
+	private Artigo artigoAdd = new Artigo();
 
 	
 	public PeriodicoBean(){
@@ -61,12 +64,10 @@ public class PeriodicoBean extends AbstractObraBean implements Serializable {
 			periodicos.add(0, periodico);
 		}
 	}
-	
-	public String getStringBotaoGravar(){
-		if(periodico.isIdNull())
-			return "Gravar";
-		else
-			return "Gravar Alterações";
+
+	public void adicionarArtigo() {
+		periodico.adicionaArtigo(artigoAdd);
+		artigoAdd = new Artigo();
 	}
 
 
@@ -89,5 +90,19 @@ public class PeriodicoBean extends AbstractObraBean implements Serializable {
 		if(periodicos.isEmpty())
 			updateListaPeriodicos();
 		return periodicos;
+	}
+
+	/**
+	 * @return the artigoAdd
+	 */
+	public Artigo getArtigoAdd() {
+		return artigoAdd;
+	}
+
+	/**
+	 * @param artigoAdd the artigoAdd to set
+	 */
+	public void setArtigoAdd(Artigo artigoAdd) {
+		this.artigoAdd = artigoAdd;
 	}
 }

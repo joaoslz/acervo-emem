@@ -1,14 +1,18 @@
 package ma.cultura.emem.modelo;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Artigo {
+public class Artigo implements Serializable{
 
-    @Id
+	private static final long serialVersionUID = -1467686486369558017L;
+
+	@Id
     @GeneratedValue
     private int id;
 

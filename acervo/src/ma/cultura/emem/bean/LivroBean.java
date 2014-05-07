@@ -76,13 +76,6 @@ public class LivroBean extends AbstractObraBean implements Serializable {
 			RequestContext.getCurrentInstance().execute("dlgConfirmaExemplares.show()");
 		}
 	}
-	
-	public String getStringBotaoGravar(){
-		if(livro.isIdNull())
-			return "Gravar";
-		else
-			return "Gravar Alterações";
-	}
 
 	public List<Livro> getListaLivros() {
 		if (livros.isEmpty()){

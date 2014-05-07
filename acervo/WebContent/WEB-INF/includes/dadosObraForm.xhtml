@@ -40,15 +40,6 @@
 			icon="ui-icon-plus" immediate="true" title="Adicionar Editora"
 			onclick="dlgNovaEditora.show();" />
 
-		<p:outputLabel value="Autores:" for="autores" />
-		<p:autoComplete minQueryLength="2" id="autores" value="#{obraBean.obra.autores}"
-			completeMethod="#{obraBean.autocompleteAutorByNome}" var="a"
-			itemLabel="#{a.nome}" itemValue="#{a}" converter="#{autorConverter}"
-			forceSelection="true" multiple="true" />
-		<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
-			process="form:autores" title="Adicionar Autor"
-			onclick="dlgNovoAutor.show()" />
-
 		<p:outputLabel value="Idioma:" for="idioma" />
 		<p:selectOneMenu id="idioma" value="#{obraBean.obra.idioma}" converter="#{idiomaConverter}">  
    						<f:selectItem itemLabel="Selecione o Idioma" itemValue="#{null}" />           						
@@ -58,6 +49,15 @@
 			icon="ui-icon-plus" immediate="true" title="Adicionar Idioma"
 			onclick="dlgNovoIdioma.show();" />
 
+		<p:outputLabel value="Autores:" for="autores" />
+		<p:autoComplete minQueryLength="2" id="autores" value="#{obraBean.obra.autores}"
+			completeMethod="#{obraBean.autocompleteAutorByNome}" var="a"
+			itemLabel="#{a.nome}" itemValue="#{a}" converter="#{autorConverter}"
+			forceSelection="true" multiple="true" />
+		<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
+			process="form:autores" title="Adicionar Autor"
+			onclick="dlgNovoAutor.show()" />
+
 		<p:outputLabel value="Local:" for="local" />
 		<p:autoComplete minQueryLength="2" value="#{obraBean.obra.local}" id="local"
 			completeMethod="#{obraBean.autocompleteLocalByNome}" var="l"
@@ -65,6 +65,11 @@
 		<p:commandButton id="showAddLocalButton" icon="ui-icon-plus"
 			immediate="true" title="Adicionar Local"
 			onclick="dlgNovoLocal.show()" />
+
+		<p:outputLabel value="É Ilustrado?" for="ehIlustrado" />
+		<p:selectBooleanCheckbox id="ehIlustrado"
+			value="#{obraBean.obra.ehIlustrado}" />
+		<h:outputText value=""/>
 
 		<p:outputLabel value="Assuntos" for="assuntos" />
 		<p:autoComplete minQueryLength="2" id="assuntos" value="#{obraBean.obra.assuntos}"
@@ -75,9 +80,5 @@
 		<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
 			process="form:assuntos" title="Adicionar Assunto"
 			onclick="dlgNovoAssunto.show()" />
-
-		<p:outputLabel value="É Ilustrado?" for="ehIlustrado" />
-		<p:selectBooleanCheckbox id="ehIlustrado"
-			value="#{obraBean.obra.ehIlustrado}" />
 
 </ui:composition>

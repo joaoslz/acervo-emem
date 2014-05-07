@@ -76,6 +76,9 @@ table tr th {
   text-align: center;
   border: 1px solid #cccccc;
 }
+.hide-column-names table thead{
+    display: none;
+}
 
 /*Coloca a cor acinzentada dos formul�rios e das tabelas.*/
 table tr td { 

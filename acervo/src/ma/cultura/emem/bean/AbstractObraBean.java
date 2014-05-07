@@ -112,6 +112,13 @@ public abstract class AbstractObraBean {
 		editoraAdd = new Editora();
 	}
 	
+	public String getStringBotaoGravar(){
+		if(getObra().isIdNull())
+			return "Gravar";
+		else
+			return "Gravar Alterações";
+	}
+	
 	public List<Idioma> getListaIdiomas(){
 		return idiomaDAO.listarTodos();
 	}
