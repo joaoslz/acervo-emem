@@ -24,7 +24,15 @@
 		<h:outputText value=""/>
 
 		<p:outputLabel value="Nº de Páginas:" for="numPaginas" />
-		<p:inputText id="numPaginas" value="#{obraBean.obra.numPaginas}" />
+		
+		<h:panelGroup>
+		<p:outputLabel value="Não paginado?" for="ehPaginado" />
+		<p:selectBooleanCheckbox id="ehPaginado" value="" />
+		<h:outputText value=" "/>
+		<p:inputText id="numPaginas" value="#{obraBean.obra.numPaginas}" size="6" />
+		</h:panelGroup>
+		
+		
 		<h:outputText value=""/>
 
 		<p:outputLabel value="Volume: " for="volume" />
@@ -69,7 +77,8 @@
 		<p:outputLabel value="É Ilustrado?" for="ehIlustrado" />
 		<p:selectBooleanCheckbox id="ehIlustrado"
 			value="#{obraBean.obra.ehIlustrado}" />
-		<h:outputText value=""/>
+		
+		<h:panelGroup/>
 
 		<p:outputLabel value="Assuntos" for="assuntos" />
 		<p:autoComplete minQueryLength="2" id="assuntos" value="#{obraBean.obra.assuntos}"

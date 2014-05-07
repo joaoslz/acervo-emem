@@ -43,24 +43,24 @@ public class LivroBean extends AbstractObraBean implements Serializable {
 	public void pesquisarLivros(){
 		if (isbnFilter != null && isbnFilter.length() > 0)
 			livros = livroDAO.pesquisarPorISBN(isbnFilter);
-//		TODO implementar consulta por título no DAO.
+//		TODO implementar consulta por tï¿½tulo no DAO.
 //		else if (tituloFilter != null && tituloFilter.length() > 0)
 //			livros = livroDAO.likeByTitulo(tituloFilter);
 	}
 
 	public void limparFormLivro() {
 		livro = new Livro();
-		LOGGER.debug("limpando form livro...");
+		LOGGER.debug("limpando form " + this.getClass().getSimpleName() + "...");
 	}
 	
 	public void gravar() {
-		//se já possui um id é uma edição de livro(autalização), senão é um novo livro sendo cadastrado.
+		//se jï¿½ possui um id ï¿½ uma ediï¿½ï¿½o de livro(autalizaï¿½ï¿½o), senï¿½o ï¿½ um novo livro sendo cadastrado.
 		boolean isEdicao = !livro.isIdNull();
 		
 		livro = livroDAO.atualizar(livro);
 
 		if (isEdicao) {
-			//Replace em caso de edição de livro.
+			//Replace em caso de ediï¿½ï¿½o de livro.
 			int index = livros.indexOf(livro);
 			livros.remove(index);
 			livros.add(index, livro);
@@ -68,11 +68,11 @@ public class LivroBean extends AbstractObraBean implements Serializable {
 		}else{
 			//add em caso de novo livro.
 			livros.add(0, livro);
-			//XXX Chamando o dialogo aqui para correção de um bug.
-			//BUG: Ao chamar o dialogo direto do <p:commandButton há uma falha com relação a validação.
-			//Pois mesmo que haja erro de validação, ele continua executando a exibição do dialogo.
-			//SOLUÇÃO: Ao chamar o dialogo aqui no bean o problema é corrigido, pois o JSF não executa 
-			//o método gravar caso haja erro de validação.
+			//XXX Chamando o dialogo aqui para correï¿½ï¿½o de um bug.
+			//BUG: Ao chamar o dialogo direto do <p:commandButton hï¿½ uma falha com relaï¿½ï¿½o a validaï¿½ï¿½o.
+			//Pois mesmo que haja erro de validaï¿½ï¿½o, ele continua executando a exibiï¿½ï¿½o do dialogo.
+			//SOLUï¿½ï¿½O: Ao chamar o dialogo aqui no bean o problema ï¿½ corrigido, pois o JSF nï¿½o executa 
+			//o mï¿½todo gravar caso haja erro de validaï¿½ï¿½o.
 			RequestContext.getCurrentInstance().execute("dlgConfirmaExemplares.show()");
 		}
 	}
@@ -108,8 +108,8 @@ public class LivroBean extends AbstractObraBean implements Serializable {
 		this.isbnFilter = isbnFilter;
 	}
 
-	//XXX obs.: getObra é um método abstrato do ObraBean, 
-	//pois ele é necessário para operações na superclasse
+	//XXX obs.: getObra ï¿½ um mï¿½todo abstrato do ObraBean, 
+	//pois ele ï¿½ necessï¿½rio para operaï¿½ï¿½es na superclasse
 	@Override
 	public Obra getObra() {
 		return getLivro();
