@@ -35,8 +35,8 @@ img {
   position: relative;
   vertical-align: middle;
   height:  50px;
-  background: url(../images/logoEmem.png) no-repeat top left;
-  background-color: background;
+  background: url(../images/logo.gif) no-repeat top left;
+  background-color: #1484E6;
 }
 
 

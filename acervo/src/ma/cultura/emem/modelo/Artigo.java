@@ -19,7 +19,7 @@ public class Artigo {
     private short paginaFinal;
 
     @ManyToOne
-    private Obra periodico;
+    private Periodico periodico;
 
     public int getId() {
         return id;
@@ -61,11 +61,11 @@ public class Artigo {
         this.paginaFinal = paginaFinal;
     }
 
-    public Obra getPeriodico() {
+    public Periodico getPeriodico() {
         return periodico;
     }
 
-    public void setPeriodico(Obra periodico) {
+    public void setPeriodico(Periodico periodico) {
         this.periodico = periodico;
     }
 }
