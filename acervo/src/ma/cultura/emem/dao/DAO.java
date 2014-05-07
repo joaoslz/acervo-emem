@@ -24,10 +24,11 @@ public class DAO<T> implements Serializable {
 		this.classe = classe;
 	}
 
-	public void adicionar(T t) {
+	public T adicionar(T t) {
 		em.getTransaction().begin();
 		em.persist(t);
 		em.getTransaction().commit();
+		return t;
 	}
 
 	public T atualizar(T t) {

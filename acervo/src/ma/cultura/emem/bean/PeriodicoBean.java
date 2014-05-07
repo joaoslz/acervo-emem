@@ -3,7 +3,9 @@ package ma.cultura.emem.bean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -32,7 +34,6 @@ public class PeriodicoBean extends AbstractObraBean implements Serializable {
 	private List<Periodico> periodicos = new ArrayList<Periodico>();
 	
 	private Artigo artigoAdd = new Artigo();
-
 	
 	public PeriodicoBean(){
 		LOGGER.debug("...PeriodicoBean criado!");
@@ -50,16 +51,16 @@ public class PeriodicoBean extends AbstractObraBean implements Serializable {
 	public void gravar() {
 		//se já possui um id é uma edição (autalização), senão é um novo cadastro.
 		boolean isEdicao = !periodico.isIdNull();
-		
-		periodico = periodicoDAO.atualizar(periodico);
 
 		if (isEdicao) {
+			periodico = periodicoDAO.atualizar(periodico);
 			//Replace em caso de edição de livro.
 			int index = periodicos.indexOf(periodico);
 			periodicos.remove(index);
 			periodicos.add(index, periodico);
 			limparForm();
 		}else{
+			periodico = periodicoDAO.adicionar(periodico);
 			//add em caso de novo periodico.
 			periodicos.add(0, periodico);
 		}
@@ -69,7 +70,17 @@ public class PeriodicoBean extends AbstractObraBean implements Serializable {
 		periodico.adicionaArtigo(artigoAdd);
 		artigoAdd = new Artigo();
 	}
-
+	
+	public void removerArtigo(){
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		int index = Integer.parseInt(params.get("index").toString());
+		LOGGER.debug("REMOVENDO artigo index: " + index);
+		if(!periodico.getArtigos().isEmpty()){
+			Artigo a = periodico.getArtigos().remove(index);
+			a.setPeriodico(null);
+			LOGGER.debug("REMOVIDO DA LISTA: " + a.getTitulo());
+		}
+	}
 
 	//XXX obs.: getObra é um método abstrato do ObraBean, 
 	//pois ele é necessário para operações na superclasse

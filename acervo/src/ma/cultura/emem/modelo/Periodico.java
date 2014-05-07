@@ -24,7 +24,7 @@ public class Periodico extends Obra {
 
 	private Boolean ehAssinado;
 
-	@OneToMany(mappedBy = "periodico", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "periodico", cascade=CascadeType.ALL, orphanRemoval = true)
 	private List<Artigo> artigos = new ArrayList<Artigo>();
 
 	public Periodico() {

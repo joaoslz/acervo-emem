@@ -6,11 +6,9 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -67,10 +65,10 @@ public abstract class Obra implements Serializable {
 
 	// FIXME fetch eager???? não consegui fazer via HQL pq ja tem fetch pro
 	// autor.
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
 	private List<Assunto> assuntos;
 
-	@OneToMany(mappedBy = "obra", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "obra")
 	private List<Exemplar> exemplares;
 
 	@ManyToOne

@@ -50,11 +50,19 @@
 						<h:outputText value=""/>
 		
 						<p:outputLabel value="Artigos:" for="artigos"/>
-						
-						<p:dataTable id="artigos" value="#{periodicoBean.periodico.artigos}" var="p"
+						<p:dataTable id="artigos" value="#{periodicoBean.periodico.artigos}" var="a" rowIndexVar="index"
 									 emptyMessage="Nenhum artigo adicionado" styleClass="hide-column-names">
 							<p:column>
-								<h:outputText value="#{p.titulo}" />
+								<h:outputText value="#{a.titulo}" />
+							</p:column>
+							<p:column>
+								<h:form>
+									<p:commandButton icon="ui-icon-trash" title="Excluir Artigo" 
+													update=":form:artigos" process=":form:artigos" 
+													action="#{periodicoBean.removerArtigo}">
+									    <f:param name="index" value="#{index}" />
+									</p:commandButton>
+								</h:form>
 							</p:column>
 						</p:dataTable>
 						<p:commandButton id="showAddArtigoButton" icon="ui-icon-plus"
@@ -109,7 +117,7 @@
 				</p:column>
 				<p:column>
 					<h:form>
-						<p:commandButton icon="ui-icon-pencil" title="Alterar Livro" update=":form">
+						<p:commandButton icon="ui-icon-pencil" title="Alterar Periódico" update=":form">
 							<f:setPropertyActionListener value="#{periodico}" target="#{periodicoBean.periodico}" />
 						</p:commandButton>
 					</h:form>
@@ -118,9 +126,8 @@
 		</p:fieldset>
 	
 		<!--DIALOG ARTIGO........................................................................................... -->
-		<p:dialog header="Cadastro de Artigo" widgetVar="dlgNovoArtigo"
-			resizable="false" modal="true">
-			<h:form>
+		<p:dialog header="Cadastro de Artigo" widgetVar="dlgNovoArtigo" resizable="false" modal="true">
+			<h:form id="formArtigo">
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Título:" for="titulo" />
 					<p:inputText id="titulo" value="#{periodicoBean.artigoAdd.titulo}"
