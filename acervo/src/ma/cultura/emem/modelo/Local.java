@@ -25,4 +25,14 @@ public class Local implements java.io.Serializable {
     public void setNome(String nome) {
 	this.nome = nome;
     }
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Local))
+			return false;
+		Local other = (Local) obj;
+		if(this.getNome() == null || other.getNome() == null)
+			return false;
+		return this.getNome().equals(other.getNome());
+	}
 }

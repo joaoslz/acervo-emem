@@ -14,31 +14,45 @@ import javax.persistence.NamedQuery;
 	@NamedQuery(name = Assunto.NAMED_QUERY_PESQUISAR_POR_ASSUNTO, query = "from Assunto a where a.assunto like :assunto order by a.assunto asc") })
 
 public class Assunto implements Serializable{
-	
-    private static final long serialVersionUID = -884776973799815651L;
-    
-    public static final String NAMED_QUERY_LISTAR_TODOS = "Assunto.listarTodos";
-    public static final String NAMED_QUERY_PESQUISAR_POR_ASSUNTO = "Assunto.pesquisarPorAssunto";
-    
-    @Id
-    @GeneratedValue
-    private int id;
-    private String assunto;
 
-    public int getId() {
-	return id;
-    }
+	private static final long serialVersionUID = -884776973799815651L;
 
-    public String getAssunto() {
-	return assunto;
-    }
+	public static final String NAMED_QUERY_LISTAR_TODOS = "Assunto.listarTodos";
+	public static final String NAMED_QUERY_PESQUISAR_POR_ASSUNTO = "Assunto.pesquisarPorAssunto";
 
-    public void setAssunto(String assunto) {
-	this.assunto = assunto;
-    }
+	@Id
+	@GeneratedValue
+	private Integer id;
+	private String assunto;
 
-    @Override
-    public String toString() {
-	return assunto;
-    }    
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}   
+
+	public String getAssunto() {
+		return assunto;
+	}
+
+	public void setAssunto(String assunto) {
+		this.assunto = assunto;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Assunto))
+			return false;
+		Assunto other = (Assunto) obj;
+		if(this.getId() == null || other.getId() == null)
+			return false;
+		return this.getId().equals(other.getId());
+	}
+
+	@Override
+	public String toString() {
+		return assunto;
+	} 
 }

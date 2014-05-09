@@ -27,7 +27,7 @@ public class Exemplar implements Serializable {
 	private static final long serialVersionUID = 8689410871717711520L;
 	@Id
 	@GeneratedValue
-	private int id;
+	private Integer id;
 	private boolean ehDoacao;
 	@Temporal(TemporalType.DATE)
 	private Calendar dataAquisicao;
@@ -38,11 +38,11 @@ public class Exemplar implements Serializable {
 	@ManyToOne
 	private Obra obra;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -83,5 +83,15 @@ public class Exemplar implements Serializable {
 			dataAquisicao  = GregorianCalendar.getInstance();
 			dataAquisicao .setTime(d);
 		}
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Exemplar))
+			return false;
+		Exemplar other = (Exemplar) obj;
+		if(this.getId() == null || other.getId() == null)
+			return false;
+		return this.getId().equals(other.getId());
 	}
 }

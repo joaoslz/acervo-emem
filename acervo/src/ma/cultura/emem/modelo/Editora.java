@@ -24,7 +24,7 @@ public class Editora implements Serializable{
 	
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     private String nome;
     private String site;
@@ -32,11 +32,11 @@ public class Editora implements Serializable{
     @OneToMany(mappedBy = "editora")
     private List<Obra> obras = new ArrayList<Obra>();
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -68,11 +68,13 @@ public class Editora implements Serializable{
         this.obras = obras;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-	if(!(obj instanceof Editora))
-	    return false;
-	Editora ed = (Editora) obj;
-	return this.id == ed.id;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Editora))
+			return false;
+		Editora other = (Editora) obj;
+		if(this.getId() == null || other.getId() == null)
+			return false;
+		return this.getId().equals(other.getId());
+	}
 }
