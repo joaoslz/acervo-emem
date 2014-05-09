@@ -12,6 +12,7 @@ import ma.cultura.emem.dao.EditoraDAO;
 import ma.cultura.emem.dao.ExemplarDAO;
 import ma.cultura.emem.dao.IdiomaDAO;
 import ma.cultura.emem.dao.LocalDAO;
+import ma.cultura.emem.dao.ObraDAO;
 import ma.cultura.emem.modelo.Assunto;
 import ma.cultura.emem.modelo.Autor;
 import ma.cultura.emem.modelo.Editora;
@@ -20,10 +21,14 @@ import ma.cultura.emem.modelo.Idioma;
 import ma.cultura.emem.modelo.Local;
 import ma.cultura.emem.modelo.Obra;
 
+import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
 public abstract class AbstractObraBean {
 
+	private static final Logger LOGGER = Logger.getLogger(AbstractObraBean.class);
+	
 	@Inject
 	private IdiomaDAO idiomaDAO;
 	@Inject
@@ -36,6 +41,8 @@ public abstract class AbstractObraBean {
 	private LocalDAO localDAO;
 	@Inject
 	private ExemplarDAO exemplarDAO;
+	@Inject
+	private ObraDAO obraDAO;
 
 	// POJO para os cadastros auxiliares
 	private Idioma idiomaAdd = new Idioma();
@@ -44,15 +51,66 @@ public abstract class AbstractObraBean {
 	private Assunto assuntoAdd = new Assunto();
 	private Autor autorAdd = new Autor();
 
+	//TODO Criar uma classe auxiliar para encapsular esses campos.
 	// Campos para cadastro de Exemplar
 	private int quantidade;
 	private boolean ehDoacao;
 	private Date dataAquisicao;
 	private List<Exemplar> exemplares = new ArrayList<Exemplar>();
-
 	
-	public abstract Obra getObra();
+	protected Obra obra;
+	protected List lista = new ArrayList();
 
+	public AbstractObraBean(){
+		LOGGER.debug(this.getClass().getSimpleName() + " criado!");	
+		limparForm();
+	}
+
+	//A subclasse define qual a instacia de obra
+	protected abstract Obra getNewObra();
+	public abstract void updateListaObras();
+	public abstract String recarregarPagina();
+
+	public void gravar() {
+		//se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
+		boolean isEdicao = !getObra().isIdNull();
+
+		if (isEdicao) {
+			obra = obraDAO.atualizar(getObra());
+			//Replace em caso de edicao de livro.
+			int index = lista.indexOf(getObra());
+			lista.remove(index);
+			lista.add(index, getObra());
+			limparForm();
+		}else{
+			obra = obraDAO.adicionar(getObra());
+			//add em caso de novo livro.
+			lista.add(0, getObra());
+			showDialogExemplares();
+		}
+	}
+	
+	public List getLista(){
+		if(lista.isEmpty())
+			updateListaObras();
+		return lista;
+	}
+
+	public void limparForm() {
+		//a subclasse define qual a instacia de obra
+		obra = getNewObra();
+		LOGGER.debug("limpando form " + this.getClass().getSimpleName() + "...");
+	}
+	
+	protected void showDialogExemplares(){
+		//XXX Chamando o dialogo aqui para correcao de um bug.
+		//BUG: Ao chamar o dialogo direto do <p:commandButton ha uma falha com relacao a validacao.
+		//Pois mesmo que haja erro de validacao, ele continua executando a exibicao do dialogo.
+		//SOLUCAO: Ao chamar o dialogo aqui no bean o problema eh corrigido, pois o JSF nao executa 
+		//o metodo gravar caso haja erro de validacao.
+		RequestContext.getCurrentInstance().execute("dlgConfirmaExemplares.show()");
+	}
+	
 	public void limparListaExemplares(){
 		exemplares.clear();
 	}
@@ -116,7 +174,7 @@ public abstract class AbstractObraBean {
 		if(getObra().isIdNull())
 			return "Gravar";
 		else
-			return "Gravar Alterações";
+			return "Gravar AlteraÃ§Ãµes";
 	}
 	
 	public List<Idioma> getListaIdiomas(){
@@ -139,6 +197,7 @@ public abstract class AbstractObraBean {
 		return assuntoDAO.pesquisarPorAssunto(assunto);
 	}
 
+	//..................................................................GETs e SETs
 	public Editora getEditoraAdd() {
 		return editoraAdd;
 	}
@@ -209,5 +268,13 @@ public abstract class AbstractObraBean {
 
 	public void setIdiomaAdd(Idioma idiomaAdd) {
 		this.idiomaAdd = idiomaAdd;
+	}
+
+	public Obra getObra() {
+		return obra;
+	}
+
+	public void setObra(Obra obra) {
+		this.obra = obra;
 	}	
 }

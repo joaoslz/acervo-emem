@@ -16,43 +16,9 @@ public class PopulaBDEmem {
 	public static void main(String[] args) {
 
 		EntityManager em = new JPAUtil().getEntityManager();
-
-		em.getTransaction().begin();
-
-		Autor assis = geraAutor("Machado de Assis");
-		em.persist(assis);
-
-		Autor amado = geraAutor("Jorge Amado");
-		em.persist(amado);
-
-		Autor coelho = geraAutor("Paulo Coelho");
-		em.persist(coelho);
-
-		Livro casmurro = geraLivro("978-8-52-504464-8", "Dom Casmurro", "10/01/1899", assis);
-		Livro memorias = geraLivro("978-8-50-815415-9", "Memorias Postumas de Bras Cubas", "01/01/1881", assis);
-		Livro quincas = geraLivro("978-8-50-804084-1", "Quincas Borba", "01/01/1891", assis);
-
-		em.persist(casmurro);
-		em.persist(memorias);
-		em.persist(quincas);
-
-		Obra alquemista = geraLivro("978-8-57-542758-3", "O Alquimista", "01/01/1988", coelho);
-		Obra brida = geraLivro("978-8-50-567258-7", "Brida", "01/01/1990", coelho);
-		Obra valkirias = geraLivro("978-8-52-812458-8", "As Valkirias", "01/01/1992", coelho);
-		Obra maao = geraLivro("978-8-51-892238-9", "O Diario de um Mago", "01/01/1987", coelho);
-
-		em.persist(alquemista);
-		em.persist(brida);
-		em.persist(valkirias);
-		em.persist(maao);
-
-		Obra capitaes = geraLivro("978-8-50-831169-1", "Capitaes da Areia", "01/01/1937", amado);
-		Obra flor = geraLivro("978-8-53-592569-9", "Dona Flor e Seus Dois Maridos", "01/01/1966", amado);
-
-		em.persist(capitaes);
-		em.persist(flor);
-
-		em.getTransaction().commit();
+		for(Obra l: em.createQuery("from Obra a order by a.id desc", Obra.class).getResultList()){
+			System.out.println(l.getClass().getSimpleName());
+		}
 		em.close();
 
 	}

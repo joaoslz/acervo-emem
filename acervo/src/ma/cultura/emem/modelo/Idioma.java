@@ -38,6 +38,8 @@ public class Idioma {
 		if (obj == null || !(obj instanceof Idioma))
 			return false;
 		Idioma other = (Idioma) obj;
+		if(this.getId() == null || other.getId() == null)
+			return false;
 		return this.getId().equals(other.getId());
 	}
 

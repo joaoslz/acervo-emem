@@ -23,7 +23,7 @@ public class PesquisaObraBean implements Serializable {
 	@Inject
 	private ObraDAO obraDAO;
 	
-	private final SelectItem[] listaBuscaRapida = new SelectItem[] { new SelectItem("titulo", "Título"),
+	private final SelectItem[] listaBuscaRapida = new SelectItem[] { new SelectItem("titulo", "TÃ­tulo"),
 			new SelectItem("assunto", "Assunto"), new SelectItem("editora", "Editora") };
 
 	private String textoPesquisa;
@@ -43,7 +43,14 @@ public class PesquisaObraBean implements Serializable {
 
 	public List<Obra> getObrasPorTitulo() {
 		LOGGER.debug("titulo: " + titulo);
-		return obraDAO.pesquisarPorTitulo(titulo);
+		List lista =  obraDAO.pesquisarPorTitulo(titulo);
+		
+		StringBuilder builder = new StringBuilder();
+		for(Object o: lista){
+			builder.append("\nCLASS: " + o.getClass().getSimpleName());
+		}
+		LOGGER.debug(builder);
+		return lista;
 	}
 
 	public String getTitulo() {

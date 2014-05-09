@@ -52,7 +52,7 @@ public class LivroDAO extends DAO<Livro> {
 
 
 	public List<Livro> pesquisarPorISBN(String isbn) {
-		TypedQuery<Livro> query = em.createNamedQuery(Livro.NAMED_QUERY_PESQUISAR_POR_ISBN, Livro.class);
+		TypedQuery<Livro> query = em.createNamedQuery("Livro.pesquisarPorISBN", Livro.class);
 		query.setMaxResults(5);
 		query.setParameter("isbn", "%" + isbn + "%");
 		return query.getResultList();

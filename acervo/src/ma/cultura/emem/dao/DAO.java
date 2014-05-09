@@ -45,31 +45,19 @@ public class DAO<T> implements Serializable {
 	}
 
 	public List<T> listarTodos() {
-		// IMPORTANTE:Cada entidade deve implementar a named query listarTodos 
-		// com um atributo estatico NAMED_QUERY_LISTAR_TODOS para o nome da query.
+		// IMPORTANTE:Cada entidade deve implementar a named query Entidade.listarTodos 
 		List<T> lista = null;
-		try {
-			// pega o valor do atributo NAMED_QUERY_LISTAR_TODOS.
-			String namedQuery = classe.getField("NAMED_QUERY_LISTAR_TODOS").get(null).toString();
-			lista = em.createNamedQuery(namedQuery, classe).getResultList();
-		} catch (Exception e) {
-			LOGGER.error("Erro ao criar named query NAMED_QUERY_LISTAR_TODOS para a classe" + classe.getName(), e);
-		}
+		String namedQuery = classe.getSimpleName() + ".listarTodos";
+		lista = em.createNamedQuery(namedQuery, classe).getResultList();
 		return lista;
 	}
 
 	public List<T> listarTodos(int maxResult) {
-		// IMPORTANTE:Cada entidade deve implementar a named query listarTodos 
-		// com um atributo estatico NAMED_QUERY_LISTAR_TODOS para o nome da query.
+		// IMPORTANTE:Cada entidade deve implementar a named query Entidade.listarTodos 
 		List<T> lista = null;
-		try {
-			// pega o valor do atributo NAMED_QUERY_LISTAR_TODOS.
-			String namedQuery = classe.getField("NAMED_QUERY_LISTAR_TODOS").get(null).toString();
-			lista = em.createNamedQuery(namedQuery, classe).setMaxResults(maxResult).getResultList();
-			LOGGER.debug("lista com max result: " + maxResult);
-		} catch (Exception e) {
-			LOGGER.error("Erro ao criar named query NAMED_QUERY_LISTAR_TODOS para a classe" + classe.getName(), e);
-		}
+		String namedQuery = classe.getSimpleName() + ".listarTodos";
+		lista = em.createNamedQuery(namedQuery, classe).setMaxResults(maxResult).getResultList();
+		LOGGER.debug("lista com max result: " + maxResult);
 		return lista;
 	}
 

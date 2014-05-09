@@ -6,8 +6,10 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/WEB-INF/template/_template.xhtml">
+			
+<ui:composition template="WEB-INF/template/_template.xhtml">
 	<ui:define name="conteudo">
+
 
 		<h:form id="formPesquisa">
 			<p:messages id="messages" autoUpdate="true" />
@@ -20,7 +22,7 @@
 					</p:selectOneMenu>
 
 					<p:inputText id="txtPesquisa"
-						value="#{pesquisaObraBean.titulo}" required="true" requiredMessage="Você deve digitar algum texto para pesquisa"
+						value="#{pesquisaObraBean.titulo}" required="true"
 						size="60"></p:inputText>
 
 					<p:commandButton value="Buscar" process="" update="tabelaObras" />
@@ -37,6 +39,8 @@
 				</p:column>
 			</p:dataTable>
 		</h:form>
+
+
 	</ui:define>
 </ui:composition>
 

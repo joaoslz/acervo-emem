@@ -20,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
@@ -63,7 +64,7 @@ public abstract class Obra implements Serializable {
 	@ManyToMany
 	private List<Autor> autores;
 
-	// FIXME fetch eager???? não consegui fazer via HQL pq ja tem fetch pro
+	// FIXME fetch eager???? nï¿½o consegui fazer via HQL pq ja tem fetch pro
 	// autor.
 	@ManyToMany
 	private List<Assunto> assuntos;
@@ -220,6 +221,19 @@ public abstract class Obra implements Serializable {
 		this.idioma = idioma;
 	}
 	
+	@Transient
+	public void setEhPaginado(boolean ehPaginado){
+		if(!ehPaginado)
+			setNumPaginas((short)0);
+	}
+
+	@Transient
+	public boolean getEhPaginado(){
+		if(getNumPaginas() == null )
+			return false;
+		return getNumPaginas() > 0;
+	}
+	
 	public String getAutoresToString(){
 		StringBuilder builder = new StringBuilder();
 		if(getAutores() != null){
@@ -248,5 +262,15 @@ public abstract class Obra implements Serializable {
 			}
 		}
 		return builder.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Obra))
+			return false;
+		Obra other = (Obra) obj;
+		if(this.getId() == null || other.getId() == null)
+			return false;
+		return this.getId().equals(other.getId());
 	}
 }

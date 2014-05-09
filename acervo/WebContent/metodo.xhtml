@@ -7,8 +7,8 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/WEB-INF/template/_formObra.xhtml">
-	<ui:param name="obraBean" value="#{livroBean}"></ui:param>
-	<ui:param name="titulo" value="Dados do Livro"></ui:param>
+	<ui:param name="obraBean" value="#{metodoBean}"></ui:param>
+	<ui:param name="titulo" value="Dados do Método"></ui:param>
 	
 	<ui:define name="dadosForm">
 
@@ -17,13 +17,13 @@
 				<p:outputLabel value="ISBN:" for="isbn" />
 			</p:column>
 			<p:column colspan="5">
-				<p:inputText id="isbn" value="#{livroBean.livro.isbn}" />
+				<p:inputText id="isbn" value="#{metodoBean.metodo.isbn}" />
 			</p:column>
 			<p:column>
 				<p:outputLabel value="Cutter:" for="cutter" />
 			</p:column>
 			<p:column colspan="5">
-				<p:inputText id="cutter" value="#{livroBean.livro.cutter}"
+				<p:inputText id="cutter" value="#{metodoBean.metodo.cutter}"
 					validatorMessage="Cutter não pode ser superio a 5 caracteres">
 					<f:validateLength maximum="5" />
 				</p:inputText>
@@ -34,24 +34,24 @@
 				<p:outputLabel value="Série:" for="serie" />
 			</p:column>
 			<p:column colspan="5">
-				<p:inputText id="serie" value="#{livroBean.livro.serie}" />
+				<p:inputText id="serie" value="#{metodoBean.metodo.serie}" />
 			</p:column>
 			<p:column>
 				<p:outputLabel value="Classificação:" for="classificacao" />
 			</p:column>
 			<p:column colspan="5">
 				<p:inputText id="classificacao"
-					value="#{livroBean.livro.classificacao}" />
+					value="#{metodoBean.metodo.classificacao}" />
 			</p:column>
 		</p:row>
 	</ui:define>
 	
 	
 	<ui:define name="tabelaObras">
-	<p:fieldset>
-			<p:dataTable id="tabelaObras" value="#{livroBean.lista}" var="livro" emptyMessage="Nenhum Livro cadastrado">
+		<p:fieldset>
+			<p:dataTable id="tabelaObras" value="#{metodoBean.lista}" var="metodo" emptyMessage="Nenhum Método cadastrado">
 
-				<f:facet name="header"> Livros Cadastrados </f:facet>
+				<f:facet name="header"> Métodos Cadastrados </f:facet>
 				<p:columnGroup type="header">
 					<p:row>
 						<p:column headerText="Título" />
@@ -65,36 +65,36 @@
 				</p:columnGroup>
 
 				<p:column>
-					<h:outputText value="#{livro.titulo}" />
+					<h:outputText value="#{metodo.titulo}" />
 				</p:column>
 				<p:column>
-					<h:outputText value="#{livro.isbn}" />
+					<h:outputText value="#{metodo.isbn}" />
 				</p:column>
 				<p:column>
-					<h:outputText value="#{livro.editora.nome}" />
+					<h:outputText value="#{metodo.editora.nome}" />
 				</p:column>
 				<p:column>
-					<h:outputText value="#{livro.local.nome}" />
-				</p:column>
-
-				<p:column>
-					<h:outputText value="#{livro.autoresToString}" />
+					<h:outputText value="#{metodo.local.nome}" />
 				</p:column>
 
 				<p:column>
-					<h:outputText value="#{livro.assuntosToString}" />
+					<h:outputText value="#{metodo.autoresToString}" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="#{metodo.assuntosToString}" />
 				</p:column>
 
 				<p:column>
 					<h:form>
-						<p:commandButton icon="ui-icon-pencil" title="Alterar Livro" update="@form :form">
-							<f:setPropertyActionListener value="#{livro}" target="#{livroBean.obra}" />
+						<p:commandButton icon="ui-icon-pencil" title="Alterar Método" update="@form :form">
+							<f:setPropertyActionListener value="#{metodo}" target="#{metodoBean.obra}" />
 						</p:commandButton>
 						<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
 							oncomplete="dlgExemplares.show()"
-							action="#{livroBean.updateListaExemplares}"
+							action="#{metodoBean.updateListaExemplares}"
 							update="@form :formExemplares :formExemplares">
-							<f:setPropertyActionListener value="#{livro}" target="#{livroBean.obra}" />
+							<f:setPropertyActionListener value="#{metodo}" target="#{metodoBean.obra}" />
 						</p:commandButton>
 					</h:form>
 				</p:column>

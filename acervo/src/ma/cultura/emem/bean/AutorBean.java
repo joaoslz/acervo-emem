@@ -25,7 +25,7 @@ public class AutorBean implements Serializable {
 	private List<Autor> autores = new ArrayList<Autor>();
 
     /**
-     * Método para editar o autor direto da tabela.
+     * Metodo para editar o autor direto da tabela.
      * @param event
      */
 	public void editAutor(RowEditEvent event) {  
@@ -35,7 +35,7 @@ public class AutorBean implements Serializable {
 
 	public void gravar() {
 		autorDAO.adicionar(autor);
-//		Após o cadastro o autor é adicionado direto no ArrayList 
+//		Apos o cadastro o autor eh adicionado direto no ArrayList 
 //		para evitar ter  que atualizar a lista com outra consulta no banco.
 		autores.add(0, autor);
 		autor = new Autor();
@@ -46,8 +46,6 @@ public class AutorBean implements Serializable {
 	}
 
 	public List<Autor> getAutores() {
-//		se a lista está vazia é porque o bean acabou de ser criado (nova view), 
-//		então faz uma consulta no banco para atualizar a lista.
 		if(autores.isEmpty())
 			updateListaAutores();
 		return autores;
@@ -55,9 +53,5 @@ public class AutorBean implements Serializable {
 
 	public Autor getAutor() {
 		return autor;
-	}
-	
-	public void setAutor(Autor autor) {
-		this.autor = autor;
 	}
 }

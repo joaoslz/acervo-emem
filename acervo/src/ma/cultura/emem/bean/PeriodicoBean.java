@@ -1,8 +1,6 @@
 package ma.cultura.emem.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
@@ -21,98 +19,63 @@ import org.apache.log4j.Logger;
 @ViewScoped
 public class PeriodicoBean extends AbstractObraBean implements Serializable {
 
-	private static final long serialVersionUID = 317415519634926614L;
-
 	private static final Logger LOGGER = Logger.getLogger(PeriodicoBean.class);
 
-	//	DAOs
+	// DAOs
 	@Inject
 	private PeriodicoDAO periodicoDAO;
-	// POJO para o cadastro 
-	private Periodico periodico = new Periodico();
-	// livros para o datatable
-	private List<Periodico> periodicos = new ArrayList<Periodico>();
-	
+
 	private Artigo artigoAdd = new Artigo();
-	
-	public PeriodicoBean(){
-		LOGGER.debug("...PeriodicoBean criado!");
-	}
 
-	public void updateListaPeriodicos(){
-		periodicos = periodicoDAO.listarTodos(5);
-	}
-
-	public void limparForm() {
-		periodico = new Periodico();
-		LOGGER.debug("limpando form Periodico...");
-	}
-	
-	public void gravar() {
-		//se já possui um id é uma edição (autalização), senão é um novo cadastro.
-		boolean isEdicao = !periodico.isIdNull();
-
-		if (isEdicao) {
-			periodico = periodicoDAO.atualizar(periodico);
-			//Replace em caso de edição de livro.
-			int index = periodicos.indexOf(periodico);
-			periodicos.remove(index);
-			periodicos.add(index, periodico);
-			limparForm();
-		}else{
-			periodico = periodicoDAO.adicionar(periodico);
-			//add em caso de novo periodico.
-			periodicos.add(0, periodico);
-		}
+	public PeriodicoBean() {
 	}
 
 	public void adicionarArtigo() {
-		periodico.adicionaArtigo(artigoAdd);
+		getPeriodico().adicionaArtigo(artigoAdd);
 		artigoAdd = new Artigo();
 	}
-	
-	public void removerArtigo(){
+
+	public void removerArtigo() {
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		int index = Integer.parseInt(params.get("index").toString());
 		LOGGER.debug("REMOVENDO artigo index: " + index);
-		if(!periodico.getArtigos().isEmpty()){
-			Artigo a = periodico.getArtigos().remove(index);
+		if (!getPeriodico().getArtigos().isEmpty()) {
+			Artigo a = getPeriodico().getArtigos().remove(index);
 			a.setPeriodico(null);
 			LOGGER.debug("REMOVIDO DA LISTA: " + a.getTitulo());
 		}
 	}
 
-	//XXX obs.: getObra é um método abstrato do ObraBean, 
-	//pois ele é necessário para operações na superclasse
 	@Override
-	public Obra getObra() {
-		return getPeriodico();
+	protected void showDialogExemplares() {
+		//Sebrescrevendo este mÃ©todo para nÃ£o exibir os exemplares na tela de periÃ³dicos.
+		//por isso ele estÃ¡ em branco, chamando apenas o limparForm.
+		limparForm();
+	}
+
+	@Override
+	protected Obra getNewObra() {
+		return new Periodico();
+	}
+
+	@Override
+	public void updateListaObras() {
+		lista = periodicoDAO.listarTodos();
+	}
+	
+	@Override
+	public String recarregarPagina() {
+		return "periodico?faces-redirect=true";
 	}
 
 	public Periodico getPeriodico() {
-		return periodico;
+		return (Periodico) getObra();
 	}
 
-	public void setPeriodico(Periodico periodico) {
-		this.periodico = periodico;
-	}
-
-	public List<Periodico> getPeriodicos() {
-		if(periodicos.isEmpty())
-			updateListaPeriodicos();
-		return periodicos;
-	}
-
-	/**
-	 * @return the artigoAdd
-	 */
 	public Artigo getArtigoAdd() {
 		return artigoAdd;
 	}
 
-	/**
-	 * @param artigoAdd the artigoAdd to set
-	 */
 	public void setArtigoAdd(Artigo artigoAdd) {
 		this.artigoAdd = artigoAdd;
 	}
