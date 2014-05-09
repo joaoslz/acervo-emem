@@ -63,8 +63,8 @@
 	<ui:define name="tabelaObras">
 	<!--LISTA ........................................................................................ -->
 		<p:fieldset>
-			<p:dataTable id="tabelaObras" value="#{periodicoBean.lista}"
-				var="periodico" emptyMessage="Nenhum Periódico cadastrado">
+			<p:dataTable id="tabelaObras" value="#{periodicoBean.periodicoLazyDataModel}"
+				var="periodico" paginator="true" lazy="true" rows="10" emptyMessage="Nenhum Periódico cadastrado">
 				
 				<f:facet name="header"> Periódico Cadastrados </f:facet>
        			<p:columnGroup type="header"> 

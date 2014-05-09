@@ -6,7 +6,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ma.cultura.emem.dao.LivroDAO;
+import ma.cultura.emem.bean.datamodel.LivroLazyDataModel;
 import ma.cultura.emem.modelo.Livro;
 import ma.cultura.emem.modelo.Obra;
 
@@ -14,9 +14,18 @@ import ma.cultura.emem.modelo.Obra;
 @ViewScoped
 public class LivroBean extends AbstractObraBean implements Serializable {
 
+	private static final long serialVersionUID = -2182379017227854261L;
+
 	// DAOs
+//	@Inject
+//	private LivroDAO livroDAO;
+	
 	@Inject
-	private LivroDAO livroDAO;
+	private LivroLazyDataModel livroLazyDataModel;
+	
+	public LivroBean(){
+		super();
+	}
 	
 	public Livro getLivro(){
 		return (Livro) getObra();
@@ -28,12 +37,11 @@ public class LivroBean extends AbstractObraBean implements Serializable {
 	}
 
 	@Override
-	public void updateListaObras() {
-		lista = livroDAO.listarTodos();
-	}
-
-	@Override
 	public String recarregarPagina() {
 		return "livro?faces-redirect=true";
+	}
+
+	public LivroLazyDataModel getLivroLazyDataModel() {
+		return livroLazyDataModel;
 	}
 }

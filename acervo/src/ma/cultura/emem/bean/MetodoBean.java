@@ -6,7 +6,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ma.cultura.emem.dao.MetodoDAO;
+import ma.cultura.emem.bean.datamodel.MetodoLazyDataModel;
 import ma.cultura.emem.modelo.Metodo;
 import ma.cultura.emem.modelo.Obra;
 
@@ -14,9 +14,12 @@ import ma.cultura.emem.modelo.Obra;
 @ViewScoped
 public class MetodoBean extends AbstractObraBean implements Serializable {
 
+	private static final long serialVersionUID = -55181606637412623L;
 	// DAOs
+//	@Inject
+//	private MetodoDAO metodoDAO;
 	@Inject
-	private MetodoDAO metodoDAO;
+	private MetodoLazyDataModel metodoLazyDataModel;
 	
 	public Metodo getMetodo(){
 		return (Metodo) getObra();
@@ -28,12 +31,11 @@ public class MetodoBean extends AbstractObraBean implements Serializable {
 	}
 
 	@Override
-	public void updateListaObras() {
-		lista = metodoDAO.listarTodos();
-	}
-
-	@Override
 	public String recarregarPagina() {
 		return "metodo?faces-redirect=true";
+	}
+
+	public MetodoLazyDataModel getMetodoLazyDataModel() {
+		return metodoLazyDataModel;
 	}
 }

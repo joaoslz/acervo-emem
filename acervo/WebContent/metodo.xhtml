@@ -49,7 +49,8 @@
 	
 	<ui:define name="tabelaObras">
 		<p:fieldset>
-			<p:dataTable id="tabelaObras" value="#{metodoBean.lista}" var="metodo" emptyMessage="Nenhum Método cadastrado">
+			<p:dataTable id="tabelaObras" value="#{metodoBean.metodoLazyDataModel}" var="metodo" 
+						paginator="true" lazy="true" rows="10" emptyMessage="Nenhum Método cadastrado">
 
 				<f:facet name="header"> Métodos Cadastrados </f:facet>
 				<p:columnGroup type="header">

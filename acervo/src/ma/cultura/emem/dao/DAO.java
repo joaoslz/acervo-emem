@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaQuery;
 
 import org.apache.log4j.Logger;
 
@@ -62,9 +61,10 @@ public class DAO<T> implements Serializable {
 	}
 
 	public List<T> listarPorPagina(int firstResult, int maxResultsByPage) {
-		CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
-		query.select(query.from(classe));
-		List<T> lista = em.createQuery(query).setFirstResult(firstResult).setMaxResults(maxResultsByPage).getResultList();
+		// IMPORTANTE:Cada entidade deve implementar a named query Entidade.listarTodos 
+		List<T> lista = null;
+		String namedQuery = classe.getSimpleName() + ".listarTodos";
+		lista = em.createNamedQuery(namedQuery, classe).setFirstResult(firstResult).setMaxResults(maxResultsByPage).getResultList();
 		LOGGER.debug("utilizando lista paginada...");
 		return lista;
 	}

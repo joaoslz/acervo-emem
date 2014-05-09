@@ -8,7 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ma.cultura.emem.dao.PeriodicoDAO;
+import ma.cultura.emem.bean.datamodel.PeriodicoLazyDataModel;
 import ma.cultura.emem.modelo.Artigo;
 import ma.cultura.emem.modelo.Obra;
 import ma.cultura.emem.modelo.Periodico;
@@ -19,11 +19,15 @@ import org.apache.log4j.Logger;
 @ViewScoped
 public class PeriodicoBean extends AbstractObraBean implements Serializable {
 
+	private static final long serialVersionUID = -8216262637075293980L;
+
 	private static final Logger LOGGER = Logger.getLogger(PeriodicoBean.class);
 
 	// DAOs
+//	@Inject
+//	private PeriodicoDAO periodicoDAO;
 	@Inject
-	private PeriodicoDAO periodicoDAO;
+	private PeriodicoLazyDataModel periodicoLazyDataModel;
 
 	private Artigo artigoAdd = new Artigo();
 
@@ -59,11 +63,6 @@ public class PeriodicoBean extends AbstractObraBean implements Serializable {
 	}
 
 	@Override
-	public void updateListaObras() {
-		lista = periodicoDAO.listarTodos();
-	}
-	
-	@Override
 	public String recarregarPagina() {
 		return "periodico?faces-redirect=true";
 	}
@@ -78,5 +77,9 @@ public class PeriodicoBean extends AbstractObraBean implements Serializable {
 
 	public void setArtigoAdd(Artigo artigoAdd) {
 		this.artigoAdd = artigoAdd;
+	}
+
+	public PeriodicoLazyDataModel getPeriodicoLazyDataModel() {
+		return periodicoLazyDataModel;
 	}
 }

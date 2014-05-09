@@ -59,7 +59,6 @@ public abstract class AbstractObraBean {
 	private List<Exemplar> exemplares = new ArrayList<Exemplar>();
 	
 	protected Obra obra;
-	protected List lista = new ArrayList();
 
 	public AbstractObraBean(){
 		LOGGER.debug(this.getClass().getSimpleName() + " criado!");	
@@ -68,34 +67,20 @@ public abstract class AbstractObraBean {
 
 	//A subclasse define qual a instacia de obra
 	protected abstract Obra getNewObra();
-	public abstract void updateListaObras();
 	public abstract String recarregarPagina();
 
 	public void gravar() {
 		//se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
 		boolean isEdicao = !getObra().isIdNull();
-
 		if (isEdicao) {
 			obra = obraDAO.atualizar(getObra());
-			//Replace em caso de edicao de livro.
-			int index = lista.indexOf(getObra());
-			lista.remove(index);
-			lista.add(index, getObra());
 			limparForm();
 		}else{
 			obra = obraDAO.adicionar(getObra());
-			//add em caso de novo livro.
-			lista.add(0, getObra());
 			showDialogExemplares();
 		}
 	}
 	
-	public List getLista(){
-		if(lista.isEmpty())
-			updateListaObras();
-		return lista;
-	}
-
 	public void limparForm() {
 		//a subclasse define qual a instacia de obra
 		obra = getNewObra();

@@ -49,7 +49,8 @@
 	
 	<ui:define name="tabelaObras">
 	<p:fieldset>
-			<p:dataTable id="tabelaObras" value="#{livroBean.lista}" var="livro" emptyMessage="Nenhum Livro cadastrado">
+			<p:dataTable id="tabelaObras" value="#{livroBean.livroLazyDataModel}" var="livro" 
+					 	paginator="true" lazy="true" rows="10" mptyMessage="Nenhum Livro cadastrado">
 
 				<f:facet name="header"> Livros Cadastrados </f:facet>
 				<p:columnGroup type="header">
