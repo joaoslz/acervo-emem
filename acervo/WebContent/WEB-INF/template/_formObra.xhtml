@@ -39,7 +39,7 @@
 						<p:outputLabel value="Titulo:" for="titulo" />
 					</p:column>
 					<p:column colspan="5">
-						<p:inputText id="titulo" value="#{obraBean.obra.titulo}"
+						<p:inputText id="titulo" value="#{obraBean.obra.titulo}" size="50"
 							required="true" requiredMessage="Título obrigatório">
 							<f:ajax event="blur" render="messages" />
 						</p:inputText>
@@ -48,7 +48,7 @@
 						<p:outputLabel value="Subtitulo:" for="subtitulo" />
 					</p:column>
 					<p:column colspan="5">
-						<p:inputText id="subtitulo" value="#{obraBean.obra.subtitulo}" />
+						<p:inputText id="subtitulo" value="#{obraBean.obra.subtitulo}" size="40" />
 					</p:column>
 				</p:row>
 				<p:row>
@@ -71,8 +71,8 @@
 					<p:column>
 						<p:outputLabel value="Editora:" for="editora" />
 					</p:column>
-					<p:column >
-						<p:autoComplete minQueryLength="2"
+					<p:column>
+						<p:autoComplete minQueryLength="2" 
 							value="#{obraBean.obra.editora}" id="editora"
 							completeMethod="#{obraBean.autocompleteEditoraByNome}" var="e"
 							itemLabel="#{e.nome}" itemValue="#{e}"
@@ -143,7 +143,7 @@
 						value="#{obraBean.obra.ehIlustrado}" />
 					</p:column>
 					<p:column>
-						<p:outputLabel value="É Paginado?" for="ehPaginado" />
+						<p:outputLabel value="Não Paginado?" for="ehPaginado" />
 					</p:column>
 					<p:column>
 						<p:selectBooleanCheckbox id="ehPaginado" value="#{obraBean.obra.ehPaginado}" />
