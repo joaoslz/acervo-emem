@@ -7,119 +7,122 @@
 
 
 
-		<!-- DIALOG EXEMPLARES...................................................................................... -->
+	<!-- DIALOG EXEMPLARES...................................................................................... -->
 
-		<p:dialog header="Cadastro de Exemplares" widgetVar="dlgExemplares"
-			resizable="false" closable="false" modal="true">
-			<h:form id="formExemplares">
+	<p:dialog header="Cadastro de Exemplares" widgetVar="dlgExemplares"
+		resizable="false" closable="false" modal="true">
+		<h:form id="formExemplares">
 
-				<b><h:outputText value="Título: " /></b>
-				<h:outputText value="#{obraBean.obra.titulo}" />
+			<b><h:outputText value="Título: " /></b>
+			<h:outputText value="#{obraBean.obra.titulo}" />
 
-				<p:panelGrid columns="2">
-					<f:facet name="header"> Dados do Exemplar</f:facet>
-					<h:outputText value="Quantidade: " />
-					<p:spinner value="#{obraBean.quantidade}" max="300" min="1" />
-					<h:outputText value="Data de Aquisição: *" />
-					<p:calendar value="#{obraBean.dataAquisicao}" locale="pt_BR"
-						display="inline" navigator="true" />
+			<p:panelGrid columns="2" style="width:100%">
+				<f:facet name="header"> Dados do Exemplar</f:facet>
+				<h:outputText value="Quantidade: " />
+				<p:spinner value="#{obraBean.quantidade}" max="300" min="1" />
+				<h:outputText value="Data de Aquisição: " />
+				<p:calendar value="#{obraBean.dataAquisicao}" locale="pt_BR"
+					display="inline" navigator="true" />
 
-					<h:outputText value="É Doaçao? " />
-					<p:selectBooleanCheckbox value="#{obraBean.ehDoacao}" />
+				<h:outputText value="É Doaçao? " />
+				<p:selectBooleanCheckbox value="#{obraBean.ehDoacao}" />
 
+			</p:panelGrid>
 
-					<f:facet name="footer">
-						<p:commandButton value="Gravar"
-							action="#{obraBean.cadastrarExemplares}"
-							update="@form :formExemplares:tabelaExemplares" />
-						<!--............Ao sair da tela de exemplares é preciso limpar form obra e a lista de exemplares....-->
-						<p:commandButton value="Sair" action="#{obraBean.limparForm}"
-							actionListener="#{obraBean.limparListaExemplares}"
-							oncomplete="dlgExemplares.hide()" update=":form :tabelaObras" />
-					</f:facet>
-				</p:panelGrid>
+			<p:toolbar style="margin-top: 2px;margin-bottom:10px;">
+				<p:toolbarGroup align="right">
+					<p:commandButton value="Gravar"
+						action="#{obraBean.cadastrarExemplares}"
+						update="@form :formExemplares:tabelaExemplares" />
+					<!--............Ao sair da tela de exemplares é preciso limpar form obra e a lista de exemplares....-->
+					<p:commandButton value="Sair" action="#{obraBean.limparForm}"
+						actionListener="#{obraBean.limparListaExemplares}"
+						oncomplete="dlgExemplares.hide()" update=":form :tabelaObras" />
 
-				<p:dataTable id="tabelaExemplares" value="#{obraBean.exemplares}"
-					var="exemplar" emptyMessage="Nenhum Exemplar cadastrado"
-					editable="true">
-					<p:ajax event="rowEdit" listener="#{obraBean.editExempar}"
-						update=":formExemplares:tabelaExemplares" />
+				</p:toolbarGroup>
+			</p:toolbar>
 
-					<p:columnGroup type="header">
-						<p:row>
-							<p:column colspan="5" headerText="Exemplares Cadastrados" />
-						</p:row>
-						<p:row>
-							<p:column headerText="ID" />
-							<p:column headerText="É Doação" />
-							<p:column headerText="Data de Aquisição" />
-							<p:column headerText="Observação" />
-							<p:column headerText="Alterar" />
-						</p:row>
-					</p:columnGroup>
+			<p:dataTable id="tabelaExemplares" value="#{obraBean.exemplares}"
+				var="exemplar" emptyMessage="Nenhum Exemplar cadastrado"
+				editable="true">
+				<p:ajax event="rowEdit" listener="#{obraBean.editExempar}"
+					update=":formExemplares:tabelaExemplares" />
 
-					<p:column>
-						<h:outputText value="#{exemplar.id}" />
-					</p:column>
-					<p:column>
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText rendered="#{exemplar.ehDoacao}" value="Sim" />
-								<h:outputText rendered="#{!exemplar.ehDoacao}" value="Não" />
-							</f:facet>
-							<f:facet name="input">
-								<p:selectBooleanCheckbox value="#{exemplar.ehDoacao}" />
-							</f:facet>
-						</p:cellEditor>
-					</p:column>
-					<p:column>
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{exemplar.dataAquisicao.time}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</f:facet>
-							<f:facet name="input">
-								<p:calendar value="#{exemplar.dataAquisicao}"
-									converter="calendarConverter" pattern="dd/MM/yyyy" />
-							</f:facet>
-						</p:cellEditor>
-					</p:column>
-					<p:column>
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{exemplar.observacao}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText value="#{exemplar.observacao}" />
-							</f:facet>
-						</p:cellEditor>
-					</p:column>
-					<p:column>
-						<p:rowEditor />
-					</p:column>
-				</p:dataTable>
-			</h:form>
-		</p:dialog>
+				<p:columnGroup type="header">
+					<p:row>
+						<p:column colspan="5" headerText="Exemplares Cadastrados" />
+					</p:row>
+					<p:row>
+						<p:column headerText="ID" />
+						<p:column headerText="É Doação" />
+						<p:column headerText="Data de Aquisição" />
+						<p:column headerText="Observação" />
+						<p:column headerText="Alterar" />
+					</p:row>
+				</p:columnGroup>
 
-		<!-- DIALOG DESEJA CADASTRAR EXEMPLARES...................................................................... -->
-		<p:dialog header="Deseja cadastrar algum exemplar?"
-			widgetVar="dlgConfirmaExemplares" closable="false" modal="true"
-			resizable="false">
-			<h:form>
-				<h:panelGrid columns="3">
-					<p:outputLabel value="Deseja cadastrar algum exemplar? " />
+				<p:column>
+					<h:outputText value="#{exemplar.id}" />
+				</p:column>
+				<p:column>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText rendered="#{exemplar.ehDoacao}" value="Sim" />
+							<h:outputText rendered="#{!exemplar.ehDoacao}" value="Não" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectBooleanCheckbox value="#{exemplar.ehDoacao}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column>
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{exemplar.dataAquisicao.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<p:calendar value="#{exemplar.dataAquisicao}"
+								converter="calendarConverter" pattern="dd/MM/yyyy" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column>
+					<p:cellEditor >
+						<f:facet name="output">
+							<h:outputText value="#{exemplar.observacao}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{exemplar.observacao}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column >
+					<p:rowEditor />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</p:dialog>
 
-					<p:commandButton value="Sim"
-						oncomplete="dlgConfirmaExemplares.hide();dlgExemplares.show()"
-						process="@form"
-						update=":formExemplares :formExemplares:tabelaExemplares" />
-					<p:commandButton value="Não"
-						oncomplete="dlgConfirmaExemplares.hide();"
-						action="#{obraBean.limparForm}" process="@form"
-						update=":form :tabelaObras" />
-				</h:panelGrid>
-			</h:form>
-		</p:dialog>
+	<!-- DIALOG DESEJA CADASTRAR EXEMPLARES...................................................................... -->
+	<p:dialog header="Deseja cadastrar algum exemplar?"
+		widgetVar="dlgConfirmaExemplares" closable="false" modal="true"
+		resizable="false">
+		<h:form>
+			<h:panelGrid columns="3">
+				<p:outputLabel value="Deseja cadastrar algum exemplar? " />
+
+				<p:commandButton value="Sim"
+					oncomplete="dlgConfirmaExemplares.hide();dlgExemplares.show()"
+					process="@form"
+					update=":formExemplares :formExemplares:tabelaExemplares" />
+				<p:commandButton value="Não"
+					oncomplete="dlgConfirmaExemplares.hide();"
+					action="#{obraBean.limparForm}" process="@form"
+					update=":form :tabelaObras" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
 
 </ui:composition>
