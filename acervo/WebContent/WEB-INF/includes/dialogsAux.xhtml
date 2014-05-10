@@ -59,24 +59,6 @@
 			</h:form>
 		</p:dialog>
 
-
-		<!-- DIALOG AUTOR............................................................................................ -->
-		<p:dialog header="Cadastro de Autor" widgetVar="dlgNovoAutor"
-			resizable="false" modal="true">
-			<h:form>
-				<h:panelGrid columns="2">
-					<p:outputLabel value="Nome:" for="nome" />
-					<p:inputText id="nome" value="#{obraBean.autorAdd.nome}"
-						required="true" requiredMessage="Campo nome deve ser digitado" />
-
-					<p:commandButton value="Gravar" action="#{obraBean.gravarAutor}"
-						oncomplete="dlgNovoAutor.hide();" process="@form"
-						update="@form :form:autores" />
-				</h:panelGrid>
-			</h:form>
-		</p:dialog>
-
-
 		<!-- DIALOG ASSUNTO.......................................................................................... -->
 		<p:dialog header="Cadastro de Assunto" widgetVar="dlgNovoAssunto"
 			resizable="false" modal="true">

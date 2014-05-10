@@ -9,49 +9,65 @@
 <ui:composition template="/WEB-INF/template/_formObra.xhtml">
 	<ui:param name="obraBean" value="#{livroBean}"></ui:param>
 	<ui:param name="titulo" value="Dados do Livro"></ui:param>
-	
+
 	<ui:define name="dadosForm">
 
 		<p:row>
 			<p:column>
 				<p:outputLabel value="ISBN:" for="isbn" />
 			</p:column>
-			<p:column colspan="5">
+			<p:column colspan="2">
 				<p:inputText id="isbn" value="#{livroBean.livro.isbn}" />
 			</p:column>
 			<p:column>
 				<p:outputLabel value="Cutter:" for="cutter" />
 			</p:column>
-			<p:column colspan="5">
+			<p:column colspan="2">
 				<p:inputText id="cutter" value="#{livroBean.livro.cutter}"
 					validatorMessage="Cutter não pode ser superio a 5 caracteres">
 					<f:validateLength maximum="5" />
 				</p:inputText>
 			</p:column>
-			</p:row>
-			<p:row>
+			<p:column rowspan="2">
+				<p:outputLabel value="Autores:" for="autores" />
+			</p:column>
+			<p:column rowspan="2">
+				<p:autoComplete minQueryLength="2" id="autores"
+					value="#{obraBean.obra.autores}"
+					completeMethod="#{obraBean.autocompleteAutorByNome}" var="a"
+					itemLabel="#{a.nome}" itemValue="#{a}"
+					converter="#{autorConverter}" forceSelection="true" multiple="true" />
+			</p:column>
+			<p:column rowspan="2">
+				<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
+					process="form:autores" title="Adicionar Autor"
+					onclick="dlgNovoAutor.show()" />
+			</p:column>
+		</p:row>
+		<p:row>
 			<p:column>
 				<p:outputLabel value="Série:" for="serie" />
 			</p:column>
-			<p:column colspan="5">
+			<p:column colspan="2">
 				<p:inputText id="serie" value="#{livroBean.livro.serie}" />
 			</p:column>
 			<p:column>
 				<p:outputLabel value="Classificação:" for="classificacao" />
 			</p:column>
-			<p:column colspan="5">
+			<p:column colspan="2">
 				<p:inputText id="classificacao"
 					value="#{livroBean.livro.classificacao}" />
 			</p:column>
 		</p:row>
 	</ui:define>
-	
-	
+
+
 	<ui:define name="tabelaObras">
-	<p:fieldset>
-			<p:dataTable id="tabelaObras" value="#{livroBean.livroLazyDataModel}" var="livro" 
-					 	paginator="true" lazy="true" rows="10" mptyMessage="Nenhum Livro cadastrado" 
-					 	rowsPerPageTemplate="10 15 20 30 40" paginatorAlwaysVisible="false">
+		<p:fieldset>
+			<p:dataTable id="tabelaObras" value="#{livroBean.livroLazyDataModel}"
+				var="livro" paginator="true" lazy="true" rows="10"
+				mptyMessage="Nenhum Livro cadastrado"
+				rowsPerPageTemplate="10 15 20 30 40" paginatorAlwaysVisible="false">
 
 				<f:facet name="header"> Livros Cadastrados </f:facet>
 				<p:columnGroup type="header">
@@ -89,19 +105,41 @@
 
 				<p:column>
 					<h:form>
-						<p:commandButton icon="ui-icon-pencil" title="Alterar Livro" update="@form :form">
-							<f:setPropertyActionListener value="#{livro}" target="#{livroBean.obra}" />
+						<p:commandButton icon="ui-icon-pencil" title="Alterar Livro"
+							update="@form :form">
+							<f:setPropertyActionListener value="#{livro}"
+								target="#{livroBean.obra}" />
 						</p:commandButton>
 						<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
 							oncomplete="dlgExemplares.show()"
 							action="#{livroBean.updateListaExemplares}"
 							update="@form :formExemplares :formExemplares">
-							<f:setPropertyActionListener value="#{livro}" target="#{livroBean.obra}" />
+							<f:setPropertyActionListener value="#{livro}"
+								target="#{livroBean.obra}" />
 						</p:commandButton>
 					</h:form>
 				</p:column>
 			</p:dataTable>
 		</p:fieldset>
+	</ui:define>
+	
+	<ui:define name="dialogs">
+	
+		<!-- DIALOG AUTOR............................................................................................ -->
+		<p:dialog header="Cadastro de Autor" widgetVar="dlgNovoAutor"
+			resizable="false" modal="true">
+			<h:form>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{obraBean.autorAdd.nome}"
+						required="true" requiredMessage="Campo nome deve ser digitado" />
+
+					<p:commandButton value="Gravar" action="#{obraBean.gravarAutor}"
+						oncomplete="dlgNovoAutor.hide();" process="@form"
+						update="@form :form:autores" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

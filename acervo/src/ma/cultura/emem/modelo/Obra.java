@@ -222,16 +222,16 @@ public abstract class Obra implements Serializable {
 	}
 	
 	@Transient
-	public void setEhPaginado(boolean ehPaginado){
-		if(!ehPaginado)
+	public void setNaoPaginado(boolean naoPaginado){
+		if(naoPaginado)
 			setNumPaginas((short)0);
 	}
 
 	@Transient
-	public boolean getEhPaginado(){
+	public boolean getNaoPaginado(){
 		if(getNumPaginas() == null )
 			return false;
-		return getNumPaginas() > 0;
+		return getNumPaginas() <= 0;
 	}
 	
 	public String getAutoresToString(){
