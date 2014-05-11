@@ -14,18 +14,18 @@
 
 		<p:row>
 			<p:column>
-				<p:outputLabel value="ISSN:" for="issn" />
-			</p:column>
-			<p:column colspan="3">
-				<p:inputText id="issn" value="#{periodicoBean.periodico.issn}" />
-			</p:column>
-			<p:column>
 				<p:outputLabel value="É assinado?" for="ehAssinado" />
 			</p:column>
 			<p:column>
 				<p:selectBooleanCheckbox id="ehAssinado" value="#{periodicoBean.periodico.ehAssinado}" />
 			</p:column>
-			<p:column colspan="2">
+			<p:column>
+				<p:outputLabel value="ISSN:" for="issn" />
+			</p:column>
+			<p:column colspan="3">
+				<p:inputText id="issn" value="#{periodicoBean.periodico.issn}" />
+			</p:column>
+			<p:column colspan="5">
 				<p:dataTable id="artigos" value="#{periodicoBean.periodico.artigos}" var="a" rowIndexVar="index"
 									 emptyMessage="Nenhum artigo adicionado">
 					<f:facet name="header"> Artigos </f:facet>

@@ -55,14 +55,15 @@
 					<p:column>
 						<p:outputLabel value="Editora:" for="editora" />
 					</p:column>
-					<p:column  colspan="2">
-						<p:autoComplete minQueryLength="2"
+					<p:column colspan="4" >
+						<p:autoComplete minQueryLength="2" size="45"
 							value="#{obraBean.obra.editora}" id="editora"
 							completeMethod="#{obraBean.autocompleteEditoraByNome}" var="e"
 							itemLabel="#{e.nome}" itemValue="#{e}"
 							converter="#{editoraConverter}" forceSelection="true" >
 							</p:autoComplete>
-					
+					</p:column>
+					<p:column>
 						<p:commandButton type="button" id="showAddEditoraButton"
 							icon="ui-icon-plus" immediate="true" title="Adicionar Editora"
 							onclick="dlgNovaEditora.show();" />
@@ -120,7 +121,7 @@
 					<p:column rowspan="2">
 						<p:outputLabel value="Assuntos:" for="assuntos" />
 					</p:column>
-					<p:column rowspan="2">
+					<p:column rowspan="2" colspan="4">
 						<p:autoComplete minQueryLength="2" id="assuntos"
 							value="#{obraBean.obra.assuntos}"
 							completeMethod="#{obraBean.autocompleteAssuntoByAssunto}" var="a"
