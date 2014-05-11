@@ -31,7 +31,7 @@
 			<p:column rowspan="2">
 				<p:outputLabel value="Autores:" for="autores" />
 			</p:column>
-			<p:column rowspan="2">
+			<p:column rowspan="2" colspan="4">
 				<p:autoComplete minQueryLength="2" id="autores"
 					value="#{obraBean.obra.autores}"
 					completeMethod="#{obraBean.autocompleteAutorByNome}" var="a"
