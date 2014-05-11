@@ -32,7 +32,7 @@ public abstract class AbstractObraBean {
 	@Inject
 	private IdiomaDAO idiomaDAO;
 	@Inject
-	private AutorDAO autorDAO;
+	protected AutorDAO autorDAO;
 	@Inject
 	private EditoraDAO editoraDAO;
 	@Inject
@@ -49,7 +49,7 @@ public abstract class AbstractObraBean {
 	private Editora editoraAdd = new Editora();
 	private Local localAdd = new Local();
 	private Assunto assuntoAdd = new Assunto();
-	private Autor autorAdd = new Autor();
+	protected Autor autorAdd = new Autor();
 
 	//TODO Criar uma classe auxiliar para encapsular esses campos.
 	// Campos para cadastro de Exemplar
@@ -132,11 +132,12 @@ public abstract class AbstractObraBean {
 	}
 	
 	public void gravarAutor() {
+		autorAdd.setEhAutorArtigo(false);
 		autorDAO.adicionar(autorAdd);
 		getObra().adicionarAutor(autorAdd);
 		autorAdd = new Autor();
 	}
-
+	
 	public void gravarAssunto() {
 		assuntoDAO.adicionar(assuntoAdd);
 		getObra().adicionarAssunto(assuntoAdd);

@@ -1,10 +1,14 @@
 package ma.cultura.emem.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -25,6 +29,9 @@ public class Artigo implements Serializable{
     @ManyToOne
     private Periodico periodico;
 
+	@ManyToMany
+	private List<Autor> autores;
+	
     public int getId() {
         return id;
     }
@@ -72,4 +79,39 @@ public class Artigo implements Serializable{
     public void setPeriodico(Periodico periodico) {
         this.periodico = periodico;
     }
+
+	/**
+	 * @return the autores
+	 */
+	public List<Autor> getAutores() {
+		return autores;
+	}
+
+	public String getAutoresToString(){
+		StringBuilder builder = new StringBuilder();
+		if(getAutores() != null){
+			Iterator<Autor> it = getAutores().iterator();
+			while(it.hasNext()){
+				Autor a = it.next();
+				builder.append(a.getNome());
+				if(it.hasNext()){
+					builder.append(", ");
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
+	/**
+	 * @param autores the autores to set
+	 */
+	public void setAutores(List<Autor> autores) {
+		this.autores = autores;
+	}
+	
+	public void adicionarAutor(Autor autor) {
+		if (autores == null)
+			autores = new ArrayList<Autor>();
+		autores.add(autor);
+	}
 }

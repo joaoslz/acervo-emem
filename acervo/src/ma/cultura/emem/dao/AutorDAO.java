@@ -15,7 +15,13 @@ public class AutorDAO extends DAO<Autor> {
 	}
 
 	public List<Autor> pesquisarPorNome(String nome) {
-		TypedQuery<Autor> query = em.createNamedQuery(Autor.NAMED_QUERY_PESQUISAR_POR_NOME, Autor.class);
+		TypedQuery<Autor> query = em.createNamedQuery("Autor.pesquisarPorNome", Autor.class);
+		query.setParameter("nome", "%" + nome + "%");
+		return query.getResultList();
+	}
+
+	public List<Autor> pesquisarPorNomeAutorArtigo(String nome) {
+		TypedQuery<Autor> query = em.createNamedQuery("Autor.pesquisarPorNomeAutorArtigo", Autor.class);
 		query.setParameter("nome", "%" + nome + "%");
 		return query.getResultList();
 	}

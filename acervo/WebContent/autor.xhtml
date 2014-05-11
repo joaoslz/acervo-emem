@@ -12,18 +12,22 @@
 	<ui:define name="conteudo">
 		<h:form id="formAutor">
 			<p:messages />
-			<p:fieldset>
-				<h:panelGrid columns="3">
+				<h:panelGrid columns="2">
 					<f:facet name="header"> Dados do Autor </f:facet>
 					<p:outputLabel value="Nome:" for="nome" />
 					<p:inputText id="nome" value="#{autorBean.autor.nome}"
 						required="true" requiredMessage="Campo nome deve ser digitado" />
-
-					<p:commandButton value="Gravar" action="#{autorBean.gravar}" 
-					process="@form" update="@form :formTabelaAutores:tabelaAutores" />
-					
+					<p:outputLabel value="É autor de artigo?" for="ehAutorArtigo" />
+           			<p:selectBooleanCheckbox id="ehAutorArtigo" value="#{autorBean.autor.ehAutorArtigo}"/>
+					<f:facet name="footer">
+						<p:toolbar style="margin-top: 2px;margin-bottom:10px;" >
+							<p:toolbarGroup align="right">
+								<p:commandButton value="Gravar" action="#{autorBean.gravar}" 
+								process="@form" update="@form :formTabelaAutores:tabelaAutores" />
+							</p:toolbarGroup>
+						</p:toolbar>
+					 </f:facet>
 				</h:panelGrid>
-			</p:fieldset>
 		</h:form>
 		<h:form id="formTabelaAutores">
 			<p:fieldset>
@@ -39,6 +43,17 @@
 		               		</f:facet>
 		               		<f:facet name="input">
 		               			<p:inputText value="#{autor.nome}"/>
+		               		</f:facet>
+	               		</p:cellEditor>
+					</p:column>
+					<p:column resizable="true" headerText="É autor de Artigo?">
+						<p:cellEditor>
+		               		<f:facet name="output">
+								<h:outputText value="Sim" rendered="#{autor.ehAutorArtigo}" />
+								<h:outputText value="Não" rendered="#{!autor.ehAutorArtigo}" />
+		               		</f:facet>
+		               		<f:facet name="input">
+		               			<p:selectBooleanCheckbox value="#{autor.ehAutorArtigo}"/>
 		               		</f:facet>
 	               		</p:cellEditor>
 					</p:column>

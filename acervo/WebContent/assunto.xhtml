@@ -13,16 +13,20 @@
 	
 		<h:form id="formAssunto">
 			<p:messages />
-			<p:fieldset>
-				<h:panelGrid columns="3">
-					<f:facet name="header"> Dados do Assunto </f:facet>
-					<p:outputLabel value="Assunto:" for="assunto" />
-					<p:inputText id="assunto" value="#{assuntoBean.assunto.assunto}"
-						required="true" requiredMessage="Campo nome deve ser digitado" />
-					<p:commandButton value="Gravar" action="#{assuntoBean.gravar}"
-						process="@form" update="@form :formTabelaAssuntos:tabelaAssuntos" />
-				</h:panelGrid>
-			</p:fieldset>
+			<h:panelGrid columns="2">
+				<f:facet name="header"> Dados do Assunto </f:facet>
+				<p:outputLabel value="Assunto:" for="assunto" />
+				<p:inputText id="assunto" value="#{assuntoBean.assunto.assunto}"
+					required="true" requiredMessage="Campo nome deve ser digitado" />
+				<f:facet name="footer">
+					<p:toolbar style="margin-top: 2px;margin-bottom:10px;" >
+						<p:toolbarGroup align="right">
+							<p:commandButton value="Gravar" action="#{assuntoBean.gravar}"
+								process="@form" update="@form :formTabelaAssuntos:tabelaAssuntos" />
+						</p:toolbarGroup>
+					</p:toolbar>
+				 </f:facet>
+			</h:panelGrid>
 		</h:form>
 
 		<h:form id="formTabelaAssuntos">

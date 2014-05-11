@@ -1,6 +1,7 @@
 package ma.cultura.emem.bean;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
@@ -10,6 +11,7 @@ import javax.inject.Named;
 
 import ma.cultura.emem.bean.datamodel.PeriodicoLazyDataModel;
 import ma.cultura.emem.modelo.Artigo;
+import ma.cultura.emem.modelo.Autor;
 import ma.cultura.emem.modelo.Obra;
 import ma.cultura.emem.modelo.Periodico;
 
@@ -49,6 +51,10 @@ public class PeriodicoBean extends AbstractObraBean implements Serializable {
 			LOGGER.debug("REMOVIDO DA LISTA: " + a.getTitulo());
 		}
 	}
+	
+	public void limparFormArtigo(){
+		artigoAdd = new Artigo();
+	}
 
 	@Override
 	protected void showDialogExemplares() {
@@ -69,6 +75,17 @@ public class PeriodicoBean extends AbstractObraBean implements Serializable {
 
 	public Periodico getPeriodico() {
 		return (Periodico) getObra();
+	}
+
+	public void gravarAutorArtigo() {
+		autorAdd.setEhAutorArtigo(true);
+		autorDAO.adicionar(autorAdd);
+		getArtigoAdd().adicionarAutor(autorAdd);
+		autorAdd = new Autor();
+	}
+	
+	public List<Autor> autocompleteAutorArtigoByNome(String nome) {
+		return autorDAO.pesquisarPorNomeAutorArtigo(nome);
 	}
 
 	public Artigo getArtigoAdd() {

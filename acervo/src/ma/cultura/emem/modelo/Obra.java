@@ -26,20 +26,14 @@ import javax.persistence.Transient;
 @DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @NamedQueries({
-	@NamedQuery(name = Obra.NAMED_QUERY_LISTAR_TODOS, query = "from Obra a order by a.id desc"),
-	@NamedQuery(name = Obra.NAMED_QUERY_PESQUISAR_POR_TITULO, query = "from Obra a where a.titulo like :titulo"),
-	@NamedQuery(name = Obra.NAMED_QUERY_PESQUISAR_POR_AUTOR, query = "select distinct a from Obra a left join fetch a.autores t where t.nome like :autor"),
-	@NamedQuery(name = Obra.NAMED_QUERY_PESQUISAR_POR_ASSUNTO, query = "select distinct a from Obra a left join fetch a.assuntos s where s.assunto like :assunto"),
-	@NamedQuery(name = Obra.NAMED_QUERY_PESQUISAR_POR_EDITORA, query = "from Obra a where a.editora.nome like :editora")
+	@NamedQuery(name = "Obra.listarTodos", query = "from Obra a order by a.id desc"),
+	@NamedQuery(name = "Obra.pesquisarPorTitulo", query = "from Obra a where a.titulo like :titulo"),
+	@NamedQuery(name = "Obra.pesquisarPorAutor", query = "select distinct a from Obra a left join fetch a.autores t where t.nome like :autor"),
+	@NamedQuery(name = "Obra.pesquisarPorAssunto", query = "select distinct a from Obra a left join fetch a.assuntos s where s.assunto like :assunto"),
+	@NamedQuery(name = "Obra.pesquisarPorEditora", query = "from Obra a where a.editora.nome like :editora")
 
 })
 public abstract class Obra implements Serializable {
-
-	public static final String NAMED_QUERY_LISTAR_TODOS = "Obra.listarTodos";
-	public static final String NAMED_QUERY_PESQUISAR_POR_TITULO = "Obra.pesquisarPorTitulo";
-	public static final String NAMED_QUERY_PESQUISAR_POR_AUTOR = "Obra.pesquisarPorAutor";
-	public static final String NAMED_QUERY_PESQUISAR_POR_ASSUNTO = "Obra.pesquisarPorAssunto";
-	public static final String NAMED_QUERY_PESQUISAR_POR_EDITORA = "Obra.pesquisarPorEditora";
 
 	private static final long serialVersionUID = 8672695121158033015L;
 

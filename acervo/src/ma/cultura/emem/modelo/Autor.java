@@ -10,12 +10,11 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({ 
-	@NamedQuery(name = Autor.NAMED_QUERY_LISTAR_TODOS, query = "from Autor a order by a.id desc"),
-	@NamedQuery(name = Autor.NAMED_QUERY_PESQUISAR_POR_NOME, query = "from Autor a where a.nome like :nome order by a.nome asc") })
+	@NamedQuery(name = "Autor.listarTodos", query = "from Autor a order by a.id desc"),
+	@NamedQuery(name = "Autor.pesquisarPorNome", query = "from Autor a where a.nome like :nome order by a.nome asc"),
+	@NamedQuery(name = "Autor.pesquisarPorNomeAutorArtigo", query = "from Autor a where a.ehAutorArtigo = true and a.nome like :nome order by a.nome asc")
+})
 public class Autor implements Serializable {
-
-	public static final String NAMED_QUERY_LISTAR_TODOS = "Autor.listarTodos";
-	public static final String NAMED_QUERY_PESQUISAR_POR_NOME = "Autor.pesquisarPorNome";
 
 	private static final long serialVersionUID = 8385561660567611471L;
 	
@@ -23,6 +22,7 @@ public class Autor implements Serializable {
 	@GeneratedValue
 	private Integer id;
 	private String nome;
+	private boolean ehAutorArtigo;
 
 	public String getNome() {
 		return nome;
@@ -74,5 +74,19 @@ public class Autor implements Serializable {
 	@Override
 	public String toString() {
 		return this.nome;
+	}
+
+	/**
+	 * @return the ehAutorArtigo
+	 */
+	public boolean isEhAutorArtigo() {
+		return ehAutorArtigo;
+	}
+
+	/**
+	 * @param ehAutorArtigo the ehAutorArtigo to set
+	 */
+	public void setEhAutorArtigo(boolean ehAutorArtigo) {
+		this.ehAutorArtigo = ehAutorArtigo;
 	}
 }

@@ -10,7 +10,6 @@
 	<ui:define name="conteudo">
 		<h:form id="formEditora">
 			<p:messages />
-			<p:fieldset>
 				<h:panelGrid columns="2">
 					<f:facet name="header"> Dados da Editora </f:facet>
 					<p:outputLabel value="Nome:" for="nome" />
@@ -20,10 +19,15 @@
 					<p:outputLabel value="Site:" for="site" />
 					<p:inputText id="site" value="#{editoraBean.editora.site}"  />
 					 
-					<p:commandButton value="Gravar" action="#{editoraBean.gravar}" 
-					process="@form" update="@form :formTabelaEditoras:tabelaEditoras"/>
+					<f:facet name="footer">
+						<p:toolbar style="margin-top: 2px;margin-bottom:10px;" >
+							<p:toolbarGroup align="right">
+								<p:commandButton value="Gravar" action="#{editoraBean.gravar}" 
+								process="@form" update="@form :formTabelaEditoras:tabelaEditoras"/>
+							</p:toolbarGroup>
+						</p:toolbar>
+					 </f:facet>
 				</h:panelGrid>
-			</p:fieldset>
 		</h:form>
 		<h:form id="formTabelaEditoras">
 			<p:fieldset>
