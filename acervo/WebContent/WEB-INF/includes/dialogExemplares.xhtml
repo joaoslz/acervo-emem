@@ -34,6 +34,9 @@
 					<p:commandButton value="Gravar"
 						action="#{obraBean.cadastrarExemplares}"
 						update="@form :formExemplares:tabelaExemplares" />
+						
+					<p:separator />
+						
 					<!--............Ao sair da tela de exemplares é preciso limpar form obra e a lista de exemplares....-->
 					<p:commandButton value="Sair" action="#{obraBean.limparForm}"
 						actionListener="#{obraBean.limparListaExemplares}"

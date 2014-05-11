@@ -198,6 +198,9 @@
 					<p:toolbarGroup align="right">
 						<p:commandButton value="Gravar" action="#{periodicoBean.adicionarArtigo}"
 								oncomplete="dlgNovoArtigo.hide();" process="@form" update="@form :form:artigos" />
+						
+						<p:separator />
+						
 						<p:commandButton value="Sair" action="#{periodicoBean.limparFormArtigo}"
 								oncomplete="dlgNovoArtigo.hide();" process="@form" update="@form" />
 					</p:toolbarGroup>
