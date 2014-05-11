@@ -63,22 +63,22 @@
 
 
 	<ui:define name="tabelaObras">
-		<p:fieldset>
+		<p:fieldset style="width:97%">
 			<p:dataTable id="tabelaObras" value="#{livroBean.livroLazyDataModel}"
-				var="livro" paginator="true" lazy="true" rows="10"
+				var="livro" paginator="true" lazy="true" rows="10" 
 				mptyMessage="Nenhum Livro cadastrado"
-				rowsPerPageTemplate="10 15 20 30 40" paginatorAlwaysVisible="false">
+				rowsPerPageTemplate="5 10 15 20 30 40" paginatorAlwaysVisible="false">
 
 				<f:facet name="header"> Livros Cadastrados </f:facet>
 				<p:columnGroup type="header">
 					<p:row>
 						<p:column headerText="Título" />
-						<p:column headerText="ISBN" />
+						<p:column headerText="ISBN" style="width: 100px"/>
 						<p:column headerText="Editora" />
-						<p:column headerText="Local" />
+						<p:column headerText="Local" style="width: 100px"/>
 						<p:column headerText="Autores" />
 						<p:column headerText="Assuntos" />
-						<p:column headerText="Alterar" />
+						<p:column headerText="Alterar" style="width: 80px"/>
 					</p:row>
 				</p:columnGroup>
 

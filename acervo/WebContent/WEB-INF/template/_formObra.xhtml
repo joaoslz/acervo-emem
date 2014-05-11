@@ -12,7 +12,7 @@
 		<script type="text/javascript" src="js/traducaoCalendario.js"></script>
 		<h:form id="form">
 
-			<div style="height: 20px;">
+			<div style="height: 15px;">
 			<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
 			<p:ajaxStatus id="ajaxStatusPanel" styleClass="ajaxStatusPanel">
 				<f:facet name="start">
@@ -26,8 +26,8 @@
 			<!-- ......................................................................................... -->
 			</div>
 			<p:messages id="messages" autoUpdate="true" />
-
-			<p:panelGrid style="width:100%">
+			<!--  Formulário de cadastro de obra -->
+			<p:panelGrid style="width:99%">
 				<f:facet name="header"> 
 					<p:row>
 						<p:column colspan="12">#{titulo} </p:column>
@@ -39,7 +39,7 @@
 						<p:outputLabel value="Titulo:" for="titulo" />
 					</p:column>
 					<p:column colspan="5">
-						<p:inputText id="titulo" value="#{obraBean.obra.titulo}" size="50"
+						<p:inputText id="titulo" value="#{obraBean.obra.titulo}" style="width:95%"
 							required="true" requiredMessage="Título obrigatório">
 							<f:ajax event="blur" render="messages" />
 						</p:inputText>
@@ -48,7 +48,7 @@
 						<p:outputLabel value="Subtitulo:" for="subtitulo" />
 					</p:column>
 					<p:column colspan="5">
-						<p:inputText id="subtitulo" value="#{obraBean.obra.subtitulo}" size="46" />
+						<p:inputText id="subtitulo" value="#{obraBean.obra.subtitulo}" style="width:95%" />
 					</p:column>
 				</p:row>
 				<p:row>
@@ -115,7 +115,7 @@
 						<p:inputText id="ano" value="#{obraBean.obra.ano}" size="2" />
 					</p:column>
 					<p:column rowspan="2">
-						<p:outputLabel value="Assuntos" for="assuntos" />
+						<p:outputLabel value="Assuntos:" for="assuntos" />
 					</p:column>
 					<p:column rowspan="2">
 						<p:autoComplete minQueryLength="2" id="assuntos"
@@ -155,10 +155,12 @@
 				<ui:insert name="dadosForm"></ui:insert>
 			</p:panelGrid>
 
-			<p:toolbar style="margin-top: 2px;margin-bottom:10px;">
+			<p:toolbar style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
 				<p:toolbarGroup align="right">
 					<p:commandButton value="#{obraBean.stringBotaoGravar}"
 						action="#{obraBean.gravar}" process="@form" update="@form :tabelaObras" />
+						
+					<p:separator />
 
 					<p:commandButton value="Limpar Formulário" update="@form"
 						action="#{obraBean.recarregarPagina}" immediate="true" />
