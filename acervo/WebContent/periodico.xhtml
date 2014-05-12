@@ -25,7 +25,7 @@
 			<p:column colspan="3">
 				<p:inputText id="issn" value="#{periodicoBean.periodico.issn}" />
 			</p:column>
-			<p:column colspan="5">
+			<p:column colspan="5" rowspan="2">
 				<p:dataTable id="artigos" value="#{periodicoBean.periodico.artigos}" var="a" rowIndexVar="index"
 									 emptyMessage="Nenhum artigo adicionado">
 					<f:facet name="header"> Artigos </f:facet>
@@ -53,10 +53,21 @@
 					</p:column>
 				</p:dataTable>
 			</p:column>
-			<p:column>
+			<p:column rowspan="2">
 				<p:commandButton id="showAddArtigoButton" icon="ui-icon-plus"
 							immediate="true" title="Adicionar Artigo"
 							onclick="dlgNovoArtigo.show()" />
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<p:outputLabel value="Periodicidade:" for="periodicidade" />
+			</p:column>
+			<p:column colspan="5">
+				<p:selectOneMenu id="periodicidade" value="#{periodicoBean.periodico.periodicidade}">  
+         				<f:selectItem itemLabel="Selecione a Periodicidade" itemValue="" />  
+	           			 <f:selectItems value="#{periodicoBean.listaPeriodicidade}" />  
+    			</p:selectOneMenu>  
 			</p:column>
 		</p:row>
 	</ui:define>
