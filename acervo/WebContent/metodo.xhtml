@@ -12,53 +12,10 @@
 
 	<ui:define name="dadosForm">
 
-		<p:row>
-			<p:column>
-				<p:outputLabel value="ISBN:" for="isbn" />
-			</p:column>
-			<p:column colspan="2">
-				<p:inputText id="isbn" value="#{metodoBean.metodo.isbn}" />
-			</p:column>
-			<p:column>
-				<p:outputLabel value="Cutter:" for="cutter" />
-			</p:column>
-			<p:column colspan="2">
-				<p:inputText id="cutter" value="#{metodoBean.metodo.cutter}"
-					validatorMessage="Cutter não pode ser superio a 5 caracteres">
-					<f:validateLength maximum="5" />
-				</p:inputText>
-			</p:column>
-			<p:column rowspan="2">
-				<p:outputLabel value="Autores:" for="autores" />
-			</p:column>
-			<p:column rowspan="2" colspan="4">
-				<p:autoComplete minQueryLength="2" id="autores"
-					value="#{obraBean.obra.autores}"
-					completeMethod="#{obraBean.autocompleteAutorByNome}" var="a"
-					itemLabel="#{a.nome}" itemValue="#{a}"
-					converter="#{autorConverter}" forceSelection="true" multiple="true" />
-			</p:column>
-			<p:column rowspan="2">
-				<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
-					process="form:autores" title="Adicionar Autor"
-					onclick="dlgNovoAutor.show()" />
-			</p:column>
-		</p:row>
-		<p:row>
-			<p:column>
-				<p:outputLabel value="Série:" for="serie" />
-			</p:column>
-			<p:column colspan="2">
-				<p:inputText id="serie" value="#{metodoBean.metodo.serie}" />
-			</p:column>
-			<p:column>
-				<p:outputLabel value="Classificação:" for="classificacao" />
-			</p:column>
-			<p:column colspan="2">
-				<p:inputText id="classificacao"
-					value="#{metodoBean.metodo.classificacao}" />
-			</p:column>
-		</p:row>
+		<ui:include src="/WEB-INF/includes/dadosLivro.xhtml">
+			<ui:param name="bean" value="#{metodoBean}" />
+		</ui:include>
+		
 	</ui:define>
 
 
