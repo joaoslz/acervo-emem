@@ -24,7 +24,8 @@ public class PeriodicoBean extends AbstractObraBean implements Serializable {
 
 	private static final long serialVersionUID = -8216262637075293980L;
 
-	private static final Logger LOGGER = Logger.getLogger(PeriodicoBean.class);
+	@Inject
+	private Logger logger;
 
 	// DAOs
 //	@Inject
@@ -45,11 +46,11 @@ public class PeriodicoBean extends AbstractObraBean implements Serializable {
 	public void removerArtigo() {
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		int index = Integer.parseInt(params.get("index").toString());
-		LOGGER.debug("REMOVENDO artigo index: " + index);
+		logger.debug("REMOVENDO artigo index: " + index);
 		if (!getPeriodico().getArtigos().isEmpty()) {
 			Artigo a = getPeriodico().getArtigos().remove(index);
 			a.setPeriodico(null);
-			LOGGER.debug("REMOVIDO DA LISTA: " + a.getTitulo());
+			logger.debug("REMOVIDO DA LISTA: " + a.getTitulo());
 		}
 	}
 	

@@ -24,12 +24,6 @@ public class AssuntoBean implements Serializable {
 	private Assunto assunto = new Assunto();
 	private List<Assunto> assuntos = new ArrayList<Assunto>();
 	
-
-	/**
-	 * Método para editar o assunto direto da tabela.
-	 * 
-	 * @param event
-	 */
 	public void editAssunto(RowEditEvent event) {
 		Assunto a = (Assunto) event.getObject();
 		assuntoDAO.atualizar(a);
@@ -41,15 +35,15 @@ public class AssuntoBean implements Serializable {
 
 	public void gravar() {
 		assuntoDAO.adicionar(this.assunto);
-//		Após o cadastro o autor é adicionado direto no ArrayList 
+//		Apos o cadastro o autor eh adicionado direto no ArrayList 
 //		para evitar ter  que atualizar a lista com outra consulta no banco.
 		assuntos.add(0, this.assunto);
 		this.assunto = new Assunto();
 	}
 
 	public List<Assunto> getAssuntos() {
-		// se a lista está vazia é porque o bean acabou de ser criado (nova view),
-		// então faz uma consulta no banco para atualizar a lista.
+		// se a lista estï¿½ vazia ï¿½ porque o bean acabou de ser criado (nova view),
+		// entï¿½o faz uma consulta no banco para atualizar a lista.
 		if (assuntos.isEmpty())
 			updateListaAssuntos();
 		return assuntos;

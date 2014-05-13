@@ -17,7 +17,8 @@ import org.apache.log4j.Logger;
 @RequestScoped
 public class PesquisaObraBean implements Serializable {
 
-	private static final Logger LOGGER = Logger.getLogger(PesquisaObraBean.class);
+	@Inject
+	private Logger logger;
 	private static final long serialVersionUID = -8379599414801598582L;
 
 	@Inject
@@ -42,14 +43,14 @@ public class PesquisaObraBean implements Serializable {
 	}
 
 	public List<Obra> getObrasPorTitulo() {
-		LOGGER.debug("titulo: " + titulo);
+		logger.debug("titulo: " + titulo);
 		List lista =  obraDAO.pesquisarPorTitulo(titulo);
 		
 		StringBuilder builder = new StringBuilder();
 		for(Object o: lista){
 			builder.append("\nCLASS: " + o.getClass().getSimpleName());
 		}
-		LOGGER.debug(builder);
+		logger.debug(builder);
 		return lista;
 	}
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import ma.cultura.emem.dao.AssuntoDAO;
@@ -27,7 +28,8 @@ import org.primefaces.event.RowEditEvent;
 
 public abstract class AbstractObraBean {
 
-	private static final Logger LOGGER = Logger.getLogger(AbstractObraBean.class);
+	@Inject
+	private Logger logger;
 	
 	@Inject
 	private IdiomaDAO idiomaDAO;
@@ -60,8 +62,10 @@ public abstract class AbstractObraBean {
 	
 	protected Obra obra;
 
-	public AbstractObraBean(){
-		LOGGER.debug(this.getClass().getSimpleName() + " criado!");	
+	@PostConstruct
+	public void init(){
+		logger.debug(this.getClass().getSimpleName() + " criado!");	
+		logger.error(" error TESTE!");	
 		limparForm();
 	}
 
@@ -84,7 +88,7 @@ public abstract class AbstractObraBean {
 	public void limparForm() {
 		//a subclasse define qual a instacia de obra
 		obra = getNewObra();
-		LOGGER.debug("limpando form " + this.getClass().getSimpleName() + "...");
+		logger.debug("limpando form " + this.getClass().getSimpleName() + "...");
 	}
 	
 	protected void showDialogExemplares(){

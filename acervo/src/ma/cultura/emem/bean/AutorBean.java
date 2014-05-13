@@ -11,6 +11,7 @@ import javax.inject.Named;
 import ma.cultura.emem.dao.AutorDAO;
 import ma.cultura.emem.modelo.Autor;
 
+import org.apache.log4j.Logger;
 import org.primefaces.event.RowEditEvent;
 
 @Named
@@ -18,7 +19,9 @@ import org.primefaces.event.RowEditEvent;
 public class AutorBean implements Serializable {
 
 	private static final long serialVersionUID = 3905906075866017417L;
-    
+
+	@Inject
+	private Logger logger;
 	@Inject
 	private AutorDAO autorDAO;
 	private Autor autor = new Autor();
@@ -39,9 +42,12 @@ public class AutorBean implements Serializable {
 //		para evitar ter  que atualizar a lista com outra consulta no banco.
 		autores.add(0, autor);
 		autor = new Autor();
+
+		logger.error(" error TESTE!");	
 	}
 
 	public void updateListaAutores() {
+		logger.info("listando autores..");
 		autores = autorDAO.listarTodos();
 	}
 
