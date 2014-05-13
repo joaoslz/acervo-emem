@@ -12,7 +12,8 @@ public class DAO<T> implements Serializable {
 
 	private static final long serialVersionUID = -4361432740747336731L;
 
-	private static final Logger LOGGER = Logger.getLogger(DAO.class);
+	@Inject
+	private Logger logger;
 
 	private final Class<T> classe;
 
@@ -56,7 +57,7 @@ public class DAO<T> implements Serializable {
 		List<T> lista = null;
 		String namedQuery = classe.getSimpleName() + ".listarTodos";
 		lista = em.createNamedQuery(namedQuery, classe).setMaxResults(maxResult).getResultList();
-		LOGGER.debug("lista com max result: " + maxResult);
+		logger.debug("lista com max result: " + maxResult);
 		return lista;
 	}
 
@@ -65,7 +66,7 @@ public class DAO<T> implements Serializable {
 		List<T> lista = null;
 		String namedQuery = classe.getSimpleName() + ".listarTodos";
 		lista = em.createNamedQuery(namedQuery, classe).setFirstResult(firstResult).setMaxResults(maxResultsByPage).getResultList();
-		LOGGER.debug("utilizando lista paginada...");
+		logger.debug("utilizando lista paginada...");
 		return lista;
 	}
 
