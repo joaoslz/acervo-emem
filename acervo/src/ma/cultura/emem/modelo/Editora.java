@@ -13,12 +13,9 @@ import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({ 
-	@NamedQuery(name = Editora.NAMED_QUERY_LISTAR_TODOS, query = "select e from Editora e order by e.id desc"),
-	@NamedQuery(name = Editora.NAMED_QUERY_PESQUISAR_POR_NOME, query = "select e from Editora e where e.nome like :nome order by e.nome asc") })
+	@NamedQuery(name = "Editora.listarTodos", query = "select e from Editora e order by e.id desc"),
+	@NamedQuery(name = "Editora.pesquisarPorNome", query = "select e from Editora e where e.nome like :nome order by e.nome asc") })
 public class Editora implements Serializable{
-
-	public static final String NAMED_QUERY_LISTAR_TODOS = "Editora.listarTodos";
-	public static final String NAMED_QUERY_PESQUISAR_POR_NOME = "Editora.pesquisarPorNome";
 
 	private static final long serialVersionUID = -7971911155752471160L;
 	

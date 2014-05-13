@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/_template.xhtml">
+
+	<ui:define name="conteudo">
+		<h:form id="form">
+
+			<div style="height: 15px;">
+				<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
+				<p:ajaxStatus id="ajaxStatusPanel" styleClass="ajaxStatusPanel">
+					<f:facet name="start">
+						<h:graphicImage value="/images/ajaxloading.gif" />
+							Carregando...
+						</f:facet>
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+				<!-- ......................................................................................... -->
+			</div>
+			<p:messages id="messages" autoUpdate="true" />
+
+			<!--  Formulário de cadastro de obra -->
+			<p:panelGrid style="width:99%">
+				<f:facet name="header">
+					<p:row>
+						<p:column colspan="12">Dados da Partitura</p:column>
+					</p:row>
+				</f:facet>
+
+				<p:row>
+					<p:column>
+						<p:outputLabel value="Titulo:" for="titulo" />
+					</p:column>
+					<p:column colspan="2">
+						<p:inputText id="titulo" value="#{partituraBean.obra.titulo}"
+							style="width:392px;" required="true"
+							requiredMessage="Título obrigatório">
+							<f:ajax event="blur" render="messages" />
+						</p:inputText>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel value="Autores:" for="autores" />
+					</p:column>
+					<p:column>
+						<p:autoComplete minQueryLength="2" id="autores"
+							value="#{partituraBean.obra.autores}"
+							completeMethod="#{partituraBean.autocompleteAutorByNome}" var="a"
+							itemLabel="#{a.nome}" itemValue="#{a}"
+							converter="#{autorConverter}" forceSelection="true" multiple="true" />
+					</p:column>
+					<p:column>
+						<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
+							process="form:autores" title="Adicionar Autor"
+							onclick="dlgNovoAutor.show()" />
+					</p:column>
+					
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel value="Instrumento:"  for="instrumento"/>
+					</p:column>
+					<p:column>
+						<p:autoComplete minQueryLength="2" size="45"
+							value="#{partituraBean.partitura.instrumento}" id="instrumento"
+							completeMethod="#{partituraBean.autocompleteInstrumentoByNome}" var="i"
+							itemLabel="#{i.nome}" itemValue="#{i}"
+							converter="#{instrumentoConverter}" forceSelection="true" >
+							</p:autoComplete>
+					</p:column>
+					<p:column>
+						<p:commandButton type="button" id="showAddInstrumentoButton"
+							icon="ui-icon-plus" immediate="true" title="Adicionar Instrumento"
+							onclick="dlgNovoInstrumento.show();" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel value="Gênero:" for="genero"/>
+					</p:column>
+					<p:column>
+						<p:autoComplete minQueryLength="2" size="45"
+							value="#{partituraBean.partitura.genero}" id="genero"
+							completeMethod="#{partituraBean.autocompleteGeneroByNome}" var="g"
+							itemLabel="#{g.nome}" itemValue="#{g}"
+							converter="#{generoConverter}" forceSelection="true" >
+							</p:autoComplete>
+					</p:column>
+					<p:column>
+						<p:commandButton type="button" id="showAddGeneroButton"
+							icon="ui-icon-plus" immediate="true" title="Adicionar Gênero"
+							onclick="dlgNovoGenero.show();" />
+					</p:column>
+				</p:row>
+				
+			</p:panelGrid>
+
+			<p:toolbar style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
+				<p:toolbarGroup align="right">
+					<p:commandButton value="#{partituraBean.stringBotaoGravar}"
+						action="#{partituraBean.gravar}" process="@form"
+						update="@form :tabelaObras" />
+
+					<p:separator />
+
+					<p:commandButton value="Limpar Formulário" update="@form"
+						action="#{partituraBean.recarregarPagina}" immediate="true" />
+
+				</p:toolbarGroup>
+			</p:toolbar>
+
+		</h:form>
+		
+		<!--LISTA ........................................................................................ -->
+		<p:fieldset>
+			<p:dataTable id="tabelaObras"
+				value="#{partituraBean.partituraLazyDataModel}" var="p"
+				paginator="true" lazy="true" rows="10"
+				emptyMessage="Nenhum Partitura cadastrada">
+
+				<f:facet name="header"> Partituras Cadastradas </f:facet>
+				<p:columnGroup type="header">
+					<p:row>
+						<p:column headerText="Título" />
+						<p:column headerText="Autores" />
+						<p:column headerText="Instrumento" />
+						<p:column headerText="Gênero" />
+						<p:column headerText="Alterar" />
+					</p:row>
+				</p:columnGroup>
+
+				<p:column>
+					<h:outputText value="#{p.titulo}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{p.autoresToString}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{p.instrumento}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{p.genero}" />
+				</p:column>
+				<p:column>
+					<h:form>
+						<p:commandButton icon="ui-icon-pencil" title="Alterar Partitura"
+							update=":form">
+							<f:setPropertyActionListener value="#{p}"
+								target="#{partituraBean.obra}" />
+						</p:commandButton>
+					</h:form>
+				</p:column>
+			</p:dataTable>
+		</p:fieldset>
+
+
+		<!-- DIALOG AUTOR............................................................................................ -->
+		<p:dialog header="Cadastro de Autor" widgetVar="dlgNovoAutor"
+			resizable="false" modal="true">
+			<h:form>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{partituraBean.autorAdd.nome}"
+						required="true" requiredMessage="Campo nome deve ser digitado" />
+
+					<p:commandButton value="Gravar"
+						action="#{partituraBean.gravarAutor}"
+						oncomplete="dlgNovoAutor.hide();" process="@form"
+						update="@form :form:autores" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		
+		<!--DIALOG INSTRUMENTO........................................................................................... -->
+		<p:dialog header="Cadastro de Instrumento" widgetVar="dlgNovoInstrumento"
+			resizable="false" modal="true">
+			<h:form>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{partituraBean.instrumentoAdd.nome}"
+						required="true"
+						requiredMessage="O campo nome deve ser digitado" />
+
+					<f:facet name="footer">
+						<p:toolbar style="margin-top: 2px;margin-bottom:10px;" >
+							<p:toolbarGroup align="right">
+								<p:commandButton value="Gravar" action="#{partituraBean.gravarInstrumento}"
+									oncomplete="dlgNovoInstrumento.hide();" process="@form" update="@form :form:instrumento" />
+							</p:toolbarGroup>
+						</p:toolbar>
+					 </f:facet>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		<!--DIALOG GENERO........................................................................................... -->
+		<p:dialog header="Cadastro de Gênero" widgetVar="dlgNovoGenero"
+			resizable="false" modal="true">
+			<h:form>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{partituraBean.generoAdd.nome}"
+						required="true"
+						requiredMessage="O campo nome deve ser digitado" />
+
+					<f:facet name="footer">
+						<p:toolbar style="margin-top: 2px;margin-bottom:10px;" >
+							<p:toolbarGroup align="right">
+								<p:commandButton value="Gravar" action="#{partituraBean.gravarGenero}"
+									oncomplete="dlgNovoGenero.hide();" process="@form" update="@form :form:genero" />
+							</p:toolbarGroup>
+						</p:toolbar>
+					 </f:facet>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>

@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -24,6 +26,9 @@ public class Periodico extends Obra {
 
 	private Boolean ehAssinado;
 
+	@Enumerated(EnumType.STRING)
+	private PeriodicidadeEnum periodicidade;
+	
 	@OneToMany(mappedBy = "periodico", cascade=CascadeType.ALL, orphanRemoval = true)
 	private List<Artigo> artigos = new ArrayList<Artigo>();
 
@@ -73,5 +78,19 @@ public class Periodico extends Obra {
 			}
 		}
 		return builder.toString();
+	}
+
+	/**
+	 * @return the periodicidade
+	 */
+	public PeriodicidadeEnum getPeriodicidade() {
+		return periodicidade;
+	}
+
+	/**
+	 * @param periodicidade the periodicidade to set
+	 */
+	public void setPeriodicidade(PeriodicidadeEnum periodicidade) {
+		this.periodicidade = periodicidade;
 	}
 }

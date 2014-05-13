@@ -20,6 +20,10 @@ public class MetodoBean extends AbstractObraBean implements Serializable {
 //	private MetodoDAO metodoDAO;
 	@Inject
 	private MetodoLazyDataModel metodoLazyDataModel;
+
+	public Metodo getLivro(){
+		return (Metodo) getObra();
+	}
 	
 	public Metodo getMetodo(){
 		return (Metodo) getObra();

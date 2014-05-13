@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+		<p:row>
+			<p:column>
+				<p:outputLabel value="ISBN:" for="isbn" />
+			</p:column>
+			<p:column colspan="2">
+				<p:inputText id="isbn" value="#{bean.livro.isbn}" />
+			</p:column>
+			<p:column>
+				<p:outputLabel value="Cutter:" for="cutter" />
+			</p:column>
+			<p:column colspan="2">
+				<p:inputText id="cutter" value="#{bean.livro.cutter}"
+					validatorMessage="Cutter não pode ser superio a 5 caracteres">
+					<f:validateLength maximum="5" />
+				</p:inputText>
+			</p:column>
+			<p:column rowspan="2">
+				<p:outputLabel value="Autores:" for="autores" />
+			</p:column>
+			<p:column rowspan="2" colspan="4">
+				<p:autoComplete minQueryLength="2" id="autores"
+					value="#{bean.livro.autores}"
+					completeMethod="#{bean.autocompleteAutorByNome}" var="a"
+					itemLabel="#{a.nome}" itemValue="#{a}"
+					converter="#{autorConverter}" forceSelection="true" multiple="true" />
+			</p:column>
+			<p:column rowspan="2">
+				<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
+					process="form:autores" title="Adicionar Autor"
+					onclick="dlgNovoAutor.show()" />
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<p:outputLabel value="Série:" for="serie" />
+			</p:column>
+			<p:column colspan="2">
+				<p:inputText id="serie" value="#{bean.livro.serie}" />
+			</p:column>
+			<p:column>
+				<p:outputLabel value="Classificação:" for="classificacao" />
+			</p:column>
+			<p:column colspan="2">
+				<p:inputText id="classificacao"
+					value="#{bean.livro.classificacao}" />
+			</p:column>
+		</p:row>
+
+
+</ui:composition>

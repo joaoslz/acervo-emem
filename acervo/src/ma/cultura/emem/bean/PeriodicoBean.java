@@ -13,6 +13,7 @@ import ma.cultura.emem.bean.datamodel.PeriodicoLazyDataModel;
 import ma.cultura.emem.modelo.Artigo;
 import ma.cultura.emem.modelo.Autor;
 import ma.cultura.emem.modelo.Obra;
+import ma.cultura.emem.modelo.PeriodicidadeEnum;
 import ma.cultura.emem.modelo.Periodico;
 
 import org.apache.log4j.Logger;
@@ -86,6 +87,10 @@ public class PeriodicoBean extends AbstractObraBean implements Serializable {
 	
 	public List<Autor> autocompleteAutorArtigoByNome(String nome) {
 		return autorDAO.pesquisarPorNomeAutorArtigo(nome);
+	}
+	
+	public PeriodicidadeEnum[] getListaPeriodicidade(){
+		return PeriodicidadeEnum.values();
 	}
 
 	public Artigo getArtigoAdd() {
