@@ -16,7 +16,8 @@ import org.apache.log4j.Logger;
 @Named
 public class InstrumentoConverter implements Converter {
 
-	private static final Logger LOGGER = Logger.getLogger(InstrumentoConverter.class);
+	@Inject
+	private Logger logger;
 	
 	@Inject
     private InstrumentoDAO instrumentoDAO;
@@ -28,7 +29,7 @@ public class InstrumentoConverter implements Converter {
             try {
                 return instrumentoDAO.buscarPorId(Integer.valueOf(id));
             } catch(NumberFormatException exception) {
-            	LOGGER.error("Erro ao converter Instrumento.", exception);
+            	logger.error("Erro ao converter Instrumento.", exception);
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversao", "Instrumento Invalido"));
             }
         }

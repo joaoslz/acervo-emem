@@ -16,7 +16,8 @@ import org.apache.log4j.Logger;
 @Named
 public class GeneroConverter implements Converter {
 
-	private static final Logger LOGGER = Logger.getLogger(GeneroConverter.class);
+	@Inject
+	private Logger logger;
 	
 	@Inject
     private GeneroDAO generoDAO;
@@ -28,7 +29,7 @@ public class GeneroConverter implements Converter {
             try {
                 return generoDAO.buscarPorId(Integer.valueOf(id));
             } catch(NumberFormatException exception) {
-            	LOGGER.error("Erro ao converter Genero.", exception);
+            	logger.error("Erro ao converter Genero.", exception);
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversao", "Genero Invalido"));
             }
         }
