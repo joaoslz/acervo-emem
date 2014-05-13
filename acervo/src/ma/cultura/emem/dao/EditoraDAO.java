@@ -20,7 +20,7 @@ public class EditoraDAO extends DAO<Editora> {
 
 	public List<Editora> pesquisarPorNome(String nome) {
 		LOGGER.debug("pesquisando editora por nome: " + nome);
-		TypedQuery<Editora> query = em.createNamedQuery(Editora.NAMED_QUERY_PESQUISAR_POR_NOME, Editora.class);
+		TypedQuery<Editora> query = em.createNamedQuery("Editora.pesquisarPorNome", Editora.class);
 		query.setParameter("nome", "%" + nome + "%");
 		return query.getResultList();
 	}
