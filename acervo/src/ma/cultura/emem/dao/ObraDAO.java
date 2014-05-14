@@ -3,6 +3,7 @@ package ma.cultura.emem.dao;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.TypedQuery;
 
 import ma.cultura.emem.modelo.Obra;
@@ -11,7 +12,8 @@ import org.apache.log4j.Logger;
 
 public class ObraDAO extends DAO<Obra> {
 	private static final long serialVersionUID = -2807083787187739746L;
-	private static final Logger LOGGER = Logger.getLogger(ObraDAO.class);
+	@Inject
+	private Logger logger;
 	
 	public ObraDAO() {
 		super(Obra.class);

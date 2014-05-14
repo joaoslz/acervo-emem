@@ -2,6 +2,7 @@ package ma.cultura.emem.dao;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.TypedQuery;
 
 import ma.cultura.emem.modelo.Exemplar;
@@ -11,7 +12,8 @@ import org.apache.log4j.Logger;
 public class ExemplarDAO extends DAO<Exemplar> {
 
 	private static final long serialVersionUID = -558780804432621543L;
-	private static final Logger LOGGER = Logger.getLogger(ExemplarDAO.class);
+	@Inject
+	private Logger logger;
 
 	public ExemplarDAO() {
 		super(Exemplar.class);
@@ -22,7 +24,7 @@ public class ExemplarDAO extends DAO<Exemplar> {
 		for (Exemplar ex : exemplares) {
 			em.persist(ex);
 		}
-		LOGGER.debug("Adicionando Exemplares: " + exemplares.size());
+		logger.debug("Adicionando Exemplares: " + exemplares.size());
 		em.getTransaction().commit();
 	}
 

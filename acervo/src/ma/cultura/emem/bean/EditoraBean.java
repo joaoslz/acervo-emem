@@ -11,6 +11,7 @@ import javax.inject.Named;
 import ma.cultura.emem.dao.EditoraDAO;
 import ma.cultura.emem.modelo.Editora;
 
+import org.apache.log4j.Logger;
 import org.primefaces.event.RowEditEvent;
 
 @Named
@@ -19,6 +20,8 @@ public class EditoraBean implements Serializable {
 
 	private static final long serialVersionUID = -4804077138249718146L;
 
+	@Inject
+	private Logger logger;
 	@Inject
 	private EditoraDAO editoraDAO;
 
@@ -30,7 +33,7 @@ public class EditoraBean implements Serializable {
 	}
 
 	/**
-	 * Método para editar a editora direto da tabela.
+	 * Mï¿½todo para editar a editora direto da tabela.
 	 * @param event
 	 */
 	public void editEditora(RowEditEvent event) {
@@ -42,6 +45,7 @@ public class EditoraBean implements Serializable {
 		editoraDAO.adicionar(this.editora);
 		editoras.add(0, editora);
 		editora = new Editora();
+		logger.warn("Warn teste!");
 	}
 
 	public List<Editora> getEditoras() {

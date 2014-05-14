@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 import org.primefaces.component.calendar.Calendar;
@@ -19,7 +20,8 @@ import org.primefaces.component.calendar.Calendar;
 @FacesConverter(value = "calendarConverter")
 public class CalendarConverter implements Converter {
 
-	private static final Logger LOGGER = Logger.getLogger(CalendarConverter.class);
+	@Inject
+	private Logger logger;
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -30,7 +32,7 @@ public class CalendarConverter implements Converter {
 				cal = GregorianCalendar.getInstance();
 				cal.setTime(data);
 			} catch (ParseException e) {
-				throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversão", "Data Inválida"), e);
+				throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversï¿½o", "Data Invï¿½lida"), e);
 			}
 			return cal;
 		} else {
@@ -45,9 +47,9 @@ public class CalendarConverter implements Converter {
 			try {
 				convertedValue = convertToString(context, (Calendar) component, (java.util.Calendar) value);
 			} catch (ParseException e) {
-				throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversão", "Data Inválida"), e);
+				throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversï¿½o", "Data Invï¿½lida"), e);
 			}
-			LOGGER.debug("CALENDAR_CONVERTER...get as string...: " + value);
+			logger.debug("CALENDAR_CONVERTER...get as string...: " + value);
 		}
 		return convertedValue;
 	}

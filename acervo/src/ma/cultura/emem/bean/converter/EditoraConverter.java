@@ -15,8 +15,9 @@ import org.apache.log4j.Logger;
 
 @Named
 public class EditoraConverter implements Converter {
-	
-	private static final Logger LOGGER = Logger.getLogger(EditoraConverter.class);
+
+	@Inject
+	private Logger logger;
     
 	@Inject
     private EditoraDAO editoraDAO;
@@ -26,11 +27,11 @@ public class EditoraConverter implements Converter {
             return null;
         } else {
             try {
-            	LOGGER.debug("Converter editora id: " + id);
-            	LOGGER.debug("Converter editora DAO: " + editoraDAO);
+            	logger.debug("Converter editora id: " + id);
+            	logger.debug("Converter editora DAO: " + editoraDAO);
                 return editoraDAO.buscarPorId(Integer.valueOf(id));
             } catch(NumberFormatException exception) {
-                throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversão", "Editora Inválida"));
+                throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversï¿½o", "Editora Invï¿½lida"));
             }
         }
     }
@@ -39,7 +40,7 @@ public class EditoraConverter implements Converter {
         if (value == null) {
             return "";
         } else {
-        	LOGGER.debug("Converter editora id: " + value + " / class: " + value.getClass());
+        	logger.debug("Converter editora id: " + value + " / class: " + value.getClass());
             return String.valueOf(((Editora) value).getId());
         }
     }

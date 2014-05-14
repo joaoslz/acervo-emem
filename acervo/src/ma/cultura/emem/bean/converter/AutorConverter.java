@@ -16,7 +16,8 @@ import org.apache.log4j.Logger;
 @Named
 public class AutorConverter implements Converter {
 
-	private static final Logger LOGGER = Logger.getLogger(AutorConverter.class);
+	@Inject
+	private Logger logger;
 	
 	@Inject
     private AutorDAO autorDAO;
@@ -28,8 +29,8 @@ public class AutorConverter implements Converter {
             try {
                 return autorDAO.buscarPorId(Integer.valueOf(id));
             } catch(NumberFormatException exception) {
-            	LOGGER.error("Erro ao converter autor.", exception);
-                throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversão", "Autor Inválido"));
+            	logger.error("Erro ao converter autor.", exception);
+                throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversï¿½o", "Autor Invï¿½lido"));
             }
         }
     }
