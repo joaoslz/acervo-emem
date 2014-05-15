@@ -23,6 +23,8 @@ body {
   font: normal .85em arial, sans-serif;
   background: #F9F9F9;
   color: #555;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 img {  
