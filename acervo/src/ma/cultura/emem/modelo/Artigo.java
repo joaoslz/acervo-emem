@@ -27,7 +27,7 @@ public class Artigo implements Serializable{
     private short paginaFinal;
 
     @ManyToOne
-    private Periodico periodico;
+    private Fasciculo fasciculo;
 
 	@ManyToMany
 	private List<Autor> autores;
@@ -72,15 +72,7 @@ public class Artigo implements Serializable{
         this.paginaFinal = paginaFinal;
     }
 
-    public Periodico getPeriodico() {
-        return periodico;
-    }
-
-    public void setPeriodico(Periodico periodico) {
-        this.periodico = periodico;
-    }
-
-	/**
+ 	/**
 	 * @return the autores
 	 */
 	public List<Autor> getAutores() {
@@ -113,5 +105,13 @@ public class Artigo implements Serializable{
 		if (autores == null)
 			autores = new ArrayList<Autor>();
 		autores.add(autor);
+	}
+
+	public Fasciculo getFasciculo() {
+		return fasciculo;
+	}
+
+	public void setFasciculo(Fasciculo fasciculo) {
+		this.fasciculo = fasciculo;
 	}
 }

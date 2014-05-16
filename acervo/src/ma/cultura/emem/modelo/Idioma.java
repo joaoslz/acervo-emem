@@ -1,5 +1,7 @@
 package ma.cultura.emem.modelo;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,7 +10,9 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({ @NamedQuery(name = Idioma.NAMED_QUERY_LISTAR_TODOS, query = "from Idioma i order by i.nome asc") })
-public class Idioma {
+public class Idioma implements Serializable {
+
+	private static final long serialVersionUID = -8054954052714813400L;
 
 	public static final String NAMED_QUERY_LISTAR_TODOS = "Idioma.listarTodos";
 

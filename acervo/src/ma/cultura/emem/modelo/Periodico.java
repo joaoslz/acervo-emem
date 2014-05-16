@@ -29,9 +29,10 @@ public class Periodico extends Obra {
 	@Enumerated(EnumType.STRING)
 	private PeriodicidadeEnum periodicidade;
 	
-	@OneToMany(mappedBy = "periodico", cascade=CascadeType.ALL, orphanRemoval = true)
-	private List<Artigo> artigos = new ArrayList<Artigo>();
+	@OneToMany(mappedBy = "periodico")
+	private List<Fasciculo> fasciculos = new ArrayList<Fasciculo>();
 
+	
 	public Periodico() {
 		// TODO Auto-generated constructor stub
 	}
@@ -44,18 +45,6 @@ public class Periodico extends Obra {
 		this.issn = issn;
 	}
 
-	public List<Artigo> getArtigos() {
-		return artigos;
-	}
-
-	public void setArtigos(List<Artigo> artigos) {
-		this.artigos = artigos;
-	}
-
-	public void adicionaArtigo(Artigo artigo) {
-		artigos.add(artigo);
-		artigo.setPeriodico(this);
-	}
 
 	public Boolean getEhAssinado() {
 		return ehAssinado;
@@ -63,21 +52,6 @@ public class Periodico extends Obra {
 
 	public void setEhAssinado(Boolean ehAssinado) {
 		this.ehAssinado = ehAssinado;
-	}
-
-	public String getArtigosToString() {
-		StringBuilder builder = new StringBuilder();
-		if (getArtigos() != null && !getArtigos().isEmpty()) {
-			Iterator<Artigo> it = getArtigos().iterator();
-			while (it.hasNext()) {
-				Artigo a = it.next();
-				builder.append(a.getTitulo());
-				if (it.hasNext()) {
-					builder.append(", ");
-				}
-			}
-		}
-		return builder.toString();
 	}
 
 	/**
