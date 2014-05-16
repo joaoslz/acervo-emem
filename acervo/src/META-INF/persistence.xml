@@ -10,12 +10,18 @@
 		
 		<class>ma.cultura.emem.modelo.Obra</class>
 		<class>ma.cultura.emem.modelo.Livro</class>
-		<class>ma.cultura.emem.modelo.Exemplar</class>
+		<class>ma.cultura.emem.modelo.Metodo</class>		
 		<class>ma.cultura.emem.modelo.Periodico</class>
+		<class>ma.cultura.emem.modelo.Partitura</class>
+		<class>ma.cultura.emem.modelo.Exemplar</class>
 		<class>ma.cultura.emem.modelo.Autor</class>
+		<class>ma.cultura.emem.modelo.Fasciculo</class>
 		<class>ma.cultura.emem.modelo.Artigo</class>
 		<class>ma.cultura.emem.modelo.Editora</class>
 		<class>ma.cultura.emem.modelo.Assunto</class>
+		<class>ma.cultura.emem.modelo.Local</class>
+		<class>ma.cultura.emem.modelo.Idioma</class>
+		
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
