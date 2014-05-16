@@ -13,22 +13,22 @@
 		<h:form id="form">
 
 			<div style="height: 15px;">
-			<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
-			<p:ajaxStatus id="ajaxStatusPanel" styleClass="ajaxStatusPanel">
-				<f:facet name="start">
-					<h:graphicImage value="/images/ajaxloading.gif" />
+				<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
+				<p:ajaxStatus id="ajaxStatusPanel" styleClass="ajaxStatusPanel">
+					<f:facet name="start">
+						<h:graphicImage value="/images/ajaxloading.gif" />
 							Carregando...
 						</f:facet>
-				<f:facet name="complete">
-					<h:outputText value="" />
-				</f:facet>
-			</p:ajaxStatus>
-			<!-- ......................................................................................... -->
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+				<!-- ......................................................................................... -->
 			</div>
 			<p:messages id="messages" autoUpdate="true" />
 			<!--  Formulário de cadastro de obra -->
 			<p:panelGrid style="width:99%">
-				<f:facet name="header"> 
+				<f:facet name="header">
 					<p:row>
 						<p:column colspan="12">#{titulo} </p:column>
 					</p:row>
@@ -39,8 +39,9 @@
 						<p:outputLabel value="Titulo:" for="titulo" />
 					</p:column>
 					<p:column colspan="5">
-						<p:inputText id="titulo" value="#{obraBean.obra.titulo}" style="width:95%"
-							required="true" requiredMessage="Título obrigatório">
+						<p:inputText id="titulo" value="#{obraBean.obra.titulo}"
+							style="width:95%" required="true"
+							requiredMessage="Título obrigatório">
 							<f:ajax event="blur" render="messages" />
 						</p:inputText>
 					</p:column>
@@ -48,20 +49,21 @@
 						<p:outputLabel value="Subtitulo:" for="subtitulo" />
 					</p:column>
 					<p:column colspan="5">
-						<p:inputText id="subtitulo" value="#{obraBean.obra.subtitulo}" style="width:95%" />
+						<p:inputText id="subtitulo" value="#{obraBean.obra.subtitulo}"
+							style="width:95%" />
 					</p:column>
 				</p:row>
 				<p:row>
 					<p:column>
 						<p:outputLabel value="Editora:" for="editora" />
 					</p:column>
-					<p:column colspan="4" >
+					<p:column colspan="4">
 						<p:autoComplete minQueryLength="2" size="45"
 							value="#{obraBean.obra.editora}" id="editora"
 							completeMethod="#{obraBean.autocompleteEditoraByNome}" var="e"
 							itemLabel="#{e.nome}" itemValue="#{e}"
-							converter="#{editoraConverter}" forceSelection="true" >
-							</p:autoComplete>
+							converter="#{editoraConverter}" forceSelection="true">
+						</p:autoComplete>
 					</p:column>
 					<p:column>
 						<p:commandButton type="button" id="showAddEditoraButton"
@@ -71,13 +73,14 @@
 					<p:column>
 						<p:outputLabel value="Local:" for="local" />
 					</p:column>
-					<p:column >
-						<p:autoComplete minQueryLength="2" value="#{obraBean.obra.local}" size="10"
-							id="local" completeMethod="#{obraBean.autocompleteLocalByNome}"
-							var="l" itemLabel="#{l.nome}" itemValue="#{l}"
+					<p:column>
+						<p:autoComplete minQueryLength="2" value="#{obraBean.obra.local}"
+							size="10" id="local"
+							completeMethod="#{obraBean.autocompleteLocalByNome}" var="l"
+							itemLabel="#{l.nome}" itemValue="#{l}"
 							converter="#{localConverter}" />
 					</p:column>
-					<p:column >
+					<p:column>
 						<p:commandButton id="showAddLocalButton" icon="ui-icon-plus"
 							immediate="true" title="Adicionar Local"
 							onclick="dlgNovoLocal.show()" />
@@ -85,7 +88,7 @@
 					<p:column>
 						<p:outputLabel value="Idioma:" for="idioma" />
 					</p:column>
-					<p:column >
+					<p:column>
 						<p:selectOneMenu id="idioma" value="#{obraBean.obra.idioma}"
 							converter="#{idiomaConverter}">
 							<f:selectItem itemLabel="Selecione o Idioma" itemValue="#{null}" />
@@ -104,19 +107,22 @@
 						<p:outputLabel value="Edição:" for="edicao" />
 					</p:column>
 					<p:column>
-						<p:inputText id="edicao" value="#{obraBean.obra.edicao}" size="2" />
+						<p:inputMask id="edicao" mask="9?99" placeHolder=" " 
+						             value="#{obraBean.obra.edicao}" size="2" />
 					</p:column>
 					<p:column>
 						<p:outputLabel value="Volume: " for="volume" />
 					</p:column>
 					<p:column>
-						<p:inputText id="volume" value="#{obraBean.obra.volume}" size="2" />
+						<p:inputMask id="volume" mask="9?99" placeHolder=" " 
+						             value="#{obraBean.obra.volume}" size="2" />
 					</p:column>
 					<p:column>
 						<p:outputLabel value="Ano:" for="ano" />
 					</p:column>
-					<p:column >
-						<p:inputText id="ano" value="#{obraBean.obra.ano}" size="2" />
+					<p:column>
+						<p:inputMask id="ano" value="#{obraBean.obra.ano}" mask="9999"
+							size="2" />
 					</p:column>
 					<p:column rowspan="2">
 						<p:outputLabel value="Assuntos:" for="assuntos" />
@@ -141,19 +147,21 @@
 					</p:column>
 					<p:column>
 						<p:selectBooleanCheckbox id="ehIlustrado"
-						value="#{obraBean.obra.ehIlustrado}" />
+							value="#{obraBean.obra.ehIlustrado}" />
 					</p:column>
 					<p:column>
 						<p:outputLabel value="Não Paginado?" for="naoPaginado" />
 					</p:column>
 					<p:column>
-						<p:selectBooleanCheckbox id="naoPaginado" value="#{obraBean.obra.naoPaginado}" />
+						<p:selectBooleanCheckbox id="naoPaginado"
+							value="#{obraBean.obra.naoPaginado}" />
 					</p:column>
 					<p:column>
 						<p:outputLabel value="Nº de Páginas:" for="numPaginas" />
 					</p:column>
 					<p:column>
-						<p:inputText id="numPaginas" value="#{obraBean.obra.numPaginas}" size="2" />
+						<p:inputText id="numPaginas" value="#{obraBean.obra.numPaginas}"
+							size="2" />
 					</p:column>
 				</p:row>
 				<ui:insert name="dadosForm"></ui:insert>
@@ -162,8 +170,9 @@
 			<p:toolbar style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
 				<p:toolbarGroup align="right">
 					<p:commandButton value="#{obraBean.stringBotaoGravar}"
-						action="#{obraBean.gravar}" process="@form" update="@form :tabelaObras" />
-						
+						action="#{obraBean.gravar}" process="@form"
+						update="@form :tabelaObras" />
+
 					<p:separator />
 
 					<p:commandButton value="Limpar Formulário" update="@form"
@@ -175,13 +184,13 @@
 		</h:form>
 
 		<ui:insert name="tabelaObras"></ui:insert>
-		
+
 		<ui:insert name="dialogs"></ui:insert>
-		
+
 		<ui:include src="/WEB-INF/includes/dialogExemplares.xhtml">
 			<ui:param name="obraBean" value="#{obraBean}" />
 		</ui:include>
-		
+
 		<ui:include src="/WEB-INF/includes/dialogsAux.xhtml">
 			<ui:param name="obraBean" value="#{obraBean}" />
 		</ui:include>
