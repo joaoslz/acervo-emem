@@ -1,5 +1,7 @@
 package ma.cultura.emem.dao;
 
+import java.io.Serializable;
+
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
@@ -7,10 +9,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class JPAUtil {
+public class JPAUtil implements Serializable {
+	
 	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("acervo_emem");
 
-	// Anotação para que o CDI reconheca este método com um produto para o EntityManager
+	// Anotaï¿½ï¿½o para que o CDI reconheca este mï¿½todo com um produto para o EntityManager
 	@Produces
 	@RequestScoped
 	public EntityManager getEntityManager() {
@@ -18,7 +21,7 @@ public class JPAUtil {
 		return em;
 	}
 
-	// Método para que o CDI feche o EntityManager ao liberar da memória.
+	// Mï¿½todo para que o CDI feche o EntityManager ao liberar da memï¿½ria.
 	public void close(@Disposes EntityManager em) {
 		em.close();
 	}

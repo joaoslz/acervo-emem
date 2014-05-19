@@ -12,6 +12,7 @@ import javax.inject.Named;
 import ma.cultura.emem.bean.datamodel.PeriodicoLazyDataModel;
 import ma.cultura.emem.modelo.Artigo;
 import ma.cultura.emem.modelo.Autor;
+import ma.cultura.emem.modelo.Fasciculo;
 import ma.cultura.emem.modelo.Obra;
 import ma.cultura.emem.modelo.PeriodicidadeEnum;
 import ma.cultura.emem.modelo.Periodico;
@@ -30,33 +31,46 @@ public class PeriodicoBean extends AbstractObraBean implements Serializable {
 	// DAOs
 //	@Inject
 //	private PeriodicoDAO periodicoDAO;
+
 	@Inject
 	private PeriodicoLazyDataModel periodicoLazyDataModel;
 
-	private Artigo artigoAdd = new Artigo();
+	private Fasciculo fasciculoAdd = new Fasciculo();
 
 	public PeriodicoBean() {
 	}
 
-	public void adicionarArtigo() {
-		getPeriodico().adicionaArtigo(artigoAdd);
-		artigoAdd = new Artigo();
-	}
-
-	public void removerArtigo() {
-		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-		int index = Integer.parseInt(params.get("index").toString());
-		logger.debug("REMOVENDO artigo index: " + index);
-		if (!getPeriodico().getArtigos().isEmpty()) {
-			Artigo a = getPeriodico().getArtigos().remove(index);
-			a.setPeriodico(null);
-			logger.debug("REMOVIDO DA LISTA: " + a.getTitulo());
-		}
-	}
+//	public void adicionarArtigo() {
+//		getPeriodico().adicionaArtigo(artigoAdd);
+//		artigoAdd = new Artigo();
+//	}
+//
+//	public void removerArtigo() {
+//		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+//		int index = Integer.parseInt(params.get("index").toString());
+//		logger.debug("REMOVENDO artigo index: " + index);
+//		if (!getPeriodico().getArtigos().isEmpty()) {
+//			Artigo a = getPeriodico().getArtigos().remove(index);
+//			a.setPeriodico(null);
+//			logger.debug("REMOVIDO DA LISTA: " + a.getTitulo());
+//		}
+//	}
+//	
+//	public void limparFormArtigo(){
+//		artigoAdd = new Artigo();
+//	}
+//	
+//	public void gravarAutorArtigo() {
+//		autorAdd.setEhAutorArtigo(true);
+//		autorDAO.adicionar(autorAdd);
+//		getArtigoAdd().adicionarAutor(autorAdd);
+//		autorAdd = new Autor();
+//	}
+//	
+//	public List<Autor> autocompleteAutorArtigoByNome(String nome) {
+//		return autorDAO.pesquisarPorNomeAutorArtigo(nome);
+//	}
 	
-	public void limparFormArtigo(){
-		artigoAdd = new Artigo();
-	}
 
 	@Override
 	protected void showDialogExemplares() {
@@ -78,31 +92,22 @@ public class PeriodicoBean extends AbstractObraBean implements Serializable {
 	public Periodico getPeriodico() {
 		return (Periodico) getObra();
 	}
-
-	public void gravarAutorArtigo() {
-		autorAdd.setEhAutorArtigo(true);
-		autorDAO.adicionar(autorAdd);
-		getArtigoAdd().adicionarAutor(autorAdd);
-		autorAdd = new Autor();
-	}
-	
-	public List<Autor> autocompleteAutorArtigoByNome(String nome) {
-		return autorDAO.pesquisarPorNomeAutorArtigo(nome);
-	}
 	
 	public PeriodicidadeEnum[] getListaPeriodicidade(){
 		return PeriodicidadeEnum.values();
 	}
 
-	public Artigo getArtigoAdd() {
-		return artigoAdd;
-	}
-
-	public void setArtigoAdd(Artigo artigoAdd) {
-		this.artigoAdd = artigoAdd;
-	}
 
 	public PeriodicoLazyDataModel getPeriodicoLazyDataModel() {
 		return periodicoLazyDataModel;
 	}
+
+	public Fasciculo getFasciculoAdd() {
+		return fasciculoAdd;
+	}
+
+	public void setFasciculoAdd(Fasciculo fasciculoAdd) {
+		this.fasciculoAdd = fasciculoAdd;
+	}
+
 }

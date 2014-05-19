@@ -38,6 +38,10 @@ public class Exemplar implements Serializable {
 	@ManyToOne
 	private Obra obra;
 
+	@ManyToOne
+	private Fasciculo fasciculo;
+
+	
 	public Integer getId() {
 		return id;
 	}

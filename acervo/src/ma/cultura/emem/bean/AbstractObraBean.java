@@ -51,6 +51,8 @@ public abstract class AbstractObraBean {
 	private Editora editoraAdd = new Editora();
 	private Local localAdd = new Local();
 	private Assunto assuntoAdd = new Assunto();
+
+	// FIXME Acredito que não será mais preciso este objeto (autorAdd)
 	protected Autor autorAdd = new Autor();
 
 	//TODO Criar uma classe auxiliar para encapsular esses campos.
@@ -65,12 +67,13 @@ public abstract class AbstractObraBean {
 	@PostConstruct
 	public void init(){
 		logger.debug(this.getClass().getSimpleName() + " criado!");	
-		logger.error(" error TESTE!");	
+//		logger.error(" error TESTE!");	
 		limparForm();
 	}
 
 	//A subclasse define qual a instacia de obra
 	protected abstract Obra getNewObra();
+	
 	public abstract String recarregarPagina();
 
 	public void gravar() {

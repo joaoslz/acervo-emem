@@ -27,6 +27,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package ma.cultura.emem.log4j;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Properties;
 
@@ -53,7 +54,7 @@ import com.sun.mail.smtp.SMTPTransport;
  * @see <a href="http://code.google.com/p/log4j-gmail-smtp-appender/">Google Code Project</a> <br/>
  *      <a href="http://www.tgerm.com">My Blog</a>
  */
-public class GmailSMTPAppender extends SMTPAppender {
+public class GmailSMTPAppender extends SMTPAppender implements Serializable {
 	/**
 	 * Cached session for later use i.e. while sending emails
 	 */

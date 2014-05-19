@@ -46,7 +46,7 @@ public abstract class Obra implements Serializable {
 	private Short ano;
 	private Short numPaginas;
 	private Short edicao;
-	private Boolean ehIlustrado;
+	private boolean ehIlustrado;
 	private Short volume;
 
 	@Temporal(TemporalType.TIMESTAMP)

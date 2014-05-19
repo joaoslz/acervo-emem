@@ -30,7 +30,7 @@ public class Periodico extends Obra {
 	private PeriodicidadeEnum periodicidade;
 	
 	@OneToMany(mappedBy = "periodico")
-	private List<Fasciculo> fasciculos = new ArrayList<Fasciculo>();
+	private List<Fasciculo> fasciculos = new ArrayList<>();
 
 	
 	public Periodico() {
@@ -67,4 +67,14 @@ public class Periodico extends Obra {
 	public void setPeriodicidade(PeriodicidadeEnum periodicidade) {
 		this.periodicidade = periodicidade;
 	}
+
+	public List<Fasciculo> getFasciculos() {
+		return fasciculos;
+	}
+
+	public void setFasciculos(List<Fasciculo> fasciculos) {
+		this.fasciculos = fasciculos;
+	}
+	
+
 }

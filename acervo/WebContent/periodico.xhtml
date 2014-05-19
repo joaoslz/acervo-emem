@@ -9,15 +9,16 @@
 <ui:composition template="/WEB-INF/template/_formObra.xhtml">
 	<ui:param name="obraBean" value="#{periodicoBean}"></ui:param>
 	<ui:param name="titulo" value="Dados do Periódico"></ui:param>
-	
-	<ui:define name="dadosForm">					
+
+	<ui:define name="dadosForm">
 
 		<p:row>
 			<p:column>
 				<p:outputLabel value="É assinado?" for="ehAssinado" />
 			</p:column>
 			<p:column>
-				<p:selectBooleanCheckbox id="ehAssinado" value="#{periodicoBean.periodico.ehAssinado}" />
+				<p:selectBooleanCheckbox id="ehAssinado"
+					value="#{periodicoBean.periodico.ehAssinado}" />
 			</p:column>
 			<p:column>
 				<p:outputLabel value="ISSN:" for="issn" />
@@ -26,37 +27,35 @@
 				<p:inputText id="issn" value="#{periodicoBean.periodico.issn}" />
 			</p:column>
 			<p:column colspan="5" rowspan="2">
-				<p:dataTable id="artigos" value="#{periodicoBean.periodico.artigos}" var="a" rowIndexVar="index"
-									 emptyMessage="Nenhum artigo adicionado">
-					<f:facet name="header"> Artigos </f:facet>
-					
+				<p:dataTable id="fasciculos"
+					value="#{periodicoBean.periodico.fasciculos}" var="f"
+					rowIndexVar="index"
+					emptyMessage="Nenhum fascículo (revista) adicionado">
+					<f:facet name="header"> Fascículos </f:facet>
+
 					<p:column headerText="Título">
-						<h:outputText value="#{a.titulo}" />
+						<h:outputText value="#{f.titulo}" />
 					</p:column>
-					<p:column headerText="Autores">
-						<h:outputText value="#{a.autoresToString}" />
+					<p:column headerText="Subtitulo">
+						<h:outputText value="#{f.subtitulo}" />
 					</p:column>
-					<p:column headerText="Pág. Inicial">
-						<h:outputText value="#{a.paginaInicial}" />
+					<p:column headerText="Edição">
+						<h:outputText value="#{f.edicao}" />
 					</p:column>
-					<p:column headerText="Pág. Final">
-						<h:outputText value="#{a.paginaFinal}" />
+					<p:column headerText="Mês">
+						<h:outputText value="#{f.mes}" />
 					</p:column>
 					<p:column>
-						<h:form>
-							<p:commandButton icon="ui-icon-trash" title="Excluir Artigo" 
-											update=":form:artigos" process=":form:artigos" 
-											action="#{periodicoBean.removerArtigo}">
-							    <f:param name="index" value="#{index}" />
-							</p:commandButton>
-						</h:form>
+						<h:outputText value="#{f.ano}" />
 					</p:column>
 				</p:dataTable>
+
+
 			</p:column>
 			<p:column rowspan="2">
-				<p:commandButton id="showAddArtigoButton" icon="ui-icon-plus"
-							immediate="true" title="Adicionar Artigo"
-							onclick="dlgNovoArtigo.show()" />
+				<p:commandButton id="showAddAFasciculoButton" icon="ui-icon-plus"
+					immediate="true" title="Adicionar Fascículo"
+					onclick="dlgNovoFasciculo.show()" />
 			</p:column>
 		</p:row>
 		<p:row>
@@ -64,31 +63,34 @@
 				<p:outputLabel value="Periodicidade:" for="periodicidade" />
 			</p:column>
 			<p:column colspan="5">
-				<p:selectOneMenu id="periodicidade" value="#{periodicoBean.periodico.periodicidade}">  
-         				<f:selectItem itemLabel="Selecione a Periodicidade" itemValue="" />  
-	           			 <f:selectItems value="#{periodicoBean.listaPeriodicidade}" />  
-    			</p:selectOneMenu>  
+				<p:selectOneMenu id="periodicidade"
+					value="#{periodicoBean.periodico.periodicidade}">
+					<f:selectItem itemLabel="Selecione a Periodicidade" itemValue="" />
+					<f:selectItems value="#{periodicoBean.listaPeriodicidade}" />
+				</p:selectOneMenu>
 			</p:column>
 		</p:row>
 	</ui:define>
-	
+
 	<ui:define name="tabelaObras">
-	<!--LISTA ........................................................................................ -->
+		<!--LISTA ........................................................................................ -->
 		<p:fieldset>
-			<p:dataTable id="tabelaObras" value="#{periodicoBean.periodicoLazyDataModel}"
-				var="periodico" paginator="true" lazy="true" rows="10" emptyMessage="Nenhum Periódico cadastrado">
-				
+			<p:dataTable id="tabelaObras"
+				value="#{periodicoBean.periodicoLazyDataModel}" var="periodico"
+				paginator="true" lazy="true" rows="10"
+				emptyMessage="Nenhum Periódico cadastrado">
+
 				<f:facet name="header"> Periódico Cadastrados </f:facet>
-       			<p:columnGroup type="header"> 
-       				<p:row>
-						<p:column headerText="Título"/>
-						<p:column headerText="Editora"/>
-						<p:column headerText="Assuntos"/>
-						<p:column headerText="Artigos"/>
-						<p:column headerText="Alterar"/>
-       				</p:row>
-       			</p:columnGroup>
-        			
+				<p:columnGroup type="header">
+					<p:row>
+						<p:column headerText="Título" />
+						<p:column headerText="Editora" />
+						<p:column headerText="Assuntos" />
+						<p:column headerText="Artigos" />
+						<p:column headerText="Alterar" />
+					</p:row>
+				</p:columnGroup>
+
 				<p:column>
 					<h:outputText value="#{periodico.titulo}" />
 				</p:column>
@@ -99,124 +101,94 @@
 					<h:outputText value="#{periodico.assuntosToString}" />
 				</p:column>
 				<p:column>
-					
-					<p:dataTable value="#{periodico.artigos}" var="a" emptyMessage="Nenhum artigo adicionado">
-						<p:column headerText="Título">
-							<h:outputText value="#{a.titulo}" />
-						</p:column>
-						<p:column headerText="Autores">
-							<h:outputText value="#{a.autoresToString}" />
-						</p:column>
-						<p:column headerText="Ini.">
-							<h:outputText value="#{a.paginaInicial}" />
-						</p:column>
-						<p:column headerText="Fin.">
-							<h:outputText value="#{a.paginaFinal}" />
-						</p:column>
-					</p:dataTable>
-				
 				</p:column>
 				<p:column>
 					<h:form>
-						<p:commandButton icon="ui-icon-pencil" title="Alterar Periódico" update=":form">
-							<f:setPropertyActionListener value="#{periodico}" target="#{periodicoBean.obra}" />
+						<p:commandButton icon="ui-icon-pencil" title="Alterar Periódico"
+							update=":form">
+							<f:setPropertyActionListener value="#{periodico}"
+								target="#{periodicoBean.obra}" />
 						</p:commandButton>
+						<p:commandButton icon="ui-icon-tag" title="Incluir Fasciculo"
+							oncomplete="dlgExemplares.show()"
+							action="#{livroBean.updateListaExemplares}"
+							update="@form :formExemplares :formExemplares">
+							<f:setPropertyActionListener value="#{livro}"
+								target="#{livroBean.obra}" />
+						</p:commandButton>
+
 					</h:form>
 				</p:column>
 			</p:dataTable>
 		</p:fieldset>
-		
+
 	</ui:define>
-	
+
 	<ui:define name="dialogs">
-	
-		<!-- DIALOG AUTOR............................................................................................ -->
-		<p:dialog header="Cadastro de Autor" widgetVar="dlgNovoAutor"
+		<!--DIALOG FASCÍCULO ................................... -->
+		<p:dialog header="Cadastro de Fascículo" widgetVar="dlgNovoFasciculo"
 			resizable="false" modal="true">
-			<h:form>
-				<h:panelGrid columns="2">
-					<p:outputLabel value="Nome:" for="nome" />
-					<p:inputText id="nome" value="#{obraBean.autorAdd.nome}"
-						required="true" requiredMessage="Campo nome deve ser digitado" />
-					
-					<p:commandButton value="Gravar" action="#{obraBean.gravarAutorArtigo}"
-						oncomplete="dlgNovoAutor.hide();" process="@form"
-						update="@form :formArtigo:autores" />
-				</h:panelGrid>
-			</h:form>
-		</p:dialog>
-		<!--DIALOG ARTIGO........................................................................................... -->
-		<p:dialog header="Cadastro de Artigo" widgetVar="dlgNovoArtigo" resizable="false" modal="true">
-			<h:form id="formArtigo">
+			<h:form id="formFasciculo">
 				<p:panelGrid>
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Título:" for="titulo" />
+							<p:outputLabel value="Título:" for="tituloFasciculo" />
 						</p:column>
-						<p:column colspan="4">
-							<p:inputText id="titulo" size="46"
-								value="#{periodicoBean.artigoAdd.titulo}" />
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Assunto:" for="assuntoArtigo" />
-						</p:column>
-						<p:column colspan="4">
-							<p:inputText id="assuntoArtigo" size="46"
-								value="#{periodicoBean.artigoAdd.assunto}"/>
+
+						<p:column colspan="5">
+		
+							<p:inputText id="tituloFasciculo" size="46"
+								value="#{periodicoBean.fasciculoAdd.titulo}" />
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Autores:" for="autores" />
+							<p:outputLabel value="Subtítulo:" for="subtituloFasciculo" />
 						</p:column>
-						<p:column colspan="3">
-							<p:autoComplete minQueryLength="2" id="autores"
-								value="#{obraBean.artigoAdd.autores}"
-								completeMethod="#{obraBean.autocompleteAutorArtigoByNome}" var="a"
-								itemLabel="#{a.nome}" itemValue="#{a}"
-								converter="#{autorConverter}" forceSelection="true"
-								multiple="true" />
-						</p:column>
-						<p:column>
-							<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
-								process="formArtigo:autores" title="Adicionar Autor"
-								onclick="dlgNovoAutor.show()" />
+						<p:column colspan="5">
+							<p:inputText id="subtituloFasciculo" size="46"
+								value="#{periodicoBean.fasciculoAdd.subtitulo}" />
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Página Inicial:" for="paginaInicial" />
+							<p:outputLabel value="Ano" for="ano" />
 						</p:column>
 						<p:column>
-							<p:inputText id="paginaInicial" size="2"
-								value="#{periodicoBean.artigoAdd.paginaInicial}"/>
+							<p:inputText id="ano" value="#{periodicoBean.fasciculoAdd.ano}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Página Final:" for="paginaFinal" />
+							<p:outputLabel value="Mês" for="mes" />
 						</p:column>
 						<p:column>
-							<p:inputText id="paginaFinal" size="2"
-								value="#{periodicoBean.artigoAdd.paginaFinal}" />
+							<p:inputText id="mes" value="#{periodicoBean.fasciculoAdd.mes}" />
 						</p:column>
-						<p:column><p:spacer height="0" /> </p:column>
-					</p:row>
+						<p:column>
+							<p:outputLabel value="Edição" for="edicao" />
+						</p:column>
+						<p:column>
+							<p:inputText id="edicao" value="#{periodicoBean.fasciculoAdd.edicao}" />
+						</p:column>
+					</p:row>					
 				</p:panelGrid>
-				
+
 				<p:toolbar style="margin-top: 2px;margin-bottom:10px;">
 					<p:toolbarGroup align="right">
-						<p:commandButton value="Gravar" action="#{periodicoBean.adicionarArtigo}"
-								oncomplete="dlgNovoArtigo.hide();" process="@form" update="@form :form:artigos" />
-						
+						<p:commandButton value="Gravar"
+							action="#{periodicoBean.adicionarFasciculo}"
+							oncomplete="dlgNovoFasciculo.hide();" process="@form"
+							update="@form :form:fasciculos" />
+
 						<p:separator />
-						
-						<p:commandButton value="Sair" action="#{periodicoBean.limparFormArtigo}"
-								oncomplete="dlgNovoArtigo.hide();" process="@form" update="@form" />
+
+						<p:commandButton value="Sair"
+							action="#{periodicoBean.limparFormFasciculo}"
+							oncomplete="dlgNovoFasciculo.hide(); return false;" />
 					</p:toolbarGroup>
 				</p:toolbar>
 			</h:form>
 		</p:dialog>
+
 	</ui:define>
 </ui:composition>
 </html>
