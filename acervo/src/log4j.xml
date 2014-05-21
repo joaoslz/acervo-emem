@@ -14,7 +14,7 @@
 	debug: Este atributo, quando verdadeiro(true), ativa os logs de debug do 
 	próprio log4j. Se ele não for definido, por default fica como "false".
 	
-	
+
 	<appender>: esta tag define um dispositivo de saída de log, como Console, arquivo...
 	<layout>: esta tag define o formato do texto de saída, Simples, Html, xml...
 	
