@@ -1,170 +1,102 @@
 package ma.cultura.emem.modelo;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-@Entity
-@DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@NamedQueries({
-	@NamedQuery(name = "Obra.listarTodos", query = "from Obra a order by a.id desc"),
-	@NamedQuery(name = "Obra.pesquisarPorTitulo", query = "from Obra a where a.titulo like :titulo"),
-	@NamedQuery(name = "Obra.pesquisarPorAutor", query = "select distinct a from Obra a left join fetch a.autores t where t.nome like :autor"),
-	@NamedQuery(name = "Obra.pesquisarPorAssunto", query = "select distinct a from Obra a left join fetch a.assuntos s where s.assunto like :assunto"),
-	@NamedQuery(name = "Obra.pesquisarPorEditora", query = "from Obra a where a.editora.nome like :editora")
+import ma.cultura.emem.modelo.auxiliar.Autor;
 
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
+@NamedQueries({
+		@NamedQuery(name = "Obra.findAll", query = "from Obra a order by a.id desc")
 })
-public abstract class Obra implements Serializable {
+public abstract class Obra extends ItemAcervo {
 
 	private static final long serialVersionUID = 8672695121158033015L;
 
-	@Id
-	@GeneratedValue
-	private Integer id;
 
-	private String titulo;
-	private String subtitulo;
-	private Short ano;
-	private Short numPaginas;
-	private Short edicao;
+	private short ano;
+	private String classificacao;
+	private String cutter;
+	private short edicao;
 	private boolean ehIlustrado;
-	private Short volume;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar dataCadastro = Calendar.getInstance();
-
-	@ManyToOne
-	private Idioma idioma;
+	private String isbn;
+	private short numPaginas;
+	private String serie;
+	private String tipo;
+	private short volume;
 
 	@ManyToMany
 	private List<Autor> autores;
 
-	// FIXME fetch eager???? n�o consegui fazer via HQL pq ja tem fetch pro
-	// autor.
-	@ManyToMany
-	private List<Assunto> assuntos;
-
-	@OneToMany(mappedBy = "obra")
-	private List<Exemplar> exemplares;
-
-	@ManyToOne
-	private Editora editora;
-
-	@ManyToOne
-	private Local local;
-
-
-	public Integer getId() {
-		return id;
+	@Transient
+	public void setNaoPaginado(boolean naoPaginado) {
+		if (naoPaginado)
+			setNumPaginas((short) 0);
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	@Transient
+	public boolean getNaoPaginado() {
+		return getNumPaginas() <= 0;
 	}
 
-	public String getTitulo() {
-		return titulo;
+	@Transient
+	public String getAutoresToString() {
+		StringBuilder builder = new StringBuilder();
+		if (getAutores() != null) {
+			Iterator<Autor> it = getAutores().iterator();
+			while (it.hasNext()) {
+				Autor a = it.next();
+				builder.append(a.getNome());
+				if (it.hasNext()) {
+					builder.append(", ");
+				}
+			}
+		}
+		return builder.toString();
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-	public String getSubtitulo() {
-		return subtitulo;
-	}
-
-	public void setSubtitulo(String subtitulo) {
-		this.subtitulo = subtitulo;
-	}
-
-	public Short getAno() {
+	public short getAno() {
 		return ano;
 	}
 
-	public void setAno(Short ano) {
+	public void setAno(short ano) {
 		this.ano = ano;
 	}
 
-	public Short getNumPaginas() {
-		return numPaginas;
+	public String getClassificacao() {
+		return classificacao;
 	}
 
-	public void setNumPaginas(Short numPaginas) {
-		this.numPaginas = numPaginas;
+	public void setClassificacao(String classificacao) {
+		this.classificacao = classificacao;
 	}
 
-	public Calendar getDataCadastro() {
-		return dataCadastro;
+	public String getCutter() {
+		return cutter;
 	}
 
-	public void setDataCadastro(Calendar dataCadastro) {
-		this.dataCadastro = dataCadastro;
+	public void setCutter(String cutter) {
+		this.cutter = cutter;
 	}
 
-	public List<Autor> getAutores() {
-		return autores;
+	public short getEdicao() {
+		return edicao;
 	}
 
-	public void setAutores(List<Autor> autores) {
-		this.autores = autores;
-	}
-
-	public List<Assunto> getAssuntos() {
-		return assuntos;
-	}
-
-	public void setAssuntos(List<Assunto> assuntos) {
-		this.assuntos = assuntos;
-	}
-
-	public List<Exemplar> getExemplares() {
-		return exemplares;
-	}
-
-	public void setExemplares(List<Exemplar> exemplares) {
-		this.exemplares = exemplares;
-	}
-
-	public Editora getEditora() {
-		return editora;
-	}
-
-	public void setEditora(Editora editora) {
-		this.editora = editora;
-	}
-
-	public Local getLocal() {
-		return local;
-	}
-
-	public void setLocal(Local local) {
-		this.local = local;
-	}
-
-	public void adicionarAutor(Autor autor) {
-		if (autores == null)
-			autores = new ArrayList<Autor>();
-		autores.add(autor);
+	public void setEdicao(short edicao) {
+		this.edicao = edicao;
 	}
 
 	public boolean isEhIlustrado() {
@@ -175,96 +107,56 @@ public abstract class Obra implements Serializable {
 		this.ehIlustrado = ehIlustrado;
 	}
 
-	public void adicionarExemplar(Exemplar exemplar) {
-		if (exemplares == null)
-			exemplares = new ArrayList<Exemplar>();
-		exemplares.add(exemplar);
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+	public short getNumPaginas() {
+		return numPaginas;
+	}
+
+	public void setNumPaginas(short numPaginas) {
+		this.numPaginas = numPaginas;
+	}
+
+	public String getSerie() {
+		return serie;
+	}
+
+	public void setSerie(String serie) {
+		this.serie = serie;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public short getVolume() {
+		return volume;
+	}
+
+	public void setVolume(short volume) {
+		this.volume = volume;
+	}
+
+	public List<Autor> getAutores() {
+		return autores;
+	}
+
+	public void setAutores(List<Autor> autores) {
+		this.autores = autores;
 	}
 	
-	public void adicionarAssunto(Assunto assunto){
-	    if(assuntos == null)
-		assuntos = new ArrayList<Assunto>();
-	    assuntos.add(assunto);
-	}
-
-	public Short getEdicao() {
-		return edicao;
-	}
-
-	public void setEdicao(Short edicao) {
-		this.edicao = edicao;
-	}
-	
-	public boolean isIdNull(){
-	    return id == null || id.intValue() == 0;
-	}
-
-	public Short getVolume() {
-	return volume;
-	}
-
-	public void setVolume(Short volume) {
-	this.volume = volume;
-	}
-
-	public Idioma getIdioma() {
-		return idioma;
-	}
-
-	public void setIdioma(Idioma idioma) {
-		this.idioma = idioma;
-	}
-	
-	@Transient
-	public void setNaoPaginado(boolean naoPaginado){
-		if(naoPaginado)
-			setNumPaginas((short)0);
-	}
-
-	@Transient
-	public boolean getNaoPaginado(){
-		if(getNumPaginas() == null )
-			return false;
-		return getNumPaginas() <= 0;
-	}
-	
-	public String getAutoresToString(){
-		StringBuilder builder = new StringBuilder();
-		if(getAutores() != null){
-			Iterator<Autor> it = getAutores().iterator();
-			while(it.hasNext()){
-				Autor a = it.next();
-				builder.append(a.getNome());
-				if(it.hasNext()){
-					builder.append(", ");
-				}
-			}
-		}
-		return builder.toString();
-	}
-
-	public String getAssuntosToString(){
-		StringBuilder builder = new StringBuilder();
-		if(getAssuntos() != null){
-			Iterator<Assunto> it = getAssuntos().iterator();
-			while(it.hasNext()){
-				Assunto a = it.next();
-				builder.append(a.getAssunto());
-				if(it.hasNext()){
-					builder.append(", ");
-				}
-			}
-		}
-		return builder.toString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null || !(obj instanceof Obra))
-			return false;
-		Obra other = (Obra) obj;
-		if(this.getId() == null || other.getId() == null)
-			return false;
-		return this.getId().equals(other.getId());
+	public void addAutor(Autor autor){
+		if(autores != null)
+			autores.add(autor);
 	}
 }

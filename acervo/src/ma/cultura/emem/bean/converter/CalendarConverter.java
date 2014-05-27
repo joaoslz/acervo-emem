@@ -11,13 +11,13 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
-import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 import org.primefaces.component.calendar.Calendar;
 
-@FacesConverter(value = "calendarConverter")
+@Named
 public class CalendarConverter implements Converter {
 
 	@Inject

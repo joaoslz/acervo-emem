@@ -38,6 +38,6 @@ public class MetodoLazyDataModel extends LazyDataModel<Metodo> {
 	@Override
 	public List<Metodo> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
 		setRowCount(metodoDAO.contarTodos());
-		return metodoDAO.listarPorPagina(first, pageSize);
+		return metodoDAO.findAllPaginated(first, pageSize);
 	}
 }

@@ -1,6 +1,5 @@
 package ma.cultura.emem.modelo;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -10,16 +9,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Transient;
+
+import ma.cultura.emem.modelo.auxiliar.Autor;
 
 @Entity
-public class Artigo implements Serializable{
+@NamedQuery(name="Artigo.findAll", query="SELECT a FROM Artigo a")
+public class Artigo extends BaseEntity{
 
 	private static final long serialVersionUID = -1467686486369558017L;
 
 	@Id
-    @GeneratedValue
-    private int id;
-
+	@GeneratedValue
+	private Integer id;
+	
     private String titulo;
     private String assunto;
 
@@ -32,14 +36,23 @@ public class Artigo implements Serializable{
 	@ManyToMany
 	private List<Autor> autores;
 	
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
+	@Transient
+	public String getAutoresToString(){
+		StringBuilder builder = new StringBuilder();
+		if(getAutores() != null){
+			Iterator<Autor> it = getAutores().iterator();
+			while(it.hasNext()){
+				Autor a = it.next();
+				builder.append(a.getNome());
+				if(it.hasNext()){
+					builder.append(", ");
+				}
+			}
+		}
+		return builder.toString();
+	}
+	
     public String getTitulo() {
         return titulo;
     }
@@ -72,36 +85,15 @@ public class Artigo implements Serializable{
         this.paginaFinal = paginaFinal;
     }
 
- 	/**
-	 * @return the autores
-	 */
 	public List<Autor> getAutores() {
 		return autores;
 	}
-
-	public String getAutoresToString(){
-		StringBuilder builder = new StringBuilder();
-		if(getAutores() != null){
-			Iterator<Autor> it = getAutores().iterator();
-			while(it.hasNext()){
-				Autor a = it.next();
-				builder.append(a.getNome());
-				if(it.hasNext()){
-					builder.append(", ");
-				}
-			}
-		}
-		return builder.toString();
-	}
 	
-	/**
-	 * @param autores the autores to set
-	 */
 	public void setAutores(List<Autor> autores) {
 		this.autores = autores;
 	}
 	
-	public void adicionarAutor(Autor autor) {
+	public void addAutor(Autor autor) {
 		if (autores == null)
 			autores = new ArrayList<Autor>();
 		autores.add(autor);
@@ -113,5 +105,13 @@ public class Artigo implements Serializable{
 
 	public void setFasciculo(Fasciculo fasciculo) {
 		this.fasciculo = fasciculo;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }

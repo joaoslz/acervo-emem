@@ -1,47 +1,73 @@
 package ma.cultura.emem.modelo;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
+import ma.cultura.emem.modelo.auxiliar.MesEnum;
 
 @Entity
-public class Fasciculo implements Serializable {
+public class Fasciculo extends BaseEntity {
 
 	private static final long serialVersionUID = -1467686486369558017L;
 
 	@Id
-    @GeneratedValue
-    private Integer id;
-
-    private String titulo;
-    private String subtitulo;
-    
+	@GeneratedValue
+	private Integer id;
+	
+	private String titulo;
+	private String subtitulo;
 	private short edicao;
-
-	private String mes;
+	@Enumerated(EnumType.ORDINAL)
+	private MesEnum mes;
 	private short ano;
-	
-    @ManyToOne
-    private Periodico periodico;
-    
-	@OneToMany(mappedBy = "fasciculo")
-	private List<Exemplar> exemplares = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "fasciculo", cascade=CascadeType.ALL, orphanRemoval = true)
-	private List<Artigo> artigos = new ArrayList<>();
 
+	@ManyToOne
+	private Periodico periodico;
+
+	@OneToMany(mappedBy = "fasciculo")
+	private List<Exemplar> exemplares;// XXX = new ArrayList<>();
+
+	@OneToMany(mappedBy = "fasciculo", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Artigo> artigos;// XXX = new ArrayList<>();
+
+
+
+	@Override
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	
+	@Transient
+	public String getArtigosToString() {
+		StringBuilder builder = new StringBuilder();
+		if (getArtigos() != null && !getArtigos().isEmpty()) {
+			Iterator<Artigo> it = getArtigos().iterator();
+			while (it.hasNext()) {
+				Artigo a = it.next();
+				builder.append(a.getTitulo());
+				if (it.hasNext()) {
+					builder.append(", ");
+				}
+			}
+		}
+		return builder.toString();
+	}
 	
-    public String getTitulo() {
+	public String getTitulo() {
 		return titulo;
 	}
 
@@ -73,55 +99,30 @@ public class Fasciculo implements Serializable {
 		this.ano = ano;
 	}
 
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-   	public Short getAno() {
- 		return ano;
- 	}
-
- 	public void setAno(Short ano) {
- 		this.ano = ano;
- 	}
-
-
- 	public String getMes() {
- 		return mes;
- 	}
-
- 	public void setMes(String mesInicio) {
- 		this.mes = mesInicio;
- 	}
-
- 	public Periodico getPeriodico() {
- 		return periodico;
- 	}
-
- 	public void setPeriodico(Periodico periodico) {
- 		this.periodico = periodico;
- 	}
-    
-	public String getArtigosToString() {
-		StringBuilder builder = new StringBuilder();
-		if (getArtigos() != null && !getArtigos().isEmpty()) {
-			Iterator<Artigo> it = getArtigos().iterator();
-			while (it.hasNext()) {
-				Artigo a = it.next();
-				builder.append(a.getTitulo());
-				if (it.hasNext()) {
-					builder.append(", ");
-				}
-			}
-		}
-		return builder.toString();
+	public Short getAno() {
+		return ano;
 	}
-    
+
+	public void setAno(Short ano) {
+		this.ano = ano;
+	}
+
+	public MesEnum getMes() {
+		return mes;
+	}
+
+	public void setMes(MesEnum m) {
+		this.mes = m;
+	}
+
+	public Periodico getPeriodico() {
+		return periodico;
+	}
+
+	public void setPeriodico(Periodico periodico) {
+		this.periodico = periodico;
+	}
+
 	public List<Artigo> getArtigos() {
 		return artigos;
 	}
@@ -130,8 +131,12 @@ public class Fasciculo implements Serializable {
 		this.artigos = artigos;
 	}
 
-	public void adicionaArtigo(Artigo artigo) {
+	public void addArtigo(Artigo artigo) {
 		artigos.add(artigo);
 		artigo.setFasciculo(this);
+	}
+
+	public void setExemplares(List<Exemplar> exemplares) {
+		this.exemplares = exemplares;
 	}
 }

@@ -38,6 +38,6 @@ public class LivroLazyDataModel extends LazyDataModel<Livro> {
 	@Override
 	public List<Livro> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
 		setRowCount(livroDAO.contarTodos());
-		return livroDAO.listarPorPagina(first, pageSize);
+		return livroDAO.findAllPaginated(first, pageSize);
 	}
 }

@@ -28,9 +28,9 @@ public class ExemplarDAO extends DAO<Exemplar> {
 		em.getTransaction().commit();
 	}
 
-	public List<Exemplar> pesquisarExemplaresPorObra(Integer idObra) {
-		TypedQuery<Exemplar> query = em.createNamedQuery(Exemplar.NAMED_QUERY_LISTAR_POR_OBRA, Exemplar.class);
-		query.setParameter("idObra", idObra);
+	public List<Exemplar> pesquisarExemplaresPorItemAcervo(Integer idItemAcervo) {
+		TypedQuery<Exemplar> query = em.createNamedQuery("Exemplar.listarPorItemAcervo", Exemplar.class);
+		query.setParameter("idItemAcervo", idItemAcervo);
 		return query.getResultList();
 	}
 }

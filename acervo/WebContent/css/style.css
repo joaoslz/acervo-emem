@@ -68,7 +68,27 @@ footer a {
   color: #A8AA94;
   text-decoration: none;
 }
+.ui-fieldset {
+  padding: 6px 4px;
+  background: #f9f9f9;
+  color: #e69700;
+  font-weight: bold;
+  text-align: left;
+  border: 1px solid #cccccc;	
+}
+.ui-fieldset legend{
+	text-align: center;
+	width: 100%;
+}
 
+table tr th { 
+  padding: 6px 4px;
+  background: #f9f9f9;
+  color: #e69700;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #cccccc;
+}
 /*Coloca a fonte do header dos panelGrids.*/
 table tr th { 
   padding: 6px 4px;

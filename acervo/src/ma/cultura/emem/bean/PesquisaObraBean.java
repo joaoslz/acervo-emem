@@ -1,6 +1,7 @@
 package ma.cultura.emem.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -44,7 +45,7 @@ public class PesquisaObraBean implements Serializable {
 
 	public List<Obra> getObrasPorTitulo() {
 		logger.debug("titulo: " + titulo);
-		List lista =  obraDAO.pesquisarPorTitulo(titulo);
+		List lista =  new ArrayList();//obraDAO.pesquisarPorTitulo(titulo);
 		
 		StringBuilder builder = new StringBuilder();
 		for(Object o: lista){

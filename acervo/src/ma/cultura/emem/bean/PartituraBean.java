@@ -10,10 +10,10 @@ import javax.inject.Named;
 import ma.cultura.emem.bean.datamodel.PartituraLazyDataModel;
 import ma.cultura.emem.dao.GeneroDAO;
 import ma.cultura.emem.dao.InstrumentoDAO;
-import ma.cultura.emem.modelo.Genero;
-import ma.cultura.emem.modelo.Instrumento;
-import ma.cultura.emem.modelo.Obra;
+import ma.cultura.emem.modelo.ItemAcervo;
 import ma.cultura.emem.modelo.Partitura;
+import ma.cultura.emem.modelo.auxiliar.Genero;
+import ma.cultura.emem.modelo.auxiliar.Instrumento;
 
 @Named
 @ViewScoped
@@ -49,11 +49,11 @@ public class PartituraBean extends AbstractObraBean implements Serializable {
 	}
 	
 	public List<Instrumento> autocompleteInstrumentoByNome(String nome) {
-		return instrumentoDAO.pesquisarPorNome(nome);
+		return instrumentoDAO.findByNome(nome);
 	}
 
 	public List<Genero> autocompleteGeneroByNome(String nome) {
-		return generoDAO.pesquisarPorNome(nome);
+		return generoDAO.findByNome(nome);
 	}
 	
 	@Override
@@ -64,7 +64,7 @@ public class PartituraBean extends AbstractObraBean implements Serializable {
 	}
 
 	@Override
-	protected Obra getNewObra() {
+	protected ItemAcervo getNewItemAcervo() {
 		return new Partitura();
 	}
 
@@ -74,37 +74,25 @@ public class PartituraBean extends AbstractObraBean implements Serializable {
 	}
 
 	public Partitura getPartitura() {
-		return (Partitura) getObra();
+		return (Partitura) getItemAcervo();
 	}
 
 	public PartituraLazyDataModel getPartituraLazyDataModel() {
 		return partituraLazyDataModel;
 	}
 
-	/**
-	 * @return the instrumentoAdd
-	 */
 	public Instrumento getInstrumentoAdd() {
 		return instrumentoAdd;
 	}
 
-	/**
-	 * @param instrumentoAdd the instrumentoAdd to set
-	 */
 	public void setInstrumentoAdd(Instrumento instrumentoAdd) {
 		this.instrumentoAdd = instrumentoAdd;
 	}
 
-	/**
-	 * @return the generoAdd
-	 */
 	public Genero getGeneroAdd() {
 		return generoAdd;
 	}
 
-	/**
-	 * @param generoAdd the generoAdd to set
-	 */
 	public void setGeneroAdd(Genero generoAdd) {
 		this.generoAdd = generoAdd;
 	}

@@ -6,76 +6,87 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/WEB-INF/template/_formObra.xhtml">
-	<ui:param name="obraBean" value="#{periodicoBean}"></ui:param>
+<ui:composition template="/WEB-INF/template/_formItemAcervo.xhtml">
+	<ui:param name="itemAcervoBean" value="#{periodicoBean}"></ui:param>
 	<ui:param name="titulo" value="Dados do Periódico"></ui:param>
 
 	<ui:define name="dadosForm">
 
-		<p:row>
-			<p:column>
-				<p:outputLabel value="É assinado?" for="ehAssinado" />
-			</p:column>
-			<p:column>
-				<p:selectBooleanCheckbox id="ehAssinado"
-					value="#{periodicoBean.periodico.ehAssinado}" />
-			</p:column>
-			<p:column>
-				<p:outputLabel value="ISSN:" for="issn" />
-			</p:column>
-			<p:column colspan="3">
-				<p:inputText id="issn" value="#{periodicoBean.periodico.issn}" />
-			</p:column>
-			<p:column colspan="5" rowspan="2">
-				<p:dataTable id="fasciculos"
-					value="#{periodicoBean.periodico.fasciculos}" var="f"
-					rowIndexVar="index"
-					emptyMessage="Nenhum fascículo (revista) adicionado">
-					<f:facet name="header"> Fascículos </f:facet>
-
-					<p:column headerText="Título">
-						<h:outputText value="#{f.titulo}" />
-					</p:column>
-					<p:column headerText="Subtitulo">
-						<h:outputText value="#{f.subtitulo}" />
-					</p:column>
-					<p:column headerText="Edição">
-						<h:outputText value="#{f.edicao}" />
-					</p:column>
-					<p:column headerText="Mês">
-						<h:outputText value="#{f.mes}" />
+		<p:fieldset>
+			<legend>Dados de Periódico</legend>
+			<p:panelGrid style="width:99%">
+				<p:row>
+					<p:column>
+						<p:outputLabel value="É assinado?" for="ehAssinado" />
 					</p:column>
 					<p:column>
-						<h:outputText value="#{f.ano}" />
+						<p:selectBooleanCheckbox id="ehAssinado"
+							value="#{periodicoBean.periodico.ehAssinado}" />
 					</p:column>
-				</p:dataTable>
+					<p:column>
+						<p:outputLabel value="ISSN:" for="issn" />
+					</p:column>
+					<p:column >
+						<p:inputText id="issn" value="#{periodicoBean.periodico.issn}" />
+					</p:column>
+					<p:column rowspan="2">
+						<p:dataTable id="fasciculos"
+							value="#{periodicoBean.periodico.fasciculos}" var="f"
+							rowIndexVar="index"
+							emptyMessage="Nenhum fascículo (revista) adicionado">
+							<f:facet name="header"> Fascículos </f:facet>
+
+							<p:column headerText="Título">
+								<h:outputText value="#{f.titulo}" />
+							</p:column>
+							<p:column headerText="Subtitulo">
+								<h:outputText value="#{f.subtitulo}" />
+							</p:column>
+							<p:column headerText="Edição">
+								<h:outputText value="#{f.edicao}" />
+							</p:column>
+							<p:column headerText="Mês">
+								<h:outputText value="#{f.mes}" />
+							</p:column>
+							<p:column headerText="Ano">
+								<h:outputText value="#{f.ano}" />
+							</p:column>
+							<p:column headerText="Remover">
+								<p:commandButton id="showAddAFasciculoButton"
+									action="#{periodicoBean.removerFasciculo(index)}" 
+									icon="ui-icon-trash"
+									immediate="true" title="Remover Fascículo" />
+							</p:column>
+						</p:dataTable>
 
 
-			</p:column>
-			<p:column rowspan="2">
-				<p:commandButton id="showAddAFasciculoButton" icon="ui-icon-plus"
-					immediate="true" title="Adicionar Fascículo"
-					onclick="dlgNovoFasciculo.show()" />
-			</p:column>
-		</p:row>
-		<p:row>
-			<p:column>
-				<p:outputLabel value="Periodicidade:" for="periodicidade" />
-			</p:column>
-			<p:column colspan="5">
-				<p:selectOneMenu id="periodicidade"
-					value="#{periodicoBean.periodico.periodicidade}">
-					<f:selectItem itemLabel="Selecione a Periodicidade" itemValue="" />
-					<f:selectItems value="#{periodicoBean.listaPeriodicidade}" />
-				</p:selectOneMenu>
-			</p:column>
-		</p:row>
+					</p:column>
+					<p:column rowspan="2">
+						<p:commandButton id="showAddAFasciculoButton" icon="ui-icon-plus"
+							immediate="true" title="Adicionar Fascículo"
+							onclick="dlgNovoFasciculo.show()" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel value="Periodicidade:" for="periodicidade" />
+					</p:column>
+					<p:column colspan="3">
+						<p:selectOneMenu id="periodicidade"
+							value="#{periodicoBean.periodico.periodicidade}">
+							<f:selectItem itemLabel="Selecione a Periodicidade" itemValue="" />
+							<f:selectItems value="#{periodicoBean.listaPeriodicidade}" />
+						</p:selectOneMenu>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</p:fieldset>
 	</ui:define>
 
-	<ui:define name="tabelaObras">
+	<ui:define name="tabelaItensAcervo">
 		<!--LISTA ........................................................................................ -->
 		<p:fieldset>
-			<p:dataTable id="tabelaObras"
+			<p:dataTable id="tabelaItensAcervo"
 				value="#{periodicoBean.periodicoLazyDataModel}" var="periodico"
 				paginator="true" lazy="true" rows="10"
 				emptyMessage="Nenhum Periódico cadastrado">
@@ -86,7 +97,7 @@
 						<p:column headerText="Título" />
 						<p:column headerText="Editora" />
 						<p:column headerText="Assuntos" />
-						<p:column headerText="Artigos" />
+						<p:column headerText="Fascículos" />
 						<p:column headerText="Alterar" />
 					</p:row>
 				</p:columnGroup>
@@ -101,22 +112,15 @@
 					<h:outputText value="#{periodico.assuntosToString}" />
 				</p:column>
 				<p:column>
+					<p:dataTable styleClass="hide-column-names" value="#{periodico.fasciculos}" var="f">
+						<p:column>#{f.titulo}</p:column>
+					</p:dataTable>
 				</p:column>
 				<p:column>
 					<h:form>
-						<p:commandButton icon="ui-icon-pencil" title="Alterar Periódico"
-							update=":form">
-							<f:setPropertyActionListener value="#{periodico}"
-								target="#{periodicoBean.obra}" />
+						<p:commandButton icon="ui-icon-pencil" title="Alterar Periódico" update=":form">
+							<f:setPropertyActionListener value="#{periodico}" target="#{periodicoBean.itemAcervo}" />
 						</p:commandButton>
-						<p:commandButton icon="ui-icon-tag" title="Incluir Fasciculo"
-							oncomplete="dlgExemplares.show()"
-							action="#{livroBean.updateListaExemplares}"
-							update="@form :formExemplares :formExemplares">
-							<f:setPropertyActionListener value="#{livro}"
-								target="#{livroBean.obra}" />
-						</p:commandButton>
-
 					</h:form>
 				</p:column>
 			</p:dataTable>
@@ -134,9 +138,7 @@
 						<p:column>
 							<p:outputLabel value="Título:" for="tituloFasciculo" />
 						</p:column>
-
 						<p:column colspan="5">
-		
 							<p:inputText id="tituloFasciculo" size="46"
 								value="#{periodicoBean.fasciculoAdd.titulo}" />
 						</p:column>
@@ -155,21 +157,26 @@
 							<p:outputLabel value="Ano" for="ano" />
 						</p:column>
 						<p:column>
-							<p:inputText id="ano" value="#{periodicoBean.fasciculoAdd.ano}" />
+							<p:inputText id="ano" size="2" value="#{periodicoBean.fasciculoAdd.ano}" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Mês" for="mes" />
 						</p:column>
 						<p:column>
-							<p:inputText id="mes" value="#{periodicoBean.fasciculoAdd.mes}" />
+							<p:selectOneMenu id="mes"
+								value="#{periodicoBean.fasciculoAdd.mes}">
+								<f:selectItem itemLabel="Selecione o Mês" itemValue="" />
+								<f:selectItems value="#{periodicoBean.listaMeses}" />
+							</p:selectOneMenu>
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Edição" for="edicao" />
 						</p:column>
 						<p:column>
-							<p:inputText id="edicao" value="#{periodicoBean.fasciculoAdd.edicao}" />
+							<p:inputText id="edicao" size="2"
+								value="#{periodicoBean.fasciculoAdd.edicao}" />
 						</p:column>
-					</p:row>					
+					</p:row>
 				</p:panelGrid>
 
 				<p:toolbar style="margin-top: 2px;margin-bottom:10px;">
@@ -178,9 +185,7 @@
 							action="#{periodicoBean.adicionarFasciculo}"
 							oncomplete="dlgNovoFasciculo.hide();" process="@form"
 							update="@form :form:fasciculos" />
-
 						<p:separator />
-
 						<p:commandButton value="Sair"
 							action="#{periodicoBean.limparFormFasciculo}"
 							oncomplete="dlgNovoFasciculo.hide(); return false;" />

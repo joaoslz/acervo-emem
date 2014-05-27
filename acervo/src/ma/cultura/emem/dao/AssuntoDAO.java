@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.persistence.TypedQuery;
 
-import ma.cultura.emem.modelo.Assunto;
+import ma.cultura.emem.modelo.auxiliar.Assunto;
 
 public class AssuntoDAO extends DAO<Assunto> {
 
@@ -14,9 +14,9 @@ public class AssuntoDAO extends DAO<Assunto> {
 		super(Assunto.class);
 	}
 
-	public List<Assunto> pesquisarPorAssunto(String assunto) {
-		TypedQuery<Assunto> query = em.createNamedQuery(Assunto.NAMED_QUERY_PESQUISAR_POR_ASSUNTO, Assunto.class);
-		query.setParameter("assunto", "%" + assunto + "%");
+	public List<Assunto> findByNome(String nome) {
+		TypedQuery<Assunto> query = em.createNamedQuery("Assunto.findByNome", Assunto.class);
+		query.setParameter("nome", "%" + nome + "%");
 		return query.getResultList();
 	}
 

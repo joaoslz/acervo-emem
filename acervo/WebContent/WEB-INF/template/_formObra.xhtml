@@ -6,194 +6,131 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/WEB-INF/template/_template.xhtml">
+<ui:composition template="/WEB-INF/template/_formItemAcervo.xhtml">
+	<ui:param name="itemAcervoBean" value="#{obraBean}"></ui:param>
+	<ui:param name="titulo" value="#{titulo}"></ui:param>
 
-	<ui:define name="conteudo">
-		<script type="text/javascript" src="js/traducaoCalendario.js"></script>
-		<h:form id="form">
+	<ui:define name="dadosForm">
 
-			<div style="height: 15px;">
-				<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
-				<p:ajaxStatus id="ajaxStatusPanel" styleClass="ajaxStatusPanel">
-					<f:facet name="start">
-						<h:graphicImage value="/images/ajaxloading.gif" />
-							Carregando...
-						</f:facet>
-					<f:facet name="complete">
-						<h:outputText value="" />
-					</f:facet>
-				</p:ajaxStatus>
-				<!-- ......................................................................................... -->
-			</div>
-			<p:messages id="messages" autoUpdate="true" />
-			<!--  Formulário de cadastro de obra -->
+		<p:fieldset>
+			<legend>Dados de Obra</legend>
 			<p:panelGrid style="width:99%">
-				<f:facet name="header">
-					<p:row>
-						<p:column colspan="12">#{titulo} </p:column>
-					</p:row>
-				</f:facet>
+			<p:row>
+				<p:column>
+					<p:outputLabel value="Edição:" for="edicao" />
+				</p:column>
+				<p:column>
+					<p:inputMask id="edicao" mask="9?99" placeHolder=" "
+						value="#{obraBean.obra.edicao}" size="2" />
+				</p:column>
+				<p:column>
+					<p:outputLabel value="Volume: " for="volume" />
+				</p:column>
+				<p:column>
+					<p:inputMask id="volume" mask="9?99" placeHolder=" "
+						value="#{obraBean.obra.volume}" size="2" />
+				</p:column>
+				<p:column>
+					<p:outputLabel value="Ano:" for="ano" />
+				</p:column>
+				<p:column colspan="2">
+					<p:inputMask id="ano" value="#{obraBean.obra.ano}" mask="9999"
+						size="2" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:outputLabel value="É Ilustrado?" for="ehIlustrado" />
+				</p:column>
+				<p:column>
+					<p:selectBooleanCheckbox id="ehIlustrado"
+						value="#{obraBean.obra.ehIlustrado}" />
+				</p:column>
+				<p:column>
+					<p:outputLabel value="Não Paginado?" for="naoPaginado" />
+				</p:column>
+				<p:column>
+					<p:selectBooleanCheckbox id="naoPaginado"
+						value="#{obraBean.obra.naoPaginado}" />
+				</p:column>
+				<p:column>
+					<p:outputLabel value="Nº de Páginas:" for="numPaginas" />
+				</p:column>
+				<p:column colspan="2">
+					<p:inputText id="numPaginas" value="#{obraBean.obra.numPaginas}"
+						size="2" />
+				</p:column>
+			</p:row>
 
 				<p:row>
 					<p:column>
-						<p:outputLabel value="Titulo:" for="titulo" />
+						<p:outputLabel value="ISBN:" for="isbn" />
 					</p:column>
-					<p:column colspan="5">
-						<p:inputText id="titulo" value="#{obraBean.obra.titulo}"
-							style="width:95%" required="true"
-							requiredMessage="Título obrigatório">
-							<f:ajax event="blur" render="messages" />
+					<p:column>
+						<p:inputText id="isbn" value="#{obraBean.obra.isbn}" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="Cutter:" for="cutter" />
+					</p:column>
+					<p:column>
+						<p:inputText id="cutter" value="#{obraBean.obra.cutter}"
+							validatorMessage="Cutter não pode ser superio a 5 caracteres">
+							<f:validateLength maximum="5" />
 						</p:inputText>
 					</p:column>
-					<p:column>
-						<p:outputLabel value="Subtitulo:" for="subtitulo" />
-					</p:column>
-					<p:column colspan="5">
-						<p:inputText id="subtitulo" value="#{obraBean.obra.subtitulo}"
-							style="width:95%" />
-					</p:column>
-				</p:row>
-				<p:row>
-					<p:column>
-						<p:outputLabel value="Editora:" for="editora" />
-					</p:column>
-					<p:column colspan="4">
-						<p:autoComplete minQueryLength="2" size="45"
-							value="#{obraBean.obra.editora}" id="editora"
-							completeMethod="#{obraBean.autocompleteEditoraByNome}" var="e"
-							itemLabel="#{e.nome}" itemValue="#{e}"
-							converter="#{editoraConverter}" forceSelection="true">
-						</p:autoComplete>
-					</p:column>
-					<p:column>
-						<p:commandButton type="button" id="showAddEditoraButton"
-							icon="ui-icon-plus" immediate="true" title="Adicionar Editora"
-							onclick="dlgNovaEditora.show();" />
-					</p:column>
-					<p:column>
-						<p:outputLabel value="Local:" for="local" />
-					</p:column>
-					<p:column>
-						<p:autoComplete minQueryLength="2" value="#{obraBean.obra.local}"
-							size="10" id="local"
-							completeMethod="#{obraBean.autocompleteLocalByNome}" var="l"
-							itemLabel="#{l.nome}" itemValue="#{l}"
-							converter="#{localConverter}" />
-					</p:column>
-					<p:column>
-						<p:commandButton id="showAddLocalButton" icon="ui-icon-plus"
-							immediate="true" title="Adicionar Local"
-							onclick="dlgNovoLocal.show()" />
-					</p:column>
-					<p:column>
-						<p:outputLabel value="Idioma:" for="idioma" />
-					</p:column>
-					<p:column>
-						<p:selectOneMenu id="idioma" value="#{obraBean.obra.idioma}"
-							converter="#{idiomaConverter}">
-							<f:selectItem itemLabel="Selecione o Idioma" itemValue="#{null}" />
-							<f:selectItems value="#{obraBean.listaIdiomas}" var="i"
-								itemLabel="#{i.nome}" itemValue="#{i}" />
-						</p:selectOneMenu>
-					</p:column>
-					<p:column colspan="3">
-						<p:commandButton type="button" id="showAddIdiomaButton"
-							icon="ui-icon-plus" immediate="true" title="Adicionar Idioma"
-							onclick="dlgNovoIdioma.show();" />
-					</p:column>
-				</p:row>
-				<p:row>
-					<p:column>
-						<p:outputLabel value="Edição:" for="edicao" />
-					</p:column>
-					<p:column>
-						<p:inputMask id="edicao" mask="9?99" placeHolder=" " 
-						             value="#{obraBean.obra.edicao}" size="2" />
-					</p:column>
-					<p:column>
-						<p:outputLabel value="Volume: " for="volume" />
-					</p:column>
-					<p:column>
-						<p:inputMask id="volume" mask="9?99" placeHolder=" " 
-						             value="#{obraBean.obra.volume}" size="2" />
-					</p:column>
-					<p:column>
-						<p:outputLabel value="Ano:" for="ano" />
-					</p:column>
-					<p:column>
-						<p:inputMask id="ano" value="#{obraBean.obra.ano}" mask="9999"
-							size="2" />
+					<p:column rowspan="2">
+						<p:outputLabel value="Autores:" for="autores" />
 					</p:column>
 					<p:column rowspan="2">
-						<p:outputLabel value="Assuntos:" for="assuntos" />
-					</p:column>
-					<p:column rowspan="2" colspan="4">
-						<p:autoComplete minQueryLength="2" id="assuntos"
-							value="#{obraBean.obra.assuntos}"
-							completeMethod="#{obraBean.autocompleteAssuntoByAssunto}" var="a"
-							itemLabel="#{a.assunto}" itemValue="#{a}"
-							converter="#{assuntoConverter}" forceSelection="true"
+						<p:autoComplete minQueryLength="2" id="autores"
+							value="#{obraBean.obra.autores}"
+							completeMethod="#{obraBean.autocompleteAutorByNome}" var="a"
+							itemLabel="#{a.nome}" itemValue="#{a}"
+							converter="#{entityConverter}" forceSelection="true"
 							multiple="true" />
 					</p:column>
-					<p:column colspan="2" rowspan="2">
-						<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
-							process="form:assuntos" title="Adicionar Assunto"
-							onclick="dlgNovoAssunto.show()" />
+					<p:column rowspan="2">
+						<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
+							process="form:autores" title="Adicionar Autor"
+							onclick="dlgNovoAutor.show()" />
 					</p:column>
 				</p:row>
 				<p:row>
 					<p:column>
-						<p:outputLabel value="É Ilustrado?" for="ehIlustrado" />
+						<p:outputLabel value="Série:" for="serie" />
 					</p:column>
 					<p:column>
-						<p:selectBooleanCheckbox id="ehIlustrado"
-							value="#{obraBean.obra.ehIlustrado}" />
+						<p:inputText id="serie" value="#{obraBean.obra.serie}" />
 					</p:column>
 					<p:column>
-						<p:outputLabel value="Não Paginado?" for="naoPaginado" />
+						<p:outputLabel value="Classificação:" for="classificacao" />
 					</p:column>
 					<p:column>
-						<p:selectBooleanCheckbox id="naoPaginado"
-							value="#{obraBean.obra.naoPaginado}" />
-					</p:column>
-					<p:column>
-						<p:outputLabel value="Nº de Páginas:" for="numPaginas" />
-					</p:column>
-					<p:column>
-						<p:inputText id="numPaginas" value="#{obraBean.obra.numPaginas}"
-							size="2" />
+						<p:inputText id="classificacao"
+							value="#{obraBean.obra.classificacao}" />
 					</p:column>
 				</p:row>
-				<ui:insert name="dadosForm"></ui:insert>
 			</p:panelGrid>
+		</p:fieldset>
+	</ui:define>
+	<ui:define name="dialogs">
 
-			<p:toolbar style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
-				<p:toolbarGroup align="right">
-					<p:commandButton value="#{obraBean.stringBotaoGravar}"
-						action="#{obraBean.gravar}" process="@form"
-						update="@form :tabelaObras" />
+		<!-- DIALOG AUTOR............................................................................................ -->
+		<p:dialog header="Cadastro de Autor" widgetVar="dlgNovoAutor"
+			resizable="false" modal="true">
+			<h:form>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{obraBean.autorAdd.nome}"
+						required="true" requiredMessage="Campo nome deve ser digitado" />
 
-					<p:separator />
-
-					<p:commandButton value="Limpar Formulário" update="@form"
-						action="#{obraBean.recarregarPagina}" immediate="true" />
-
-				</p:toolbarGroup>
-			</p:toolbar>
-
-		</h:form>
-
-		<ui:insert name="tabelaObras"></ui:insert>
-
-		<ui:insert name="dialogs"></ui:insert>
-
-		<ui:include src="/WEB-INF/includes/dialogExemplares.xhtml">
-			<ui:param name="obraBean" value="#{obraBean}" />
-		</ui:include>
-
-		<ui:include src="/WEB-INF/includes/dialogsAux.xhtml">
-			<ui:param name="obraBean" value="#{obraBean}" />
-		</ui:include>
+					<p:commandButton value="Gravar"
+						action="#{obraBean.gravarAutor}"
+						oncomplete="dlgNovoAutor.hide();" process="@form"
+						update="@form :form:autores" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

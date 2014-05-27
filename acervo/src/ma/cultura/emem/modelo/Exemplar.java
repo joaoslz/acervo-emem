@@ -1,6 +1,5 @@
 package ma.cultura.emem.modelo;
 
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -17,17 +16,17 @@ import javax.persistence.TemporalType;
 
 @Entity
 @NamedQueries({ 
-	@NamedQuery(name = Exemplar.NAMED_QUERY_LISTAR_TODOS, query = "from Exemplar e order by e.id desc"),
-	@NamedQuery(name = Exemplar.NAMED_QUERY_LISTAR_POR_OBRA, query = "from Exemplar e where e.obra.id = :idObra") })
-public class Exemplar implements Serializable {
-
-	public static final String NAMED_QUERY_LISTAR_TODOS = "Exemplar.listarTodos";
-	public static final String NAMED_QUERY_LISTAR_POR_OBRA = "Exemplar.listarPorObra";
+		@NamedQuery(name = "Exemplar.findAll", query = "from Exemplar e order by e.id desc"),
+		@NamedQuery(name = "Exemplar.listarPorItemAcervo", query = "from Exemplar e where e.itemAcervo.id = :idItemAcervo") 
+})
+public class Exemplar extends BaseEntity {
 
 	private static final long serialVersionUID = 8689410871717711520L;
+
 	@Id
 	@GeneratedValue
 	private Integer id;
+	
 	private boolean ehDoacao;
 	@Temporal(TemporalType.DATE)
 	private Calendar dataAquisicao;
@@ -36,19 +35,10 @@ public class Exemplar implements Serializable {
 	private String observacao;
 
 	@ManyToOne
-	private Obra obra;
+	private ItemAcervo itemAcervo;
 
 	@ManyToOne
 	private Fasciculo fasciculo;
-
-	
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public boolean isEhDoacao() {
 		return ehDoacao;
@@ -56,14 +46,6 @@ public class Exemplar implements Serializable {
 
 	public void setEhDoacao(boolean ehDoacao) {
 		this.ehDoacao = ehDoacao;
-	}
-
-	public Obra getObra() {
-		return obra;
-	}
-
-	public void setObra(Obra obra) {
-		this.obra = obra;
 	}
 
 	public String getObservacao() {
@@ -84,18 +66,33 @@ public class Exemplar implements Serializable {
 
 	public void setDataAquisicao(Date d) {
 		if (d != null) {
-			dataAquisicao  = GregorianCalendar.getInstance();
-			dataAquisicao .setTime(d);
+			dataAquisicao = GregorianCalendar.getInstance();
+			dataAquisicao.setTime(d);
 		}
 	}
 
+	public ItemAcervo getItemAcervo() {
+		return itemAcervo;
+	}
+
+	public void setItemAcervo(ItemAcervo itemAcervo) {
+		this.itemAcervo = itemAcervo;
+	}
+
+	public Fasciculo getFasciculo() {
+		return fasciculo;
+	}
+
+	public void setFasciculo(Fasciculo fasciculo) {
+		this.fasciculo = fasciculo;
+	}
+
 	@Override
-	public boolean equals(Object obj) {
-		if (obj == null || !(obj instanceof Exemplar))
-			return false;
-		Exemplar other = (Exemplar) obj;
-		if(this.getId() == null || other.getId() == null)
-			return false;
-		return this.getId().equals(other.getId());
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }

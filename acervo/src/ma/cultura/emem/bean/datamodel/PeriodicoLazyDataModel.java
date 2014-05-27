@@ -38,6 +38,6 @@ public class PeriodicoLazyDataModel extends LazyDataModel<Periodico> {
 	@Override
 	public List<Periodico> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
 		setRowCount(periodicoDAO.contarTodos());
-		return periodicoDAO.listarPorPagina(first, pageSize);
+		return periodicoDAO.findAllPaginated(first, pageSize);
 	}
 }

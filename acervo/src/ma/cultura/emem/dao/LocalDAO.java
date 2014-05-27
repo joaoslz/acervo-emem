@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.persistence.TypedQuery;
 
-import ma.cultura.emem.modelo.Local;
+import ma.cultura.emem.modelo.auxiliar.Local;
 
 public class LocalDAO extends DAO<Local> {
 
@@ -14,8 +14,8 @@ public class LocalDAO extends DAO<Local> {
 		super(Local.class);
 	}
 
-	public List<Local> pesquisarPorNome(String nome) {
-		TypedQuery<Local> query = em.createNamedQuery(Local.NAMED_QUERY_PESQUISAR_POR_NOME, Local.class);
+	public List<Local> findByNome(String nome) {
+		TypedQuery<Local> query = em.createNamedQuery("Local.findByNome", Local.class);
 		query.setParameter("nome", "%" + nome + "%");
 		return query.getResultList();
 	}

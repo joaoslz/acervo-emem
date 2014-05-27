@@ -16,10 +16,6 @@ public class LivroBean extends AbstractObraBean implements Serializable {
 
 	private static final long serialVersionUID = -2182379017227854261L;
 
-	// DAOs
-//	@Inject
-//	private LivroDAO livroDAO;
-	
 	@Inject
 	private LivroLazyDataModel livroLazyDataModel;
 	
@@ -32,7 +28,7 @@ public class LivroBean extends AbstractObraBean implements Serializable {
 	}
 
 	@Override
-	public Obra getNewObra() {
+	public Obra getNewItemAcervo() {
 		return new Livro();
 	}
 

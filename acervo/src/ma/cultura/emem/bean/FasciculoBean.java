@@ -9,14 +9,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ma.cultura.emem.bean.datamodel.PeriodicoLazyDataModel;
 import ma.cultura.emem.dao.AutorDAO;
 import ma.cultura.emem.modelo.Artigo;
-import ma.cultura.emem.modelo.Autor;
 import ma.cultura.emem.modelo.Fasciculo;
-import ma.cultura.emem.modelo.Obra;
-import ma.cultura.emem.modelo.PeriodicidadeEnum;
-import ma.cultura.emem.modelo.Periodico;
+import ma.cultura.emem.modelo.auxiliar.Autor;
 
 import org.apache.log4j.Logger;
 
@@ -43,7 +39,7 @@ public class FasciculoBean implements Serializable {
 	}
 
 	public void adicionarArtigo() {
-		fasciculo.adicionaArtigo(artigoAdd);
+		fasciculo.addArtigo(artigoAdd);
 		artigoAdd = new Artigo();
 	}
 
@@ -63,14 +59,13 @@ public class FasciculoBean implements Serializable {
 	}
 	
 	public void gravarAutorArtigo() {
-		autorAdd.setEhAutorArtigo(true);
 		autorDAO.adicionar(autorAdd);
-		getArtigoAdd().adicionarAutor(autorAdd);
+		getArtigoAdd().addAutor(autorAdd);
 		autorAdd = new Autor();
 	}
 	
-	public List<Autor> autocompleteAutorArtigoByNome(String nome) {
-		return autorDAO.pesquisarPorNomeAutorArtigo(nome);
+	public List<Autor> autocompleteAutorByNome(String nome) {
+		return autorDAO.findByNome(nome);
 	}
 	
 

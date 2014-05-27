@@ -10,18 +10,10 @@
 	<ui:param name="obraBean" value="#{metodoBean}"></ui:param>
 	<ui:param name="titulo" value="Dados do Método"></ui:param>
 
-	<ui:define name="dadosForm">
 
-		<ui:include src="/WEB-INF/includes/dadosLivro.xhtml">
-			<ui:param name="bean" value="#{metodoBean}" />
-		</ui:include>
-		
-	</ui:define>
-
-
-	<ui:define name="tabelaObras">
+	<ui:define name="tabelaItensAcervo">
 		<p:fieldset>
-			<p:dataTable id="tabelaObras"
+			<p:dataTable id="tabelaItensAcervo"
 				value="#{metodoBean.metodoLazyDataModel}" var="metodo"
 				paginator="true" lazy="true" rows="10"
 				emptyMessage="Nenhum Método cadastrado">
@@ -65,14 +57,14 @@
 						<p:commandButton icon="ui-icon-pencil" title="Alterar Método"
 							update="@form :form">
 							<f:setPropertyActionListener value="#{metodo}"
-								target="#{metodoBean.obra}" />
+								target="#{metodoBean.itemAcervo}" />
 						</p:commandButton>
 						<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
 							oncomplete="dlgExemplares.show()"
 							action="#{metodoBean.updateListaExemplares}"
 							update="@form :formExemplares :formExemplares">
 							<f:setPropertyActionListener value="#{metodo}"
-								target="#{metodoBean.obra}" />
+								target="#{metodoBean.itemAcervo}" />
 						</p:commandButton>
 					</h:form>
 				</p:column>
@@ -80,23 +72,5 @@
 		</p:fieldset>
 	</ui:define>
 	
-	<ui:define name="dialogs">
-	
-		<!-- DIALOG AUTOR............................................................................................ -->
-		<p:dialog header="Cadastro de Autor" widgetVar="dlgNovoAutor"
-			resizable="false" modal="true">
-			<h:form>
-				<h:panelGrid columns="2">
-					<p:outputLabel value="Nome:" for="nome" />
-					<p:inputText id="nome" value="#{obraBean.autorAdd.nome}"
-						required="true" requiredMessage="Campo nome deve ser digitado" />
-
-					<p:commandButton value="Gravar" action="#{obraBean.gravarAutor}"
-						oncomplete="dlgNovoAutor.hide();" process="@form"
-						update="@form :form:autores" />
-				</h:panelGrid>
-			</h:form>
-		</p:dialog>
-	</ui:define>
 </ui:composition>
 </html>

@@ -6,7 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.TypedQuery;
 
-import ma.cultura.emem.modelo.Instrumento;
+import ma.cultura.emem.modelo.auxiliar.Instrumento;
 
 import org.apache.log4j.Logger;
 
@@ -20,9 +20,9 @@ public class InstrumentoDAO extends DAO<Instrumento> {
 		super(Instrumento.class);
 	}
 
-	public List<Instrumento> pesquisarPorNome(String nome) {
+	public List<Instrumento> findByNome(String nome) {
 		logger.debug("pesquisando instrumento por nome: " + nome);
-		TypedQuery<Instrumento> query = em.createNamedQuery("Instrumento.pesquisarPorNome", Instrumento.class);
+		TypedQuery<Instrumento> query = em.createNamedQuery("Instrumento.findByNome", Instrumento.class);
 		query.setParameter("nome", "%" + nome + "%");
 		return query.getResultList();
 	}

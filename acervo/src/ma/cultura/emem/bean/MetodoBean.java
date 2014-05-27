@@ -15,22 +15,20 @@ import ma.cultura.emem.modelo.Obra;
 public class MetodoBean extends AbstractObraBean implements Serializable {
 
 	private static final long serialVersionUID = -55181606637412623L;
-	// DAOs
-//	@Inject
-//	private MetodoDAO metodoDAO;
+	
 	@Inject
 	private MetodoLazyDataModel metodoLazyDataModel;
-
-	public Metodo getLivro(){
-		return (Metodo) getObra();
-	}
+//  XXX
+//	public Metodo getLivro(){
+//		return (Metodo) getObra();
+//	}
 	
 	public Metodo getMetodo(){
 		return (Metodo) getObra();
 	}
 
 	@Override
-	public Obra getNewObra() {
+	public Obra getNewItemAcervo() {
 		return new Metodo();
 	}
 
