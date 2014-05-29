@@ -10,8 +10,6 @@
 		
 		<class>ma.cultura.emem.modelo.ItemAcervo</class>
 		<class>ma.cultura.emem.modelo.Obra</class>
-		<class>ma.cultura.emem.modelo.Livro</class>
-		<class>ma.cultura.emem.modelo.Metodo</class>		
 		<class>ma.cultura.emem.modelo.Periodico</class>
 		<class>ma.cultura.emem.modelo.Partitura</class>
 		<class>ma.cultura.emem.modelo.Exemplar</class>
@@ -24,6 +22,7 @@
 		<class>ma.cultura.emem.modelo.auxiliar.Idioma</class>
 		<class>ma.cultura.emem.modelo.auxiliar.Instrumento</class>
 		<class>ma.cultura.emem.modelo.auxiliar.Genero</class>
+		<class>ma.cultura.emem.modelo.auxiliar.TipoObra</class>
 		
 		
 		<properties>

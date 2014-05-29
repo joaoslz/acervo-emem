@@ -1,10 +1,11 @@
-package ma.cultura.emem.dao;
+package ma.cultura.emem.dao.auxiliar;
 
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.TypedQuery;
 
+import ma.cultura.emem.dao.DAO;
 import ma.cultura.emem.modelo.auxiliar.Editora;
 
 import org.apache.log4j.Logger;
@@ -12,8 +13,6 @@ import org.apache.log4j.Logger;
 public class EditoraDAO extends DAO<Editora> {
 
 	private static final long serialVersionUID = -4059562518120940093L;
-	@Inject
-	private Logger logger;
 
 	public EditoraDAO() {
 		super(Editora.class);

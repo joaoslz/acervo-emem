@@ -13,7 +13,7 @@ public class DAO<T> implements Serializable {
 	private static final long serialVersionUID = -4361432740747336731L;
 
 	@Inject
-	private Logger logger;
+	protected Logger logger;
 
 	private final Class<T> classe;
 

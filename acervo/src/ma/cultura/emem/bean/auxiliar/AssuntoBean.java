@@ -8,7 +8,7 @@ import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ma.cultura.emem.dao.AssuntoDAO;
+import ma.cultura.emem.dao.auxiliar.AssuntoDAO;
 import ma.cultura.emem.modelo.auxiliar.Assunto;
 
 import org.primefaces.event.RowEditEvent;

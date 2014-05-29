@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ma.cultura.emem.bean.datamodel.PeriodicoLazyDataModel;
-import ma.cultura.emem.dao.AutorDAO;
+import ma.cultura.emem.dao.auxiliar.AutorDAO;
 import ma.cultura.emem.modelo.Fasciculo;
 import ma.cultura.emem.modelo.ItemAcervo;
 import ma.cultura.emem.modelo.Periodico;
@@ -18,7 +18,7 @@ import ma.cultura.emem.modelo.auxiliar.PeriodicidadeEnum;
 
 @Named
 @ViewScoped
-public class PeriodicoBean extends AbstractItemAcervoBean implements Serializable {
+public class PeriodicoBean extends AbstractItemAcervoBean {
 
 	private static final long serialVersionUID = -8216262637075293980L;
 

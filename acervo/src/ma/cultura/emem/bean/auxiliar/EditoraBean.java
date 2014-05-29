@@ -8,7 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ma.cultura.emem.dao.EditoraDAO;
+import ma.cultura.emem.dao.auxiliar.EditoraDAO;
 import ma.cultura.emem.modelo.auxiliar.Editora;
 
 import org.apache.log4j.Logger;

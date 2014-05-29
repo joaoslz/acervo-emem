@@ -8,8 +8,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ma.cultura.emem.bean.datamodel.PartituraLazyDataModel;
-import ma.cultura.emem.dao.GeneroDAO;
-import ma.cultura.emem.dao.InstrumentoDAO;
+import ma.cultura.emem.dao.auxiliar.GeneroDAO;
+import ma.cultura.emem.dao.auxiliar.InstrumentoDAO;
 import ma.cultura.emem.modelo.ItemAcervo;
 import ma.cultura.emem.modelo.Partitura;
 import ma.cultura.emem.modelo.auxiliar.Genero;
@@ -17,7 +17,7 @@ import ma.cultura.emem.modelo.auxiliar.Instrumento;
 
 @Named
 @ViewScoped
-public class PartituraBean extends AbstractObraBean implements Serializable {
+public class PartituraBean extends AbstractItemAcervoBean implements Serializable {
 
 	private static final long serialVersionUID = -5763773183540321467L;
 

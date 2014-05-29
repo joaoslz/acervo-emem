@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/_formItemAcervo.xhtml">
+	<ui:param name="itemAcervoBean" value="#{obraBean}"></ui:param>
+	<ui:param name="titulo" value="Dados da Obra"></ui:param>
+
+	<ui:define name="dadosForm">
+
+		<p:fieldset>
+			<legend></legend>
+			<p:panelGrid style="width:99%">
+				<p:row>
+					<p:column>
+						<p:outputLabel value="Tipo de Obra:" for="tipoObra" />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu id="tipoObra" value="#{obraBean.obra.tipoObra}"
+							converter="#{entityConverter}">
+							<f:selectItem itemLabel="Selecione o Tipo" itemValue="#{null}" />
+							<f:selectItems value="#{obraBean.listaTiposObra}" var="t"
+								itemLabel="#{t.nome}" itemValue="#{t}" />
+						</p:selectOneMenu>
+					</p:column>
+					<p:column>
+						<p:outputLabel value="Edição:" for="edicao" />
+					</p:column>
+					<p:column>
+						<p:inputMask id="edicao" mask="9?99" placeHolder=" "
+							value="#{obraBean.obra.edicao}" size="2" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="Volume: " for="volume" />
+					</p:column>
+					<p:column>
+						<p:inputMask id="volume" mask="9?99" placeHolder=" "
+							value="#{obraBean.obra.volume}" size="2" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="Ano:" for="ano" />
+					</p:column>
+					<p:column colspan="2">
+						<p:inputMask id="ano" value="#{obraBean.obra.ano}" mask="9999"
+							size="2" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel value="É Ilustrado?" for="ehIlustrado" />
+					</p:column>
+					<p:column>
+						<p:selectBooleanCheckbox id="ehIlustrado"
+							value="#{obraBean.obra.ehIlustrado}" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="Não Paginado?" for="naoPaginado" />
+					</p:column>
+					<p:column>
+						<p:selectBooleanCheckbox id="naoPaginado"
+							value="#{obraBean.obra.naoPaginado}" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="Nº de Páginas:" for="numPaginas" />
+					</p:column>
+					<p:column colspan="3">
+						<p:inputText id="numPaginas" value="#{obraBean.obra.numPaginas}"
+							size="2" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<p:outputLabel value="ISBN:" for="isbn" />
+					</p:column>
+					<p:column>
+						<p:inputText id="isbn" value="#{obraBean.obra.isbn}" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="Cutter:" for="cutter" />
+					</p:column>
+					<p:column>
+						<p:inputText id="cutter" value="#{obraBean.obra.cutter}"
+							validatorMessage="Cutter não pode ser superio a 5 caracteres">
+							<f:validateLength maximum="5" />
+						</p:inputText>
+					</p:column>
+					<p:column rowspan="2">
+						<p:outputLabel value="Autores:" for="autores" />
+					</p:column>
+					<p:column rowspan="2" colspan="2">
+						<p:autoComplete minQueryLength="2" id="autores"
+							value="#{obraBean.obra.autores}"
+							completeMethod="#{obraBean.autocompleteAutorByNome}" var="a"
+							itemLabel="#{a.nome}" itemValue="#{a}"
+							converter="#{entityConverter}" forceSelection="true"
+							multiple="true" />
+					</p:column>
+					<p:column rowspan="2">
+						<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
+							process="form:autores" title="Adicionar Autor"
+							onclick="dlgNovoAutor.show()" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel value="Série:" for="serie" />
+					</p:column>
+					<p:column>
+						<p:inputText id="serie" value="#{obraBean.obra.serie}" />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="Classificação:" for="classificacao" />
+					</p:column>
+					<p:column>
+						<p:inputText id="classificacao"
+							value="#{obraBean.obra.classificacao}" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</p:fieldset>
+	</ui:define>
+	<ui:define name="tabelaItensAcervo">
+
+		<p:fieldset style="width:97%">
+			<p:dataTable id="tabelaItensAcervo"
+				value="#{obraBean.obraLazyDataModel}" var="obra" paginator="true"
+				lazy="true" rows="10" mptyMessage="Nenhums Obra cadastrada"
+				rowsPerPageTemplate="5 10 15 20 30 40"
+				paginatorAlwaysVisible="false">
+
+				<f:facet name="header"> Obras Cadastradss </f:facet>
+				<p:columnGroup type="header">
+					<p:row>
+						<p:column headerText="Título" />
+						<p:column headerText="ISBN" style="width: 100px" />
+						<p:column headerText="Editora" />
+						<p:column headerText="Local" style="width: 100px" />
+						<p:column headerText="Autores" />
+						<p:column headerText="Assuntos" />
+						<p:column headerText="Alterar" style="width: 80px" />
+					</p:row>
+				</p:columnGroup>
+
+				<p:column>
+					<h:outputText value="#{obra.titulo}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{obra.isbn}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{obra.editora.nome}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{obra.local.nome}" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="#{obra.autoresToString}" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="#{obra.assuntosToString}" />
+				</p:column>
+
+				<p:column>
+					<h:form>
+						<p:commandButton icon="ui-icon-pencil" title="Alterar Obra" update=":form">
+							<f:setPropertyActionListener value="#{obra}" target="#{obraBean.itemAcervo}" />
+						</p:commandButton>
+						<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
+							oncomplete="dlgExemplares.show()"
+							action="#{obraBean.updateListaExemplares}"
+							update="@form :formExemplares :formExemplares">
+							<f:setPropertyActionListener value="#{obra}"
+								target="#{obraBean.itemAcervo}" />
+						</p:commandButton>
+					</h:form>
+				</p:column>
+			</p:dataTable>
+		</p:fieldset>
+	</ui:define>
+	<ui:define name="dialogs">
+
+		<!-- DIALOG AUTOR............................................................................................ -->
+		<p:dialog header="Cadastro de Autor" widgetVar="dlgNovoAutor"
+			resizable="false" modal="true">
+			<h:form>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{obraBean.autorAdd.nome}"
+						required="true" requiredMessage="Campo nome deve ser digitado" />
+
+					<p:commandButton value="Gravar" action="#{obraBean.gravarAutor}"
+						oncomplete="dlgNovoAutor.hide();" process="@form"
+						update="@form :form:autores" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>

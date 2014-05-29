@@ -1,19 +1,15 @@
-package ma.cultura.emem.dao;
+package ma.cultura.emem.dao.auxiliar;
 
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.TypedQuery;
 
+import ma.cultura.emem.dao.DAO;
 import ma.cultura.emem.modelo.auxiliar.Genero;
-
-import org.apache.log4j.Logger;
 
 public class GeneroDAO extends DAO<Genero> {
 
 	private static final long serialVersionUID = -8906070558967086505L;
-	@Inject
-	private Logger logger;
 
 	public GeneroDAO() {
 		super(Genero.class);

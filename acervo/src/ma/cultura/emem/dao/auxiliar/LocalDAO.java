@@ -1,9 +1,10 @@
-package ma.cultura.emem.dao;
+package ma.cultura.emem.dao.auxiliar;
 
 import java.util.List;
 
 import javax.persistence.TypedQuery;
 
+import ma.cultura.emem.dao.DAO;
 import ma.cultura.emem.modelo.auxiliar.Local;
 
 public class LocalDAO extends DAO<Local> {

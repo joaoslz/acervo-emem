@@ -1,5 +1,6 @@
-package ma.cultura.emem.dao;
+package ma.cultura.emem.dao.auxiliar;
 
+import ma.cultura.emem.dao.DAO;
 import ma.cultura.emem.modelo.auxiliar.Idioma;
 
 public class IdiomaDAO extends DAO<Idioma> {

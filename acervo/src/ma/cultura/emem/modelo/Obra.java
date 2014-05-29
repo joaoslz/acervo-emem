@@ -3,28 +3,24 @@ package ma.cultura.emem.modelo;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
 
 import ma.cultura.emem.modelo.auxiliar.Autor;
+import ma.cultura.emem.modelo.auxiliar.TipoObra;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
 @NamedQueries({
 		@NamedQuery(name = "Obra.findAll", query = "from Obra a order by a.id desc")
 })
-public abstract class Obra extends ItemAcervo {
+public class Obra extends ItemAcervo {
 
 	private static final long serialVersionUID = 8672695121158033015L;
-
 
 	private short ano;
 	private String classificacao;
@@ -34,8 +30,11 @@ public abstract class Obra extends ItemAcervo {
 	private String isbn;
 	private short numPaginas;
 	private String serie;
-	private String tipo;
 	private short volume;
+	
+	@ManyToOne
+	@JoinColumn(name="tipo")
+	private TipoObra tipoObra;
 
 	@ManyToMany
 	private List<Autor> autores;
@@ -131,14 +130,6 @@ public abstract class Obra extends ItemAcervo {
 		this.serie = serie;
 	}
 
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
 	public short getVolume() {
 		return volume;
 	}
@@ -158,5 +149,13 @@ public abstract class Obra extends ItemAcervo {
 	public void addAutor(Autor autor){
 		if(autores != null)
 			autores.add(autor);
+	}
+
+	public TipoObra getTipoObra() {
+		return tipoObra;
+	}
+
+	public void setTipoObra(TipoObra tipoObra) {
+		this.tipoObra = tipoObra;
 	}
 }

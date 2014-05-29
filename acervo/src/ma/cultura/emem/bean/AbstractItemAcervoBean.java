@@ -1,17 +1,18 @@
 package ma.cultura.emem.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import ma.cultura.emem.dao.AssuntoDAO;
-import ma.cultura.emem.dao.EditoraDAO;
 import ma.cultura.emem.dao.ExemplarDAO;
-import ma.cultura.emem.dao.IdiomaDAO;
 import ma.cultura.emem.dao.ItemAcervoDAO;
-import ma.cultura.emem.dao.LocalDAO;
+import ma.cultura.emem.dao.auxiliar.AssuntoDAO;
+import ma.cultura.emem.dao.auxiliar.EditoraDAO;
+import ma.cultura.emem.dao.auxiliar.IdiomaDAO;
+import ma.cultura.emem.dao.auxiliar.LocalDAO;
 import ma.cultura.emem.modelo.Exemplar;
 import ma.cultura.emem.modelo.ItemAcervo;
 import ma.cultura.emem.modelo.auxiliar.Assunto;
@@ -23,7 +24,9 @@ import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
-public abstract class AbstractItemAcervoBean {
+public abstract class AbstractItemAcervoBean implements Serializable{
+
+	private static final long serialVersionUID = 766213803037842422L;
 
 	@Inject
 	protected Logger logger;
