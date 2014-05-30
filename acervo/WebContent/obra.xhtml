@@ -142,6 +142,7 @@
 						<p:column headerText="Local" style="width: 100px" />
 						<p:column headerText="Autores" />
 						<p:column headerText="Assuntos" />
+						<p:column headerText="Tipo"/>
 						<p:column headerText="Alterar" style="width: 80px" />
 					</p:row>
 				</p:columnGroup>
@@ -165,6 +166,10 @@
 
 				<p:column>
 					<h:outputText value="#{obra.assuntosToString}" />
+				</p:column>
+				
+				<p:column>
+					<h:outputText value="#{obra.tipoObra}" />
 				</p:column>
 
 				<p:column>
