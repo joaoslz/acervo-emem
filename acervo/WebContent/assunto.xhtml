@@ -13,18 +13,12 @@
 	
 		<h:form id="formAssunto">
 			<p:messages />
-			<h:panelGrid columns="2">
+			<h:panelGrid columns="3">
 				<f:facet name="header"> Dados do Assunto </f:facet>
 				<p:outputLabel value="Assunto:" for="assunto" />
-				<p:inputText id="assunto" value="#{assuntoBean.assunto.assunto}"/>
-				<f:facet name="footer">
-					<p:toolbar style="margin-top: 2px;margin-bottom:10px;" >
-						<p:toolbarGroup align="right">
-							<p:commandButton value="Gravar" action="#{assuntoBean.gravar}"
-								process="@form" update="@form :formTabelaAssuntos:tabelaAssuntos" />
-						</p:toolbarGroup>
-					</p:toolbar>
-				 </f:facet>
+				<p:inputText id="assunto" value="#{assuntoBean.assunto.nome}"/>
+				<p:commandButton value="Gravar" action="#{assuntoBean.gravar}"
+						process="@form" update="@form :formTabelaAssuntos:tabelaAssuntos" />
 			</h:panelGrid>
 		</h:form>
 
@@ -34,15 +28,16 @@
 					paginatorPosition="bottom" id="tabelaAssuntos"
 					value="#{assuntoBean.assuntos}" var="assunto"
 					emptyMessage="Nenhum assunto cadastrado" style="width:60%">
+					
 					<f:facet name="header">Assuntos Cadastrados</f:facet>
 					<p:ajax event="rowEdit" listener="#{assuntoBean.editAssunto}" />
 					<p:column resizable="true" headerText="Assunto">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{assunto.assunto}" />
+								<h:outputText value="#{assunto.nome}" />
 							</f:facet>
 							<f:facet name="input">
-								<p:inputText value="#{assunto.assunto}" />
+								<p:inputText value="#{assunto.nome}" />
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
