@@ -16,6 +16,8 @@ public class TipoObra extends BaseEntity {
 	private static final long serialVersionUID = 8385561660567611471L;
 	
 	@Id
+	private Integer id;
+	
 	private String nome;
 	
 	public String getNome() {
@@ -27,12 +29,16 @@ public class TipoObra extends BaseEntity {
 	}
 
 	@Override
-	public String getId() {
-		return nome;
+	public Integer getId() {
+		return id;
 	}
 
 	@Override
 	public String toString() {
 		return this.nome;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }

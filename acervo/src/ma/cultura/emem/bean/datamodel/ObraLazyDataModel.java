@@ -34,10 +34,11 @@ public class ObraLazyDataModel extends LazyDataModel<Obra> {
 	public Object getRowKey(Obra o) {
 		return o.getId();
 	}
-	
+
 	@Override
-	public List<Obra> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
+	public List<Obra> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 		setRowCount(obraDAO.contarTodos());
 		return obraDAO.findAllPaginated(first, pageSize);
 	}
+	
 }

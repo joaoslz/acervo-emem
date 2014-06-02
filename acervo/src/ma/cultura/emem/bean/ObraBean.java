@@ -1,3 +1,4 @@
+
 package ma.cultura.emem.bean;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import ma.cultura.emem.modelo.auxiliar.TipoObra;
 @ViewScoped
 public class ObraBean extends AbstractItemAcervoBean {
 
+	private static final long serialVersionUID = 3468148839276090985L;
 	@Inject
 	private AutorDAO autorDAO;
 	@Inject

@@ -30,7 +30,7 @@
 			</p:panelGrid>
 
 			<p:toolbar style="margin-top: 2px;margin-bottom:10px;">
-				<p:toolbarGroup align="right">
+				<f:facet name="right">
 					<p:commandButton value="Gravar"
 						action="#{itemAcervoBean.cadastrarExemplares}"
 						update="@form :formExemplares:tabelaExemplares" />
@@ -42,7 +42,7 @@
 						actionListener="#{itemAcervoBean.limparListaExemplares}"
 						oncomplete="dlgExemplares.hide()" update=":form :tabelaItensAcervo" />
 
-				</p:toolbarGroup>
+				</f:facet>
 			</p:toolbar>
 
 			<p:dataTable id="tabelaExemplares" value="#{itemAcervoBean.exemplares}"

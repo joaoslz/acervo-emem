@@ -36,7 +36,7 @@ public class PartituraLazyDataModel extends LazyDataModel<Partitura> {
 	}
 	
 	@Override
-	public List<Partitura> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
+	public List<Partitura> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 		setRowCount(partituraDAO.contarTodos());
 		return partituraDAO.findAllPaginated(first, pageSize);
 	}

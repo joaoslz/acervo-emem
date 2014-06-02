@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -33,7 +32,6 @@ public class Obra extends ItemAcervo {
 	private short volume;
 	
 	@ManyToOne
-	@JoinColumn(name="tipo")
 	private TipoObra tipoObra;
 
 	@ManyToMany

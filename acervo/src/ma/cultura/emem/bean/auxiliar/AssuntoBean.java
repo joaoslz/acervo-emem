@@ -11,6 +11,7 @@ import javax.inject.Named;
 import ma.cultura.emem.dao.auxiliar.AssuntoDAO;
 import ma.cultura.emem.modelo.auxiliar.Assunto;
 
+import org.apache.log4j.Logger;
 import org.primefaces.event.RowEditEvent;
 
 @Named
@@ -19,6 +20,8 @@ public class AssuntoBean implements Serializable {
 
 	private static final long serialVersionUID = 3905906075866017417L;
 
+	@Inject
+	private Logger logger;
 	@Inject
 	private AssuntoDAO assuntoDAO;
 	private Assunto assunto = new Assunto();
@@ -34,7 +37,8 @@ public class AssuntoBean implements Serializable {
 	}
 
 	public void gravar() {
-		assuntoDAO.adicionar(this.assunto);
+		logger.debug("Gravando Assunto: " + assunto.getNome());
+		assuntoDAO.adicionar(assunto);
 //		Apos o cadastro o autor eh adicionado direto no ArrayList 
 //		para evitar ter  que atualizar a lista com outra consulta no banco.
 		assuntos.add(0, this.assunto);
@@ -51,9 +55,5 @@ public class AssuntoBean implements Serializable {
 
 	public Assunto getAssunto() {
 		return assunto;
-	}
-
-	public void setAssunto(Assunto assunto) {
-		this.assunto = assunto;
 	}
 }

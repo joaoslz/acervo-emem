@@ -121,7 +121,8 @@
 			<ui:insert name="dadosForm"></ui:insert>
 
 			<p:toolbar style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
-				<p:toolbarGroup align="right">
+				<f:facet name="right">
+				
 					<p:commandButton value="#{itemAcervoBean.stringBotaoGravar}"
 						action="#{itemAcervoBean.gravar}" process="@form"
 						update="@form :tabelaItensAcervo" />
@@ -131,7 +132,7 @@
 					<p:commandButton value="Limpar Formulário" update="@form"
 						action="#{itemAcervoBean.recarregarPagina}" immediate="true" />
 
-				</p:toolbarGroup>
+				</f:facet>
 			</p:toolbar>
 
 		</h:form>

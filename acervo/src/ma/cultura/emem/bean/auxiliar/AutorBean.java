@@ -42,8 +42,6 @@ public class AutorBean implements Serializable {
 //		para evitar ter  que atualizar a lista com outra consulta no banco.
 		autores.add(0, autor);
 		autor = new Autor();
-
-		logger.error(" error TESTE!");	
 	}
 
 	public void updateListaAutores() {
