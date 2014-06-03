@@ -19,7 +19,7 @@
 					<p:inputText id="site" value="#{obraBean.editoraAdd.site}" />
 
 					<p:commandButton value="Gravar" action="#{obraBean.gravarEditora}"
-						oncomplete="dlgNovaEditora.hide();" process="@form"
+						oncomplete="PF('dlgNovaEditora').hide();" process="@form"
 						update="@form :form:editora" />
 				</h:panelGrid>
 			</h:form>
@@ -36,7 +36,7 @@
 						requiredMessage="Campo nome do idioma deve ser digitado" />
 
 					<p:commandButton value="Gravar" action="#{obraBean.gravarIdioma}"
-						oncomplete="dlgNovoIdioma.hide();" process="@form"
+						oncomplete="PF('dlgNovoIdioma').hide();" process="@form"
 						update="@form :form:idioma" />
 				</h:panelGrid>
 			</h:form>
@@ -53,7 +53,7 @@
 						requiredMessage="Campo nome do local deve ser digitado" />
 
 					<p:commandButton value="Gravar" action="#{obraBean.gravarLocal}"
-						oncomplete="dlgNovoLocal.hide();" process="@form"
+						oncomplete="PF('dlgNovoLocal').hide();" process="@form"
 						update="@form :form:local" />
 				</h:panelGrid>
 			</h:form>
@@ -70,7 +70,7 @@
 						required="true" requiredMessage="Campo assunto deve ser digitado" />
 
 					<p:commandButton value="Gravar" action="#{obraBean.gravarAssunto}"
-						oncomplete="dlgNovoAssunto.hide();" process="@form"
+						oncomplete="PF('dlgNovoAssunto').hide();" process="@form"
 						update="@form :form:assuntos" />
 				</h:panelGrid>
 			</h:form>

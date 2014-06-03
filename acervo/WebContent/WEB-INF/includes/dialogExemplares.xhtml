@@ -40,7 +40,7 @@
 					<!--............Ao sair da tela de exemplares é preciso limpar form e a lista de exemplares....-->
 					<p:commandButton value="Sair" action="#{itemAcervoBean.limparForm}"
 						actionListener="#{itemAcervoBean.limparListaExemplares}"
-						oncomplete="dlgExemplares.hide()" update=":form :tabelaItensAcervo" />
+						oncomplete="PF('dlgExemplares').hide()" update=":form" />
 
 				</f:facet>
 			</p:toolbar>
@@ -117,13 +117,13 @@
 				<p:outputLabel value="Deseja cadastrar algum exemplar? " />
 
 				<p:commandButton value="Sim"
-					oncomplete="dlgConfirmaExemplares.hide();dlgExemplares.show()"
+					oncomplete="PF('dlgConfirmaExemplares').hide();PF('dlgExemplares').show()"
 					process="@form"
 					update=":formExemplares :formExemplares:tabelaExemplares" />
 				<p:commandButton value="Não"
-					oncomplete="dlgConfirmaExemplares.hide();"
+					oncomplete="PF('dlgConfirmaExemplares').hide();"
 					action="#{itemAcervoBean.limparForm}" process="@form"
-					update=":form :tabelaItensAcervo" />
+					update=":form" />
 			</h:panelGrid>
 		</h:form>
 	</p:dialog>

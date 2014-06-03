@@ -64,7 +64,7 @@
 					<p:column>
 						<p:commandButton type="button" id="showAddEditoraButton"
 							icon="ui-icon-plus" immediate="true" title="Adicionar Editora"
-							onclick="dlgNovaEditora.show();" />
+							onclick="PF('dlgNovaEditora').show();" />
 					</p:column>
 					<p:column rowspan="2">
 						<p:outputLabel value="Assuntos:" for="assuntos" />
@@ -80,7 +80,7 @@
 					<p:column rowspan="2">
 						<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
 							process="form:assuntos" title="Adicionar Assunto"
-							onclick="dlgNovoAssunto.show()" />
+							onclick="PF('dlgNovoAssunto').show()" />
 					</p:column>
 				</p:row>
 				<p:row>
@@ -97,7 +97,7 @@
 					<p:column>
 						<p:commandButton id="showAddLocalButton" icon="ui-icon-plus"
 							immediate="true" title="Adicionar Local"
-							onclick="dlgNovoLocal.show()" />
+							onclick="PF('dlgNovoLocal').show()" />
 					</p:column>
 					<p:column>
 						<p:outputLabel value="Idioma:" for="idioma" />
@@ -113,7 +113,7 @@
 					<p:column>
 						<p:commandButton type="button" id="showAddIdiomaButton"
 							icon="ui-icon-plus" immediate="true" title="Adicionar Idioma"
-							onclick="dlgNovoIdioma.show();" />
+							onclick="PF('dlgNovoIdioma').show();" />
 					</p:column>
 				</p:row>
 			</p:panelGrid>

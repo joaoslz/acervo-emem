@@ -90,7 +90,7 @@ public abstract class AbstractItemAcervoBean implements Serializable{
 		//Pois mesmo que haja erro de validacao, ele continua executando a exibicao do dialogo.
 		//SOLUCAO: Ao chamar o dialogo aqui no bean o problema eh corrigido, pois o JSF nao executa 
 		//o metodo gravar caso haja erro de validacao.
-		RequestContext.getCurrentInstance().execute("dlgConfirmaExemplares.show()");
+		RequestContext.getCurrentInstance().execute("PF('dlgConfirmaExemplares').show()");
 	}
 	
 	public void limparListaExemplares(){

@@ -28,11 +28,13 @@ public class ObraBean extends AbstractItemAcervoBean {
 	private ObraLazyDataModel obraLazyDataModel;
 	
 	// FIXME Acredito que não será mais preciso este objeto (autorAdd)
-	protected Autor autorAdd = new Autor();
+	private Autor autorAdd = new Autor();
 
 	public void gravarAutor() {
 		autorDAO.adicionar(autorAdd);
+		logger.debug("AUTOR ADD: " + autorAdd);
 		getObra().addAutor(autorAdd);
+		logger.debug("AUTORES: " + getObra().getAutores());
 		autorAdd = new Autor();
 	}
 

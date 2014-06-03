@@ -1,5 +1,6 @@
 package ma.cultura.emem.modelo;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class Obra extends ItemAcervo {
 	private short numPaginas;
 	private String serie;
 	private short volume;
+	@Transient
+	private boolean naoPaginado = true;
 	
 	@ManyToOne
 	private TipoObra tipoObra;
@@ -37,15 +40,14 @@ public class Obra extends ItemAcervo {
 	@ManyToMany
 	private List<Autor> autores;
 
-	@Transient
 	public void setNaoPaginado(boolean naoPaginado) {
-		if (naoPaginado)
-			setNumPaginas((short) 0);
+		if(naoPaginado)
+			numPaginas = 0;
+		this.naoPaginado = naoPaginado;
 	}
 
-	@Transient
 	public boolean getNaoPaginado() {
-		return getNumPaginas() <= 0;
+		return numPaginas <= 0 && naoPaginado;
 	}
 
 	@Transient
@@ -145,8 +147,9 @@ public class Obra extends ItemAcervo {
 	}
 	
 	public void addAutor(Autor autor){
-		if(autores != null)
-			autores.add(autor);
+		if(autores == null)
+			autores = new ArrayList<Autor>();
+		autores.add(autor);
 	}
 
 	public TipoObra getTipoObra() {
