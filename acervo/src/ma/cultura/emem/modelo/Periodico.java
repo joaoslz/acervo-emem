@@ -14,7 +14,10 @@ import javax.persistence.OneToMany;
 import ma.cultura.emem.modelo.auxiliar.PeriodicidadeEnum;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = "Periodico.findAll", query = "from Periodico p order by p.id desc") })
+@NamedQueries({ 
+	@NamedQuery(name = "Periodico.findAll", query = "from Periodico p order by p.id desc"),
+	@NamedQuery(name = "Periodico.findByTitulo", query = "from Periodico p WHERE p.titulo like :titulo") 
+})
 public class Periodico extends ItemAcervo {
 
 	private static final long serialVersionUID = -112232541131788319L;

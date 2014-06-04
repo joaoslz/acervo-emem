@@ -1,6 +1,5 @@
 package ma.cultura.emem.bean;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;

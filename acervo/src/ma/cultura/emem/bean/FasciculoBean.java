@@ -9,9 +9,13 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import ma.cultura.emem.bean.datamodel.FasciculoLazyDataModel;
+import ma.cultura.emem.dao.FasciculoDAO;
+import ma.cultura.emem.dao.PeriodicoDAO;
 import ma.cultura.emem.dao.auxiliar.AutorDAO;
 import ma.cultura.emem.modelo.Artigo;
 import ma.cultura.emem.modelo.Fasciculo;
+import ma.cultura.emem.modelo.Periodico;
 import ma.cultura.emem.modelo.auxiliar.Autor;
 
 import org.apache.log4j.Logger;
@@ -25,17 +29,47 @@ public class FasciculoBean implements Serializable {
 	@Inject
 	private Logger logger;
 	
-	private Fasciculo fasciculo = new Fasciculo();
-	
 	@Inject
 	private AutorDAO autorDAO;
+	@Inject
+	private FasciculoDAO fasciculoDAO;
+	@Inject
+	private PeriodicoDAO periodicoDAO;
+	@Inject
+	private FasciculoLazyDataModel fasciculoLazyDataModel;
 
-
+	private Periodico periodico = new Periodico();
+	private Fasciculo fasciculo = new Fasciculo();
 	private Artigo artigoAdd = new Artigo();
 	private Autor autorAdd = new Autor();
 
+	public void gravar() {
+		boolean isEdicao = getFasciculo().getId() != null;
+		if (isEdicao) {
+			fasciculo = fasciculoDAO.atualizar(getFasciculo());
+			limparForm();
+		}else{
+			fasciculo = fasciculoDAO.adicionar(getFasciculo());
+		}
+	}
+	
+	public String getStringBotaoGravar(){
+		if(getFasciculo().getId() == null)
+			return "Gravar";
+		else
+			return "Gravar Alterações";
+	}
+	
+	public String recarregarPagina() {
+		return "fasciculo?faces-redirect=true";
+	}
 
-	public FasciculoBean() {
+	public void limparForm() {
+		fasciculo = new Fasciculo();
+	}
+
+	public void limparFormArtigo(){
+		artigoAdd = new Artigo();
 	}
 
 	public void adicionarArtigo() {
@@ -54,18 +88,22 @@ public class FasciculoBean implements Serializable {
 		}
 	}
 	
-	public void limparFormArtigo(){
-		artigoAdd = new Artigo();
-	}
-	
-	public void gravarAutorArtigo() {
+	public void gravarAutor() {
 		autorDAO.adicionar(autorAdd);
 		getArtigoAdd().addAutor(autorAdd);
 		autorAdd = new Autor();
 	}
 	
 	public List<Autor> autocompleteAutorByNome(String nome) {
+		List<Autor> autores = autorDAO.findByNome(nome);
+		//XXX Talvez seja interessante fazer essa exclusão via query. ???
+		if(!getArtigoAdd().getAutores().isEmpty())
+			autores.removeAll(getArtigoAdd().getAutores());		
 		return autorDAO.findByNome(nome);
+	}
+
+	public List<Periodico> autocompletePeriodicoByNome(String titulo) {
+		return periodicoDAO.findByTitulo(titulo);
 	}
 	
 
@@ -83,6 +121,22 @@ public class FasciculoBean implements Serializable {
 
 	public void setFasciculo(Fasciculo fasciculo) {
 		this.fasciculo = fasciculo;
+	}
+
+	public Periodico getPeriodico() {
+		return periodico;
+	}
+
+	public void setPeriodico(Periodico periodico) {
+		this.periodico = periodico;
+	}
+
+	public FasciculoLazyDataModel getFasciculoLazyDataModel() {
+		return fasciculoLazyDataModel;
+	}
+
+	public void setFasciculoLazyDataModel(FasciculoLazyDataModel fasciculoLazyDataModel) {
+		this.fasciculoLazyDataModel = fasciculoLazyDataModel;
 	}
 
 }

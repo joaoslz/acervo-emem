@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/_template.xhtml">
+
+	<ui:define name="conteudo">
+	
+		<h:form id="form">
+
+			<div style="height: 15px;">
+				<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
+				<p:ajaxStatus id="ajaxStatusPanel" styleClass="ajaxStatusPanel">
+					<f:facet name="start">
+						<h:graphicImage value="/images/ajaxloading.gif" />
+							Carregando...
+						</f:facet>
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+				<!-- ......................................................................................... -->
+			</div>
+			<p:messages id="messages" autoUpdate="true" />
+
+			<p:fieldset>
+				<legend>Cadastro de Fascículo</legend>
+			</p:fieldset>
+
+
+			<!-- ....................................BOTÕES......................................................... -->
+			<p:toolbar style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
+				<f:facet name="right">
+
+					<p:commandButton value="#{fasciculoBean.stringBotaoGravar}"
+						action="#{fasciculoBean.gravar}" process="@form"
+						update="@form :tabela" />
+
+					<p:separator />
+
+					<p:commandButton value="Limpar Formulário" update="@form"
+						action="#{fasciculoBean.recarregarPagina}" immediate="true" />
+
+				</f:facet>
+			</p:toolbar>
+
+		</h:form>
+
+		<!-- ....................................TABELA......................................................... -->
+
+		<p:dataTable id="tabela"
+			value="#{fasciculoBean.fasciculoLazyDataModel}" var="fasciculo"
+			paginator="true" lazy="true" rows="10"
+			emptyMessage="Nenhum Fascículo cadastrado">
+
+			<f:facet name="header"> Fascículos Cadastrados </f:facet>
+			<p:columnGroup type="header">
+				<p:row>
+					<p:column headerText="Título" />
+					<p:column headerText="Subtítulo" />
+					<p:column headerText="Ano" />
+					<p:column headerText="Mês" />
+					<p:column headerText="Edição" />
+					<p:column headerText="Alterar" />
+				</p:row>
+			</p:columnGroup>
+
+			<p:column>
+				<h:outputText value="#{fasciculo.titulo}" />
+			</p:column>
+			<p:column>
+				<h:outputText value="#{fasciculo.subtitulo}" />
+			</p:column>
+			<p:column>
+				<h:outputText value="#{fasciculo.ano}" />
+			</p:column>
+			<p:column>
+				<h:outputText value="#{fasciculo.mes}" />
+			</p:column>
+			<p:column>
+				<h:outputText value="#{fasciculo.edicao}" />
+			</p:column>
+			<p:column>
+				<h:form>
+					<p:commandButton icon="ui-icon-pencil" title="Alterar Periódico"
+						update=":form">
+						<f:setPropertyActionListener value="#{fasciculo}"
+							target="#{fasciculoBean.fasciculo}" />
+					</p:commandButton>
+				</h:form>
+			</p:column>
+		</p:dataTable>
+		
+	</ui:define>
+</ui:composition>
+</html>

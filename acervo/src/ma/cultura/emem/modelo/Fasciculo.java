@@ -10,12 +10,18 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import ma.cultura.emem.modelo.auxiliar.MesEnum;
 
 @Entity
+@NamedQueries({ 
+	@NamedQuery(name = "Fasciculo.findAll", query = "from Fasciculo f order by f.id desc"),
+	@NamedQuery(name = "Periodico.findByTitulo", query = "from Fasciculo f WHERE f.periodico.id = :idPeriodico order by f.ano desc, f.mes desc")
+})
 public class Fasciculo extends BaseEntity {
 
 	private static final long serialVersionUID = -1467686486369558017L;
