@@ -1,6 +1,7 @@
 package ma.cultura.emem.modelo.auxiliar;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -16,6 +17,7 @@ public class TipoObra extends BaseEntity {
 	private static final long serialVersionUID = 8385561660567611471L;
 	
 	@Id
+	@GeneratedValue
 	private Integer id;
 	
 	private String nome;
