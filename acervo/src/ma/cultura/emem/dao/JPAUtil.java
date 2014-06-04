@@ -1,7 +1,5 @@
 package ma.cultura.emem.dao;
 
-import java.io.Serializable;
-
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;

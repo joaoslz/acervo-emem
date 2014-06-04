@@ -6,194 +6,142 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/WEB-INF/template/_formItemAcervo.xhtml">
-	<ui:param name="itemAcervoBean" value="#{periodicoBean}"></ui:param>
-	<ui:param name="titulo" value="Dados do Periódico"></ui:param>
+<ui:composition template="/WEB-INF/template/_template.xhtml">
 
-	<ui:define name="dadosForm">
+	<ui:define name="conteudo">
+		<script type="text/javascript" src="js/traducaoCalendario.js"></script>
+		<h:form id="form">
 
-		<p:fieldset>
-			<legend>Dados de Periódico</legend>
-			<p:panelGrid style="width:99%">
-				<p:row>
-					<p:column>
-						<p:outputLabel value="É assinado?" for="ehAssinado" />
-					</p:column>
-					<p:column>
-						<p:selectBooleanCheckbox id="ehAssinado"
-							value="#{periodicoBean.periodico.ehAssinado}" />
-					</p:column>
-					<p:column>
-						<p:outputLabel value="ISSN:" for="issn" />
-					</p:column>
-					<p:column >
-						<p:inputText id="issn" value="#{periodicoBean.periodico.issn}" />
-					</p:column>
-					<p:column rowspan="2">
-						<p:dataTable id="fasciculos"
-							value="#{periodicoBean.periodico.fasciculos}" var="f"
-							rowIndexVar="index"
-							emptyMessage="Nenhum fascículo (revista) adicionado">
-							<f:facet name="header"> Fascículos </f:facet>
-
-							<p:column headerText="Título">
-								<h:outputText value="#{f.titulo}" />
-							</p:column>
-							<p:column headerText="Subtitulo">
-								<h:outputText value="#{f.subtitulo}" />
-							</p:column>
-							<p:column headerText="Edição">
-								<h:outputText value="#{f.edicao}" />
-							</p:column>
-							<p:column headerText="Mês">
-								<h:outputText value="#{f.mes}" />
-							</p:column>
-							<p:column headerText="Ano">
-								<h:outputText value="#{f.ano}" />
-							</p:column>
-							<p:column headerText="Remover">
-								<p:commandButton id="showAddAFasciculoButton"
-									action="#{periodicoBean.removerFasciculo(index)}" 
-									icon="ui-icon-trash"
-									immediate="true" title="Remover Fascículo" />
-							</p:column>
-						</p:dataTable>
+			<div style="height: 15px;">
+				<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
+				<p:ajaxStatus id="ajaxStatusPanel" styleClass="ajaxStatusPanel">
+					<f:facet name="start">
+						<h:graphicImage value="/images/ajaxloading.gif" />
+							Carregando...
+						</f:facet>
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+				<!-- ......................................................................................... -->
+			</div>
+			<p:messages id="messages" autoUpdate="true" />
 
 
-					</p:column>
-					<p:column rowspan="2">
-						<p:commandButton id="showAddAFasciculoButton" icon="ui-icon-plus"
-							immediate="true" title="Adicionar Fascículo"
-							onclick="dlgNovoFasciculo.show()" />
-					</p:column>
-				</p:row>
-				<p:row>
-					<p:column>
-						<p:outputLabel value="Periodicidade:" for="periodicidade" />
-					</p:column>
-					<p:column colspan="3">
-						<p:selectOneMenu id="periodicidade"
-							value="#{periodicoBean.periodico.periodicidade}">
-							<f:selectItem itemLabel="Selecione a Periodicidade" itemValue="" />
-							<f:selectItems value="#{periodicoBean.listaPeriodicidade}" />
-						</p:selectOneMenu>
-					</p:column>
-				</p:row>
-			</p:panelGrid>
-		</p:fieldset>
-	</ui:define>
+			<!--  Formulário de cadastro de itemAcervo -->
 
-	<ui:define name="tabelaItensAcervo">
-		<!--LISTA ........................................................................................ -->
-		<p:fieldset>
-			<p:dataTable id="tabelaItensAcervo"
-				value="#{periodicoBean.periodicoLazyDataModel}" var="periodico"
-				paginator="true" lazy="true" rows="10"
-				emptyMessage="Nenhum Periódico cadastrado">
+			<p:fieldset>
+				<legend>Cadastro de Periódico</legend>
+			</p:fieldset>
+			<!-- ....................................DADOS DE ITEM ACERVO......................................... -->
+			<ui:include src="/WEB-INF/includes/dadosItemAcervo.xhtml">
+				<ui:param name="itemAcervoBean" value="#{periodicoBean}" />
+			</ui:include>
 
-				<f:facet name="header"> Periódico Cadastrados </f:facet>
-				<p:columnGroup type="header">
-					<p:row>
-						<p:column headerText="Título" />
-						<p:column headerText="Editora" />
-						<p:column headerText="Assuntos" />
-						<p:column headerText="Fascículos" />
-						<p:column headerText="Alterar" />
-					</p:row>
-				</p:columnGroup>
+			<!-- ....................................DADOS DO PERIODICO................................................ -->
 
-				<p:column>
-					<h:outputText value="#{periodico.titulo}" />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{periodico.editora.nome}" />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{periodico.assuntosToString}" />
-				</p:column>
-				<p:column>
-					<p:dataTable styleClass="hide-column-names" value="#{periodico.fasciculos}" var="f">
-						<p:column>#{f.titulo}</p:column>
-					</p:dataTable>
-				</p:column>
-				<p:column>
-					<h:form>
-						<p:commandButton icon="ui-icon-pencil" title="Alterar Periódico" update=":form">
-							<f:setPropertyActionListener value="#{periodico}" target="#{periodicoBean.itemAcervo}" />
-						</p:commandButton>
-					</h:form>
-				</p:column>
-			</p:dataTable>
-		</p:fieldset>
-
-	</ui:define>
-
-	<ui:define name="dialogs">
-		<!--DIALOG FASCÍCULO ................................... -->
-		<p:dialog header="Cadastro de Fascículo" widgetVar="dlgNovoFasciculo"
-			resizable="false" modal="true">
-			<h:form id="formFasciculo">
-				<p:panelGrid>
+			<p:fieldset>
+				<legend>Dados de Periódico</legend>
+				<p:panelGrid style="width:99%">
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Título:" for="tituloFasciculo" />
+							<p:outputLabel value="Periodicidade:" for="periodicidade" />
 						</p:column>
-						<p:column colspan="5">
-							<p:inputText id="tituloFasciculo" size="46"
-								value="#{periodicoBean.fasciculoAdd.titulo}" />
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Subtítulo:" for="subtituloFasciculo" />
-						</p:column>
-						<p:column colspan="5">
-							<p:inputText id="subtituloFasciculo" size="46"
-								value="#{periodicoBean.fasciculoAdd.subtitulo}" />
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Ano" for="ano" />
-						</p:column>
-						<p:column>
-							<p:inputText id="ano" size="2" value="#{periodicoBean.fasciculoAdd.ano}" />
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Mês" for="mes" />
-						</p:column>
-						<p:column>
-							<p:selectOneMenu id="mes"
-								value="#{periodicoBean.fasciculoAdd.mes}">
-								<f:selectItem itemLabel="Selecione o Mês" itemValue="" />
-								<f:selectItems value="#{periodicoBean.listaMeses}" />
+						<p:column colspan="3">
+							<p:selectOneMenu id="periodicidade"
+								value="#{periodicoBean.periodico.periodicidade}">
+								<f:selectItem itemLabel="Selecione a Periodicidade" itemValue="" />
+								<f:selectItems value="#{periodicoBean.listaPeriodicidade}" />
 							</p:selectOneMenu>
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Edição" for="edicao" />
+							<p:outputLabel value="É assinado?" for="ehAssinado" />
 						</p:column>
 						<p:column>
-							<p:inputText id="edicao" size="2"
-								value="#{periodicoBean.fasciculoAdd.edicao}" />
+							<p:selectBooleanCheckbox id="ehAssinado"
+								value="#{periodicoBean.periodico.ehAssinado}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="ISSN:" for="issn" />
+						</p:column>
+						<p:column>
+							<p:inputText id="issn" value="#{periodicoBean.periodico.issn}" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
+			</p:fieldset>
 
-				<p:toolbar style="margin-top: 2px;margin-bottom:10px;">
-					<p:toolbarGroup align="right">
-						<p:commandButton value="Gravar"
-							action="#{periodicoBean.adicionarFasciculo}"
-							oncomplete="dlgNovoFasciculo.hide();" process="@form"
-							update="@form :form:fasciculos" />
-						<p:separator />
-						<p:commandButton value="Sair"
-							action="#{periodicoBean.limparFormFasciculo}"
-							oncomplete="dlgNovoFasciculo.hide(); return false;" />
-					</p:toolbarGroup>
-				</p:toolbar>
-			</h:form>
-		</p:dialog>
+			<!-- ....................................BOTÕES......................................................... -->
+			<p:toolbar style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
+				<f:facet name="right">
 
+					<p:commandButton value="#{periodicoBean.stringBotaoGravar}"
+						action="#{periodicoBean.gravar}" process="@form"
+						update="@form :tabela" />
+
+					<p:separator />
+
+					<p:commandButton value="Limpar Formulário" update="@form"
+						action="#{periodicoBean.recarregarPagina}" immediate="true" />
+
+				</f:facet>
+			</p:toolbar>
+
+		</h:form>
+
+		<!-- ....................................TABELA......................................................... -->
+
+		<p:dataTable id="tabela"
+			value="#{periodicoBean.periodicoLazyDataModel}" var="periodico"
+			paginator="true" lazy="true" rows="10"
+			emptyMessage="Nenhum Periódico cadastrado">
+
+			<f:facet name="header"> Periódico Cadastrados </f:facet>
+			<p:columnGroup type="header">
+				<p:row>
+					<p:column headerText="Título" />
+					<p:column headerText="Editora" />
+					<p:column headerText="ISSN" />
+					<p:column headerText="Periodicidade" />
+					<p:column headerText="É Assinado?" />
+					<p:column headerText="Assuntos" />
+					<p:column headerText="Alterar" />
+				</p:row>
+			</p:columnGroup>
+
+			<p:column>
+				<h:outputText value="#{periodico.titulo}" />
+			</p:column>
+			<p:column>
+				<h:outputText value="#{periodico.editora.nome}" />
+			</p:column>
+			<p:column>
+				<h:outputText value="#{periodico.issn}" />
+			</p:column>
+			<p:column>
+				<h:outputText value="#{periodico.periodicidade}" />
+			</p:column>
+			<p:column>
+				<h:outputText value="Sim" rendered="#{periodico.ehAssinado}" />
+				<h:outputText value="Não" rendered="#{!periodico.ehAssinado}" />
+			</p:column>
+			<p:column>
+				<h:outputText value="#{periodico.assuntosToString}" />
+			</p:column>
+			<p:column>
+				<h:form>
+					<p:commandButton icon="ui-icon-pencil" title="Alterar Periódico"
+						update=":form">
+						<f:setPropertyActionListener value="#{periodico}"
+							target="#{periodicoBean.itemAcervo}" />
+					</p:commandButton>
+				</h:form>
+			</p:column>
+		</p:dataTable>
+
+		<ui:include src="/WEB-INF/includes/dialogsAux.xhtml">
+			<ui:param name="itemAcervoBean" value="#{periodicoBean}" />
+		</ui:include>
 	</ui:define>
 </ui:composition>
 </html>

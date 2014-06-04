@@ -56,9 +56,9 @@ public abstract class ItemAcervo extends BaseEntity {
 	@ManyToOne
 	private Idioma idioma;
 	@ManyToMany
-	private List<Assunto> assuntos;
+	private List<Assunto> assuntos = new ArrayList<Assunto>();;
 	@OneToMany(mappedBy = "itemAcervo")
-	private List<Exemplar> exemplares;
+	private List<Exemplar> exemplares = new ArrayList<Exemplar>();;
 
 	public ItemAcervo() {
 	}
