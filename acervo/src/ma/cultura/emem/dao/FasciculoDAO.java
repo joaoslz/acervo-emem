@@ -16,7 +16,7 @@ public class FasciculoDAO extends DAO<Fasciculo> {
 	}
 	
 	public List<Fasciculo> findByPeriodicoPaginated(Periodico p, int firstResult, int maxResultsByPage){
-		TypedQuery<Fasciculo> query = em.createNamedQuery("Periodico.findByTitulo", Fasciculo.class);
+		TypedQuery<Fasciculo> query = em.createNamedQuery("Fasciculo.findByPeriodico", Fasciculo.class);
 		query.setParameter("idPeriodico", p.getId());
 		query.setFirstResult(firstResult);
 		query.setMaxResults(maxResultsByPage);
