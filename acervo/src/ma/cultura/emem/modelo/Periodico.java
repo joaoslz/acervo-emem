@@ -25,6 +25,7 @@ public class Periodico extends ItemAcervo {
 
 	@Column(length=20)
 	private String issn;
+	
 	private Boolean ehAssinado;
 
 	@Enumerated(EnumType.STRING)

@@ -48,7 +48,7 @@ public abstract class ItemAcervo extends BaseEntity {
 	@Column(length=100, nullable=false)
 	private String titulo;
 	
-	@Column(length=100, nullable=false)
+	@Column(length=100)
 	private String subtitulo;
 	
 	@Temporal(TemporalType.TIMESTAMP)
