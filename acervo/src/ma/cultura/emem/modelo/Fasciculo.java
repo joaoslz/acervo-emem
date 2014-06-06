@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,7 +21,7 @@ import ma.cultura.emem.modelo.auxiliar.MesEnum;
 @Entity
 @NamedQueries({ 
 	@NamedQuery(name = "Fasciculo.findAll", query = "from Fasciculo f order by f.id desc"),
-	@NamedQuery(name = "Periodico.findByTitulo", query = "from Fasciculo f WHERE f.periodico.id = :idPeriodico order by f.ano desc, f.mes desc")
+	@NamedQuery(name = "Fasciculo.findByTitulo", query = "from Fasciculo f WHERE f.periodico.id = :idPeriodico order by f.ano desc, f.mes desc")
 })
 public class Fasciculo extends BaseEntity {
 
@@ -30,11 +31,18 @@ public class Fasciculo extends BaseEntity {
 	@GeneratedValue
 	private Integer id;
 	
+	
+	@Column(length=100, nullable=false)
 	private String titulo;
+	
+	@Column(length=100, nullable=false)
 	private String subtitulo;
+	
 	private short edicao;
+	
 	@Enumerated(EnumType.ORDINAL)
 	private MesEnum mes;
+	
 	private short ano;
 
 	@ManyToOne
