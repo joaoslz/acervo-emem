@@ -6,36 +6,33 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-			
+
 <ui:composition template="WEB-INF/template/_template.xhtml">
 	<ui:define name="conteudo">
 
-
-		<h:form id="formPesquisa">
-			<p:messages id="messages" autoUpdate="true" />
-			<p:growl autoUpdate="true" />
+		<h:form>
+			<p:messages id="messages" autoUpdate="true" closable="true"/>
 
 			<p:fieldset>
-				<p:panelGrid columns="3">
-					<p:selectOneMenu>
-						<f:selectItems value="" />
-					</p:selectOneMenu>
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Título" for="titulo" />
+					<p:inputText id="titulo" value="#{pesquisaObraBean.filtro.titulo}"	 />
 
-					<p:inputText id="txtPesquisa"
-						value="" required="true"
-						size="60"></p:inputText>
+					<p:outputLabel value="Subtítulo" for="subtitulo" />
+					<p:inputText id="subtitulo" value="#{pesquisaObraBean.filtro.subtitulo}" />
 
-					<p:commandButton value="Buscar" process="" update="tabelaObras" />
+					<!--  Futuramente este checkbox será dinâmico e recuperado da tabela tipoObra-->
+					<p:commandButton value="Buscar" action="#{pesquisaObraBean.pesquisar}" update="tabelaObras" />
 				</p:panelGrid>
 			</p:fieldset>
 
 			<p:dataTable rows="10" paginator="true" paginatorPosition="bottom"
-				id="tabelaObras" value="" var="obra"
-				emptyMessage="Nenhuma Obra Cadastrado">
+				id="tabelaObras" value="#{pesquisaObraBean.obrasFiltradas}"
+				var="obra" emptyMessage="Nenhuma Obra Localizada">
 
 				<p:column>
 					<f:facet name="header">Título</f:facet>
-					<h:outputText value="" />
+					<h:outputText value="#{obra.titulo}" />
 				</p:column>
 			</p:dataTable>
 		</h:form>
