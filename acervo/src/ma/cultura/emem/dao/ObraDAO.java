@@ -6,6 +6,7 @@ import java.util.List;
 import ma.cultura.emem.dao.filtro.ObraFilter;
 import ma.cultura.emem.modelo.Obra;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
@@ -25,15 +26,21 @@ public class ObraDAO extends DAO<Obra> {
 
 		Criteria criteria = session.createCriteria(Obra.class);
 				
-		if (filtro.getTitulo() != null) {
-			// titulo pode ser uma substring que aparece em qualquer parte do Título da Obra 
-			criteria.add(Restrictions.ilike("titulo", filtro.getTitulo(), MatchMode.ANYWHERE));
+		if ( StringUtils.isNotBlank(filtro.getTitulo()) ) {
+			// pesquisa em qualquer substring que aparece em qualquer parte do Título da Obra 
+			criteria.add( Restrictions.ilike("titulo", filtro.getTitulo(), MatchMode.ANYWHERE) );
 		}
 
-		if (filtro.getSubtitulo() != null) {
-			// titulo pode ser uma substring que aparece em qualquer parte do Título da Obra 
-			criteria.add(Restrictions.ilike("subtitulo", filtro.getSubtitulo(), MatchMode.ANYWHERE));
+		if ( StringUtils.isNotBlank(filtro.getSubtitulo()) ) {
+			// pesquisa em qualquer substring que aparece em qualquer parte do subtítulo da Obra 
+			criteria.add( Restrictions.ilike("subtitulo", filtro.getSubtitulo(), MatchMode.ANYWHERE) );
 		}
+		
+		if ( filtro.getTiposObra() != null && !(filtro.getTiposObra().isEmpty()) ) {
+			// adicionamos uma restrição "in", passando uma lista de tipoObra
+			criteria.add( Restrictions.in("tipoObra", filtro.getTiposObra()) );
+		}
+
 
 		return criteria.addOrder(Order.asc("titulo")).list();
 	}

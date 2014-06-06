@@ -39,8 +39,4 @@ public class TipoObra extends BaseEntity {
 	public String toString() {
 		return this.nome;
 	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 }
