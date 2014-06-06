@@ -1,6 +1,8 @@
 package ma.cultura.emem.modelo.auxiliar;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -16,8 +18,10 @@ public class TipoObra extends BaseEntity {
 	private static final long serialVersionUID = 8385561660567611471L;
 	
 	@Id
+	@GeneratedValue
 	private Integer id;
 	
+	@Column(length=100, nullable=false, unique=true)
 	private String nome;
 	
 	public String getNome() {
@@ -36,9 +40,5 @@ public class TipoObra extends BaseEntity {
 	@Override
 	public String toString() {
 		return this.nome;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 }

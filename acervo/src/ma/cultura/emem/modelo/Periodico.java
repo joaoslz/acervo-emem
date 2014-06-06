@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -22,7 +23,9 @@ public class Periodico extends ItemAcervo {
 
 	private static final long serialVersionUID = -112232541131788319L;
 
+	@Column(length=20)
 	private String issn;
+	
 	private Boolean ehAssinado;
 
 	@Enumerated(EnumType.STRING)

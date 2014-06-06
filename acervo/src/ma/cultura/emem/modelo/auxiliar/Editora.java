@@ -2,6 +2,7 @@ package ma.cultura.emem.modelo.auxiliar;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,7 +25,10 @@ public class Editora extends BaseEntity{
     @GeneratedValue
     private Integer id;
 
+    @Column(length=100, nullable=false, unique=true )
     private String nome;
+
+    @Column(length=100)
     private String site;
 
 	//bi-directional many-to-one association to ItemAcervo

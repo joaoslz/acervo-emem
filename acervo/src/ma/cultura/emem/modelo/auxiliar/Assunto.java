@@ -1,5 +1,6 @@
 package ma.cultura.emem.modelo.auxiliar;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,6 +21,9 @@ public class Assunto extends BaseEntity{
 	@Id
 	@GeneratedValue
 	private Integer id;
+	
+	
+	@Column(length=100, nullable=false, unique=true )
 	private String nome;
 
 	@Override

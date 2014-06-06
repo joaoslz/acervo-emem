@@ -10,89 +10,14 @@
 
 	<ui:define name="conteudo">
 		<script type="text/javascript" src="js/traducaoCalendario.js"></script>
-		<h:form id="form">
 
-			<div style="height: 15px;">
-				<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
-				<p:ajaxStatus id="ajaxStatusPanel" styleClass="ajaxStatusPanel">
-					<f:facet name="start">
-						<h:graphicImage value="/images/ajaxloading.gif" />
-							Carregando...
-						</f:facet>
-					<f:facet name="complete">
-						<h:outputText value="" />
-					</f:facet>
-				</p:ajaxStatus>
-				<!-- ......................................................................................... -->
-			</div>
-			<p:messages id="messages" autoUpdate="true" />
-
-
-			<!--  Formulário de cadastro de itemAcervo -->
-
-			<p:fieldset>
-				<legend>Cadastro de Periódico</legend>
-			</p:fieldset>
-			<!-- ....................................DADOS DE ITEM ACERVO......................................... -->
-			<ui:include src="/WEB-INF/includes/dadosItemAcervo.xhtml">
-				<ui:param name="itemAcervoBean" value="#{periodicoBean}" />
-			</ui:include>
-
-			<!-- ....................................DADOS DO PERIODICO................................................ -->
-
-			<p:fieldset>
-				<p:panelGrid style="width:99%">
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Periodicidade:" for="periodicidade" />
-						</p:column>
-						<p:column colspan="3">
-							<p:selectOneMenu id="periodicidade"
-								value="#{periodicoBean.periodico.periodicidade}">
-								<f:selectItem itemLabel="Selecione a Periodicidade" itemValue="" />
-								<f:selectItems value="#{periodicoBean.listaPeriodicidade}" />
-							</p:selectOneMenu>
-						</p:column>
-						<p:column>
-							<p:outputLabel value="É assinado?" for="ehAssinado" />
-						</p:column>
-						<p:column>
-							<p:selectBooleanCheckbox id="ehAssinado"
-								value="#{periodicoBean.periodico.ehAssinado}" />
-						</p:column>
-						<p:column>
-							<p:outputLabel value="ISSN:" for="issn" />
-						</p:column>
-						<p:column>
-							<p:inputText id="issn" value="#{periodicoBean.periodico.issn}" />
-						</p:column>
-					</p:row>
-				</p:panelGrid>
-			</p:fieldset>
-
-			<!-- ....................................BOTÕES......................................................... -->
-			<p:toolbar style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
-				<f:facet name="right">
-
-					<p:commandButton value="#{periodicoBean.stringBotaoGravar}"
-						action="#{periodicoBean.gravar}" process="@form"
-						update="@form :tabela" />
-
-					<p:separator />
-
-					<p:commandButton value="Limpar Formulário" update="@form"
-						action="#{periodicoBean.recarregarPagina}" immediate="true" />
-
-				</f:facet>
-			</p:toolbar>
-
-		</h:form>
 
 		<!-- ....................................TABELA......................................................... -->
 
 		<p:dataTable id="tabela"
 			value="#{periodicoBean.periodicoLazyDataModel}" var="periodico"
-			paginator="true" lazy="true" rows="10"
+			paginator="true" lazy="true" rows="10" paginatorPosition="top"
+			paginatorAlwaysVisible="false"
 			emptyMessage="Nenhum Periódico cadastrado">
 
 			<f:facet name="header"> Periódico Cadastrados </f:facet>
@@ -137,6 +62,88 @@
 				</h:form>
 			</p:column>
 		</p:dataTable>
+
+
+
+
+		<h:form id="form">
+
+			<div style="height: 15px;">
+				<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
+				<p:ajaxStatus id="ajaxStatusPanel" styleClass="ajaxStatusPanel">
+					<f:facet name="start">
+						<h:graphicImage value="/images/ajaxloading.gif" />
+							Carregando...
+						</f:facet>
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+				<!-- ......................................................................................... -->
+			</div>
+			<p:messages id="messages" autoUpdate="true" />
+
+			<!--  Formulário de cadastro de itemAcervo -->
+
+			<p:fieldset>
+				<legend>Cadastro de Periódico</legend>
+			</p:fieldset>
+			<!-- ....................................DADOS DE ITEM ACERVO......................................... -->
+			<ui:include src="/WEB-INF/includes/dadosItemAcervo.xhtml">
+				<ui:param name="itemAcervoBean" value="#{periodicoBean}" />
+			</ui:include>
+
+			<!-- ....................................DADOS DO PERIODICO................................................ -->
+
+			<p:fieldset>
+				<p:panelGrid style="width:99%">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Periodicidade:" for="periodicidade" />
+						</p:column>
+						<p:column colspan="3">
+							<p:selectOneMenu id="periodicidade"
+								value="#{periodicoBean.periodico.periodicidade}">
+								<f:selectItem itemLabel="Selecione a Periodicidade" itemValue="" />
+								<f:selectItems value="#{periodicoBean.listaPeriodicidade}" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="É assinado?" for="ehAssinado" />
+						</p:column>
+						<p:column>
+							<p:selectBooleanCheckbox id="ehAssinado"
+								value="#{periodicoBean.periodico.ehAssinado}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="ISSN:" for="issn" />
+						</p:column>
+						<p:column>
+							<p:inputText id="issn" value="#{periodicoBean.periodico.issn}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<!-- ....................................BOTÕES......................................................... -->
+				<p:toolbar
+					style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
+					<f:facet name="right">
+
+						<p:commandButton value="#{periodicoBean.stringBotaoGravar}"
+							action="#{periodicoBean.gravar}" process="@form"
+							update="@form :tabela" />
+
+						<p:separator />
+
+						<p:commandButton value="Cancelar" update="@form"
+							action="#{periodicoBean.recarregarPagina}" immediate="true" />
+
+					</f:facet>
+				</p:toolbar>
+			</p:fieldset>
+
+		</h:form>
+
 
 		<ui:include src="/WEB-INF/includes/dialogsAux.xhtml">
 			<ui:param name="itemAcervoBean" value="#{periodicoBean}" />

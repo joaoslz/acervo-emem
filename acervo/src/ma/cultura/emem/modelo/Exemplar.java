@@ -28,6 +28,7 @@ public class Exemplar extends BaseEntity {
 	private Integer id;
 	
 	private boolean ehDoacao;
+	
 	@Temporal(TemporalType.DATE)
 	private Calendar dataAquisicao;
 

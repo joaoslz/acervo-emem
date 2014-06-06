@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -43,20 +44,28 @@ public abstract class ItemAcervo extends BaseEntity {
 	@Id
 	@GeneratedValue
 	private Integer id;
-
+	
+	@Column(length=100, nullable=false)
 	private String titulo;
+	
+	@Column(length=100)
 	private String subtitulo;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dataCadastro;// XXX = Calendar.getInstance();
 
 	@ManyToOne
 	private Editora editora;
+	
 	@ManyToOne
 	private Local local;
+	
 	@ManyToOne
 	private Idioma idioma;
+	
 	@ManyToMany
 	private List<Assunto> assuntos = new ArrayList<Assunto>();;
+	
 	@OneToMany(mappedBy = "itemAcervo")
 	private List<Exemplar> exemplares = new ArrayList<Exemplar>();;
 
