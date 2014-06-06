@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -24,15 +25,20 @@ public class Obra extends ItemAcervo {
 
 	private short ano;
 	private String classificacao;
+
+	@Column(length=6, nullable=false)
 	private String cutter;
+	
 	private short edicao;
 	private boolean ehIlustrado;
+	
+	@Column(length=20)
 	private String isbn;
 	private short numPaginas;
 	private String serie;
 	private short volume;
 	@Transient
-	private boolean naoPaginado = true;
+	private boolean naoPaginado = false;
 	
 	@ManyToOne
 	private TipoObra tipoObra;

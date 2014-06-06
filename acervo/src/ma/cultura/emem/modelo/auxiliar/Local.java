@@ -1,5 +1,6 @@
 package ma.cultura.emem.modelo.auxiliar;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -16,7 +17,7 @@ public class Local extends BaseEntity{
 
 	@Id
 	private String nome;
-
+	
 	public String getNome() {
 		return nome;
 	}
