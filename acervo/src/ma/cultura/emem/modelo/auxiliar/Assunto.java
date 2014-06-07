@@ -16,7 +16,8 @@ import ma.cultura.emem.modelo.BaseEntity;
 
 public class Assunto extends BaseEntity{
 
-	private static final long serialVersionUID = -884776973799815651L;
+	private static final long serialVersionUID = 819805863730128933L;
+
 
 	@Id
 	@GeneratedValue

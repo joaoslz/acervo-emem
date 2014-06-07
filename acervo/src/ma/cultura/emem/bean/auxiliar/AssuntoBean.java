@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.bean.ViewScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -18,31 +20,37 @@ import org.primefaces.event.RowEditEvent;
 @ViewScoped
 public class AssuntoBean implements Serializable {
 
-	private static final long serialVersionUID = 3905906075866017417L;
+	private static final long serialVersionUID = -94580238145585848L;
 
 	@Inject
 	private Logger logger;
 	@Inject
 	private AssuntoDAO assuntoDAO;
+
 	private Assunto assunto = new Assunto();
 	private List<Assunto> assuntos = new ArrayList<Assunto>();
-	
+
 	public void editAssunto(RowEditEvent event) {
 		Assunto a = (Assunto) event.getObject();
 		assuntoDAO.atualizar(a);
 	}
 
-	public void updateListaAssuntos(){
+	public void updateListaAssuntos() {
 		assuntos = assuntoDAO.findAll();
 	}
 
 	public void gravar() {
-		logger.debug("Gravando Assunto: " + assunto.getNome());
-		assuntoDAO.adicionar(assunto);
-//		Apos o cadastro o autor eh adicionado direto no ArrayList 
-//		para evitar ter  que atualizar a lista com outra consulta no banco.
-		assuntos.add(0, this.assunto);
-		this.assunto = new Assunto();
+		try {
+			logger.debug("Gravando Assunto: " + assunto.getNome());
+			assuntoDAO.adicionar(assunto);
+			// Apos o cadastro o autor eh adicionado direto no ArrayList
+			// para evitar ter que atualizar a lista com outra consulta no banco.
+			assuntos.add(0, this.assunto);
+			this.assunto = new Assunto();
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(e.getMessage(),
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao cadastrar", e.getMessage()));
+		}
 	}
 
 	public List<Assunto> getAssuntos() {

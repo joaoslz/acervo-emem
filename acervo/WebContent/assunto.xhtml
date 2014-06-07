@@ -7,16 +7,16 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/WEB-INF/template/_template.xhtml">
-	<ui:define name="titulo">Novo Assunto
-	</ui:define>
+	
 	<ui:define name="conteudo">
 	
-		<h:form id="formAssunto">
+		<h:form id="form">
 			<p:messages />
 			<h:panelGrid columns="3">
 				<f:facet name="header"> Dados do Assunto </f:facet>
 				<p:outputLabel value="Assunto:" for="assunto" />
-				<p:inputText id="assunto" value="#{assuntoBean.assunto.nome}"/>
+				<p:inputText id="assunto" value="#{assuntoBean.assunto.nome}"
+					required="true" requiredMessage="Campo nome deve ser digitado"/>
 				<p:commandButton value="Gravar" action="#{assuntoBean.gravar}"
 						process="@form" update="@form :formTabelaAssuntos:tabelaAssuntos" />
 			</h:panelGrid>
