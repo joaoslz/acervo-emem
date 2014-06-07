@@ -23,7 +23,6 @@ public class Obra extends ItemAcervo {
 
 	private static final long serialVersionUID = 8672695121158033015L;
 
-	private short ano;
 	private String classificacao;
 
 	@Column(length=6, nullable=false)
@@ -70,14 +69,6 @@ public class Obra extends ItemAcervo {
 			}
 		}
 		return builder.toString();
-	}
-
-	public short getAno() {
-		return ano;
-	}
-
-	public void setAno(short ano) {
-		this.ano = ano;
 	}
 
 	public String getClassificacao() {

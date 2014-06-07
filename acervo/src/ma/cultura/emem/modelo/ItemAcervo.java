@@ -54,6 +54,8 @@ public abstract class ItemAcervo extends BaseEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dataCadastro;// XXX = Calendar.getInstance();
 
+	private short ano;
+	
 	@ManyToOne
 	private Editora editora;
 	
@@ -177,5 +179,13 @@ public abstract class ItemAcervo extends BaseEntity {
 
 	public void setExemplares(List<Exemplar> exemplares) {
 		this.exemplares = exemplares;
+	}
+
+	public short getAno() {
+		return ano;
+	}
+
+	public void setAno(short ano) {
+		this.ano = ano;
 	}
 }

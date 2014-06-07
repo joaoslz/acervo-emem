@@ -1,6 +1,5 @@
 package ma.cultura.emem.bean;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +14,7 @@ import ma.cultura.emem.dao.PeriodicoDAO;
 import ma.cultura.emem.dao.auxiliar.AutorDAO;
 import ma.cultura.emem.modelo.Artigo;
 import ma.cultura.emem.modelo.Fasciculo;
+import ma.cultura.emem.modelo.ItemAcervo;
 import ma.cultura.emem.modelo.Periodico;
 import ma.cultura.emem.modelo.auxiliar.Autor;
 
@@ -22,12 +22,9 @@ import org.apache.log4j.Logger;
 
 @Named
 @ViewScoped
-public class FasciculoBean implements Serializable {
+public class FasciculoBean extends AbstractItemAcervoBean {
 
 	private static final long serialVersionUID = -8216262637075293980L;
-
-	@Inject
-	private Logger logger;
 	
 	@Inject
 	private AutorDAO autorDAO;
@@ -102,9 +99,9 @@ public class FasciculoBean implements Serializable {
 		return autorDAO.findByNome(nome);
 	}
 
-	public List<Periodico> autocompletePeriodicoByNome(String titulo) {
-		return periodicoDAO.findByTitulo(titulo);
-	}
+//	public List<Periodico> autocompletePeriodicoByNome(String titulo) {
+//		return periodicoDAO.findByTitulo(titulo);
+//	}
 	
 
 	public Artigo getArtigoAdd() {
@@ -137,6 +134,12 @@ public class FasciculoBean implements Serializable {
 
 	public void setFasciculoLazyDataModel(FasciculoLazyDataModel fasciculoLazyDataModel) {
 		this.fasciculoLazyDataModel = fasciculoLazyDataModel;
+	}
+
+	@Override
+	protected ItemAcervo getNewItemAcervo() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

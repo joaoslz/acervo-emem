@@ -7,8 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -22,20 +20,16 @@ import ma.cultura.emem.modelo.auxiliar.MesEnum;
 	@NamedQuery(name = "Fasciculo.findAll", query = "from Fasciculo f order by f.id desc"),
 	@NamedQuery(name = "Fasciculo.findByPeriodico", query = "from Fasciculo f WHERE f.periodico.id = :idPeriodico order by f.ano desc, f.mes desc")
 })
-public class Fasciculo extends BaseEntity {
+public class Fasciculo extends ItemAcervo {
 
 	private static final long serialVersionUID = -1467686486369558017L;
-
-	@Id
-	@GeneratedValue
-	private Integer id;
 	
-	private String titulo;
-	private String subtitulo;
-	private short edicao;
+	private short volume;
+	
+	private short numPaginas;
+	
 	@Enumerated(EnumType.ORDINAL)
 	private MesEnum mes;
-	private short ano;
 
 	@ManyToOne
 	private Periodico periodico;
@@ -46,17 +40,6 @@ public class Fasciculo extends BaseEntity {
 	@OneToMany(mappedBy = "fasciculo", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Artigo> artigos;// XXX = new ArrayList<>();
 
-
-
-	@Override
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	
 	@Transient
 	public String getArtigosToString() {
 		StringBuilder builder = new StringBuilder();
@@ -73,44 +56,16 @@ public class Fasciculo extends BaseEntity {
 		return builder.toString();
 	}
 	
-	public String getTitulo() {
-		return titulo;
+	public short getVolume() {
+		return volume;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-	public String getSubtitulo() {
-		return subtitulo;
-	}
-
-	public void setSubtitulo(String subtituslo) {
-		this.subtitulo = subtituslo;
-	}
-
-	public short getEdicao() {
-		return edicao;
-	}
-
-	public void setEdicao(short edicao) {
-		this.edicao = edicao;
+	public void setVolume(short edicao) {
+		this.volume = edicao;
 	}
 
 	public List<Exemplar> getExemplares() {
 		return exemplares;
-	}
-
-	public void setAno(short ano) {
-		this.ano = ano;
-	}
-
-	public Short getAno() {
-		return ano;
-	}
-
-	public void setAno(Short ano) {
-		this.ano = ano;
 	}
 
 	public MesEnum getMes() {
@@ -144,5 +99,13 @@ public class Fasciculo extends BaseEntity {
 
 	public void setExemplares(List<Exemplar> exemplares) {
 		this.exemplares = exemplares;
+	}
+
+	public short getNumPaginas() {
+		return numPaginas;
+	}
+
+	public void setNumPaginas(short numPaginas) {
+		this.numPaginas = numPaginas;
 	}
 }
