@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotNull;
 
 import ma.cultura.emem.modelo.BaseEntity;
 
@@ -22,6 +23,7 @@ public class Autor extends BaseEntity {
 	@GeneratedValue
 	private Integer id;
 	
+	@NotNull
 	@Column(length=100, nullable=false)
 	private String nome;
 
