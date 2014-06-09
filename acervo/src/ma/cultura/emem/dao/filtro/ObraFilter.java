@@ -22,12 +22,6 @@ public class ObraFilter implements Serializable {
 	private Editora editora;
 	private List<TipoObra> tiposObra = new ArrayList<TipoObra>();
 	
-	@Inject
-	private ObraBean obraBean;
-	
-	public List<Editora> autocompleteEditoraByNome(String nome) {
-		return obraBean.autocompleteEditoraByNome(nome);
-	}
 
 	public String getTitulo() {
 		return this.titulo;

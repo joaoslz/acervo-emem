@@ -23,15 +23,19 @@ public class PesquisaObraBean implements Serializable {
 
 	private static final long serialVersionUID = -8379599414801598582L;
 	
-	
-	@Inject
-	private Logger logger;
-
 	@Inject
 	private ObraDAO obraDAO;
 
 	private ObraFilter filtro = new ObraFilter();
 	private List<Obra> obrasFiltradas = new ArrayList<Obra>();
+	
+	
+	@Inject
+	private ObraBean obraBean;
+	
+	public List<Editora> autocompleteEditoraByNome(String nome) {
+		return obraBean.autocompleteEditoraByNome(nome);
+	}
 	
 	public ObraFilter getFiltro() {
 		return filtro;
