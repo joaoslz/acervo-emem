@@ -22,6 +22,28 @@
 					<p:inputText id="subtitulo"
 						value="#{pesquisaObraBean.filtro.subtitulo}" />
 
+
+					<p:outputLabel value="Ano" />
+					<h:panelGroup>
+						<p:inputText size="10"
+							value="#{pesquisaObraBean.filtro.anoInicio}" /> até
+	    				<p:inputText size="10"
+							value="#{pesquisaObraBean.filtro.anoFim}" />
+					</h:panelGroup>
+
+
+					<p:column>
+						<p:outputLabel value="Editora:" for="editora" />
+					</p:column>
+					<p:column>
+						<p:autoComplete minQueryLength="2" size="45"
+							value="#{pesquisaObraBean.filtro.editora}" id="editora"
+							completeMethod="#{pesquisaObraBean.filtro.autocompleteEditoraByNome}"
+							var="e" itemLabel="#{e.nome}" itemValue="#{e}"
+							converter="#{entityConverter}" forceSelection="true">
+						</p:autoComplete>
+					</p:column>
+
 					<p:outputLabel vaslue="Tipo:" for="cbTipoObra" />
 					<p:selectManyCheckbox value="#{pesquisaObraBean.filtro.tiposObra}"
 						id="cbTipoObra" converter="#{entityConverter}">
@@ -38,15 +60,19 @@
 				id="tabelaObras" value="#{pesquisaObraBean.obrasFiltradas}"
 				var="obra" emptyMessage="Nenhuma Obra Localizada">
 
+				<p:column headerText="Tipo">
+					<h:outputText value="#{obra.tipoObra}" style="width: 100px" />
+				</p:column>
 				<p:column headerText="Título">
 					<h:outputText value="#{obra.titulo}" />
 				</p:column>
 				<p:column headerText="Editora">
 					<h:outputText value="#{obra.editora.nome}" />
 				</p:column>
-				<p:column headerText="Tipo">
-					<h:outputText value="#{obra.tipoObra}" />
+				<p:column headerText="Ano">
+					<h:outputText value="#{obra.ano}" style="width: 100px" />
 				</p:column>
+
 			</p:dataTable>
 		</h:form>
 

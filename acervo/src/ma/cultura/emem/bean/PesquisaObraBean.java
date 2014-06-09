@@ -11,8 +11,10 @@ import javax.inject.Named;
 import org.apache.log4j.Logger;
 
 import ma.cultura.emem.dao.ObraDAO;
+import ma.cultura.emem.dao.auxiliar.EditoraDAO;
 import ma.cultura.emem.dao.filtro.ObraFilter;
 import ma.cultura.emem.modelo.Obra;
+import ma.cultura.emem.modelo.auxiliar.Editora;
 import ma.cultura.emem.modelo.auxiliar.TipoObra;
 
 @Named
@@ -37,12 +39,11 @@ public class PesquisaObraBean implements Serializable {
 
 
 	public void pesquisar() {
-		
-		logger.debug("#### Tipo Obras: "+ filtro.getTiposObra());
 		obrasFiltradas = obraDAO.filtradas(filtro);	
 	}
 	
 	public List<Obra> getObrasFiltradas() {
 		return obrasFiltradas;
 	}
+	
 }

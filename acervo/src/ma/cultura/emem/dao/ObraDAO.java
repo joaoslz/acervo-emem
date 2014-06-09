@@ -36,6 +36,17 @@ public class ObraDAO extends DAO<Obra> {
 			criteria.add( Restrictions.ilike("subtitulo", filtro.getSubtitulo(), MatchMode.ANYWHERE) );
 		}
 		
+		if (filtro.getAnoInicio() != null) {
+			// id deve ser maior ou igual (ge = greater or equals) a filtro.anoInicio
+			criteria.add( Restrictions.ge("ano", filtro.getAnoInicio()) );
+		}
+
+		if (filtro.getAnoFim() != null) {
+			// id deve ser menor ou igual (le = lower or equal) a filtro.anoFim
+			criteria.add( Restrictions.le("ano", filtro.getAnoFim()) );
+		}
+		
+		
 		if ( filtro.getTiposObra() != null && !(filtro.getTiposObra().isEmpty()) ) {
 			// adicionamos uma restrição "in", passando uma lista de tipoObra
 			criteria.add( Restrictions.in("tipoObra", filtro.getTiposObra()) );
