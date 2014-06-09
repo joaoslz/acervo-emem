@@ -60,8 +60,8 @@
 				id="tabelaObras" value="#{pesquisaObraBean.obrasFiltradas}"
 				var="obra" emptyMessage="Nenhuma Obra Localizada">
 
-				<p:column headerText="Tipo">
-					<h:outputText value="#{obra.tipoObra}" style="width: 100px" />
+				<p:column headerText="Tipo" style="width: 100px">
+					<h:outputText value="#{obra.tipoObra}" />
 				</p:column>
 				<p:column headerText="Título">
 					<h:outputText value="#{obra.titulo}" />
@@ -69,8 +69,8 @@
 				<p:column headerText="Editora">
 					<h:outputText value="#{obra.editora.nome}" />
 				</p:column>
-				<p:column headerText="Ano">
-					<h:outputText value="#{obra.ano}" style="width: 100px" />
+				<p:column headerText="Ano" style="width: 100px; text-align: center" >
+					<h:outputText value="#{obra.ano}" />
 				</p:column>
 
 			</p:dataTable>

@@ -38,7 +38,7 @@ img {
   vertical-align: middle;
   height:  50px;
   background: url(../images/logo.gif) no-repeat top left;
-  background-color: #1484E6;
+  background-color: #357FB0;
 }
 
 
@@ -55,8 +55,8 @@ footer {
   height: 40px;
   padding: 25px 0 5px 0;
   text-align: center; 
-  background: #333;
-  color: #A8AA94;
+  background: #357FB0;
+  color: white;
 }
 
 footer p {  
