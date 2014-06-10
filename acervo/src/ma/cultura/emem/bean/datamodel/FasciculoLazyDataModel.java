@@ -41,6 +41,8 @@ public class FasciculoLazyDataModel extends LazyDataModel<Fasciculo> {
 	
 	@Override
 	public List<Fasciculo> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+		if(periodico == null)
+			return null;
 		setRowCount(fasciculoDAO.contarTodos());
 		return fasciculoDAO.findByPeriodicoPaginated(periodico, first, pageSize);
 	}

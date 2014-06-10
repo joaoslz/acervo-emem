@@ -18,8 +18,6 @@ import ma.cultura.emem.modelo.ItemAcervo;
 import ma.cultura.emem.modelo.Periodico;
 import ma.cultura.emem.modelo.auxiliar.Autor;
 
-import org.apache.log4j.Logger;
-
 @Named
 @ViewScoped
 public class FasciculoBean extends AbstractItemAcervoBean {
@@ -39,6 +37,8 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 	private Fasciculo fasciculo = new Fasciculo();
 	private Artigo artigoAdd = new Artigo();
 	private Autor autorAdd = new Autor();
+	
+	
 
 	public void gravar() {
 		boolean isEdicao = getFasciculo().getId() != null;
@@ -138,8 +138,7 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 
 	@Override
 	protected ItemAcervo getNewItemAcervo() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Fasciculo();
 	}
 
 }

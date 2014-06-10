@@ -164,10 +164,12 @@ public abstract class AbstractItemAcervoBean implements Serializable{
 	}
 
 	public List<Assunto> autocompleteAssuntoByNome(String nome) {
+		logger.debug("Find assuntos with : " + nome);
 		List<Assunto> assuntos = assuntoDAO.findByNome(nome);
-		//XXX talvez seja interessante fazer essa exclusão na query, passando a lista de ids.
-		if(!getItemAcervo().getAssuntos().isEmpty())
-			assuntos.removeAll(getItemAcervo().getAssuntos());
+//		if(!getItemAcervo().getAssuntos().isEmpty()){
+//			logger.debug("removendo assuntos já adicionados: " + getItemAcervo().getAssuntosToString());
+//			assuntos.removeAll(getItemAcervo().getAssuntos());
+//		}
 		return assuntos;
 	}
 

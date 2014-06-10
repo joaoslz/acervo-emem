@@ -10,10 +10,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import ma.cultura.emem.modelo.auxiliar.Editora;
+import ma.cultura.emem.modelo.auxiliar.Idioma;
+import ma.cultura.emem.modelo.auxiliar.Local;
 import ma.cultura.emem.modelo.auxiliar.PeriodicidadeEnum;
 
 @Entity
@@ -37,6 +41,15 @@ public class Periodico extends BaseEntity {
 
 	@Enumerated(EnumType.STRING)
 	private PeriodicidadeEnum periodicidade;
+
+	@ManyToOne
+	private Editora editora;
+	
+	@ManyToOne
+	private Local local;
+	
+	@ManyToOne
+	private Idioma idioma;
 	
 	@OneToMany(mappedBy = "periodico", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Fasciculo> fasciculos;
@@ -106,5 +119,29 @@ public class Periodico extends BaseEntity {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Editora getEditora() {
+		return editora;
+	}
+
+	public void setEditora(Editora editora) {
+		this.editora = editora;
+	}
+
+	public Local getLocal() {
+		return local;
+	}
+
+	public void setLocal(Local local) {
+		this.local = local;
+	}
+
+	public Idioma getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(Idioma idioma) {
+		this.idioma = idioma;
 	}
 }

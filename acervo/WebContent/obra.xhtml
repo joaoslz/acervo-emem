@@ -12,24 +12,10 @@
 		<script type="text/javascript" src="js/traducaoCalendario.js"></script>
 		<h:form id="form">
 
-			<div style="height: 15px;">
-				<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
-				<p:ajaxStatus id="ajaxStatusPanel" styleClass="ajaxStatusPanel">
-					<f:facet name="start">
-						<h:graphicImage value="/images/ajaxloading.gif" />
-							Carregando...
-						</f:facet>
-					<f:facet name="complete">
-						<h:outputText value="" />
-					</f:facet>
-				</p:ajaxStatus>
-				<!-- ......................................................................................... -->
-			</div>
+			<ui:include src="/WEB-INF/includes/ajaxStatusPanel.xhtml" />
 			<p:messages id="messages" autoUpdate="true" />
-			
-			
-			<!--  Formulário de cadastro de itemAcervo -->
 
+			<!--  Formulário de cadastro de itemAcervo -->
 			<p:fieldset>
 				<legend>Cadastro de Obra</legend>
 				<p:panelGrid>
@@ -47,15 +33,15 @@
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-			</p:fieldset>
-			<!-- ....................................DADOS DE ITEM ACERVO......................................... -->
-			<ui:include src="/WEB-INF/includes/dadosItemAcervo.xhtml">
-				<ui:param name="titulo" value="Dados da Obra" />
-				<ui:param name="itemAcervoBean" value="#{obraBean}" />
-			</ui:include>
+				<br />
+				<!-- ....................................DADOS DE ITEM ACERVO......................................... -->
+				<ui:include src="/WEB-INF/includes/dadosItemAcervo.xhtml">
+					<ui:param name="titulo" value="Dados da Obra" />
+					<ui:param name="itemAcervoBean" value="#{obraBean}" />
+				</ui:include>
 
-			<!-- ....................................DADOS DA OBRA................................................ -->
-			<p:fieldset>
+				<br />
+				<!-- ....................................DADOS DA OBRA................................................ -->
 				<p:panelGrid style="width:99%">
 					<p:row>
 						<p:column>
@@ -157,26 +143,28 @@
 						</p:column>
 					</p:row>
 				</p:panelGrid>
+
+				<!-- ....................................BOTÕES......................................................... -->
+				<p:toolbar
+					style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
+					<f:facet name="right">
+
+						<p:commandButton value="#{obraBean.stringBotaoGravar}"
+							action="#{obraBean.gravar}" process="@form"
+							update="@form :tabela" />
+
+						<p:separator />
+
+						<p:commandButton value="Cancelar" update="@form"
+							action="#{obraBean.recarregarPagina}" immediate="true" />
+
+					</f:facet>
+				</p:toolbar>
 			</p:fieldset>
-
-			<!-- ....................................BOTÕES......................................................... -->
-			<p:toolbar style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
-				<f:facet name="right">
-
-					<p:commandButton value="#{obraBean.stringBotaoGravar}"
-						action="#{obraBean.gravar}" process="@form" update="@form :tabela" />
-
-					<p:separator />
-
-					<p:commandButton value="Limpar Formulário" update="@form"
-						action="#{obraBean.recarregarPagina}" immediate="true" />
-
-				</f:facet>
-			</p:toolbar>
 
 		</h:form>
 
-			<!-- ....................................TABELA......................................................... -->
+		<!-- ....................................TABELA......................................................... -->
 		<p:dataTable id="tabela" value="#{obraBean.obraLazyDataModel}"
 			var="obra" paginator="true" lazy="true" rows="10"
 			mptyMessage="Nenhums Obra cadastrada"
@@ -247,7 +235,7 @@
 					<p:outputLabel value="Nome:" for="nome" />
 					<p:inputText id="nome" value="#{obraBean.autorAdd.nome}"
 						required="true" requiredMessage="Campo nome deve ser digitado" />
-	
+
 					<p:commandButton value="Gravar" action="#{obraBean.gravarAutor}"
 						oncomplete="PF('dlgNovoAutor').hide();" process="@form"
 						update="@form :form:autores" />

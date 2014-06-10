@@ -51,8 +51,8 @@ public class ObraBean extends AbstractItemAcervoBean {
 	public List<Autor> autocompleteAutorByNome(String nome) {
 		List<Autor> autores = autorDAO.findByNome(nome);
 		//XXX Talvez seja interessante fazer essa exclusão via query. ???
-		if(!getObra().getAutores().isEmpty())
-			autores.removeAll(getObra().getAutores());
+//		if(!getObra().getAutores().isEmpty())
+//			autores.removeAll(getObra().getAutores());
 		return autores;
 	}
 	

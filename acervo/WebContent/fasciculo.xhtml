@@ -9,26 +9,52 @@
 <ui:composition template="/WEB-INF/template/_template.xhtml">
 
 	<ui:define name="conteudo">
-	
+
 		<h:form id="form">
 
-			<div style="height: 15px;">
-				<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
-				<p:ajaxStatus id="ajaxStatusPanel" styleClass="ajaxStatusPanel">
-					<f:facet name="start">
-						<h:graphicImage value="/images/ajaxloading.gif" />
-							Carregando...
-						</f:facet>
-					<f:facet name="complete">
-						<h:outputText value="" />
-					</f:facet>
-				</p:ajaxStatus>
-				<!-- ......................................................................................... -->
-			</div>
 			<p:messages id="messages" autoUpdate="true" />
 
 			<p:fieldset>
 				<legend>Cadastro de Fascículo</legend>
+				<p:panelGrid style="width:99%">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Titulo:" for="titulo" />
+						</p:column>
+						<p:column>
+							<p:inputText id="titulo"
+								value="#{fasciculoBean.itemAcervo.titulo}" style="width:400px"
+								required="true" requiredMessage="Título obrigatório">
+								<f:ajax event="blur" render="messages" />
+							</p:inputText>
+						</p:column>
+						<p:column rowspan="2">
+							<p:outputLabel value="Assuntos:" for="assuntos" />
+						</p:column>
+						<p:column rowspan="2">
+							<p:autoComplete minQueryLength="2" id="assuntos"
+								value="#{fasciculoBean.itemAcervo.assuntos}"
+								completeMethod="#{fasciculoBean.autocompleteAssuntoByNome}"
+								var="a" itemLabel="#{a.nome}" itemValue="#{a}"
+								converter="#{entityConverter}" forceSelection="true"
+								multiple="true" />
+						</p:column>
+						<p:column rowspan="2">
+							<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
+								process="form:assuntos" title="Adicionar Assunto"
+								onclick="PF('dlgNovoAssunto').show()" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Subtitulo:" for="subtitulo" />
+						</p:column>
+						<p:column>
+							<p:inputText id="subtitulo"
+								value="#{fasciculoBean.itemAcervo.subtitulo}" style="width:400px" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
 			</p:fieldset>
 
 
@@ -94,7 +120,7 @@
 				</h:form>
 			</p:column>
 		</p:dataTable>
-		
+
 	</ui:define>
 </ui:composition>
 </html>

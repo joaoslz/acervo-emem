@@ -43,7 +43,7 @@ public class Obra extends ItemAcervo {
 	private TipoObra tipoObra;
 
 	@ManyToMany
-	private List<Autor> autores;
+	private List<Autor> autores = new ArrayList<>();
 
 	public void setNaoPaginado(boolean naoPaginado) {
 		if(naoPaginado)
