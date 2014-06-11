@@ -52,7 +52,7 @@ public class Periodico extends BaseEntity {
 	@ManyToOne
 	private Idioma idioma;
 	
-	@OneToMany(mappedBy = "periodico", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "periodico")
 	private List<Fasciculo> fasciculos;
 
 

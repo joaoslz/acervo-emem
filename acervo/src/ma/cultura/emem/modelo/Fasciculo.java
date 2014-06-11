@@ -1,10 +1,10 @@
 package ma.cultura.emem.modelo;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,8 +13,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.NotFound;
 
 import ma.cultura.emem.modelo.auxiliar.MesEnum;
 
@@ -38,10 +36,10 @@ public class Fasciculo extends ItemAcervo {
 	private Periodico periodico;
 
 	@OneToMany(mappedBy = "fasciculo")
-	private List<Exemplar> exemplares;// XXX = new ArrayList<>();
+	private List<Exemplar> exemplares = new ArrayList<>();
 
 	@OneToMany(mappedBy = "fasciculo", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Artigo> artigos;// XXX = new ArrayList<>();
+	private List<Artigo> artigos = new ArrayList<>();
 
 	@Transient
 	public String getArtigosToString() {

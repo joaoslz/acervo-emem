@@ -7,29 +7,27 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/WEB-INF/template/_template.xhtml">
-	
-	<ui:define name="conteudo">
-	
-		<h:form id="form">
-			<p:messages />
-			<h:panelGrid columns="3">
-				<f:facet name="header"> Dados do Assunto </f:facet>
-				<p:outputLabel value="Assunto:" for="assunto" />
-				<p:inputText id="assunto" value="#{assuntoBean.assunto.nome}"
-					required="true" requiredMessage="Campo nome deve ser digitado"/>
-				<p:commandButton value="Gravar" action="#{assuntoBean.gravar}"
-						process="@form" update="@form :formTabelaAssuntos:tabelaAssuntos" />
-			</h:panelGrid>
-		</h:form>
 
-		<h:form id="formTabelaAssuntos">
-			<p:fieldset>
+	<ui:define name="conteudo">
+
+		<p:fieldset legend="Cadastro de Assunto">
+			<h:form id="form">
+				<p:messages />
+				<h:panelGrid columns="3">
+					<p:outputLabel value="Assunto:" for="assunto" />
+					<p:inputText id="assunto" value="#{assuntoBean.assunto.nome}" style="width:400px"
+						required="true" requiredMessage="Campo nome deve ser digitado" />
+					<p:commandButton value="Gravar" action="#{assuntoBean.gravar}"
+						process="@form" update="@form :formTabelaAssuntos:tabelaAssuntos" />
+				</h:panelGrid>
+			</h:form>
+
+			<h:form id="formTabelaAssuntos">
 				<p:dataTable editable="true" rows="10" paginator="true"
-					paginatorPosition="bottom" id="tabelaAssuntos"
+					paginatorPosition="bottom" paginatorAlwaysVisible="false" id="tabelaAssuntos"
 					value="#{assuntoBean.assuntos}" var="assunto"
 					emptyMessage="Nenhum assunto cadastrado" style="width:60%">
-					
-					<f:facet name="header">Assuntos Cadastrados</f:facet>
+
 					<p:ajax event="rowEdit" listener="#{assuntoBean.editAssunto}" />
 					<p:column resizable="true" headerText="Assunto">
 						<p:cellEditor>
@@ -45,8 +43,8 @@
 						<p:rowEditor />
 					</p:column>
 				</p:dataTable>
-			</p:fieldset>
-		</h:form>
+			</h:form>
+		</p:fieldset>
 	</ui:define>
 </ui:composition>
 </html>

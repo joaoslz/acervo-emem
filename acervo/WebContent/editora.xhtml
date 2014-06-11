@@ -4,58 +4,57 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" >
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/WEB-INF/template/_template.xhtml">
 	<ui:define name="conteudo">
-		<h:form id="formEditora">
-			<p:messages />
-				<h:panelGrid columns="5" style="padding:3px " >
-					<f:facet name="header"> Dados da Editora </f:facet>
+		<p:fieldset legend="Cadastro de Editora">
+			<h:form id="formEditora">
+				<p:messages />
+				<h:panelGrid columns="5" style="padding:3px ">
 					<p:outputLabel value="Nome:" for="nome" />
-					<p:inputText id="nome" value="#{editoraBean.editora.nome}" 
-					 required="true" requiredMessage="Campo nome deve ser digitado"/>
-					 
+					<p:inputText id="nome" value="#{editoraBean.editora.nome}"
+						required="true" requiredMessage="Campo nome deve ser digitado" />
+
 					<p:outputLabel value="Site:" for="site" />
-					<p:inputText id="site" value="#{editoraBean.editora.site}"  />
-					 
-					<p:commandButton value="Gravar" action="#{editoraBean.gravar}" 
-								process="@form" update="@form :formTabelaEditoras:tabelaEditoras"/>
+					<p:inputText id="site" value="#{editoraBean.editora.site}" />
+
+					<p:commandButton value="Gravar" action="#{editoraBean.gravar}"
+						process="@form" update="@form :formTabelaEditoras:tabelaEditoras" />
 				</h:panelGrid>
-		</h:form>
-		<h:form id="formTabelaEditoras">
-			<p:fieldset>
-				<p:dataTable editable="true" rows="10" paginator="true" paginatorPosition="bottom"
-					id="tabelaEditoras" value="#{editoraBean.editoras}" var="editora" 
-					emptyMessage="Nenhuma editora cadastrada" style="width:60%">
-					<f:facet name="header"> Editoras Cadastradas </f:facet>
-	        		<p:ajax event="rowEdit" listener="#{editoraBean.editEditora}" />
+			</h:form>
+			<h:form id="formTabelaEditoras">
+				<p:dataTable editable="true" rows="10" paginator="true"
+					paginatorPosition="bottom" paginatorAlwaysVisible="false" id="tabelaEditoras"
+					value="#{editoraBean.editoras}" var="editora"
+					emptyMessage="Nenhuma editora cadastrada" style="width:700px">
+					<p:ajax event="rowEdit" listener="#{editoraBean.editEditora}" />
 					<p:column headerText="Nome">
-	       			  	<p:cellEditor>
-		               		<f:facet name="output">
+						<p:cellEditor>
+							<f:facet name="output">
 								<h:outputText value="#{editora.nome}" />
-		               		</f:facet>
-		               		<f:facet name="input">
-		               			<p:inputText value="#{editora.nome}" />
-		               		</f:facet>
-	               		</p:cellEditor>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{editora.nome}" />
+							</f:facet>
+						</p:cellEditor>
 					</p:column>
 					<p:column headerText="Site">
-	       			  	<p:cellEditor>
-		               		<f:facet name="output">
+						<p:cellEditor>
+							<f:facet name="output">
 								<h:outputText value="#{editora.site}" />
-		               		</f:facet>
-		               		<f:facet name="input">
-		               			<p:inputText value="#{editora.site}"/>
-		               		</f:facet>
-	               		</p:cellEditor>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{editora.site}" />
+							</f:facet>
+						</p:cellEditor>
 					</p:column>
-			        <p:column>
-			            <p:rowEditor />
-			        </p:column>
+					<p:column>
+						<p:rowEditor />
+					</p:column>
 				</p:dataTable>
-			</p:fieldset>
-		</h:form>
+			</h:form>
+		</p:fieldset>
 	</ui:define>
 </ui:composition>
 </html>
