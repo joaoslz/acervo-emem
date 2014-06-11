@@ -22,7 +22,8 @@ import ma.cultura.emem.modelo.auxiliar.PeriodicidadeEnum;
 
 @Entity
 @NamedQueries({ 
-	@NamedQuery(name = "Periodico.findAll", query = "from Periodico p order by p.id desc")
+	@NamedQuery(name = "Periodico.findAll", query = "from Periodico p order by p.id desc"),
+	@NamedQuery(name = "Periodico.findByNome", query = "from Periodico p WHERE p.nome like :nome order by p.nome asc")
 })
 public class Periodico extends BaseEntity {
 

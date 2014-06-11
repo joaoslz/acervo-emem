@@ -14,8 +14,48 @@
 
 			<p:messages id="messages" autoUpdate="true" />
 
-			<p:fieldset>
-				<legend>Cadastro de Fascículo</legend>
+			<p:fieldset legend="Cadastro de Revistas">
+
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Periódico: " for="periodico" />
+						</p:column>
+						<p:column>
+							<p:autoComplete minQueryLength="2" id="periodico"
+								value="#{fasciculoBean.periodico}"
+								completeMethod="#{fasciculoBean.autocompletePeriodicoByNome}"
+								var="p" itemLabel="#{p.nome}" itemValue="#{p}"
+								converter="#{entityConverter}" forceSelection="true"
+								multiple="false" required="true"
+								requiredMessage="Você deve selecionar o Periódico">
+								<p:ajax event="itemSelect" process="@this"
+									update=":form :tabela" />
+							</p:autoComplete>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="ISSN: " />
+						</p:column>
+						<p:column style="width:150px">
+							<h:outputText id="issn" value="#{fasciculoBean.periodico.issn}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Periodicidade: " />
+						</p:column>
+						<p:column style="width:150px">
+							<h:outputText id="periodicidade"
+								value="#{fasciculoBean.periodico.periodicidade}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="É Assinado? " />
+						</p:column>
+						<p:column style="width:150px">
+							<h:outputText id="ehAssinado" value="Sim"
+								rendered="#{fasciculoBean.periodico.ehAssinado}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<br />
 				<p:panelGrid style="width:99%">
 					<p:row>
 						<p:column>
@@ -51,76 +91,54 @@
 						</p:column>
 						<p:column>
 							<p:inputText id="subtitulo"
-								value="#{fasciculoBean.itemAcervo.subtitulo}" style="width:400px" />
+								value="#{fasciculoBean.itemAcervo.subtitulo}"
+								style="width:400px" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
+
+				<!-- ....................................BOTÕES......................................................... -->
+				<p:toolbar
+					style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
+					<f:facet name="right">
+						<p:commandButton value="#{fasciculoBean.stringBotaoGravar}"
+							action="#{fasciculoBean.gravar}" process="@form"
+							update="@form :tabela" />
+						<p:separator />
+						<p:commandButton value="Cancelar" update="@form"
+							action="#{fasciculoBean.recarregarPagina}" immediate="true" />
+					</f:facet>
+				</p:toolbar>
 			</p:fieldset>
-
-
-			<!-- ....................................BOTÕES......................................................... -->
-			<p:toolbar style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
-				<f:facet name="right">
-
-					<p:commandButton value="#{fasciculoBean.stringBotaoGravar}"
-						action="#{fasciculoBean.gravar}" process="@form"
-						update="@form :tabela" />
-
-					<p:separator />
-
-					<p:commandButton value="Limpar Formulário" update="@form"
-						action="#{fasciculoBean.recarregarPagina}" immediate="true" />
-
-				</f:facet>
-			</p:toolbar>
-
 		</h:form>
-
+		<br/>
 		<!-- ....................................TABELA......................................................... -->
+		<p:fieldset legend="Revistas Cadastradas">
+			<p:dataTable id="tabela"
+				value="#{fasciculoBean.fasciculoLazyDataModel}" var="fasciculo"
+				paginator="true" lazy="true" rows="10" paginatorPosition="bottom"
+				paginatorAlwaysVisible="false"
+				emptyMessage="Nenhum Revista cadastrado">
 
-		<p:dataTable id="tabela"
-			value="#{fasciculoBean.fasciculoLazyDataModel}" var="fasciculo"
-			paginator="true" lazy="true" rows="10"
-			emptyMessage="Nenhum Fascículo cadastrado">
+				<p:columnGroup type="header">
+					<p:row>
+						<p:column headerText="Título" />
+					</p:row>
+				</p:columnGroup>
 
-			<f:facet name="header"> Fascículos Cadastrados </f:facet>
-			<p:columnGroup type="header">
-				<p:row>
-					<p:column headerText="Título" />
-					<p:column headerText="Subtítulo" />
-					<p:column headerText="Ano" />
-					<p:column headerText="Mês" />
-					<p:column headerText="Edição" />
-					<p:column headerText="Alterar" />
-				</p:row>
-			</p:columnGroup>
+				<p:column>
+					<h:outputText value="#{fasciculo.titulo}" />
+				</p:column>
+			</p:dataTable>
+		</p:fieldset>
+		<ui:include src="/WEB-INF/includes/dialogAssunto.xhtml">
+			<ui:param name="itemAcervoBean" value="#{fasciculoBean}" />
+			<ui:param name="camposToUpdate" value=":form:assuntos" />
+		</ui:include>
 
-			<p:column>
-				<h:outputText value="#{fasciculo.titulo}" />
-			</p:column>
-			<p:column>
-				<h:outputText value="#{fasciculo.subtitulo}" />
-			</p:column>
-			<p:column>
-				<h:outputText value="#{fasciculo.ano}" />
-			</p:column>
-			<p:column>
-				<h:outputText value="#{fasciculo.mes}" />
-			</p:column>
-			<p:column>
-				<h:outputText value="#{fasciculo.edicao}" />
-			</p:column>
-			<p:column>
-				<h:form>
-					<p:commandButton icon="ui-icon-pencil" title="Alterar Periódico"
-						update=":form">
-						<f:setPropertyActionListener value="#{fasciculo}"
-							target="#{fasciculoBean.fasciculo}" />
-					</p:commandButton>
-				</h:form>
-			</p:column>
-		</p:dataTable>
-
+		<ui:include src="/WEB-INF/includes/dialogExemplares.xhtml">
+			<ui:param name="itemAcervoBean" value="#{fasciculoBean}" />
+		</ui:include>
 	</ui:define>
 </ui:composition>
 </html>

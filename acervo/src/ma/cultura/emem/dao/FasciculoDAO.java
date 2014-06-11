@@ -20,6 +20,8 @@ public class FasciculoDAO extends DAO<Fasciculo> {
 		query.setParameter("idPeriodico", p.getId());
 		query.setFirstResult(firstResult);
 		query.setMaxResults(maxResultsByPage);
-		return query.getResultList();
+		List<Fasciculo> lista = query.getResultList();
+		logger.debug("FASCICULOS SIZE: " + lista.size());
+		return lista;
 	}
 }

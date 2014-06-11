@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+		<!-- DIALOG ASSUNTO.......................................................................................... -->
+		<p:dialog header="Cadastro de Assunto" widgetVar="dlgNovoAssunto"
+			resizable="false" modal="true">
+			<h:form>
+				<p:messages id="messages" autoUpdate="true" />
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Assunto:" for="assunto" />
+					<p:inputText id="assunto" value="#{itemAcervoBean.assuntoAdd.nome}"
+						required="true" requiredMessage="Campo assunto deve ser digitado" />
+
+					<p:commandButton value="Gravar" action="#{itemAcervoBean.gravarAssunto}"
+						oncomplete="PF('dlgNovoAssunto').hide();" process="@form"
+						update="@form #{camposToUpdate}" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+
+</ui:composition>

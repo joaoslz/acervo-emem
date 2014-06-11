@@ -4,8 +4,11 @@
     src: local("Yanone Kaffeesatz"), url('../fonts/YanoneKaffeesatz-Regular.ttf'); 
 } 
 
+.ajaxStatusPanel{
+	display: inline;
+}
 /*elimina o header dos datatable*/
-.hide-column-names table thead tr {
+.hide-column-names table thead, .hide-column-names table thead tr {
     display: none;
 }
 
@@ -21,7 +24,7 @@ article, aside, figure, footer, header, hgroup, nav, section {
 
 body {  
   font: normal .85em arial, sans-serif;
-  background: #F9F9F9;
+  background: #000;
   color: #555;
   margin-left: auto;
   margin-right: auto;
@@ -31,6 +34,9 @@ img {
   border: 0;
 }
 
+#conteudo{
+	padding: 10px;	
+}
 #logo {
   margin:0;
   padding:0;
@@ -40,13 +46,15 @@ img {
   background: url(../images/logo.gif) no-repeat top left;
   background-color: #357FB0;
 }
-
-
-h2 {
+#logo h2 { 
 	font-size: 18px;
 	font-weight: 550px;
 	color: white;
 }
+label{
+	font-weight: bold;
+}
+
 
 footer {  
   width: 100%;
@@ -65,60 +73,39 @@ footer p {
 }
 
 footer a {  
-  color: #A8AA94;
+  color: #fff;
   text-decoration: none;
 }
-.ui-fieldset {
-  padding: 6px 4px;
-  background: #f9f9f9;
-  color: #e69700;
-  font-weight: bold;
-  text-align: left;
-  border: 1px solid #cccccc;	
-}
-.ui-fieldset legend{
-	text-align: center;
-	width: 100%;
-}
-
-table tr th { 
-  padding: 6px 4px;
-  background: #f9f9f9;
-  color: #e69700;
-  font-weight: bold;
-  text-align: center;
-  border: 1px solid #cccccc;
-}
+/* .ui-fieldset { */
+/*   padding: 6px 4px; */
+/* /*   background: #f9f9f9; */ */
+/*   color: #e69700; */
+/*   text-align: left; */
+/*   border: 1px solid #cccccc;	 */
+/* } */
+/* .ui-fieldset legend{ */
+/* 	text-align: center;C */
+/* 	width: 100%; */
+/* } */
 /*Coloca a fonte do header dos panelGrids.*/
-table tr th { 
-  padding: 6px 4px;
-  background: #f9f9f9;
-  color: #e69700;
-  font-weight: bold;
-  text-align: center;
-  border: 1px solid #cccccc;
-}
-.hide-column-names table thead{
-    display: none;
-}
-
+/* table tr th {  */
+/*   padding: 6px 4px; */
+/*   background: #f9f9f9; */
+/*   color: #e69700; */
+/*   font-weight: bold; */
+/*   text-align: center; */
+/*   border: 1px solid #cccccc; */
+/* } */
 /*Coloca a cor acinzentada dos formul�rios e das tabelas.*/
-table tr td { 
-  background: #E5E5DB;
-  color: #47433F;
-  border: 1px solid #cccccc;
-}
-table tfoot tr td { 
-  background: transparent;
-  border: 0px solid #cccccc;
-}
-fieldset{
-	margin-bottom:7px;
-}
-
-#conteudo{
-	padding: 10px;	
-}
-.ajaxStatusPanel{
-	display: inline;
-}
+/* table tr td { C */
+/*   background: #E5E5DB; */
+/*   color: #47433F; */
+/*   border: 1px solid #cccccc; */
+/* } */
+/* table tfoot tr td {  */
+/*   background: transparent; */
+/*   border: 0px solid #cccccc; */
+/* } */
+/* fieldset{ */
+/* 	margin-bottom:7px; */
+/* } */

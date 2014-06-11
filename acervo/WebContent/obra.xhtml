@@ -16,8 +16,7 @@
 			<p:messages id="messages" autoUpdate="true" />
 
 			<!--  Formulário de cadastro de itemAcervo -->
-			<p:fieldset>
-				<legend>Cadastro de Obra</legend>
+			<p:fieldset legend="Cadastro de Obra">
 				<p:panelGrid>
 					<p:row>
 						<p:column>
@@ -167,10 +166,11 @@
 		<!-- ....................................TABELA......................................................... -->
 		<p:dataTable id="tabela" value="#{obraBean.obraLazyDataModel}"
 			var="obra" paginator="true" lazy="true" rows="10"
-			mptyMessage="Nenhums Obra cadastrada"
-			rowsPerPageTemplate="5 10 15 20 30 40" paginatorAlwaysVisible="false">
+			mptyMessage="Nenhums Obra cadastrada" 
+			rowsPerPageTemplate="5 10 15 20 30 40" 
+			paginatorPosition="bottom" paginatorAlwaysVisible="false">
 
-			<f:facet name="header"> Obras Cadastradss </f:facet>
+			<f:facet name="header"> Obras Cadastradas </f:facet>
 			<p:columnGroup type="header">
 				<p:row>
 					<p:column headerText="Título" />
