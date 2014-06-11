@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -38,7 +37,7 @@ public class Fasciculo extends ItemAcervo {
 	@OneToMany(mappedBy = "fasciculo")
 	private List<Exemplar> exemplares = new ArrayList<>();
 
-	@OneToMany(mappedBy = "fasciculo", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "fasciculo")
 	private List<Artigo> artigos = new ArrayList<>();
 
 	@Transient

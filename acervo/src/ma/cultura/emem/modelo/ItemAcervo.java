@@ -1,7 +1,6 @@
 package ma.cultura.emem.modelo;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,8 +16,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import ma.cultura.emem.modelo.auxiliar.Assunto;
@@ -51,8 +48,8 @@ public abstract class ItemAcervo extends BaseEntity {
 	@Column(length=100)
 	private String subtitulo;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar dataCadastro;// XXX = Calendar.getInstance();
+//	@Temporal(TemporalType.TIMESTAMP)
+//	private Calendar dataCadastro;// XXX = Calendar.getInstance();
 
 	private short ano;
 	
@@ -115,14 +112,6 @@ public abstract class ItemAcervo extends BaseEntity {
 	@Override
 	public String toString() {
 		return titulo;
-	}
-
-	public Calendar getDataCadastro() {
-		return dataCadastro;
-	}
-
-	public void setDataCadastro(Calendar dataCadastro) {
-		this.dataCadastro = dataCadastro;
 	}
 
 	public String getSubtitulo() {

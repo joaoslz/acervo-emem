@@ -11,7 +11,7 @@
 	<ui:define name="conteudo">
 
 		<h:form id="form">
-
+			<ui:include src="/WEB-INF/includes/ajaxStatusPanel.xhtml"/>
 			<p:messages id="messages" autoUpdate="true" />
 
 			<p:fieldset legend="Cadastro de Revistas">
@@ -96,6 +96,38 @@
 						</p:column>
 					</p:row>
 				</p:panelGrid>
+				<br/>
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Volume:" for="volume" />
+						</p:column>
+						<p:column>
+							<p:inputText id="volume" value="#{fasciculoBean.fasciculo.volume}" size="2"/>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Ano:" for="ano" />
+						</p:column>
+						<p:column>
+							<p:inputText id="ano" value="#{fasciculoBean.fasciculo.ano}" size="2"/>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Mês:" for="mes" />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="mes" value="#{fasciculoBean.fasciculo.mes}">
+			          			<f:selectItem itemLabel="Meses do Ano" itemValue="" />  
+					            <f:selectItems value="#{fasciculoBean.listaMeses}" var="m" itemLabel="#{m}" itemValue="#{m}"/>  
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Número de Páginas:" for="numPaginas" />
+						</p:column>
+						<p:column>
+							<p:inputText id="numPaginas" value="#{fasciculoBean.fasciculo.numPaginas}" size="2" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
 
 				<!-- ....................................BOTÕES......................................................... -->
 				<p:toolbar
@@ -119,23 +151,44 @@
 				paginator="true" lazy="true" rows="10" paginatorPosition="bottom"
 				paginatorAlwaysVisible="false"
 				emptyMessage="Nenhum Revista cadastrado">
-
-				<p:columnGroup type="header">
-					<p:row>
-						<p:column headerText="Título" />
-					</p:row>
-				</p:columnGroup>
-
-				<p:column>
+				<p:column headerText="ISSN">
+					<h:outputText value="#{fasciculo.periodico.issn}" />
+				</p:column>
+				<p:column headerText="Título">
 					<h:outputText value="#{fasciculo.titulo}" />
+				</p:column>
+				<p:column headerText="Volume">
+					<h:outputText value="#{fasciculo.volume}" />
+				</p:column>
+				<p:column headerText="Mês">
+					<h:outputText value="#{fasciculo.mes}" />
+				</p:column>
+				<p:column headerText="Assuntos">
+					<h:outputText value="#{fasciculo.assuntosToString}" />
+				</p:column>
+				
+				<p:column>
+					<h:form>
+						<p:commandButton icon="ui-icon-pencil" title="Alterar Revista"
+							update=":form">
+							<f:setPropertyActionListener value="#{fasciculo}" target="#{fasciculoBean.itemAcervo}" />
+						</p:commandButton>
+						<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
+							oncomplete="PF('dlgExemplares').show()"
+							action="#{fasciculoBean.updateListaExemplares}"
+							update="@form :formExemplares :formExemplares">
+							<f:setPropertyActionListener value="#{fasciculo}"
+								target="#{fasciculoBean.itemAcervo}" />
+						</p:commandButton>
+					</h:form>
 				</p:column>
 			</p:dataTable>
 		</p:fieldset>
+		
 		<ui:include src="/WEB-INF/includes/dialogAssunto.xhtml">
 			<ui:param name="itemAcervoBean" value="#{fasciculoBean}" />
 			<ui:param name="camposToUpdate" value=":form:assuntos" />
 		</ui:include>
-
 		<ui:include src="/WEB-INF/includes/dialogExemplares.xhtml">
 			<ui:param name="itemAcervoBean" value="#{fasciculoBean}" />
 		</ui:include>

@@ -17,6 +17,7 @@ import ma.cultura.emem.modelo.Fasciculo;
 import ma.cultura.emem.modelo.ItemAcervo;
 import ma.cultura.emem.modelo.Periodico;
 import ma.cultura.emem.modelo.auxiliar.Autor;
+import ma.cultura.emem.modelo.auxiliar.MesEnum;
 
 @Named
 @ViewScoped
@@ -102,6 +103,9 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 		return periodicoDAO.findByNome(nome);
 	}
 	
+	public MesEnum[] getListaMeses(){
+		return MesEnum.values();
+	}
 
 	public Artigo getArtigoAdd() {
 		return artigoAdd;
