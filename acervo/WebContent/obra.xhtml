@@ -227,21 +227,6 @@
 				</p:column>
 			</p:dataTable>
 		</p:fieldset>
-		<!-- DIALOG AUTOR.......................................................................................... -->
-		<p:dialog header="Cadastro de Autor" widgetVar="dlgNovoAutor"
-			resizable="false" modal="true">
-			<h:form>
-				<h:panelGrid columns="2">
-					<p:outputLabel value="Nome:" for="nome" />
-					<p:inputText id="nome" value="#{obraBean.autorAdd.nome}"
-						required="true" requiredMessage="Campo nome deve ser digitado" />
-
-					<p:commandButton value="Gravar" action="#{obraBean.gravarAutor}"
-						oncomplete="PF('dlgNovoAutor').hide();" process="@form"
-						update="@form :form:autores" />
-				</h:panelGrid>
-			</h:form>
-		</p:dialog>
 
 		<ui:include src="/WEB-INF/includes/dialogExemplares.xhtml">
 			<ui:param name="itemAcervoBean" value="#{obraBean}" />

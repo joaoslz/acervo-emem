@@ -11,7 +11,7 @@
 	<ui:define name="conteudo">
 
 		<h:form id="form">
-			<ui:include src="/WEB-INF/includes/ajaxStatusPanel.xhtml"/>
+			<ui:include src="/WEB-INF/includes/ajaxStatusPanel.xhtml" />
 			<p:messages id="messages" autoUpdate="true" />
 
 			<p:fieldset legend="Cadastro de Revistas">
@@ -96,35 +96,119 @@
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-				<br/>
+				<br />
 				<p:panelGrid>
 					<p:row>
 						<p:column>
 							<p:outputLabel value="Volume:" for="volume" />
 						</p:column>
 						<p:column>
-							<p:inputText id="volume" value="#{fasciculoBean.fasciculo.volume}" size="2"/>
+							<p:inputText id="volume"
+								value="#{fasciculoBean.fasciculo.volume}" size="2" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Ano:" for="ano" />
 						</p:column>
 						<p:column>
-							<p:inputText id="ano" value="#{fasciculoBean.fasciculo.ano}" size="2"/>
+							<p:inputText id="ano" value="#{fasciculoBean.fasciculo.ano}"
+								size="2" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Mês:" for="mes" />
 						</p:column>
 						<p:column>
 							<p:selectOneMenu id="mes" value="#{fasciculoBean.fasciculo.mes}">
-			          			<f:selectItem itemLabel="Meses do Ano" itemValue="" />  
-					            <f:selectItems value="#{fasciculoBean.listaMeses}" var="m" itemLabel="#{m}" itemValue="#{m}"/>  
+								<f:selectItem itemLabel="Meses do Ano" itemValue="" />
+								<f:selectItems value="#{fasciculoBean.listaMeses}" var="m"
+									itemLabel="#{m}" itemValue="#{m}" />
 							</p:selectOneMenu>
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Número de Páginas:" for="numPaginas" />
 						</p:column>
 						<p:column>
-							<p:inputText id="numPaginas" value="#{fasciculoBean.fasciculo.numPaginas}" size="2" />
+							<p:inputText id="numPaginas"
+								value="#{fasciculoBean.fasciculo.numPaginas}" size="2" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<br />
+				<p:panelGrid>
+
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Título:" for="tituloArtigo" />
+						</p:column>
+						<p:column>
+							<p:inputText id="tituloArtigo"
+								value="#{fasciculoBean.artigoAdd.titulo}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Página Inicial:" for="paginaInicial" />
+						</p:column>
+						<p:column>
+							<p:inputText id="paginaInicial" size="2"
+								value="#{fasciculoBean.artigoAdd.paginaInicial}" />
+						</p:column>
+						<p:column rowspan="2">
+							<p:outputLabel value="Autores:" for="autores" />
+						</p:column>
+						<p:column rowspan="2">
+							<p:autoComplete minQueryLength="2" id="autores"
+								value="#{fasciculoBean.artigoAdd.autores}"
+								completeMethod="#{fasciculoBean.autocompleteAutorByNome}" var="a"
+								itemLabel="#{a.nome}" itemValue="#{a}"
+								converter="#{entityConverter}" forceSelection="true"
+								multiple="true" />
+						</p:column>
+						<p:column rowspan="2">
+							<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
+								process="form:autores" title="Adicionar Autor"
+								onclick="PF('dlgNovoAutor').show()" />
+						</p:column>
+						<p:column rowspan="2">
+							<p:commandButton value="Incluir Artigo" action="incluirArtigo" update="@form :form:tabelaArtigos"/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Assunto:" for="assuntoArtigo" />
+						</p:column>
+						<p:column>
+							<p:inputText id="assuntoArtigo"
+								value="#{fasciculoBean.artigoAdd.assunto}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Página Final" for="paginaFinal" />
+						</p:column>
+						<p:column>
+							<p:inputText id="paginaFinal" size="2"
+								value="#{fasciculoBean.artigoAdd.paginaFinal}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="10">
+							<p:dataTable value="#{fasciculoBean.fasciculo.artigos}"
+								var="artigo" id="tabelaArtigos">
+								<p:column headerText="Título">
+									<h:outputText value="#{artigo.titulo}" />
+								</p:column>
+								<p:column headerText="Assunto">
+									<h:outputText value="#{artigo.assunto}" />
+								</p:column>
+								<p:column headerText="Pag. Inicial">
+									<h:outputText value="#{artigo.paginaInicial}" />
+								</p:column>
+								<p:column headerText="Pág. Final">
+									<h:outputText value="#{artigo.paginaFinal}" />
+								</p:column>
+								<p:column headerText="Autores">
+									<h:outputText value="#{artigo.autoresToString}" />
+								</p:column>
+								<p:column headerText="">
+									<h:outputText value="#{artigo.paginaFinal}" />
+								</p:column>
+							</p:dataTable>
 						</p:column>
 					</p:row>
 				</p:panelGrid>
@@ -143,7 +227,7 @@
 				</p:toolbar>
 			</p:fieldset>
 		</h:form>
-		<br/>
+		<br />
 		<!-- ....................................TABELA......................................................... -->
 		<p:fieldset legend="Revistas Cadastradas">
 			<p:dataTable id="tabela"
@@ -166,12 +250,13 @@
 				<p:column headerText="Assuntos">
 					<h:outputText value="#{fasciculo.assuntosToString}" />
 				</p:column>
-				
+
 				<p:column>
 					<h:form>
 						<p:commandButton icon="ui-icon-pencil" title="Alterar Revista"
 							update=":form">
-							<f:setPropertyActionListener value="#{fasciculo}" target="#{fasciculoBean.itemAcervo}" />
+							<f:setPropertyActionListener value="#{fasciculo}"
+								target="#{fasciculoBean.itemAcervo}" />
 						</p:commandButton>
 						<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
 							oncomplete="PF('dlgExemplares').show()"
@@ -184,7 +269,7 @@
 				</p:column>
 			</p:dataTable>
 		</p:fieldset>
-		
+
 		<ui:include src="/WEB-INF/includes/dialogAssunto.xhtml">
 			<ui:param name="itemAcervoBean" value="#{fasciculoBean}" />
 			<ui:param name="camposToUpdate" value=":form:assuntos" />
@@ -192,6 +277,17 @@
 		<ui:include src="/WEB-INF/includes/dialogExemplares.xhtml">
 			<ui:param name="itemAcervoBean" value="#{fasciculoBean}" />
 		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogAutor.xhtml">
+			<ui:param name="bean" value="#{fasciculoBean}" />
+			<ui:param name="camposToUpdate" value=":form:autores" />
+		</ui:include>
+
+		<p:dialog widgetVar="dlgAddArtigo">
+			<h:form>
+				<p:panelGrid>
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

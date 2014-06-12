@@ -1,15 +1,12 @@
 package ma.cultura.emem.bean;
 
 import java.util.List;
-import java.util.Map;
 
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import ma.cultura.emem.bean.datamodel.FasciculoLazyDataModel;
-import ma.cultura.emem.dao.FasciculoDAO;
 import ma.cultura.emem.dao.PeriodicoDAO;
 import ma.cultura.emem.dao.auxiliar.AutorDAO;
 import ma.cultura.emem.modelo.Artigo;
@@ -27,8 +24,6 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 	
 	@Inject
 	private AutorDAO autorDAO;
-	@Inject
-	private FasciculoDAO fasciculoDAO;
 	@Inject
 	private PeriodicoDAO periodicoDAO;
 	@Inject
@@ -65,14 +60,14 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 		return "fasciculo?faces-redirect=true";
 	}
 
-//	public void limparFormArtigo(){
-//		artigoAdd = new Artigo();
-//	}
+	public void limparFormArtigo(){
+		artigoAdd = new Artigo();
+	}
 //
-//	public void adicionarArtigo() {
-//		fasciculo.addArtigo(artigoAdd);
-//		artigoAdd = new Artigo();
-//	}
+	public void incluirArtigo() {
+		getFasciculo().addArtigo(artigoAdd);
+		limparFormArtigo();
+	}
 //
 //	public void removerArtigo() {
 //		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
@@ -85,19 +80,15 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 //		}
 //	}
 //	
-//	public void gravarAutor() {
-//		autorDAO.adicionar(autorAdd);
-//		getArtigoAdd().addAutor(autorAdd);
-//		autorAdd = new Autor();
-//	}
-//	
-//	public List<Autor> autocompleteAutorByNome(String nome) {
-//		List<Autor> autores = autorDAO.findByNome(nome);
-//		//XXX Talvez seja interessante fazer essa exclusão via query. ???
-//		if(!getArtigoAdd().getAutores().isEmpty())
-//			autores.removeAll(getArtigoAdd().getAutores());		
-//		return autorDAO.findByNome(nome);
-//	}
+	public void gravarAutor() {
+		autorDAO.adicionar(autorAdd);
+		getArtigoAdd().addAutor(autorAdd);
+		autorAdd = new Autor();
+	}
+	
+	public List<Autor> autocompleteAutorByNome(String nome) {
+		return autorDAO.findByNome(nome);
+	}
 
 	public List<Periodico> autocompletePeriodicoByNome(String nome) {
 		return periodicoDAO.findByNome(nome);
@@ -136,5 +127,13 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 
 	public void setFasciculoLazyDataModel(FasciculoLazyDataModel fasciculoLazyDataModel) {
 		this.fasciculoLazyDataModel = fasciculoLazyDataModel;
+	}
+
+	public Autor getAutorAdd() {
+		return autorAdd;
+	}
+
+	public void setAutorAdd(Autor autorAdd) {
+		this.autorAdd = autorAdd;
 	}
 }
