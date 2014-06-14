@@ -10,13 +10,11 @@
 
 	<ui:define name="conteudo">
 
-		<ui:include src="/WEB-INF/includes/ajaxStatusPanel.xhtml" />
-		<p:messages id="messages" autoUpdate="true" />
 
-		<h:form id="form">
+		<h:form id="formTabela">
 			<p:fieldset legend="Cadastro de Revistas">
 
-				<p:layout style="min-width:400px;min-height:300px;">
+				<p:layout style="min-width:100px;min-height:400px;">
 					<p:layoutUnit position="west" resizable="true" size="200"
 						minSize="40" maxSize="300">
 						<p:panelGrid>
@@ -26,13 +24,13 @@
 								</p:column>
 							</p:row>
 							<p:row>
-								<p:column rowspan="2">
-								        <p:selectOneListbox id="periodico"
+								<p:column>
+								        <p:selectOneListbox id="periodico" required="true"
+										requiredMessage="você deve selecionar o periódico"
 										value="#{fasciculoBean.periodico}"
 										converter="#{entityConverter}" var="t" filter="true"
 										filterMatchMode="contains">
-										<p:ajax event="change" process="@this" update=":form :tabela" />
-												
+										<p:ajax event="change" process="@this" update=":formTabela:tabela " />
 								            <f:selectItems
 											value="#{fasciculoBean.listaPeriodicos}" var="p"
 											itemLabel="#{p.nome}" itemValue="#{p}">
@@ -46,166 +44,46 @@
 						</p:panelGrid>
 					</p:layoutUnit>
 
-					<p:layoutUnit position="center">
-
-						<p:panelGrid>
-							<p:row>
-								<p:column>
-									<p:outputLabel value="Titulo:" for="titulo" />
-								</p:column>
-								<p:column colspan="3">
-									<p:inputText id="titulo"
-										value="#{fasciculoBean.itemAcervo.titulo}" style="width:390px"
-										required="true" requiredMessage="Título obrigatório">
-										<f:ajax event="blur" render="messages" />
-									</p:inputText>
-								</p:column>
-							</p:row>
-							<p:row>
-								<p:column>
-									<p:outputLabel value="Subtitulo:" for="subtitulo" />
-								</p:column>
-								<p:column colspan="3">
-									<p:inputText id="subtitulo"
-										value="#{fasciculoBean.itemAcervo.subtitulo}"
-										style="width:390px" />
-								</p:column>
-							</p:row>
-							<p:row>
-								<p:column>
-									<p:outputLabel value="Assuntos:" for="assuntos" />
-								</p:column>
-								<p:column colspan="2">
-									<p:autoComplete minQueryLength="2" id="assuntos"
-										value="#{fasciculoBean.itemAcervo.assuntos}"
-										completeMethod="#{fasciculoBean.autocompleteAssuntoByNome}"
-										var="a" itemLabel="#{a.nome}" itemValue="#{a}"
-										converter="#{entityConverter}" forceSelection="true"
-										multiple="true" />
-								</p:column>
-								<p:column>
-									<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
-										process="form:assuntos" title="Adicionar Assunto"
-										onclick="PF('dlgNovoAssunto').show()" />
-								</p:column>
-							</p:row>
-							<p:row>
-								<p:column>
-									<p:outputLabel value="Volume:" for="volume" />
-								</p:column>
-								<p:column>
-									<p:inputText id="volume"
-										value="#{fasciculoBean.fasciculo.volume}" size="2" />
-								</p:column>
-								<p:column>
-									<p:outputLabel value="Ano:" for="ano" />
-								</p:column>
-								<p:column>
-									<p:inputText id="ano" value="#{fasciculoBean.fasciculo.ano}"
-										size="2" />
-								</p:column>
-							</p:row>
-							<p:row>
-								<p:column>
-									<p:outputLabel value="Mês:" for="mes" />
-								</p:column>
-								<p:column>
-									<p:selectOneMenu id="mes"
-										value="#{fasciculoBean.fasciculo.mes}">
-										<f:selectItem itemLabel="Meses do Ano" itemValue="" />
-										<f:selectItems value="#{fasciculoBean.listaMeses}" var="m"
-											itemLabel="#{m}" itemValue="#{m}" />
-									</p:selectOneMenu>
-								</p:column>
-								<p:column>
-									<p:outputLabel value="Qtd Páginas:" for="numPaginas" />
-								</p:column>
-								<p:column>
-									<p:inputText id="numPaginas"
-										value="#{fasciculoBean.fasciculo.numPaginas}" size="2" />
-								</p:column>
-							</p:row>
-						</p:panelGrid>
-						<p:panelGrid>
-							<p:row>
-								<p:column colspan="5">
-									<p:dataTable value="#{fasciculoBean.fasciculo.artigos}"
-										var="artigo" id="tabelaArtigos" style="width:650px">
-										<p:column headerText="Título">
-											<h:outputText value="#{artigo.titulo}" />
-										</p:column>
-										<p:column headerText="Paginas">
-											<h:outputText value="#{artigo.paginaInicial}" />-
-											<h:outputText value="#{artigo.paginaFinal}" />
-										</p:column>
-										<p:column headerText="Autores">
-											<h:outputText value="#{artigo.autoresToString}" />
-										</p:column>
-										<p:column headerText="">
-											<h:outputText value="#{artigo.paginaFinal}" />
-										</p:column>
-									</p:dataTable>
-								</p:column>
-							</p:row>
-						</p:panelGrid>
-						<!-- ....................................BOTÕES......................................................... -->
-						<p:toolbar
-							style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
-							<f:facet name="right">
-								<p:commandButton value="#{fasciculoBean.stringBotaoGravar}"
-									action="#{fasciculoBean.gravar}" process="@form"
-									update="@form :tabela" />
-								<p:separator />
-								<p:commandButton value="Cancelar" update="@form"
-									action="#{fasciculoBean.recarregarPagina}" immediate="true" />
+					<p:layoutUnit position="center" size="600" resizable="true">
+						<p:dataTable id="tabela"
+							value="#{fasciculoBean.fasciculoLazyDataModel}" var="fasciculo"
+							paginator="true" lazy="true" rows="10" paginatorPosition="bottom"
+							paginatorAlwaysVisible="false"
+							emptyMessage="Nenhum Revista cadastrado">
+							<f:facet name="header">
+								<p:commandButton value="Cadastrar Revista" update="@form"
+									action="#{fasciculoBean.showDialogCadastroRevista}" />
 							</f:facet>
-						</p:toolbar>
+							<p:column headerText="ISSN" width="100">
+								<h:outputText value="#{fasciculo.periodico.issn}" />
+							</p:column>
+							<p:column headerText="Título">
+								<h:outputText value="#{fasciculo.titulo}" />
+							</p:column>
+							<p:column headerText="Vol." width="20">
+								<h:outputText value="#{fasciculo.volume}" />
+							</p:column>
+							<p:column headerText="Mês" width="50">
+								<h:outputText value="#{fasciculo.mes}" />
+							</p:column>
+							<p:column headerText="Assuntos">
+								<h:outputText value="#{fasciculo.assuntosToString}" />
+							</p:column>
+
+							<p:column width="50">
+								<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
+									oncomplete="PF('dlgExemplares').show()"
+									action="#{fasciculoBean.updateListaExemplares}"
+									update="@form :formExemplares">
+									<f:setPropertyActionListener value="#{fasciculo}"
+										target="#{fasciculoBean.itemAcervo}" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
 					</p:layoutUnit>
 				</p:layout>
 			</p:fieldset>
 		</h:form>
-		<br />
-		<!-- ....................................TABELA......................................................... -->
-		<p:fieldset legend="Revistas Cadastradas">
-			<p:dataTable id="tabela"
-				value="#{fasciculoBean.fasciculoLazyDataModel}" var="fasciculo"
-				paginator="true" lazy="true" rows="10" paginatorPosition="bottom"
-				paginatorAlwaysVisible="false"
-				emptyMessage="Nenhum Revista cadastrado">
-				<p:column headerText="ISSN">
-					<h:outputText value="#{fasciculo.periodico.issn}" />
-				</p:column>
-				<p:column headerText="Título">
-					<h:outputText value="#{fasciculo.titulo}" />
-				</p:column>
-				<p:column headerText="Volume">
-					<h:outputText value="#{fasciculo.volume}" />
-				</p:column>
-				<p:column headerText="Mês">
-					<h:outputText value="#{fasciculo.mes}" />
-				</p:column>
-				<p:column headerText="Assuntos">
-					<h:outputText value="#{fasciculo.assuntosToString}" />
-				</p:column>
-
-				<p:column>
-					<h:form>
-						<p:commandButton icon="ui-icon-pencil" title="Alterar Revista"
-							update=":form">
-							<f:setPropertyActionListener value="#{fasciculo}"
-								target="#{fasciculoBean.itemAcervo}" />
-						</p:commandButton>
-						<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
-							oncomplete="PF('dlgExemplares').show()"
-							action="#{fasciculoBean.updateListaExemplares}"
-							update="@form :formExemplares :formExemplares">
-							<f:setPropertyActionListener value="#{fasciculo}"
-								target="#{fasciculoBean.itemAcervo}" />
-						</p:commandButton>
-					</h:form>
-				</p:column>
-			</p:dataTable>
-		</p:fieldset>
 
 		<ui:include src="/WEB-INF/includes/dialogAssunto.xhtml">
 			<ui:param name="itemAcervoBean" value="#{fasciculoBean}" />
@@ -239,7 +117,7 @@
 						</p:column>
 						<p:column rowspan="2">
 							<p:commandButton value="Incluir Artigo" action="incluirArtigo"
-								update="@form :form:tabelaArtigos" />
+								update="@form " />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -277,6 +155,117 @@
 						</p:column>
 					</p:row>
 				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgNovaRevista">
+			<h:form id="form">
+				<h:message for="titulo"/>
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Titulo:" for="titulo" />
+						</p:column>
+						<p:column colspan="3">
+							<p:inputText id="titulo"
+								value="#{fasciculoBean.itemAcervo.titulo}" style="width:390px"
+								required="true" requiredMessage="Título obrigatório">
+								<f:ajax event="blur" render="messages" />
+							</p:inputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Subtitulo:" for="subtitulo" />
+						</p:column>
+						<p:column colspan="3">
+							<p:inputText id="subtitulo"
+								value="#{fasciculoBean.itemAcervo.subtitulo}"
+								style="width:390px" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Assuntos:" for="assuntos" />
+						</p:column>
+						<p:column colspan="2">
+							<p:autoComplete minQueryLength="2" id="assuntos"
+								value="#{fasciculoBean.itemAcervo.assuntos}"
+								completeMethod="#{fasciculoBean.autocompleteAssuntoByNome}"
+								var="a" itemLabel="#{a.nome}" itemValue="#{a}"
+								converter="#{entityConverter}" forceSelection="true"
+								multiple="true" />
+						</p:column>
+						<p:column>
+							<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
+								process="form:assuntos" title="Adicionar Assunto"
+								onclick="PF('dlgNovoAssunto').show()" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Volume:" for="volume" />
+						</p:column>
+						<p:column>
+							<p:inputText id="volume"
+								value="#{fasciculoBean.fasciculo.volume}" size="2" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Ano:" for="ano" />
+						</p:column>
+						<p:column>
+							<p:inputText id="ano" value="#{fasciculoBean.fasciculo.ano}"
+								size="2" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Mês:" for="mes" />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="mes" value="#{fasciculoBean.fasciculo.mes}">
+								<f:selectItem itemLabel="Meses do Ano" itemValue="" />
+								<f:selectItems value="#{fasciculoBean.listaMeses}" var="m"
+									itemLabel="#{m}" itemValue="#{m}" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Qtd Páginas:" for="numPaginas" />
+						</p:column>
+						<p:column>
+							<p:inputText id="numPaginas"
+								value="#{fasciculoBean.fasciculo.numPaginas}" size="2" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="5">
+							<p:dataTable value="#{fasciculoBean.fasciculo.artigos}"
+								var="artigo" id="tabelaArtigos" style="width:650px">
+								<p:column headerText="Título">
+									<h:outputText value="#{artigo.titulo}" />
+								</p:column>
+								<p:column headerText="Paginas">
+									<h:outputText value="#{artigo.paginaInicial}" />-
+											<h:outputText value="#{artigo.paginaFinal}" />
+								</p:column>
+								<p:column headerText="Autores">
+									<h:outputText value="#{artigo.autoresToString}" />
+								</p:column>
+							</p:dataTable>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<!-- ....................................BOTÕES......................................................... -->
+				<p:toolbar
+					style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
+					<f:facet name="right">
+						<p:commandButton value="#{fasciculoBean.stringBotaoGravar}"
+							action="#{fasciculoBean.gravar}" process="@form" update="@form :formTabela:tabela" />
+						<p:separator />
+						<p:commandButton value="Cancelar" update="@form" action="#{fasciculoBean.limparForm}"
+							 oncomplete="PF('dlgNovaRevista').hide()" immediate="true" />
+					</f:facet>
+				</p:toolbar>
 			</h:form>
 		</p:dialog>
 	</ui:define>

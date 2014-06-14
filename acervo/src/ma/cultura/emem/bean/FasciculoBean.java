@@ -7,6 +7,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.context.RequestContext;
+
 import ma.cultura.emem.bean.datamodel.FasciculoLazyDataModel;
 import ma.cultura.emem.dao.PeriodicoDAO;
 import ma.cultura.emem.dao.auxiliar.AutorDAO;
@@ -50,6 +52,9 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 //			fasciculo = fasciculoDAO.adicionar(getFasciculo());
 //		}
 //	}
+	public void showDialogCadastroRevista(){
+		RequestContext.getCurrentInstance().execute("PF('dlgNovaRevista').show()");
+	}
 	
 	public String getStringBotaoGravar(){
 		if(getFasciculo().getId() == null)
@@ -92,9 +97,9 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 		return autorDAO.findByNome(nome);
 	}
 
-	public List<Periodico> autocompletePeriodicoByNome(String nome) {
-		return periodicoDAO.findByNome(nome);
-	}
+//	public List<Periodico> autocompletePeriodicoByNome(String nome) {
+//		return periodicoDAO.findByNome(nome);
+//	}
 	
 	public List<Periodico> getListaPeriodicos(){
 		if(listaPeriodicos.isEmpty())

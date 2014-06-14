@@ -35,9 +35,6 @@ public class Fasciculo extends ItemAcervo {
 	private Periodico periodico;
 
 	@OneToMany(mappedBy = "fasciculo")
-	private List<Exemplar> exemplares = new ArrayList<>();
-
-	@OneToMany(mappedBy = "fasciculo")
 	private List<Artigo> artigos = new ArrayList<>();
 
 	@Transient
@@ -62,10 +59,6 @@ public class Fasciculo extends ItemAcervo {
 
 	public void setVolume(short edicao) {
 		this.volume = edicao;
-	}
-
-	public List<Exemplar> getExemplares() {
-		return exemplares;
 	}
 
 	public MesEnum getMes() {
@@ -96,11 +89,7 @@ public class Fasciculo extends ItemAcervo {
 		artigos.add(artigo);
 		artigo.setFasciculo(this);
 	}
-
-	public void setExemplares(List<Exemplar> exemplares) {
-		this.exemplares = exemplares;
-	}
-
+	
 	public short getNumPaginas() {
 		return numPaginas;
 	}

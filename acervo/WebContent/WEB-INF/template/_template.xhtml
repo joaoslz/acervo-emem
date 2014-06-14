@@ -15,8 +15,7 @@
 </h:head>
 
 <h:body>
-	<div id="main">
-		
+	<div id="main">		
 		<div id="logo">
 		<div align="center">
 					<!-- class="logo_colour", allows you to change the colour of the text -->
@@ -25,7 +24,9 @@
 				</div>
 		
 		</div>
-		<h:form>
+		<h:form id="formMenu">
+			<p:messages id="messages" autoUpdate="true"/>
+			<ui:include src="/WEB-INF/includes/ajaxStatusPanel.xhtml" />
 			<p:menubar autoDisplay="false">
 				<p:menuitem value="Home" icon="ui-icon-home" outcome="index"/>
 				<p:submenu label="Cadastros">
@@ -41,6 +42,7 @@
 				</p:submenu>
 				<p:menuitem value="Pesquisa" icon="ui-icon-search" outcome="pesquisaObras" />
 				<p:menuitem value="Sair" icon="ui-icon-circle-close" />
+				<f:facet name="right">teste</f:facet>
 			</p:menubar>
 		</h:form>
 
