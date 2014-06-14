@@ -1,5 +1,6 @@
 package ma.cultura.emem.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -29,6 +30,7 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 	@Inject
 	private FasciculoLazyDataModel fasciculoLazyDataModel;
 
+	private List<Periodico> listaPeriodicos = new ArrayList<Periodico>();
 	private Periodico periodico = new Periodico();
 	private Artigo artigoAdd = new Artigo();
 	private Autor autorAdd = new Autor();
@@ -92,6 +94,12 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 
 	public List<Periodico> autocompletePeriodicoByNome(String nome) {
 		return periodicoDAO.findByNome(nome);
+	}
+	
+	public List<Periodico> getListaPeriodicos(){
+		if(listaPeriodicos.isEmpty())
+			listaPeriodicos = periodicoDAO.findAll();
+		return listaPeriodicos;
 	}
 	
 	public MesEnum[] getListaMeses(){

@@ -10,221 +10,158 @@
 
 	<ui:define name="conteudo">
 
-		<h:form id="form">
-			<ui:include src="/WEB-INF/includes/ajaxStatusPanel.xhtml" />
-			<p:messages id="messages" autoUpdate="true" />
+		<ui:include src="/WEB-INF/includes/ajaxStatusPanel.xhtml" />
+		<p:messages id="messages" autoUpdate="true" />
 
+		<h:form id="form">
 			<p:fieldset legend="Cadastro de Revistas">
 
-				<p:panelGrid>
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Periódico: " for="periodico" />
-						</p:column>
-						<p:column>
-							<p:autoComplete minQueryLength="2" id="periodico"
-								value="#{fasciculoBean.periodico}"
-								completeMethod="#{fasciculoBean.autocompletePeriodicoByNome}"
-								var="p" itemLabel="#{p.nome}" itemValue="#{p}"
-								converter="#{entityConverter}" forceSelection="true"
-								multiple="false" required="true"
-								requiredMessage="Você deve selecionar o Periódico">
-								<p:ajax event="itemSelect" process="@this"
-									update=":form :tabela" />
-							</p:autoComplete>
-						</p:column>
-						<p:column>
-							<p:outputLabel value="ISSN: " />
-						</p:column>
-						<p:column style="width:150px">
-							<h:outputText id="issn" value="#{fasciculoBean.periodico.issn}" />
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Periodicidade: " />
-						</p:column>
-						<p:column style="width:150px">
-							<h:outputText id="periodicidade"
-								value="#{fasciculoBean.periodico.periodicidade}" />
-						</p:column>
-						<p:column>
-							<p:outputLabel value="É Assinado? " />
-						</p:column>
-						<p:column style="width:150px">
-							<h:outputText id="ehAssinado" value="Sim"
-								rendered="#{fasciculoBean.periodico.ehAssinado}" />
-						</p:column>
-					</p:row>
-				</p:panelGrid>
-				<br />
-				<p:panelGrid style="width:99%">
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Titulo:" for="titulo" />
-						</p:column>
-						<p:column>
-							<p:inputText id="titulo"
-								value="#{fasciculoBean.itemAcervo.titulo}" style="width:400px"
-								required="true" requiredMessage="Título obrigatório">
-								<f:ajax event="blur" render="messages" />
-							</p:inputText>
-						</p:column>
-						<p:column rowspan="2">
-							<p:outputLabel value="Assuntos:" for="assuntos" />
-						</p:column>
-						<p:column rowspan="2">
-							<p:autoComplete minQueryLength="2" id="assuntos"
-								value="#{fasciculoBean.itemAcervo.assuntos}"
-								completeMethod="#{fasciculoBean.autocompleteAssuntoByNome}"
-								var="a" itemLabel="#{a.nome}" itemValue="#{a}"
-								converter="#{entityConverter}" forceSelection="true"
-								multiple="true" />
-						</p:column>
-						<p:column rowspan="2">
-							<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
-								process="form:assuntos" title="Adicionar Assunto"
-								onclick="PF('dlgNovoAssunto').show()" />
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Subtitulo:" for="subtitulo" />
-						</p:column>
-						<p:column>
-							<p:inputText id="subtitulo"
-								value="#{fasciculoBean.itemAcervo.subtitulo}"
-								style="width:400px" />
-						</p:column>
-					</p:row>
-				</p:panelGrid>
-				<br />
-				<p:panelGrid>
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Volume:" for="volume" />
-						</p:column>
-						<p:column>
-							<p:inputText id="volume"
-								value="#{fasciculoBean.fasciculo.volume}" size="2" />
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Ano:" for="ano" />
-						</p:column>
-						<p:column>
-							<p:inputText id="ano" value="#{fasciculoBean.fasciculo.ano}"
-								size="2" />
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Mês:" for="mes" />
-						</p:column>
-						<p:column>
-							<p:selectOneMenu id="mes" value="#{fasciculoBean.fasciculo.mes}">
-								<f:selectItem itemLabel="Meses do Ano" itemValue="" />
-								<f:selectItems value="#{fasciculoBean.listaMeses}" var="m"
-									itemLabel="#{m}" itemValue="#{m}" />
-							</p:selectOneMenu>
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Número de Páginas:" for="numPaginas" />
-						</p:column>
-						<p:column>
-							<p:inputText id="numPaginas"
-								value="#{fasciculoBean.fasciculo.numPaginas}" size="2" />
-						</p:column>
-					</p:row>
-				</p:panelGrid>
-				<br />
-				<p:panelGrid>
+				<p:layout style="min-width:400px;min-height:300px;">
+					<p:layoutUnit position="west" resizable="true" size="200"
+						minSize="40" maxSize="300">
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Periódico: " for="periodico" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column rowspan="2">
+								        <p:selectOneListbox id="periodico"
+										value="#{fasciculoBean.periodico}"
+										converter="#{entityConverter}" var="t" filter="true"
+										filterMatchMode="contains">
+										<p:ajax event="change" process="@this" update=":form :tabela" />
+												
+								            <f:selectItems
+											value="#{fasciculoBean.listaPeriodicos}" var="p"
+											itemLabel="#{p.nome}" itemValue="#{p}">
+										</f:selectItems>
+										<p:column>
+											#{t.nome}
+											</p:column>
+								        </p:selectOneListbox>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:layoutUnit>
 
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Título:" for="tituloArtigo" />
-						</p:column>
-						<p:column>
-							<p:inputText id="tituloArtigo"
-								value="#{fasciculoBean.artigoAdd.titulo}" />
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Página Inicial:" for="paginaInicial" />
-						</p:column>
-						<p:column>
-							<p:inputText id="paginaInicial" size="2"
-								value="#{fasciculoBean.artigoAdd.paginaInicial}" />
-						</p:column>
-						<p:column rowspan="2">
-							<p:outputLabel value="Autores:" for="autores" />
-						</p:column>
-						<p:column rowspan="2">
-							<p:autoComplete minQueryLength="2" id="autores"
-								value="#{fasciculoBean.artigoAdd.autores}"
-								completeMethod="#{fasciculoBean.autocompleteAutorByNome}" var="a"
-								itemLabel="#{a.nome}" itemValue="#{a}"
-								converter="#{entityConverter}" forceSelection="true"
-								multiple="true" />
-						</p:column>
-						<p:column rowspan="2">
-							<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
-								process="form:autores" title="Adicionar Autor"
-								onclick="PF('dlgNovoAutor').show()" />
-						</p:column>
-						<p:column rowspan="2">
-							<p:commandButton value="Incluir Artigo" action="incluirArtigo" update="@form :form:tabelaArtigos"/>
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Assunto:" for="assuntoArtigo" />
-						</p:column>
-						<p:column>
-							<p:inputText id="assuntoArtigo"
-								value="#{fasciculoBean.artigoAdd.assunto}" />
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Página Final" for="paginaFinal" />
-						</p:column>
-						<p:column>
-							<p:inputText id="paginaFinal" size="2"
-								value="#{fasciculoBean.artigoAdd.paginaFinal}" />
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column colspan="10">
-							<p:dataTable value="#{fasciculoBean.fasciculo.artigos}"
-								var="artigo" id="tabelaArtigos">
-								<p:column headerText="Título">
-									<h:outputText value="#{artigo.titulo}" />
-								</p:column>
-								<p:column headerText="Assunto">
-									<h:outputText value="#{artigo.assunto}" />
-								</p:column>
-								<p:column headerText="Pag. Inicial">
-									<h:outputText value="#{artigo.paginaInicial}" />
-								</p:column>
-								<p:column headerText="Pág. Final">
-									<h:outputText value="#{artigo.paginaFinal}" />
-								</p:column>
-								<p:column headerText="Autores">
-									<h:outputText value="#{artigo.autoresToString}" />
-								</p:column>
-								<p:column headerText="">
-									<h:outputText value="#{artigo.paginaFinal}" />
-								</p:column>
-							</p:dataTable>
-						</p:column>
-					</p:row>
-				</p:panelGrid>
+					<p:layoutUnit position="center">
 
-				<!-- ....................................BOTÕES......................................................... -->
-				<p:toolbar
-					style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
-					<f:facet name="right">
-						<p:commandButton value="#{fasciculoBean.stringBotaoGravar}"
-							action="#{fasciculoBean.gravar}" process="@form"
-							update="@form :tabela" />
-						<p:separator />
-						<p:commandButton value="Cancelar" update="@form"
-							action="#{fasciculoBean.recarregarPagina}" immediate="true" />
-					</f:facet>
-				</p:toolbar>
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Titulo:" for="titulo" />
+								</p:column>
+								<p:column colspan="3">
+									<p:inputText id="titulo"
+										value="#{fasciculoBean.itemAcervo.titulo}" style="width:390px"
+										required="true" requiredMessage="Título obrigatório">
+										<f:ajax event="blur" render="messages" />
+									</p:inputText>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Subtitulo:" for="subtitulo" />
+								</p:column>
+								<p:column colspan="3">
+									<p:inputText id="subtitulo"
+										value="#{fasciculoBean.itemAcervo.subtitulo}"
+										style="width:390px" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Assuntos:" for="assuntos" />
+								</p:column>
+								<p:column colspan="2">
+									<p:autoComplete minQueryLength="2" id="assuntos"
+										value="#{fasciculoBean.itemAcervo.assuntos}"
+										completeMethod="#{fasciculoBean.autocompleteAssuntoByNome}"
+										var="a" itemLabel="#{a.nome}" itemValue="#{a}"
+										converter="#{entityConverter}" forceSelection="true"
+										multiple="true" />
+								</p:column>
+								<p:column>
+									<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
+										process="form:assuntos" title="Adicionar Assunto"
+										onclick="PF('dlgNovoAssunto').show()" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Volume:" for="volume" />
+								</p:column>
+								<p:column>
+									<p:inputText id="volume"
+										value="#{fasciculoBean.fasciculo.volume}" size="2" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="Ano:" for="ano" />
+								</p:column>
+								<p:column>
+									<p:inputText id="ano" value="#{fasciculoBean.fasciculo.ano}"
+										size="2" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Mês:" for="mes" />
+								</p:column>
+								<p:column>
+									<p:selectOneMenu id="mes"
+										value="#{fasciculoBean.fasciculo.mes}">
+										<f:selectItem itemLabel="Meses do Ano" itemValue="" />
+										<f:selectItems value="#{fasciculoBean.listaMeses}" var="m"
+											itemLabel="#{m}" itemValue="#{m}" />
+									</p:selectOneMenu>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="Qtd Páginas:" for="numPaginas" />
+								</p:column>
+								<p:column>
+									<p:inputText id="numPaginas"
+										value="#{fasciculoBean.fasciculo.numPaginas}" size="2" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+						<p:panelGrid>
+							<p:row>
+								<p:column colspan="5">
+									<p:dataTable value="#{fasciculoBean.fasciculo.artigos}"
+										var="artigo" id="tabelaArtigos" style="width:650px">
+										<p:column headerText="Título">
+											<h:outputText value="#{artigo.titulo}" />
+										</p:column>
+										<p:column headerText="Paginas">
+											<h:outputText value="#{artigo.paginaInicial}" />-
+											<h:outputText value="#{artigo.paginaFinal}" />
+										</p:column>
+										<p:column headerText="Autores">
+											<h:outputText value="#{artigo.autoresToString}" />
+										</p:column>
+										<p:column headerText="">
+											<h:outputText value="#{artigo.paginaFinal}" />
+										</p:column>
+									</p:dataTable>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+						<!-- ....................................BOTÕES......................................................... -->
+						<p:toolbar
+							style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
+							<f:facet name="right">
+								<p:commandButton value="#{fasciculoBean.stringBotaoGravar}"
+									action="#{fasciculoBean.gravar}" process="@form"
+									update="@form :tabela" />
+								<p:separator />
+								<p:commandButton value="Cancelar" update="@form"
+									action="#{fasciculoBean.recarregarPagina}" immediate="true" />
+							</f:facet>
+						</p:toolbar>
+					</p:layoutUnit>
+				</p:layout>
 			</p:fieldset>
 		</h:form>
 		<br />
@@ -279,12 +216,66 @@
 		</ui:include>
 		<ui:include src="/WEB-INF/includes/dialogAutor.xhtml">
 			<ui:param name="bean" value="#{fasciculoBean}" />
-			<ui:param name="camposToUpdate" value=":form:autores" />
+			<ui:param name="camposToUpdate" value=":formArtigo:autores" />
 		</ui:include>
 
 		<p:dialog widgetVar="dlgAddArtigo">
-			<h:form>
+			<h:form id="formArtigo">
 				<p:panelGrid>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Título:" for="tituloArtigo" />
+						</p:column>
+						<p:column>
+							<p:inputText id="tituloArtigo"
+								value="#{fasciculoBean.artigoAdd.titulo}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Página Inicial:" for="paginaInicial" />
+						</p:column>
+						<p:column>
+							<p:inputText id="paginaInicial" size="2"
+								value="#{fasciculoBean.artigoAdd.paginaInicial}" />
+						</p:column>
+						<p:column rowspan="2">
+							<p:commandButton value="Incluir Artigo" action="incluirArtigo"
+								update="@form :form:tabelaArtigos" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Assunto:" for="assuntoArtigo" />
+						</p:column>
+						<p:column>
+							<p:inputText id="assuntoArtigo"
+								value="#{fasciculoBean.artigoAdd.assunto}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Página Final" for="paginaFinal" />
+						</p:column>
+						<p:column>
+							<p:inputText id="paginaFinal" size="2"
+								value="#{fasciculoBean.artigoAdd.paginaFinal}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column rowspan="2">
+							<p:outputLabel value="Autores:" for="autores" />
+						</p:column>
+						<p:column rowspan="2" colspan="2">
+							<p:autoComplete minQueryLength="2" id="autores"
+								value="#{fasciculoBean.artigoAdd.autores}"
+								completeMethod="#{fasciculoBean.autocompleteAutorByNome}"
+								var="a" itemLabel="#{a.nome}" itemValue="#{a}"
+								converter="#{entityConverter}" forceSelection="true"
+								multiple="true" />
+						</p:column>
+						<p:column rowspan="2">
+							<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
+								process="formArtigo:autores" title="Adicionar Autor"
+								onclick="PF('dlgNovoAutor').show()" />
+						</p:column>
+					</p:row>
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>
