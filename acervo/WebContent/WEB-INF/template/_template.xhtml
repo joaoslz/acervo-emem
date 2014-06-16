@@ -17,16 +17,14 @@
 <h:body>
 	<div id="main">		
 		<div id="logo">
-		<div align="center">
-					<!-- class="logo_colour", allows you to change the colour of the text -->
-					<h2>Secretaria de Estado da Cultura do Maranhão - SECMA</h2>
-					<h2>Escola de Música do Estado do Maranhão - Lilah Lisboa de Araújo</h2>
-				</div>
-		
+			<div align="center">
+				<!-- class="logo_colour", allows you to change the colour of the text -->
+				<h2>Secretaria de Estado da Cultura do Maranhão - SECMA</h2>
+				<h2>Escola de Música do Estado do Maranhão - Lilah Lisboa de Araújo</h2>
+			</div>
 		</div>
 		<h:form id="formMenu">
 			<p:messages id="messages" autoUpdate="true"/>
-			<ui:include src="/WEB-INF/includes/ajaxStatusPanel.xhtml" />
 			<p:menubar autoDisplay="false">
 				<p:menuitem value="Home" icon="ui-icon-home" outcome="index"/>
 				<p:submenu label="Cadastros">
@@ -42,18 +40,21 @@
 				</p:submenu>
 				<p:menuitem value="Pesquisa" icon="ui-icon-search" outcome="pesquisaObras" />
 				<p:menuitem value="Sair" icon="ui-icon-circle-close" />
-				<f:facet name="right">teste</f:facet>
+				
 			</p:menubar>
 		</h:form>
 
 		<div id="conteudo">
+			<h:form><div style="height: 20px;margin: 0;text-align: right;"><ui:include src="/WEB-INF/includes/ajaxStatusPanel.xhtml" /></div></h:form>
 			<ui:insert name="conteudo"></ui:insert>
 		</div>
 
 		<footer>
 			<p>
-				<a href="obra.xhtml">Livros/Métodos</a> | <a href="partitura.xhtml">Partituras</a>
-				| <a href="cd.xhtml">DVD-VHS</a> | <a href="relatorios.xhtml">Relatórios</a>
+				<a href="obra.xhtml">Livros/Métodos</a> 
+				| <a href="partitura.xhtml">Partituras</a>
+				| <a href="cd.xhtml">DVD-VHS</a> 
+				| <a href="relatorios.xhtml">Relatórios</a>
 				| <a href="">Fale Conosco</a>
 			</p>
 		</footer>

@@ -64,22 +64,6 @@
 							<p:inputMask id="ano" value="#{obraBean.obra.ano}" mask="9999"
 								size="2" />
 						</p:column>
-						<p:column rowspan="4">
-							<p:outputLabel value="Autores:" for="autores" />
-						</p:column>
-						<p:column rowspan="4">
-							<p:autoComplete minQueryLength="2" id="autores"
-								value="#{obraBean.obra.autores}"
-								completeMethod="#{obraBean.autocompleteAutorByNome}" var="a"
-								itemLabel="#{a.nome}" itemValue="#{a}"
-								converter="#{entityConverter}" forceSelection="true"
-								multiple="true" />
-						</p:column>
-						<p:column rowspan="4">
-							<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
-								process="form:autores" title="Adicionar Autor"
-								onclick="PF('dlgNovoAutor').show()" />
-						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
@@ -139,6 +123,25 @@
 						<p:column colspan="2">
 							<p:inputText id="classificacao"
 								value="#{obraBean.obra.classificacao}" />
+						</p:column>
+					</p:row>
+					<p:row>
+					
+						<p:column>
+							<p:outputLabel value="Autores:" for="autores" />
+						</p:column>
+						<p:column colspan="4">
+							<p:autoComplete minQueryLength="2" id="autores"
+								value="#{obraBean.obra.autores}"
+								completeMethod="#{obraBean.autocompleteAutorByNome}" var="a"
+								itemLabel="#{a.nome}" itemValue="#{a}"
+								converter="#{entityConverter}" forceSelection="true"
+								multiple="true" />
+						</p:column>
+						<p:column >
+							<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
+								process="form:autores" title="Adicionar Autor"
+								onclick="PF('dlgNovoAutor').show()" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>

@@ -47,16 +47,13 @@
 					<p:layoutUnit position="center" size="600" resizable="true">
 						<p:dataTable id="tabela"
 							value="#{fasciculoBean.fasciculoLazyDataModel}" var="fasciculo"
-							paginator="true" lazy="true" rows="10" paginatorPosition="bottom"
+							paginator="true" lazy="true" rows="5" paginatorPosition="bottom"
 							paginatorAlwaysVisible="false"
 							emptyMessage="Nenhum Revista cadastrado">
 							<f:facet name="header">
 								<p:commandButton value="Cadastrar Revista" update="@form"
 									action="#{fasciculoBean.showDialogCadastroRevista}" />
 							</f:facet>
-							<p:column headerText="ISSN" width="100">
-								<h:outputText value="#{fasciculo.periodico.issn}" />
-							</p:column>
 							<p:column headerText="Título">
 								<h:outputText value="#{fasciculo.titulo}" />
 							</p:column>
@@ -69,12 +66,19 @@
 							<p:column headerText="Assuntos">
 								<h:outputText value="#{fasciculo.assuntosToString}" />
 							</p:column>
+							<p:column headerText="Artigos">
+								<h:outputText value="#{fasciculo.artigosToString}" />
+							</p:column>
 
-							<p:column width="50">
+							<p:column width="90">
+								<p:commandButton icon="ui-icon-pencil" title="Alterar Revista"
+									update=":form" oncomplete="PF('dlgNovaRevista').show()">
+									<f:setPropertyActionListener value="#{fasciculo}" target="#{fasciculoBean.itemAcervo}" />
+								</p:commandButton>
 								<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
 									oncomplete="PF('dlgExemplares').show()"
 									action="#{fasciculoBean.updateListaExemplares}"
-									update="@form :formExemplares">
+									update=":formExemplares">
 									<f:setPropertyActionListener value="#{fasciculo}"
 										target="#{fasciculoBean.itemAcervo}" />
 								</p:commandButton>
@@ -97,7 +101,7 @@
 			<ui:param name="camposToUpdate" value=":formArtigo:autores" />
 		</ui:include>
 
-		<p:dialog widgetVar="dlgAddArtigo">
+		<p:dialog header="Artigos" widgetVar="dlgAddArtigo">
 			<h:form id="formArtigo">
 				<p:panelGrid>
 					<p:row>
@@ -106,18 +110,14 @@
 						</p:column>
 						<p:column>
 							<p:inputText id="tituloArtigo"
-								value="#{fasciculoBean.artigoAdd.titulo}" />
+								value="#{fasciculoBean.artigoAdd.titulo}" tabindex="1"/>
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Página Inicial:" for="paginaInicial" />
 						</p:column>
 						<p:column>
 							<p:inputText id="paginaInicial" size="2"
-								value="#{fasciculoBean.artigoAdd.paginaInicial}" />
-						</p:column>
-						<p:column rowspan="2">
-							<p:commandButton value="Incluir Artigo" action="incluirArtigo"
-								update="@form " />
+								value="#{fasciculoBean.artigoAdd.paginaInicial}"  tabindex="3"/>
 						</p:column>
 					</p:row>
 					<p:row>
@@ -126,39 +126,46 @@
 						</p:column>
 						<p:column>
 							<p:inputText id="assuntoArtigo"
-								value="#{fasciculoBean.artigoAdd.assunto}" />
+								value="#{fasciculoBean.artigoAdd.assunto}"  tabindex="2"/>
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Página Final" for="paginaFinal" />
 						</p:column>
 						<p:column>
 							<p:inputText id="paginaFinal" size="2"
-								value="#{fasciculoBean.artigoAdd.paginaFinal}" />
+								value="#{fasciculoBean.artigoAdd.paginaFinal}"  tabindex="4"/>
 						</p:column>
 					</p:row>
 					<p:row>
-						<p:column rowspan="2">
+						<p:column>
 							<p:outputLabel value="Autores:" for="autores" />
 						</p:column>
 						<p:column rowspan="2" colspan="2">
-							<p:autoComplete minQueryLength="2" id="autores"
+							<p:autoComplete tabindex="5" minQueryLength="2" id="autores"
 								value="#{fasciculoBean.artigoAdd.autores}"
 								completeMethod="#{fasciculoBean.autocompleteAutorByNome}"
 								var="a" itemLabel="#{a.nome}" itemValue="#{a}"
 								converter="#{entityConverter}" forceSelection="true"
 								multiple="true" />
 						</p:column>
-						<p:column rowspan="2">
+						<p:column>
 							<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
 								process="formArtigo:autores" title="Adicionar Autor"
-								onclick="PF('dlgNovoAutor').show()" />
+								onclick="PF('dlgNovoAutor').show()"  tabindex="6"/>
 						</p:column>
 					</p:row>
 				</p:panelGrid>
+				<p:toolbar
+					style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
+					<f:facet name="right">
+							<p:commandButton value="Adicionar Artigo" action="#{fasciculoBean.incluirArtigo}"
+								update="@form :form:tabelaArtigos"  tabindex="7"/>
+					</f:facet>
+				</p:toolbar>
 			</h:form>
 		</p:dialog>
 
-		<p:dialog widgetVar="dlgNovaRevista">
+		<p:dialog widgetVar="dlgNovaRevista" closable="false" header="Cadastro de Revistas">
 			<h:form id="form">
 				<h:message for="titulo"/>
 				<p:panelGrid>
@@ -168,8 +175,7 @@
 						</p:column>
 						<p:column colspan="3">
 							<p:inputText id="titulo"
-								value="#{fasciculoBean.itemAcervo.titulo}" style="width:390px"
-								required="true" requiredMessage="Título obrigatório">
+								value="#{fasciculoBean.itemAcervo.titulo}" style="width:390px" >
 								<f:ajax event="blur" render="messages" />
 							</p:inputText>
 						</p:column>
@@ -240,16 +246,25 @@
 					<p:row>
 						<p:column colspan="5">
 							<p:dataTable value="#{fasciculoBean.fasciculo.artigos}"
-								var="artigo" id="tabelaArtigos" style="width:650px">
+							    emptyMessage="Nenhum artigo adicionado!"
+								var="artigo" id="tabelaArtigos" style="width:650px" rowIndexVar="index">
+								<f:facet name="header">
+									<p:commandButton value="Adicionar Artigo" onclick="PF('dlgAddArtigo').show()" immediate="true"/>
+								</f:facet>
 								<p:column headerText="Título">
 									<h:outputText value="#{artigo.titulo}" />
 								</p:column>
-								<p:column headerText="Paginas">
+								<p:column headerText="Páginas">
 									<h:outputText value="#{artigo.paginaInicial}" />-
 											<h:outputText value="#{artigo.paginaFinal}" />
 								</p:column>
 								<p:column headerText="Autores">
 									<h:outputText value="#{artigo.autoresToString}" />
+								</p:column>
+								<p:column width="25">
+									<p:commandButton icon="ui-icon-trash" title="Excluir Artigo"
+										action="#{fasciculoBean.removerArtigo(index)}"
+										update=":form:tabelaArtigos" />
 								</p:column>
 							</p:dataTable>
 						</p:column>
@@ -259,11 +274,11 @@
 				<p:toolbar
 					style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
 					<f:facet name="right">
-						<p:commandButton value="#{fasciculoBean.stringBotaoGravar}"
+						<p:commandButton value="#{fasciculoBean.stringBotaoGravar}" onsuccess="PF('dlgNovaRevista').hide()"
 							action="#{fasciculoBean.gravar}" process="@form" update="@form :formTabela:tabela" />
 						<p:separator />
 						<p:commandButton value="Cancelar" update="@form" action="#{fasciculoBean.limparForm}"
-							 oncomplete="PF('dlgNovaRevista').hide()" immediate="true" />
+							 oncomplete="PF('dlgNovaRevista').hide()" />
 					</f:facet>
 				</p:toolbar>
 			</h:form>

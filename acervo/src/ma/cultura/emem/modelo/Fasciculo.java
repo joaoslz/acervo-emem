@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -18,6 +19,7 @@ import ma.cultura.emem.modelo.auxiliar.MesEnum;
 @Entity
 @NamedQueries({ 
 	@NamedQuery(name = "Fasciculo.findAll", query = "from Fasciculo f order by f.id desc"),
+	@NamedQuery(name = "Fasciculo.contarTodosByPeriodico", query = "select count(f) from Fasciculo f WHERE f.periodico.id = :idPeriodico "),
 	@NamedQuery(name = "Fasciculo.findByPeriodico", query = "from Fasciculo f WHERE f.periodico.id = :idPeriodico order by f.ano desc, f.mes desc")
 })
 public class Fasciculo extends ItemAcervo {
@@ -34,7 +36,7 @@ public class Fasciculo extends ItemAcervo {
 	@ManyToOne
 	private Periodico periodico;
 
-	@OneToMany(mappedBy = "fasciculo")
+	@OneToMany(mappedBy = "fasciculo", orphanRemoval=true, cascade=CascadeType.ALL)
 	private List<Artigo> artigos = new ArrayList<>();
 
 	@Transient

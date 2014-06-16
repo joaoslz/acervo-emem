@@ -10,17 +10,37 @@
 				</p:column>
 				<p:column colspan="5">
 					<p:inputText id="titulo"
-						value="#{itemAcervoBean.itemAcervo.titulo}" style="width:95%"
+						value="#{itemAcervoBean.itemAcervo.titulo}" style="width:390px"
 						required="true" requiredMessage="Título obrigatório">
 						<f:ajax event="blur" render="messages" />
 					</p:inputText>
 				</p:column>
+			</p:row>
+			<p:row>
 				<p:column>
 					<p:outputLabel value="Subtitulo:" for="subtitulo" />
 				</p:column>
 				<p:column colspan="5">
 					<p:inputText id="subtitulo"
-						value="#{itemAcervoBean.itemAcervo.subtitulo}" style="width:95%" />
+						value="#{itemAcervoBean.itemAcervo.subtitulo}" style="width:390px" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:outputLabel value="Assuntos:" for="assuntos" />
+				</p:column>
+				<p:column colspan="4">
+					<p:autoComplete minQueryLength="2" id="assuntos"
+						value="#{itemAcervoBean.itemAcervo.assuntos}"
+						completeMethod="#{itemAcervoBean.autocompleteAssuntoByNome}"
+						var="a" itemLabel="#{a.nome}" itemValue="#{a}"
+						converter="#{entityConverter}" forceSelection="true"
+						multiple="true" />
+				</p:column>
+				<p:column>
+					<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
+						process="form:assuntos" title="Adicionar Assunto"
+						onclick="PF('dlgNovoAssunto').show()" />
 				</p:column>
 			</p:row>
 			<p:row>
@@ -39,22 +59,6 @@
 					<p:commandButton type="button" id="showAddEditoraButton"
 						icon="ui-icon-plus" immediate="true" title="Adicionar Editora"
 						onclick="PF('dlgNovaEditora').show();" />
-				</p:column>
-				<p:column rowspan="2">
-					<p:outputLabel value="Assuntos:" for="assuntos" />
-				</p:column>
-				<p:column rowspan="2">
-					<p:autoComplete minQueryLength="2" id="assuntos"
-						value="#{itemAcervoBean.itemAcervo.assuntos}"
-						completeMethod="#{itemAcervoBean.autocompleteAssuntoByNome}"
-						var="a" itemLabel="#{a.nome}" itemValue="#{a}"
-						converter="#{entityConverter}" forceSelection="true"
-						multiple="true" />
-				</p:column>
-				<p:column rowspan="2">
-					<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
-						process="form:assuntos" title="Adicionar Assunto"
-						onclick="PF('dlgNovoAssunto').show()" />
 				</p:column>
 			</p:row>
 			<p:row>

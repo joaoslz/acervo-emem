@@ -15,6 +15,11 @@ public class FasciculoDAO extends DAO<Fasciculo> {
 		super(Fasciculo.class);
 	}
 	
+	public int contarTodosByPeriodico(Periodico p){
+		Long count = em.createNamedQuery("Fasciculo.contarTodosByPeriodico", Long.class).setParameter("idPeriodico", p.getId()).getSingleResult();
+		return count.intValue();
+	}
+	
 	public List<Fasciculo> findByPeriodicoPaginated(Periodico p, int firstResult, int maxResultsByPage){
 		TypedQuery<Fasciculo> query = em.createNamedQuery("Fasciculo.findByPeriodico", Fasciculo.class);
 		query.setParameter("idPeriodico", p.getId());

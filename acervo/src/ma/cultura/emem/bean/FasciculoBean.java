@@ -2,12 +2,12 @@ package ma.cultura.emem.bean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import org.primefaces.context.RequestContext;
 
 import ma.cultura.emem.bean.datamodel.FasciculoLazyDataModel;
 import ma.cultura.emem.dao.PeriodicoDAO;
@@ -18,6 +18,8 @@ import ma.cultura.emem.modelo.ItemAcervo;
 import ma.cultura.emem.modelo.Periodico;
 import ma.cultura.emem.modelo.auxiliar.Autor;
 import ma.cultura.emem.modelo.auxiliar.MesEnum;
+
+import org.primefaces.context.RequestContext;
 
 @Named
 @ViewScoped
@@ -70,22 +72,23 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 	public void limparFormArtigo(){
 		artigoAdd = new Artigo();
 	}
-//
+
 	public void incluirArtigo() {
 		getFasciculo().addArtigo(artigoAdd);
 		limparFormArtigo();
+		RequestContext.getCurrentInstance().execute("PF('dlgAddArtigo').hide()");
 	}
-//
-//	public void removerArtigo() {
+
+	public void removerArtigo(int index) {
 //		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 //		int index = Integer.parseInt(params.get("index").toString());
-//		logger.debug("REMOVENDO artigo index: " + index);
-//		if (!this.fasciculo.getArtigos().isEmpty()) {
-//			Artigo a = this.fasciculo.getArtigos().remove(index);
-//			a.setFasciculo(null);
-//			logger.debug("REMOVIDO DA LISTA: " + a.getTitulo());
-//		}
-//	}
+		logger.debug("REMOVENDO artigo index: " + index);
+		if (!this.getFasciculo().getArtigos().isEmpty()) {
+			Artigo a = this.getFasciculo().getArtigos().remove(index);
+			a.setFasciculo(null);
+			logger.debug("REMOVIDO DA LISTA: " + a.getTitulo());
+		}
+	}
 //	
 	public void gravarAutor() {
 		autorDAO.adicionar(autorAdd);

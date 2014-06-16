@@ -11,13 +11,13 @@
 	<ui:define name="conteudo">
 		<script type="text/javascript" src="js/traducaoCalendario.js"></script>
 
+		<p:fieldset legend="Cadastro de Periódico">
 
-		<h:form id="form">
-			<ui:include src="/WEB-INF/includes/ajaxStatusPanel.xhtml" />
-			<p:messages id="messages" autoUpdate="true" />
+			<h:form id="form">
+				<ui:include src="/WEB-INF/includes/ajaxStatusPanel.xhtml" />
+				<p:messages id="messages" autoUpdate="true" />
 
-			<!-- ....................................DADOS DO PERIODICO................................................ -->
-			<p:fieldset legend="Cadastro de Periódico">
+				<!-- ....................................DADOS DO PERIODICO................................................ -->
 				<p:panelGrid style="width:99%">
 					<p:row>
 						<p:column>
@@ -56,21 +56,14 @@
 								action="#{periodicoBean.gravar}" process="@form"
 								update="@form :tabela" />
 						</p:column>
-						<p:column>
-							<p:commandButton value="Cancelar" update="@form"
-								action="#{periodicoBean.recarregarPagina}" immediate="true" />
-						</p:column>
 					</p:row>
 				</p:panelGrid>
-			</p:fieldset>
 
-		</h:form>
-		<br/>
-		<!-- ....................................TABELA......................................................... -->
-		<p:fieldset legend="Periódicos Cadastrados">
+			</h:form>
+			<!-- ....................................TABELA......................................................... -->
 			<p:dataTable id="tabela"
 				value="#{periodicoBean.periodicoLazyDataModel}" var="periodico"
-				paginator="true" lazy="true" rows="10"
+				paginator="true" lazy="true" rows="5"
 				rowsPerPageTemplate="5 10 15 20 30 40" paginatorPosition="bottom"
 				paginatorAlwaysVisible="false"
 				emptyMessage="Nenhum Periódico cadastrado">

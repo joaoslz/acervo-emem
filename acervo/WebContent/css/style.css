@@ -1,5 +1,6 @@
 .ajaxStatusPanel {
 	display: inline;
+	background-color: #fff;
 }
 /*elimina o header dos datatable*/
 .hide-column-names table thead,.hide-column-names table thead tr {
