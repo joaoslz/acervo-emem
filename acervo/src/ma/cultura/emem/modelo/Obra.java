@@ -28,14 +28,14 @@ public class Obra extends ItemAcervo {
 	@Column(length=6, nullable=false)
 	private String cutter;
 	
-	private short edicao;
+	private Short edicao;
 	private boolean ehIlustrado;
 	
 	@Column(length=20)
 	private String isbn;
-	private short numPaginas;
+	private Short numPaginas;
 	private String serie;
-	private short volume;
+	private Short volume;
 	@Transient
 	private boolean naoPaginado = false;
 	
@@ -52,7 +52,7 @@ public class Obra extends ItemAcervo {
 	}
 
 	public boolean getNaoPaginado() {
-		return numPaginas <= 0 && naoPaginado;
+		return numPaginas == null && naoPaginado;
 	}
 
 	@Transient
@@ -87,11 +87,11 @@ public class Obra extends ItemAcervo {
 		this.cutter = cutter;
 	}
 
-	public short getEdicao() {
+	public Short getEdicao() {
 		return edicao;
 	}
 
-	public void setEdicao(short edicao) {
+	public void setEdicao(Short edicao) {
 		this.edicao = edicao;
 	}
 
@@ -111,11 +111,11 @@ public class Obra extends ItemAcervo {
 		this.isbn = isbn;
 	}
 
-	public short getNumPaginas() {
+	public Short getNumPaginas() {
 		return numPaginas;
 	}
 
-	public void setNumPaginas(short numPaginas) {
+	public void setNumPaginas(Short numPaginas) {
 		this.numPaginas = numPaginas;
 	}
 
@@ -127,11 +127,11 @@ public class Obra extends ItemAcervo {
 		this.serie = serie;
 	}
 
-	public short getVolume() {
+	public Short getVolume() {
 		return volume;
 	}
 
-	public void setVolume(short volume) {
+	public void setVolume(Short volume) {
 		this.volume = volume;
 	}
 
