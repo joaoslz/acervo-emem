@@ -231,6 +231,11 @@
 			</p:dataTable>
 		</p:fieldset>
 
+		<ui:include src="/WEB-INF/includes/dialogAutor.xhtml">
+			<ui:param name="bean" value="#{obraBean}" />
+			<ui:param name="camposToUpdate" value=":form:autores" />
+		</ui:include>
+		
 		<ui:include src="/WEB-INF/includes/dialogExemplares.xhtml">
 			<ui:param name="itemAcervoBean" value="#{obraBean}" />
 		</ui:include>
