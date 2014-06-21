@@ -12,6 +12,8 @@ import ma.cultura.emem.dao.MidiaDAO;
 import ma.cultura.emem.dao.auxiliar.CantorDAO;
 import ma.cultura.emem.dao.auxiliar.GravadoraDAO;
 import ma.cultura.emem.modelo.CD;
+import ma.cultura.emem.modelo.auxiliar.Cantor;
+import ma.cultura.emem.modelo.auxiliar.Gravadora;
 import ma.cultura.emem.modelo.auxiliar.Midia;
 
 @Named("cdBean")
@@ -31,6 +33,21 @@ public class CDBean extends AbstractItemAcervoBean {
 	@Inject
 	private CantorDAO cantorDAO;
 
+	private Gravadora gravadoraAdd = new Gravadora();
+	private Cantor cantorAdd = new Cantor();
+	
+	public void gravarCantor(){
+		cantorDAO.adicionar(cantorAdd);
+		getCD().getCantores().add(cantorAdd);
+		cantorAdd = new Cantor();
+	}
+	
+	public void gravarGravadora(){
+		gravadoraDAO.adicionar(gravadoraAdd);
+		getCD().setGravadora(gravadoraAdd);
+		gravadoraAdd = new Gravadora();
+	}
+	
 	@Override
 	public CD getNewItemAcervo() {
 		return new CD();
@@ -59,5 +76,21 @@ public class CDBean extends AbstractItemAcervoBean {
 
 	public CDLazyDataModel getCdLazyDataModel() {
 		return cdLazyDataModel;
+	}
+
+	public Gravadora getGravadoraAdd() {
+		return gravadoraAdd;
+	}
+
+	public void setGravadoraAdd(Gravadora gravadoraAdd) {
+		this.gravadoraAdd = gravadoraAdd;
+	}
+
+	public Cantor getCantorAdd() {
+		return cantorAdd;
+	}
+
+	public void setCantorAdd(Cantor cantorAdd) {
+		this.cantorAdd = cantorAdd;
 	}
 }

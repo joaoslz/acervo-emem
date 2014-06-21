@@ -16,7 +16,7 @@
 
 					<p:commandButton value="Gravar" action="#{itemAcervoBean.gravarAssunto}"
 						oncomplete="PF('dlgNovoAssunto').hide();" process="@form"
-						update="@form #{camposToUpdate}" />
+						update="@form :form:assuntos" />
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

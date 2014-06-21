@@ -114,7 +114,10 @@
 								itemLabel="#{g.nome}" itemValue="#{g}"
 								converter="#{entityConverter}" />
 						</p:column>
-						<p:column>x
+						<p:column>
+							<p:commandButton id="showAddGravadoraButton" icon="ui-icon-plus"
+								process="form:gravadora" title="Adicionar Gravadora"
+								onclick="PF('dlgNovaGravadora').show()" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Comentario: " for="comentario" />
@@ -125,13 +128,18 @@
 						<p:column>
 							<p:outputLabel value="Cantores: " for="cantores" />
 						</p:column>
-						<p:column colspan="5">
+						<p:column>
 							<p:autoComplete minQueryLength="2" id="cantores"
 								value="#{cdBean.CD.cantores}"
 								completeMethod="#{cdBean.cantorDAO.findByNome}"
 								var="c" itemLabel="#{c.nome}" itemValue="#{c}"
 								converter="#{entityConverter}" forceSelection="true"
 								multiple="true" />
+						</p:column>
+						<p:column>
+							<p:commandButton id="showAddCantorButton" icon="ui-icon-plus"
+								process="form:cantores" title="Adicionar Cantor"
+								onclick="PF('dlgNovoCantor').show()" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
@@ -141,7 +149,7 @@
 					<f:facet name="right">
 						<p:commandButton value="#{cdBean.stringBotaoGravar}"
 							action="#{cdBean.gravar}" process="@form"
-							update="@form " />
+							update="@form :tabela" />
 						<p:separator />
 						<p:commandButton value="Cancelar" update="@form"
 							action="#{cdBean.recarregarPagina}" immediate="true" />
@@ -168,6 +176,7 @@
 						<p:column headerText="Local" style="width: 100px" />
 						<p:column headerText="Comentário" />
 						<p:column headerText="Cantores" />
+						<p:column headerText="Assuntos" />
 						<p:column headerText="Alterar" style="width: 80px" />
 					</p:row>
 				</p:columnGroup>
@@ -188,7 +197,10 @@
 					<h:outputText value="#{cd.comentario}" />
 				</p:column>
 				<p:column>
-					<h:outputText value="#{cd.cantores}" />
+					<h:outputText value="#{cd.cantoresToString}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{cd.assuntosToString}" />
 				</p:column>
 				<p:column>
 					<h:form>
@@ -212,7 +224,22 @@
 		<ui:include src="/WEB-INF/includes/dialogExemplares.xhtml">
 			<ui:param name="itemAcervoBean" value="#{cdBean}" />
 		</ui:include>
-
+		<ui:include src="/WEB-INF/includes/dialogLocal.xhtml">
+			<ui:param name="itemAcervoBean" value="#{cdBean}" />
+		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogIdioma.xhtml">
+			<ui:param name="itemAcervoBean" value="#{cdBean}" />
+		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogAssunto.xhtml">
+			<ui:param name="itemAcervoBean" value="#{cdBean}" />
+		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogGravadora.xhtml">
+			<ui:param name="bean" value="#{cdBean}" />
+		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogCantor.xhtml">
+			<ui:param name="bean" value="#{cdBean}" />
+		</ui:include>
+		
 	</ui:define>
 </ui:composition>
 </html>

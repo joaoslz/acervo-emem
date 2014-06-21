@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<!-- DIALOG Cantor.......................................................................................... -->
+		<p:dialog header="Cadastro de Cantor" widgetVar="dlgNovoCantor"
+			resizable="false" modal="true">
+			<h:form>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{bean.cantorAdd.nome}"
+						required="true" requiredMessage="Campo nome deve ser digitado" />
+
+					<p:commandButton value="Gravar" action="#{bean.gravarCantor}"
+						oncomplete="PF('dlgNovoCantor').hide();" process="@form"
+						update="@form :form:cantores" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+</ui:composition>

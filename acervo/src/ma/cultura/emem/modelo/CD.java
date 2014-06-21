@@ -1,5 +1,7 @@
 package ma.cultura.emem.modelo;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -31,10 +33,10 @@ public class CD extends ItemAcervo {
 	private Midia midia;
 	
 	@ManyToMany
-	private List<Cantor> cantores;
+	private List<Cantor> cantores = new ArrayList<Cantor>();
 	
 	@OneToMany(mappedBy = "cd")
-	private List<Musica> musicas;
+	private List<Musica> musicas = new ArrayList<>();
 	
 	public String getComentario() {
 		return comentario;
@@ -75,4 +77,19 @@ public class CD extends ItemAcervo {
 	public void setCantores(List<Cantor> cantores) {
 		this.cantores = cantores;
 	}	
+	
+	public String getCantoresToString(){
+		StringBuilder builder = new StringBuilder();
+		if (getCantores() != null) {
+			Iterator<Cantor> it = getCantores().iterator();
+			while (it.hasNext()) {
+				Cantor c = it.next();
+				builder.append(c.getNome());
+				if (it.hasNext()) {
+					builder.append(", ");
+				}
+			}
+		}
+		return builder.toString();		
+	}
 }
