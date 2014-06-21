@@ -14,142 +14,167 @@
 
 			<!--  Formulário de cadastro de itemAcervo -->
 			<p:fieldset legend="Cadastro de CDs">
-			
-				<p:panelGrid>
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Tipo de Midia:" for="midia" />
-						</p:column>
-						<p:column>
-							<p:selectOneMenu id="midia" value="#{cdBean.CD.midia}"
-								converter="#{entityConverter}">
-								<f:selectItem itemLabel="Selecione a Mídia" itemValue="#{null}" />
-								<f:selectItems value="#{cdBean.listaMidias}" var="m"
-									itemLabel="#{m.nome}" itemValue="#{m}" />
-							</p:selectOneMenu>
-						</p:column>
-					</p:row>
-				</p:panelGrid>
-				<br />
-				
-				<!-- ....................................DADOS DE ITEM ACERVO......................................... -->
-				<p:panelGrid style="width:99%">
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Titulo:" for="titulo" />
-						</p:column>
-						<p:column colspan="5">
-							<p:inputText id="titulo"
-								value="#{cdBean.itemAcervo.titulo}" style="width:390px"
-								required="true" requiredMessage="Título obrigatório">
-								<f:ajax event="blur" render="messages" />
-							</p:inputText>
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Subtitulo:" for="subtitulo" />
-						</p:column>
-						<p:column colspan="5">
-							<p:inputText id="subtitulo"
-								value="#{cdBean.itemAcervo.subtitulo}" style="width:390px" />
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Local:" for="local" />
-						</p:column>
-						<p:column>
-							<p:autoComplete minQueryLength="2"
-								value="#{cdBean.itemAcervo.local}" size="10" id="local"
-								completeMethod="#{cdBean.autocompleteLocalByNome}" var="l"
-								itemLabel="#{l.nome}" itemValue="#{l}"
-								converter="#{entityConverter}" />
-						</p:column>
-						<p:column>
-							<p:commandButton id="showAddLocalButton" icon="ui-icon-plus"
-								immediate="true" title="Adicionar Local"
-								onclick="PF('dlgNovoLocal').show()" />
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Idioma:" for="idioma" />
-						</p:column>
-						<p:column>
-							<p:selectOneMenu id="idioma"
-								value="#{cdBean.itemAcervo.idioma}"
-								converter="#{entityConverter}">
-								<f:selectItem itemLabel="Selecione o Idioma" itemValue="#{null}" />
-								<f:selectItems value="#{cdBean.listaIdiomas}" var="i"
-									itemLabel="#{i.nome}" itemValue="#{i}" />
-							</p:selectOneMenu>
-						</p:column>
-						<p:column>
-							<p:commandButton type="button" id="showAddIdiomaButton"
-								icon="ui-icon-plus" immediate="true" title="Adicionar Idioma"
-								onclick="PF('dlgNovoIdioma').show();" />
-						</p:column>
-						<p:column >
-							<p:outputLabel value="Assuntos:" for="assuntos" />
-						</p:column>
-						<p:column >
-							<p:autoComplete minQueryLength="2" id="assuntos"
-								value="#{cdBean.itemAcervo.assuntos}"
-								completeMethod="#{cdBean.autocompleteAssuntoByNome}"
-								var="a" itemLabel="#{a.nome}" itemValue="#{a}"
-								converter="#{entityConverter}" forceSelection="true"
-								multiple="true" />
-						</p:column>
-						<p:column >
-							<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
-								process="form:assuntos" title="Adicionar Assunto"
-								onclick="PF('dlgNovoAssunto').show()" />
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Gravadora:" for="gravadora" />
-						</p:column>
-						<p:column >
-							<p:autoComplete minQueryLength="2" size="10"
-								value="#{cdBean.CD.gravadora}" id="gravadora"
-								completeMethod="#{cdBean.gravadoraDAO.findByNome}" var="g"
-								itemLabel="#{g.nome}" itemValue="#{g}"
-								converter="#{entityConverter}" />
-						</p:column>
-						<p:column>
-							<p:commandButton id="showAddGravadoraButton" icon="ui-icon-plus"
-								process="form:gravadora" title="Adicionar Gravadora"
-								onclick="PF('dlgNovaGravadora').show()" />
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Comentario: " for="comentario" />
-						</p:column>
-						<p:column colspan="2">
-							<p:inputTextarea id="comentario" value="#{cdBean.CD.comentario}" style="width:250px"/>
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Cantores: " for="cantores" />
-						</p:column>
-						<p:column>
-							<p:autoComplete minQueryLength="2" id="cantores"
-								value="#{cdBean.CD.cantores}"
-								completeMethod="#{cdBean.cantorDAO.findByNome}"
-								var="c" itemLabel="#{c.nome}" itemValue="#{c}"
-								converter="#{entityConverter}" forceSelection="true"
-								multiple="true" />
-						</p:column>
-						<p:column>
-							<p:commandButton id="showAddCantorButton" icon="ui-icon-plus"
-								process="form:cantores" title="Adicionar Cantor"
-								onclick="PF('dlgNovoCantor').show()" />
-						</p:column>
-					</p:row>
-				</p:panelGrid>
+
+				<p:layout style="min-width:100px;min-height:400px;">
+					<p:layoutUnit position="center" resizable="true" size="200"
+						minSize="40" maxSize="300">
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Tipo de Midia:" for="midia" />
+								</p:column>
+								<p:column>
+									<p:selectOneMenu id="midia" value="#{cdBean.CD.midia}"
+										converter="#{entityConverter}">
+										<f:selectItem itemLabel="Selecione a Mídia"
+											itemValue="#{null}" />
+										<f:selectItems value="#{cdBean.listaMidias}" var="m"
+											itemLabel="#{m.nome}" itemValue="#{m}" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+						<br />
+
+						<!-- ....................................DADOS DE ITEM ACERVO......................................... -->
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Titulo:" for="titulo" />
+								</p:column>
+								<p:column colspan="2">
+									<p:inputText id="titulo" value="#{cdBean.itemAcervo.titulo}"
+										style="width:290px" required="true"
+										requiredMessage="Título obrigatório">
+										<f:ajax event="blur" render="messages" />
+									</p:inputText>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="Subtitulo:" for="subtitulo" />
+								</p:column>
+								<p:column colspan="2">
+									<p:inputText id="subtitulo"
+										value="#{cdBean.itemAcervo.subtitulo}" style="width:290px" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Local:" for="local" />
+								</p:column>
+								<p:column>
+									<p:autoComplete minQueryLength="2"
+										value="#{cdBean.itemAcervo.local}" size="10" id="local"
+										completeMethod="#{cdBean.autocompleteLocalByNome}" var="l"
+										itemLabel="#{l.nome}" itemValue="#{l}"
+										converter="#{entityConverter}" />
+								</p:column>
+								<p:column>
+									<p:commandButton id="showAddLocalButton" icon="ui-icon-plus"
+										immediate="true" title="Adicionar Local"
+										onclick="PF('dlgNovoLocal').show()" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="Idioma:" for="idioma" />
+								</p:column>
+								<p:column>
+									<p:selectOneMenu id="idioma"
+										value="#{cdBean.itemAcervo.idioma}"
+										converter="#{entityConverter}">
+										<f:selectItem itemLabel="Selecione o Idioma"
+											itemValue="#{null}" />
+										<f:selectItems value="#{cdBean.listaIdiomas}" var="i"
+											itemLabel="#{i.nome}" itemValue="#{i}" />
+									</p:selectOneMenu>
+								</p:column>
+								<p:column>
+									<p:commandButton type="button" id="showAddIdiomaButton"
+										icon="ui-icon-plus" immediate="true" title="Adicionar Idioma"
+										onclick="PF('dlgNovoIdioma').show();" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Assuntos:" for="assuntos" />
+								</p:column>
+								<p:column colspan="4">
+									<p:autoComplete minQueryLength="2" id="assuntos"
+										value="#{cdBean.itemAcervo.assuntos}"
+										completeMethod="#{cdBean.autocompleteAssuntoByNome}" var="a"
+										itemLabel="#{a.nome}" itemValue="#{a}"
+										converter="#{entityConverter}" forceSelection="true"
+										multiple="true" />
+								</p:column>
+								<p:column>
+									<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
+										process="form:assuntos" title="Adicionar Assunto"
+										onclick="PF('dlgNovoAssunto').show()" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Gravadora:" for="gravadora" />
+								</p:column>
+								<p:column>
+									<p:autoComplete minQueryLength="2" size="10"
+										value="#{cdBean.CD.gravadora}" id="gravadora"
+										completeMethod="#{cdBean.gravadoraDAO.findByNome}" var="g"
+										itemLabel="#{g.nome}" itemValue="#{g}"
+										converter="#{entityConverter}" />
+								</p:column>
+								<p:column>
+									<p:commandButton id="showAddGravadoraButton"
+										icon="ui-icon-plus" process="form:gravadora"
+										title="Adicionar Gravadora"
+										onclick="PF('dlgNovaGravadora').show()" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="Comentario: " for="comentario" />
+								</p:column>
+								<p:column colspan="2">
+									<p:inputTextarea id="comentario"
+										value="#{cdBean.CD.comentario}" style="width:250px" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Cantores: " for="cantores" />
+								</p:column>
+								<p:column colspan="4">
+									<p:autoComplete minQueryLength="2" id="cantores"
+										value="#{cdBean.CD.cantores}"
+										completeMethod="#{cdBean.cantorDAO.findByNome}" var="c"
+										itemLabel="#{c.nome}" itemValue="#{c}"
+										converter="#{entityConverter}" forceSelection="true"
+										multiple="true" />
+								</p:column>
+								<p:column>
+									<p:commandButton id="showAddCantorButton" icon="ui-icon-plus"
+										process="form:cantores" title="Adicionar Cantor"
+										onclick="PF('dlgNovoCantor').show()" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+
+					</p:layoutUnit>
+					<p:layoutUnit position="east" resizable="true" size="400"
+						minSize="40" maxSize="400">
+						<p:dataList value="#{cdBean.CD.musicas}" var="musica" type="ordered">
+							<f:facet name="header">
+					            
+								<p:commandButton id="showAddMusicaButton" icon="ui-icon-plus"
+										title="Adicionar Música" value="Adicionar Música"
+										onclick="PF('dlgNovoCantor').show()" />
+					        </f:facet>
+					        #{musica}
+					    </p:dataList>
+					</p:layoutUnit>
+				</p:layout>
 				<!-- ....................................BOTÕES......................................................... -->
 				<p:toolbar
 					style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
 					<f:facet name="right">
 						<p:commandButton value="#{cdBean.stringBotaoGravar}"
-							action="#{cdBean.gravar}" process="@form"
-							update="@form :tabela" />
+							action="#{cdBean.gravar}" process="@form" update="@form :tabela" />
 						<p:separator />
 						<p:commandButton value="Cancelar" update="@form"
 							action="#{cdBean.recarregarPagina}" immediate="true" />
@@ -158,12 +183,12 @@
 			</p:fieldset>
 
 		</h:form>
-		
-		<br/>
+
+		<br />
 		<!-- ....................................TABELA......................................................... -->
 		<p:fieldset legend="CDs Cadastrados">
-			<p:dataTable id="tabela" value="#{cdBean.cdLazyDataModel}"
-				var="cd" paginator="true" lazy="true" rows="5"
+			<p:dataTable id="tabela" value="#{cdBean.cdLazyDataModel}" var="cd"
+				paginator="true" lazy="true" rows="5"
 				mptyMessage="Nenhum CD cadastrad0"
 				rowsPerPageTemplate="5 10 15 20 30 40" paginatorPosition="bottom"
 				paginatorAlwaysVisible="false">
@@ -206,7 +231,8 @@
 					<h:form>
 						<p:commandButton icon="ui-icon-pencil" title="Alterar CD"
 							update=":form">
-							<f:setPropertyActionListener value="#{cd}" target="#{cdBean.itemAcervo}" />
+							<f:setPropertyActionListener value="#{cd}"
+								target="#{cdBean.itemAcervo}" />
 						</p:commandButton>
 						<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
 							oncomplete="PF('dlgExemplares').show()"
@@ -219,8 +245,8 @@
 				</p:column>
 			</p:dataTable>
 		</p:fieldset>
-		
-		
+
+
 		<ui:include src="/WEB-INF/includes/dialogExemplares.xhtml">
 			<ui:param name="itemAcervoBean" value="#{cdBean}" />
 		</ui:include>
@@ -239,7 +265,7 @@
 		<ui:include src="/WEB-INF/includes/dialogCantor.xhtml">
 			<ui:param name="bean" value="#{cdBean}" />
 		</ui:include>
-		
+
 	</ui:define>
 </ui:composition>
 </html>
