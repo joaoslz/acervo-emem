@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/_template.xhtml">
+	<ui:define name="conteudo">
+		<p:fieldset legend="Cadastro de Gravadora">
+			<h:form id="formGravadora">
+				<p:messages />
+				<h:panelGrid columns="5" style="padding:3px ">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" value="#{gravadoraBean.gravadora.nome}"
+						required="true" requiredMessage="Campo nome deve ser digitado" />
+
+					<p:commandButton value="Gravar" action="#{gravadoraBean.gravar}"
+						process="@form" update="@form :formTabelaGravadoras:tabelaGravadoras" />
+				</h:panelGrid>
+			</h:form>
+			<h:form id="formTabelaGravadoras">
+				<p:dataTable editable="true" rows="10" paginator="true"
+					paginatorPosition="bottom" paginatorAlwaysVisible="false" id="tabelaGravadoras"
+					value="#{gravadoraBean.gravadoras}" var="gravadora"
+					emptyMessage="Nenhuma gravadora cadastrada" style="width:700px">
+					<p:ajax event="rowEdit" listener="#{gravadoraBean.editGravadora}" />
+					<p:column headerText="Nome">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{gravadora.nome}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{gravadora.nome}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column>
+						<p:rowEditor />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:fieldset>
+	</ui:define>
+</ui:composition>
+</html>
