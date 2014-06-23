@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -35,7 +36,7 @@ public class CD extends ItemAcervo {
 	@ManyToMany
 	private List<Cantor> cantores = new ArrayList<Cantor>();
 	
-	@OneToMany(mappedBy = "cd")
+	@OneToMany(mappedBy = "cd", cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<Musica> musicas = new ArrayList<>();
 	
 	public String getComentario() {
@@ -71,12 +72,35 @@ public class CD extends ItemAcervo {
 	}
 
 	public List<Cantor> getCantores() {
+		if (cantores == null) {
+			cantores = new ArrayList<>();
+		}
 		return cantores;
 	}
 
 	public void setCantores(List<Cantor> cantores) {
 		this.cantores = cantores;
 	}	
+	
+	public void addMusica(Musica m){
+		m.setCd(this);
+		getMusicas().add(m);
+	}
+	
+	public String getMusicasToString(){
+		StringBuilder builder = new StringBuilder();
+		if (getCantores() != null) {
+			Iterator<Musica> it = getMusicas().iterator();
+			while (it.hasNext()) {
+				Musica m = it.next();
+				builder.append(m.toString());
+				if (it.hasNext()) {
+					builder.append(", ");
+				}
+			}
+		}
+		return builder.toString();		
+	}
 	
 	public String getCantoresToString(){
 		StringBuilder builder = new StringBuilder();

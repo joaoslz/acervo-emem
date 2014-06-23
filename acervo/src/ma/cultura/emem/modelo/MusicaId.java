@@ -8,29 +8,29 @@ import javax.persistence.Embeddable;
 public class MusicaId implements Serializable {
 
 	private static final long serialVersionUID = -8669532704023815911L;
-	private int cd;
-	private int faixa;
+	private Integer cd;
+	private Integer faixa;
 
-	public int getFaixa() {
+	public Integer getFaixa() {
 		return faixa;
 	}
 
-	public void setFaixa(int faixa) {
+	public void setFaixa(Integer faixa) {
 		this.faixa = faixa;
 	}
 
-	public int getCd() {
+	public Integer getCd() {
 		return cd;
 	}
 
-	public void setCd(int cd) {
+	public void setCd(Integer cd) {
 		this.cd = cd;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
+		final Integer prime = 31;
+		Integer result = 1;
 		result = prime * result + cd;
 		result = prime * result + faixa;
 		return result;

@@ -158,16 +158,22 @@
 					</p:layoutUnit>
 					<p:layoutUnit position="east" resizable="true" size="400"
 						minSize="40" maxSize="400">
-						<p:dataList value="#{cdBean.CD.musicas}" var="musica" type="ordered">
+						<p:dataTable id="musicas" value="#{cdBean.CD.musicas}"
+							var="musica" rowIndexVar="index">
 							<f:facet name="header">
-					            
 								<p:commandButton id="showAddMusicaButton" icon="ui-icon-plus"
-										title="Adicionar Música" value="Adicionar Música"
-										onclick="PF('dlgNovoCantor').show()" />
-					        </f:facet>
-					        #{musica}
-					    </p:dataList>
-					</p:layoutUnit>
+									title="Adicionar Música" value="Adicionar Música"
+									onclick="PF('dlgAddMusica').show()" />
+							</f:facet>
+							<p:column>
+								<h:outputText value="#{musica} " style="display:inline-block" />
+							</p:column>
+							<p:column width="40">
+								<p:commandButton icon="ui-icon-trash" action="#{cdBean.removerMusica(index)}"
+									update=":form:musicas" title="Remover Música" />
+							</p:column>
+						</p:dataTable>
+'					</p:layoutUnit>
 				</p:layout>
 				<!-- ....................................BOTÕES......................................................... -->
 				<p:toolbar
@@ -193,39 +199,29 @@
 				rowsPerPageTemplate="5 10 15 20 30 40" paginatorPosition="bottom"
 				paginatorAlwaysVisible="false">
 
-				<p:columnGroup type="header">
-					<p:row>
-						<p:column headerText="Mídia" style="width: 50px" />
-						<p:column headerText="Título" />
-						<p:column headerText="Gravadora" />
-						<p:column headerText="Local" style="width: 100px" />
-						<p:column headerText="Comentário" />
-						<p:column headerText="Cantores" />
-						<p:column headerText="Assuntos" />
-						<p:column headerText="Alterar" style="width: 80px" />
-					</p:row>
-				</p:columnGroup>
-
-				<p:column>
+				<p:column headerText="Mídia">
 					<h:outputText value="#{cd.midia}" />
 				</p:column>
-				<p:column>
+				<p:column headerText="Título">
 					<h:outputText value="#{cd.titulo}" />
 				</p:column>
-				<p:column>
+				<p:column headerText="Gravadora">
 					<h:outputText value="#{cd.gravadora}" />
 				</p:column>
-				<p:column>
+				<p:column headerText="Local">
 					<h:outputText value="#{cd.local.nome}" />
 				</p:column>
-				<p:column>
+				<p:column headerText="Comentário">
 					<h:outputText value="#{cd.comentario}" />
 				</p:column>
-				<p:column>
-					<h:outputText value="#{cd.cantoresToString}" />
+				<p:column headerText="Cantores">
+					#{cd.cantoresToString}
 				</p:column>
-				<p:column>
-					<h:outputText value="#{cd.assuntosToString}" />
+				<p:column headerText="Assuntos">
+					#{cd.assuntosToString}
+				</p:column>
+				<p:column headerText="Músicas" width="250">
+					#{cd.musicasToString}
 				</p:column>
 				<p:column>
 					<h:form>
@@ -266,6 +262,31 @@
 			<ui:param name="bean" value="#{cdBean}" />
 		</ui:include>
 
+		<!-- DIALOG Cantor.......................................................................................... -->
+		<p:dialog header="Música" widgetVar="dlgAddMusica" resizable="false"
+			modal="true">
+			<h:form>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Faixa: " for="faixa" />
+					<p:inputText id="faixa" value="#{cdBean.musicaAdd.faixa}" />
+					<p:outputLabel value="Título:" for="titulo" />
+					<p:inputText id="titulo" value="#{cdBean.musicaAdd.titulo}" />
+					<p:outputLabel value="Duração:" for="duracao" />
+					<p:inputText id="duracao" value="#{cdBean.musicaAdd.duracao}" />
+					<p:outputLabel value="Compositores:" for="compositores" />
+					<p:autoComplete minQueryLength="2" id="compositores"
+						value="#{cdBean.musicaAdd.compositores}"
+						completeMethod="#{cdBean.compositorDAO.findByNome}" var="c"
+						itemLabel="#{c.nome}" itemValue="#{c}"
+						converter="#{entityConverter}" forceSelection="true"
+						multiple="true" />
+
+					<p:commandButton value="Gravar" action="#{cdBean.addMusica}"
+						oncomplete="PF('dlgAddMusica').hide();" process="@form"
+						update="@form :form:musicas" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

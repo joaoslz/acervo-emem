@@ -75,4 +75,11 @@ public class Musica implements Serializable {
 	public void setCompositores(List<Compositor> compositores) {
 		this.compositores = compositores;
 	}
+
+	@Override
+	public String toString() {
+		return faixa + " - " + titulo + " (" + duracao + ")";
+	}
+	
+	
 }

@@ -10,8 +10,10 @@ import javax.inject.Named;
 import ma.cultura.emem.bean.datamodel.CDLazyDataModel;
 import ma.cultura.emem.dao.MidiaDAO;
 import ma.cultura.emem.dao.auxiliar.CantorDAO;
+import ma.cultura.emem.dao.auxiliar.CompositorDAO;
 import ma.cultura.emem.dao.auxiliar.GravadoraDAO;
 import ma.cultura.emem.modelo.CD;
+import ma.cultura.emem.modelo.Musica;
 import ma.cultura.emem.modelo.auxiliar.Cantor;
 import ma.cultura.emem.modelo.auxiliar.Gravadora;
 import ma.cultura.emem.modelo.auxiliar.Midia;
@@ -32,9 +34,27 @@ public class CDBean extends AbstractItemAcervoBean {
 	private GravadoraDAO gravadoraDAO;
 	@Inject
 	private CantorDAO cantorDAO;
+	@Inject
+	private CompositorDAO compositorDAO;
 
 	private Gravadora gravadoraAdd = new Gravadora();
 	private Cantor cantorAdd = new Cantor();
+	private Musica musicaAdd = new Musica();
+	
+	
+	public void addMusica(){
+		getCD().addMusica(musicaAdd);
+		musicaAdd = new Musica();
+	}
+	
+	public void removerMusica(int index) {
+		logger.debug("REMOVENDO musica index: " + index);
+		if (!this.getCD().getMusicas().isEmpty()) {
+			Musica m = this.getCD().getMusicas().remove(index);
+			m.setCd(null);
+			logger.debug("REMOVIDO DA LISTA: " + m.getTitulo());
+		}
+	}
 	
 	public void gravarCantor(){
 		cantorDAO.adicionar(cantorAdd);
@@ -92,5 +112,17 @@ public class CDBean extends AbstractItemAcervoBean {
 
 	public void setCantorAdd(Cantor cantorAdd) {
 		this.cantorAdd = cantorAdd;
+	}
+
+	public Musica getMusicaAdd() {
+		return musicaAdd;
+	}
+
+	public void setMusicaAdd(Musica musicaAdd) {
+		this.musicaAdd = musicaAdd;
+	}
+
+	public CompositorDAO getCompositorDAO() {
+		return compositorDAO;
 	}
 }
