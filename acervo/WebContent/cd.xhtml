@@ -17,7 +17,7 @@
 
 				<p:layout style="min-width:100px;min-height:380px;">
 					<p:layoutUnit position="center" resizable="true"
-						style="max-height:350px;">
+						style="max-height:380px;">
 						<p:panelGrid>
 							<p:row>
 								<p:column>
@@ -154,10 +154,22 @@
 								</p:column>
 							</p:row>
 						</p:panelGrid>
+						<br/>
+						<p:panelGrid >
+							<f:facet name="header"> Dados do Exemplar</f:facet>
+							<p:row>
+								<p:column><p:outputLabel value="Qtd Exemplares: " /></p:column>
+								<p:column><p:spinner value="#{cdBean.exemplaresAdd.quantidade}" max="300" min="1" /></p:column>
+								<p:column><p:outputLabel value="Data de Aquisição: " /></p:column>
+								<p:column><p:calendar value="#{cdBean.exemplaresAdd.dataAquisicao}" locale="pt_BR" display="inline" navigator="true" size="10"/></p:column>
+								<p:column><p:outputLabel value="É Doaçao? " /></p:column>
+								<p:column><p:selectBooleanCheckbox value="#{cdBean.exemplaresAdd.ehDoacao}" /></p:column>
+							</p:row>
+						</p:panelGrid>
 
 					</p:layoutUnit>
 					<p:layoutUnit position="east" resizable="true" size="400"
-						style="max-height:350px;">
+						style="max-height:380px;">
 						<p:dataTable id="musicas" value="#{cdBean.CD.musicas}"
 							var="musica" rowIndexVar="index">
 							<f:facet name="header">
@@ -279,7 +291,7 @@
 		<p:dialog header="Música" widgetVar="dlgAddMusica" resizable="false"
 			modal="true">
 			<h:form id="formMusica">
-				<h:panelGrid>
+				<p:panelGrid>
 					<p:row>
 						<p:column>
 							<p:outputLabel value="Faixa: " for="faixa" />
@@ -326,10 +338,17 @@
 								onclick="PF('dlgNovoCompositor').show()" />
 						</p:column>
 					</p:row>
-					<p:commandButton value="Gravar" action="#{cdBean.addMusica}"
+				</p:panelGrid>
+				<p:toolbar
+					style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
+					<f:facet name="right">
+						<p:commandButton value="Adicionar" action="#{cdBean.addMusica}"
 						oncomplete="PF('dlgAddMusica').hide();" process="@form"
-						update="@form :formMusica:compositores" />
-				</h:panelGrid>
+						update="@form :form:musicas" />
+						<p:separator />
+						<p:commandButton value="Cancelar" update="@form" oncomplete="PF('dlgAddMusica').hide()" immediate="true" />
+					</f:facet>
+				</p:toolbar>
 			</h:form>
 		</p:dialog>
 

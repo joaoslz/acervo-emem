@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class ExemplarPOJO implements Serializable{
 	private static final long serialVersionUID = 1583124054830275018L;
-	private int quantidade = 0;
+	private int quantidade = 1;//Default 1
 	private boolean ehDoacao;
 	private Date dataAquisicao;
 

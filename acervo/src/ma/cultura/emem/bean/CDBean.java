@@ -52,11 +52,11 @@ public class CDBean extends AbstractItemAcervoBean {
 		//se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
 		boolean isEdicao = getItemAcervo().getId() != null;
 		itemAcervo = cdDAO.atualizar(getCD());
-		if (isEdicao) {
-			limparForm();
-		}else{
-			showDialogExemplares();
+		logger.debug("id: " + itemAcervo.getId());
+		if (!isEdicao) {
+			cadastrarExemplares();
 		}
+		limparForm();
 	}
 	
 	

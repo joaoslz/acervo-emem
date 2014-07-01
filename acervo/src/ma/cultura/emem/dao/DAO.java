@@ -33,7 +33,7 @@ public class DAO<T> implements Serializable {
 
 	public T atualizar(T t) {
 		em.getTransaction().begin();
-		em.merge(t);
+		t = em.merge(t);
 		em.getTransaction().commit();
 		return t;
 	}

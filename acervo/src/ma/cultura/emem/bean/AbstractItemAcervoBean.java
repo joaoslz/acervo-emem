@@ -109,6 +109,7 @@ public abstract class AbstractItemAcervoBean implements Serializable{
 	public void cadastrarExemplares() {
 		List<Exemplar> exemplares = new ArrayList<Exemplar>();
 		for (int i = 0; i < exemplaresAdd.getQuantidade(); i++) {
+			logger.debug(i + "-" + getItemAcervo().getId());
 			Exemplar exemplar = new Exemplar();
 			exemplar.setItemAcervo(getItemAcervo());
 			exemplar.setEhDoacao(exemplaresAdd.isEhDoacao());

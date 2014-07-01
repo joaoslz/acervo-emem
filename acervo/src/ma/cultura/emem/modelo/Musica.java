@@ -62,6 +62,8 @@ public class Musica implements Serializable {
 	}
 
 	public List<Compositor> getCompositores() {
+		if(compositores == null)
+			compositores = new ArrayList<>();
 		return compositores;
 	}
 
