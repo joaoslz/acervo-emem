@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ma.cultura.emem.bean.datamodel.FasciculoLazyDataModel;
+import ma.cultura.emem.dao.FasciculoDAO;
 import ma.cultura.emem.dao.PeriodicoDAO;
 import ma.cultura.emem.dao.auxiliar.AutorDAO;
 import ma.cultura.emem.modelo.Artigo;
@@ -30,6 +31,8 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 	@Inject
 	private PeriodicoDAO periodicoDAO;
 	@Inject
+	private FasciculoDAO fasciculoDAO;
+	@Inject
 	private FasciculoLazyDataModel fasciculoLazyDataModel;
 
 	private List<Periodico> listaPeriodicos = new ArrayList<Periodico>();
@@ -43,15 +46,18 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 		return new Fasciculo();
 	}
 
-//	public void gravar() {
-//		boolean isEdicao = getFasciculo().getId() != null;
-//		if (isEdicao) {
-//			fasciculo = fasciculoDAO.atualizar(getFasciculo());
-//			limparForm();
-//		}else{
-//			fasciculo = fasciculoDAO.adicionar(getFasciculo());
-//		}
-//	}
+	@Override
+	public void gravar() {
+		//se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
+		boolean isEdicao = getItemAcervo().getId() != null;
+		itemAcervo = fasciculoDAO.atualizar(getFasciculo());
+		logger.debug("id: " + itemAcervo.getId());
+		if (!isEdicao) {
+			cadastrarExemplares();
+		}
+		limparForm();
+	}
+	
 	public void showDialogCadastroRevista(){
 		RequestContext.getCurrentInstance().execute("PF('dlgNovaRevista').show()");
 	}

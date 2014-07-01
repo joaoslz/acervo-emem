@@ -155,11 +155,11 @@
 							</p:row>
 						</p:panelGrid>
 						<br/>
-						<p:panelGrid >
+						<p:panelGrid rendered="#{empty cdBean.CD.id}">
 							<f:facet name="header"> Dados do Exemplar</f:facet>
 							<p:row>
 								<p:column><p:outputLabel value="Qtd Exemplares: " /></p:column>
-								<p:column><p:spinner value="#{cdBean.exemplaresAdd.quantidade}" max="300" min="1" /></p:column>
+								<p:column><p:spinner value="#{cdBean.exemplaresAdd.quantidade}" max="300" min="1" size="3"/></p:column>
 								<p:column><p:outputLabel value="Data de Aquisição: " /></p:column>
 								<p:column><p:calendar value="#{cdBean.exemplaresAdd.dataAquisicao}" locale="pt_BR" display="inline" navigator="true" size="10"/></p:column>
 								<p:column><p:outputLabel value="É Doaçao? " /></p:column>
