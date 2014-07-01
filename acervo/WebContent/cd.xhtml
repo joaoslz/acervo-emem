@@ -13,7 +13,7 @@
 		<h:form id="form">
 
 			<!--  Formulário de cadastro de itemAcervo -->
-			<p:fieldset legend="Cadastro de CDs" toggleable="true" >
+			<p:fieldset legend="Cadastro de CDs" toggleable="true" collapsed="true" widgetVar="cdFieldSet">
 
 				<p:layout style="min-width:100px;min-height:380px;">
 					<p:layoutUnit position="center" resizable="true"
@@ -192,8 +192,8 @@
 				<p:toolbar
 					style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
 					<f:facet name="right">
-						<p:commandButton value="#{cdBean.stringBotaoGravar}"
-							action="#{cdBean.gravar}" process="@form" update="@form :tabela" />
+						<p:commandButton value="#{cdBean.stringBotaoGravar}" oncomplete="PF('cdFieldSet').toggle()"
+							action="#{cdBean.gravar}" process="@form" update="@form :formTabela:tabela" />
 						<p:separator />
 						<p:commandButton value="Cancelar" update="@form"
 							action="#{cdBean.recarregarPagina}" immediate="true" />
@@ -205,6 +205,7 @@
 
 		<br />
 		<!-- ....................................TABELA......................................................... -->
+		<h:form id="formTabela">
 		<p:fieldset legend="CDs Cadastrados">
 			<p:dataTable id="tabela" value="#{cdBean.cdLazyDataModel}" var="cd"
 				paginator="true" lazy="true" rows="5"
@@ -215,7 +216,7 @@
 				<p:column headerText="Mídia">
 					<h:outputText value="#{cd.midia}" />
 				</p:column>
-				<p:column headerText="Título">
+				<p:column headerText="Título" filterBy="#{cd.titulo}">
 					<h:outputText value="#{cd.titulo}" />
 				</p:column>
 				<p:column headerText="Gravadora">
@@ -235,9 +236,7 @@
 				</p:column>
 				<p:column headerText="Músicas" width="250">
 					<p:dataList value="#{cd.musicas}" var="musica" type="definition">
-					    <h:outputLink id="x" value="#">
-					        <h:outputText value="#{musica}" style="cursor:pointer" />
-					    </h:outputLink>						
+					        <h:outputText id="x" value="#{musica}" style="cursor:default"/>
 						<p:overlayPanel for="x" showEffect="fade" 
 							hideEffect="fade" showEvent="mouseover" hideEvent="mouseout"
 							dismissable="false" showCloseIcon="true" at="right top">
@@ -249,24 +248,22 @@
 					</p:dataList>
 				</p:column>
 				<p:column>
-					<h:form>
-						<p:commandButton icon="ui-icon-pencil" title="Alterar CD"
-							update=":form">
-							<f:setPropertyActionListener value="#{cd}"
-								target="#{cdBean.itemAcervo}" />
-						</p:commandButton>
-						<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
-							oncomplete="PF('dlgExemplares').show()"
-							action="#{cdBean.updateListaExemplares}"
-							update="@form :formExemplares :formExemplares">
-							<f:setPropertyActionListener value="#{cd}"
-								target="#{cdBean.itemAcervo}" />
-						</p:commandButton>
-					</h:form>
+					<p:commandButton icon="ui-icon-pencil" title="Alterar CD"
+						update=":form" oncomplete="PF('cdFieldSet').toggle()">
+						<f:setPropertyActionListener value="#{cd}"
+							target="#{cdBean.itemAcervo}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
+						oncomplete="PF('dlgExemplares').show()"
+						action="#{cdBean.updateListaExemplares}"
+						update="@form :formExemplares ">
+						<f:setPropertyActionListener value="#{cd}"
+							target="#{cdBean.itemAcervo}" />
+					</p:commandButton>
 				</p:column>
 			</p:dataTable>
 		</p:fieldset>
-
+		</h:form>	
 
 		<ui:include src="/WEB-INF/includes/dialogExemplares.xhtml">
 			<ui:param name="itemAcervoBean" value="#{cdBean}" />

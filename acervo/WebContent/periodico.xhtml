@@ -54,53 +54,43 @@
 						<p:column>
 							<p:commandButton value="#{periodicoBean.stringBotaoGravar}"
 								action="#{periodicoBean.gravar}" process="@form"
-								update="@form :tabela" />
+								update="@form :formTabela:tabela" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
 
 			</h:form>
 			<!-- ....................................TABELA......................................................... -->
-			<p:dataTable id="tabela"
-				value="#{periodicoBean.periodicoLazyDataModel}" var="periodico"
-				paginator="true" lazy="true" rows="5"
-				rowsPerPageTemplate="5 10 15 20 30 40" paginatorPosition="bottom"
-				paginatorAlwaysVisible="false"
-				emptyMessage="Nenhum Periódico cadastrado">
+			<h:form id="formTabela">
+				<p:dataTable id="tabela"
+					value="#{periodicoBean.periodicoLazyDataModel}" var="periodico"
+					paginator="true" lazy="true" rows="5"
+					rowsPerPageTemplate="5 10 15 20 30 40" paginatorPosition="bottom"
+					paginatorAlwaysVisible="false"
+					emptyMessage="Nenhum Periódico cadastrado">
 
-				<p:columnGroup type="header">
-					<p:row>
-						<p:column headerText="Nome" />
-						<p:column headerText="ISSN" />
-						<p:column headerText="Periodicidade" />
-						<p:column headerText="É Assinado?" />
-						<p:column headerText="Alterar" />
-					</p:row>
-				</p:columnGroup>
-
-				<p:column>
-					<h:outputText value="#{periodico.nome}" />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{periodico.issn}" />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{periodico.periodicidade}" />
-				</p:column>
-				<p:column>
-					<h:outputText value="Sim" rendered="#{periodico.ehAssinado}" />
-					<h:outputText value="Não" rendered="#{!periodico.ehAssinado}" />
-				</p:column>
-				<p:column>
-					<h:form>
-						<p:commandButton icon="ui-icon-pencil" title="Alterar Periódico"
-							update=":form">
-							<f:setPropertyActionListener value="#{periodico}"
-								target="#{periodicoBean.periodico}" />
-						</p:commandButton>
-					</h:form>
-				</p:column>
-			</p:dataTable>
+					<p:column headerText="Nome" filterBy="#{periodico.nome}">
+						<h:outputText value="#{periodico.nome}" />
+					</p:column>
+					<p:column headerText="ISSN" filterBy="#{periodico.issn}">
+						<h:outputText value="#{periodico.issn}" />
+					</p:column>
+					<p:column headerText="Periodicidade">
+						<h:outputText value="#{periodico.periodicidade}" />
+					</p:column>
+					<p:column headerText="É Assinado?">
+						<h:outputText value="Sim" rendered="#{periodico.ehAssinado}" />
+						<h:outputText value="Não" rendered="#{!periodico.ehAssinado}" />
+					</p:column>
+					<p:column headerText="Alterar">
+							<p:commandButton icon="ui-icon-pencil" title="Alterar Periódico"
+								update=":form">
+								<f:setPropertyActionListener value="#{periodico}"
+									target="#{periodicoBean.periodico}" />
+							</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</h:form>
 		</p:fieldset>
 	</ui:define>
 </ui:composition>

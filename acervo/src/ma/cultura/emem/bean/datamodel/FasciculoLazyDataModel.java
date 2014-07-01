@@ -8,8 +8,10 @@ import javax.inject.Named;
 
 import ma.cultura.emem.dao.FasciculoDAO;
 import ma.cultura.emem.modelo.Fasciculo;
+import ma.cultura.emem.modelo.Obra;
 import ma.cultura.emem.modelo.Periodico;
 
+import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -23,6 +25,8 @@ public class FasciculoLazyDataModel extends LazyDataModel<Fasciculo> {
 
 	@Inject
 	private FasciculoDAO fasciculoDAO;
+	@Inject
+	private Logger logger;
 	
 	private Periodico periodico;
 
@@ -41,10 +45,21 @@ public class FasciculoLazyDataModel extends LazyDataModel<Fasciculo> {
 	
 	@Override
 	public List<Fasciculo> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-		if(periodico == null)
-			return null;
-		setRowCount(fasciculoDAO.contarTodosByPeriodico(periodico));
-		return fasciculoDAO.findByPeriodicoPaginated(periodico, first, pageSize);
+		List<Fasciculo> result = null;
+		
+		if(periodico != null){
+			if(filters != null && filters.size() > 0){
+				logger.debug("Usando Filtros ");
+				filters.put("periodico.id", periodico.getId());
+				result = fasciculoDAO.findFilteredWithLike(filters);
+				setRowCount(result.size());
+			}else{
+				logger.debug("Sem Filtros ");
+				setRowCount(fasciculoDAO.contarTodosByPeriodico(periodico));
+				result = fasciculoDAO.findByPeriodicoPaginated(periodico, first, pageSize);
+			}
+		}
+		return result;
 	}
 
 	public void setPeriodico(Periodico periodico) {

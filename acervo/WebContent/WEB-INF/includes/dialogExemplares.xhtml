@@ -15,18 +15,17 @@
 
 			<b><h:outputText value="Título: " /></b>
 			<h:outputText value="#{itemAcervoBean.itemAcervo.titulo}" />
-
-			<p:panelGrid columns="2" style="width:100%" >
+			<br/><br/>
+			<p:panelGrid style="width:100%">
 				<f:facet name="header"> Dados do Exemplar</f:facet>
-				<h:outputText value="Quantidade: " />
-				<p:spinner value="#{itemAcervoBean.exemplaresAdd.quantidade}" max="300" min="1" />
-				<h:outputText value="Data de Aquisição: " />
-				<p:calendar value="#{itemAcervoBean.exemplaresAdd.dataAquisicao}" locale="pt_BR"
-					display="inline" navigator="true" />
-
-				<h:outputText value="É Doaçao? " />
-				<p:selectBooleanCheckbox value="#{itemAcervoBean.exemplaresAdd.ehDoacao}" />
-
+				<p:row>
+					<p:column><p:outputLabel value="Qtd Exemplares: " /></p:column>
+					<p:column><p:spinner value="#{itemAcervoBean.exemplaresAdd.quantidade}" max="300" min="1" size="3"/></p:column>
+					<p:column><p:outputLabel value="Data de Aquisição: " /></p:column>
+					<p:column><p:calendar value="#{itemAcervoBean.exemplaresAdd.dataAquisicao}" locale="pt_BR" display="inline" navigator="true" size="10"/></p:column>
+					<p:column><p:outputLabel value="É Doaçao? " /></p:column>
+					<p:column><p:selectBooleanCheckbox value="#{itemAcervoBean.exemplaresAdd.ehDoacao}" /></p:column>
+				</p:row>
 			</p:panelGrid>
 
 			<p:toolbar style="margin-top: 2px;margin-bottom:10px;">

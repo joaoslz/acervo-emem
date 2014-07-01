@@ -2,11 +2,22 @@ package ma.cultura.emem.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 
+import ma.cultura.emem.modelo.Obra;
+
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 public class DAO<T> implements Serializable {
 
@@ -68,6 +79,29 @@ public class DAO<T> implements Serializable {
 		lista = em.createNamedQuery(namedQuery, classe).setFirstResult(firstResult).setMaxResults(maxResultsByPage).getResultList();
 		logger.debug("utilizando lista paginada...");
 		return lista;
+	}
+	
+	/**
+	 * Este método funciona com ilike para atributos do tipo string e equals para atributos numéricos.
+	 * @param firstResult
+	 * @param maxResultsByPage
+	 * @param filters
+	 * @return
+	 */
+	public List<T> findFilteredWithLike(Map<String, Object> filters){
+		Session session = em.unwrap(Session.class);
+		Criteria criteria = session.createCriteria(classe);
+		for(Map.Entry<String, Object> e: filters.entrySet()){
+			logger.debug("add Filtro: " + e.getKey() + " like " + e.getValue());
+			if(e.getValue() instanceof Short || e.getValue() instanceof Integer|| e.getValue() instanceof Long 
+					|| e.getValue() instanceof Float || e.getValue() instanceof Double) {
+				criteria = criteria.add( Restrictions.eq(e.getKey(), e.getValue()));				
+			}else if(e.getValue() instanceof String){
+				criteria = criteria.add( Restrictions.ilike(e.getKey(), e.getValue().toString(), MatchMode.ANYWHERE) );
+			}
+			//TODO Pode ser feito também para filtro com listas, usando operador in.
+		}
+		return criteria.list();
 	}
 
 	public T buscarPorId(Object id) {

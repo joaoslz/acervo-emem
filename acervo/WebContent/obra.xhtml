@@ -13,7 +13,7 @@
 		<h:form id="form">
 
 			<!--  Formulário de cadastro de itemAcervo -->
-			<p:fieldset legend="Cadastro de Obra" toggleable="true">
+			<p:fieldset legend="Cadastro de Obra" toggleable="true" collapsed="true">
 				<p:panelGrid>
 					<p:row>
 						<p:column>
@@ -150,7 +150,7 @@
 
 						<p:commandButton value="#{obraBean.stringBotaoGravar}"
 							action="#{obraBean.gravar}" process="@form"
-							update="@form :tabela" />
+							update="@form :formTabela:tabela" />
 
 						<p:separator />
 
@@ -165,67 +165,50 @@
 		<br/>
 		<!-- ....................................TABELA......................................................... -->
 		<p:fieldset legend="Obras Cadastradas">
+			<h:form id="formTabela">
 			<p:dataTable id="tabela" value="#{obraBean.obraLazyDataModel}"
-				var="obra" paginator="true" lazy="true" rows="10"
+				var="obra" paginator="true" lazy="true" rows="150"
 				mptyMessage="Nenhums Obra cadastrada"
 				rowsPerPageTemplate="5 10 15 20 30 40" paginatorPosition="bottom"
 				paginatorAlwaysVisible="false">
 
-				<p:columnGroup type="header">
-					<p:row>
-						<p:column headerText="Título" />
-						<p:column headerText="ISBN" style="width: 100px" />
-						<p:column headerText="Editora" />
-						<p:column headerText="Local" style="width: 100px" />
-						<p:column headerText="Autores" />
-						<p:column headerText="Assuntos" />
-						<p:column headerText="Tipo" />
-						<p:column headerText="Alterar" style="width: 80px" />
-					</p:row>
-				</p:columnGroup>
-
-				<p:column>
+				<p:column filterBy="#{obra.titulo}" filterMatchMode="contains"   headerText="Título">
 					<h:outputText value="#{obra.titulo}" />
 				</p:column>
-				<p:column>
+				<p:column filterBy="#{obra.isbn}" headerText="ISBN" style="width: 100px">
 					<h:outputText value="#{obra.isbn}" />
 				</p:column>
-				<p:column>
+				<p:column headerText="Editora">
 					<h:outputText value="#{obra.editora.nome}" />
 				</p:column>
-				<p:column>
+				<p:column headerText="Local" style="width: 100px">
 					<h:outputText value="#{obra.local.nome}" />
 				</p:column>
-
-				<p:column>
+				<p:column headerText="Autores">
 					<h:outputText value="#{obra.autoresToString}" />
 				</p:column>
-
-				<p:column>
+				<p:column headerText="Assuntos">
 					<h:outputText value="#{obra.assuntosToString}" />
 				</p:column>
-
-				<p:column>
+				<p:column headerText="Tipo">
 					<h:outputText value="#{obra.tipoObra}" />
 				</p:column>
-
-				<p:column>
-					<h:form>
-						<p:commandButton icon="ui-icon-pencil" title="Alterar Obra"
-							update=":form">
-							<f:setPropertyActionListener value="#{obra}"
-								target="#{obraBean.itemAcervo}" />
-						</p:commandButton>
-						<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
-							oncomplete="PF('dlgExemplares').show()"
-							action="#{obraBean.updateListaExemplares}"
-							update="@form :formExemplares :formExemplares">
-							<f:setPropertyActionListener value="#{obra}"
-								target="#{obraBean.itemAcervo}" />
-						</p:commandButton>
-					</h:form>
+				<p:column headerText="Alterar" style="width: 80px">
+					<p:commandButton icon="ui-icon-pencil" title="Alterar Obra"
+						update=":form">
+						<f:setPropertyActionListener value="#{obra}"
+							target="#{obraBean.itemAcervo}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
+						oncomplete="PF('dlgExemplares').show()"
+						action="#{obraBean.updateListaExemplares}"
+						update="@form :formExemplares">
+						<f:setPropertyActionListener value="#{obra}"
+							target="#{obraBean.itemAcervo}" />
+					</p:commandButton>
 				</p:column>
 			</p:dataTable>
+			</h:form>
 		</p:fieldset>
 
 		<ui:include src="/WEB-INF/includes/dialogAutor.xhtml">

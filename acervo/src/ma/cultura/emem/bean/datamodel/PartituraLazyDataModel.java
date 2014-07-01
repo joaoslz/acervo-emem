@@ -8,7 +8,9 @@ import javax.inject.Named;
 
 import ma.cultura.emem.dao.PartituraDAO;
 import ma.cultura.emem.modelo.Partitura;
+import ma.cultura.emem.modelo.Periodico;
 
+import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -21,6 +23,8 @@ public class PartituraLazyDataModel extends LazyDataModel<Partitura> {
 	private static final long serialVersionUID = 1132999011331958579L;
 	@Inject
 	private PartituraDAO partituraDAO;
+	@Inject
+	private Logger logger;
 
 	public PartituraLazyDataModel() {
 	}
@@ -37,7 +41,16 @@ public class PartituraLazyDataModel extends LazyDataModel<Partitura> {
 	
 	@Override
 	public List<Partitura> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-		setRowCount(partituraDAO.contarTodos());
-		return partituraDAO.findAllPaginated(first, pageSize);
+		List<Partitura> result = null;
+		if(filters != null && filters.size() > 0){
+			logger.debug("Usando Filtros ");
+			result = partituraDAO.findFilteredWithLike(filters);
+			setRowCount(result.size());
+		}else{
+			logger.debug("Sem Filtros ");
+			result = partituraDAO.findAllPaginated(first, pageSize);
+			setRowCount(partituraDAO.contarTodos());
+		}
+		return result;
 	}
 }
