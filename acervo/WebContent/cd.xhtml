@@ -13,11 +13,11 @@
 		<h:form id="form">
 
 			<!--  Formulário de cadastro de itemAcervo -->
-			<p:fieldset legend="Cadastro de CDs">
+			<p:fieldset legend="Cadastro de CDs" toggleable="true" >
 
-				<p:layout style="min-width:100px;min-height:400px;">
-					<p:layoutUnit position="center" resizable="true" size="200"
-						minSize="40" maxSize="300">
+				<p:layout style="min-width:100px;min-height:380px;">
+					<p:layoutUnit position="center" resizable="true"
+						style="max-height:350px;">
 						<p:panelGrid>
 							<p:row>
 								<p:column>
@@ -157,7 +157,7 @@
 
 					</p:layoutUnit>
 					<p:layoutUnit position="east" resizable="true" size="400"
-						minSize="40" maxSize="400">
+						style="max-height:350px;">
 						<p:dataTable id="musicas" value="#{cdBean.CD.musicas}"
 							var="musica" rowIndexVar="index">
 							<f:facet name="header">
@@ -169,8 +169,9 @@
 								<h:outputText value="#{musica} " style="display:inline-block" />
 							</p:column>
 							<p:column width="40">
-								<p:commandButton icon="ui-icon-trash" action="#{cdBean.removerMusica(index)}"
-									update=":form:musicas" title="Remover Música" />
+								<p:commandButton icon="ui-icon-trash"
+									action="#{cdBean.removerMusica(index)}" update=":form:musicas"
+									title="Remover Música" />
 							</p:column>
 						</p:dataTable>
 '					</p:layoutUnit>
@@ -221,7 +222,19 @@
 					#{cd.assuntosToString}
 				</p:column>
 				<p:column headerText="Músicas" width="250">
-					#{cd.musicasToString}
+					<p:dataList value="#{cd.musicas}" var="musica" type="definition">
+					    <h:outputLink id="x" value="#">
+					        <h:outputText value="#{musica}" style="cursor:pointer" />
+					    </h:outputLink>						
+						<p:overlayPanel for="x" showEffect="fade" 
+							hideEffect="fade" showEvent="mouseover" hideEvent="mouseout"
+							dismissable="false" showCloseIcon="true" at="right top">
+							<p:dataList value="#{musica.compositores}" var="c" type="definition" emptyMessage="Não Cadastrado">
+								<f:facet name="header">Compositores</f:facet>
+								<p:column>#{c.nome}</p:column>
+							</p:dataList>						
+						</p:overlayPanel>
+					</p:dataList>
 				</p:column>
 				<p:column>
 					<h:form>
@@ -262,28 +275,75 @@
 			<ui:param name="bean" value="#{cdBean}" />
 		</ui:include>
 
-		<!-- DIALOG Cantor.......................................................................................... -->
+		<!-- DIALOG Música.......................................................................................... -->
 		<p:dialog header="Música" widgetVar="dlgAddMusica" resizable="false"
 			modal="true">
-			<h:form>
-				<h:panelGrid columns="2">
-					<p:outputLabel value="Faixa: " for="faixa" />
-					<p:inputText id="faixa" value="#{cdBean.musicaAdd.faixa}" />
-					<p:outputLabel value="Título:" for="titulo" />
-					<p:inputText id="titulo" value="#{cdBean.musicaAdd.titulo}" />
-					<p:outputLabel value="Duração:" for="duracao" />
-					<p:inputText id="duracao" value="#{cdBean.musicaAdd.duracao}" />
-					<p:outputLabel value="Compositores:" for="compositores" />
-					<p:autoComplete minQueryLength="2" id="compositores"
-						value="#{cdBean.musicaAdd.compositores}"
-						completeMethod="#{cdBean.compositorDAO.findByNome}" var="c"
-						itemLabel="#{c.nome}" itemValue="#{c}"
-						converter="#{entityConverter}" forceSelection="true"
-						multiple="true" />
-
+			<h:form id="formMusica">
+				<h:panelGrid>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Faixa: " for="faixa" />
+						</p:column>
+						<p:column>
+							<p:inputText id="faixa" value="#{cdBean.musicaAdd.faixa}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Título:" for="titulo" />
+						</p:column>
+						<p:column>
+							<p:inputText id="titulo" value="#{cdBean.musicaAdd.titulo}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Duração:" for="duracao" />
+						</p:column>
+						<p:column>
+							<p:inputMask mask="99:99" id="duracao"
+								value="#{cdBean.musicaAdd.duracao}">
+								<f:convertDateTime pattern="mm:ss" timeZone="GMT-03:00"
+									type="time" timeStyle="short" />
+							</p:inputMask>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Compositores:" for="compositores" />
+						</p:column>
+						<p:column>
+							<p:autoComplete minQueryLength="2" id="compositores"
+								value="#{cdBean.musicaAdd.compositores}"
+								completeMethod="#{cdBean.compositorDAO.findByNome}" var="c"
+								itemLabel="#{c.nome}" itemValue="#{c}"
+								converter="#{entityConverter}" forceSelection="true"
+								multiple="true" />
+						</p:column>
+						<p:column>
+							<p:commandButton id="showAddCompositorButton" icon="ui-icon-plus"
+								immediate="true" title="Adicionar Compositor" process="formMusica:compositores"
+								onclick="PF('dlgNovoCompositor').show()" />
+						</p:column>
+					</p:row>
 					<p:commandButton value="Gravar" action="#{cdBean.addMusica}"
 						oncomplete="PF('dlgAddMusica').hide();" process="@form"
-						update="@form :form:musicas" />
+						update="@form :formMusica:compositores" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- DIALOG Compositor.......................................................................................... -->
+		<p:dialog header="Compositor" widgetVar="dlgNovoCompositor"
+			resizable="false" modal="true">
+			<h:form>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Compositor: " for="compositor" />
+					<p:inputText id="compositor" value="#{cdBean.compositorAdd.nome}" />
+
+					<p:commandButton value="Gravar" action="#{cdBean.gravarCompositor}"
+						oncomplete="PF('dlgNovoCompositor').hide();" process="@form"
+						update="@form :formMusica:compositores" />
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

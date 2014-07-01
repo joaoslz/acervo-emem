@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ma.cultura.emem.bean.datamodel.CDLazyDataModel;
+import ma.cultura.emem.dao.CDDAO;
 import ma.cultura.emem.dao.MidiaDAO;
 import ma.cultura.emem.dao.auxiliar.CantorDAO;
 import ma.cultura.emem.dao.auxiliar.CompositorDAO;
@@ -15,6 +16,7 @@ import ma.cultura.emem.dao.auxiliar.GravadoraDAO;
 import ma.cultura.emem.modelo.CD;
 import ma.cultura.emem.modelo.Musica;
 import ma.cultura.emem.modelo.auxiliar.Cantor;
+import ma.cultura.emem.modelo.auxiliar.Compositor;
 import ma.cultura.emem.modelo.auxiliar.Gravadora;
 import ma.cultura.emem.modelo.auxiliar.Midia;
 
@@ -26,7 +28,9 @@ public class CDBean extends AbstractItemAcervoBean {
 	
 	@Inject
 	private CDLazyDataModel cdLazyDataModel;
-	
+
+	@Inject
+	private CDDAO cdDAO;
 	@Inject
 	private MidiaDAO midiaDAO;
 	
@@ -39,7 +43,21 @@ public class CDBean extends AbstractItemAcervoBean {
 
 	private Gravadora gravadoraAdd = new Gravadora();
 	private Cantor cantorAdd = new Cantor();
+	private Compositor compositorAdd =  new Compositor();
 	private Musica musicaAdd = new Musica();
+	
+	
+	@Override
+	public void gravar() {
+		//se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
+		boolean isEdicao = getItemAcervo().getId() != null;
+		itemAcervo = cdDAO.atualizar(getCD());
+		if (isEdicao) {
+			limparForm();
+		}else{
+			showDialogExemplares();
+		}
+	}
 	
 	
 	public void addMusica(){
@@ -54,6 +72,12 @@ public class CDBean extends AbstractItemAcervoBean {
 			m.setCd(null);
 			logger.debug("REMOVIDO DA LISTA: " + m.getTitulo());
 		}
+	}
+
+	public void gravarCompositor(){
+		compositorDAO.adicionar(compositorAdd);
+		musicaAdd.getCompositores().add(compositorAdd);
+		compositorAdd = new Compositor();
 	}
 	
 	public void gravarCantor(){
@@ -124,5 +148,15 @@ public class CDBean extends AbstractItemAcervoBean {
 
 	public CompositorDAO getCompositorDAO() {
 		return compositorDAO;
+	}
+
+
+	public Compositor getCompositorAdd() {
+		return compositorAdd;
+	}
+
+
+	public void setCompositorAdd(Compositor compositorAdd) {
+		this.compositorAdd = compositorAdd;
 	}
 }

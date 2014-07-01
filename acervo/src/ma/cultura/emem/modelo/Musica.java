@@ -1,16 +1,21 @@
 package ma.cultura.emem.modelo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import ma.cultura.emem.modelo.auxiliar.Compositor;
 
@@ -18,46 +23,34 @@ import ma.cultura.emem.modelo.auxiliar.Compositor;
 @NamedQueries({ 
 	@NamedQuery(name = "Musica.findAll", query = "from Musica")
 })
-@IdClass(MusicaId.class)
+//@IdClass(MusicaId.class)
 public class Musica implements Serializable {
 
 	private static final long serialVersionUID = -3083428134975977541L;
 
 	@Id
-	private int faixa;
+	@GeneratedValue
+	private Integer id;
+	private Integer faixa;
 	private String titulo;
-	private int duracao;
 	
-	@Id
+	@Temporal(TemporalType.TIME)
+	private Date duracao;
+	
+//	@Id
 	@ManyToOne
 	@JoinColumn(name="cd_id")
 	private CD cd;
 
 	@ManyToMany
-	private List<Compositor> compositores;
+	private List<Compositor> compositores = new ArrayList<Compositor>();
 	
-	public int getFaixa() {
-		return faixa;
-	}
-
-	public void setFaixa(int faixa) {
-		this.faixa = faixa;
-	}
-
 	public String getTitulo() {
 		return titulo;
 	}
 
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
-	}
-
-	public int getDuracao() {
-		return duracao;
-	}
-
-	public void setDuracao(int duracao) {
-		this.duracao = duracao;
 	}
 
 	public CD getCd() {
@@ -78,8 +71,35 @@ public class Musica implements Serializable {
 
 	@Override
 	public String toString() {
-		return faixa + " - " + titulo + " (" + duracao + ")";
+		return faixa + " - " + titulo + " (" + getDuracaoToString() + ")";
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getFaixa() {
+		return faixa;
+	}
+
+	public void setFaixa(Integer faixa) {
+		this.faixa = faixa;
+	}
+
+	public Date getDuracao() {
+		return duracao;
+	}
+
+	public void setDuracao(Date duracao) {
+		this.duracao = duracao;
 	}
 	
-	
+	public String getDuracaoToString(){
+		SimpleDateFormat f = new SimpleDateFormat("mm:ss");
+		return f.format(duracao);
+	}
 }

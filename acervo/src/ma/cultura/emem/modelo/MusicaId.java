@@ -10,21 +10,16 @@ public class MusicaId implements Serializable {
 	private static final long serialVersionUID = -8669532704023815911L;
 	private Integer cd;
 	private Integer faixa;
-
-	public Integer getFaixa() {
-		return faixa;
+	
+	public MusicaId() {
+		super();
 	}
 
-	public void setFaixa(Integer faixa) {
-		this.faixa = faixa;
-	}
-
-	public Integer getCd() {
-		return cd;
-	}
-
-	public void setCd(Integer cd) {
+	//Esta classe precisa deste construtor com os campos, caso contrario o jpa nao consegue injetar os ids.
+	public MusicaId(Integer cd, Integer faixa) {
+		super();
 		this.cd = cd;
+		this.faixa = faixa;
 	}
 
 	@Override

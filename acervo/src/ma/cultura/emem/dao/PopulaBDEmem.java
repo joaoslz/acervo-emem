@@ -1,26 +1,33 @@
 package ma.cultura.emem.dao;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.EntityManager;
 
-import ma.cultura.emem.modelo.CD;
 import ma.cultura.emem.modelo.Musica;
 
 public class PopulaBDEmem {
 
 	public static void main(String[] args) {
 
-		EntityManager em = new JPAUtil().getEntityManager();
-		CD cd  = new CD();
-		cd.setTitulo("teste");
-		
-		Musica m = new Musica();
-		m.setTitulo("musica 1");
-		
-		cd.addMusica(m);
+		try {
+			SimpleDateFormat f = new SimpleDateFormat("mm:ss");
+			Date d = f.parse("01:02");
+			EntityManager em = new JPAUtil().getEntityManager();
 
-		em.persist(cd);
-		
-		em.close();
+			for (Musica m : em.createQuery("from Musica", Musica.class).getResultList()) {
+				System.out.println(f.format(m.getDuracao()));
+			}
+
+			System.out.println(f.format(d));
+
+			em.close();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 
 	}
 }
