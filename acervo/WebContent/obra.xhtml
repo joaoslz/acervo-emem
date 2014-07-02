@@ -13,7 +13,7 @@
 		<h:form id="form">
 
 			<!--  Formulário de cadastro de itemAcervo -->
-			<p:fieldset legend="Cadastro de Obra" toggleable="true" collapsed="true">
+			<p:fieldset legend="Cadastro de Obra" toggleable="true" collapsed="#{empty obraBean.obra.id}">
 				<p:panelGrid>
 					<p:row>
 						<p:column>
@@ -160,7 +160,9 @@
 					</f:facet>
 				</p:toolbar>
 			</p:fieldset>
-
+<!-- Solucioina o bug de dialog que aparece ao pressionar enter -->
+			<p:commandButton id="btnDefault" style="display:none"/>
+			<p:defaultCommand target="btnDefault" />
 		</h:form>
 		<br/>
 		<!-- ....................................TABELA......................................................... -->

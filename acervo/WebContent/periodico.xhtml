@@ -58,7 +58,9 @@
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-
+				<!-- Solucioina o bug de dialog que aparece ao pressionar enter -->
+				<p:commandButton id="btnDefault" style="display:none" />
+				<p:defaultCommand target="btnDefault" />
 			</h:form>
 			<!-- ....................................TABELA......................................................... -->
 			<h:form id="formTabela">
@@ -83,11 +85,11 @@
 						<h:outputText value="Não" rendered="#{!periodico.ehAssinado}" />
 					</p:column>
 					<p:column headerText="Alterar">
-							<p:commandButton icon="ui-icon-pencil" title="Alterar Periódico"
-								update=":form">
-								<f:setPropertyActionListener value="#{periodico}"
-									target="#{periodicoBean.periodico}" />
-							</p:commandButton>
+						<p:commandButton icon="ui-icon-pencil" title="Alterar Periódico"
+							update=":form">
+							<f:setPropertyActionListener value="#{periodico}"
+								target="#{periodicoBean.periodico}" />
+						</p:commandButton>
 					</p:column>
 				</p:dataTable>
 			</h:form>

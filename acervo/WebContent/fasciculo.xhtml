@@ -30,7 +30,8 @@
 										value="#{fasciculoBean.periodico}"
 										converter="#{entityConverter}" var="t" filter="true"
 										filterMatchMode="contains">
-										<p:ajax event="change" process="@this" update=":formTabela:tabela " />
+										<p:ajax event="change" process="@this"
+											update=":formTabela:tabela " />
 								            <f:selectItems
 											value="#{fasciculoBean.listaPeriodicos}" var="p"
 											itemLabel="#{p.nome}" itemValue="#{p}">
@@ -73,7 +74,8 @@
 							<p:column width="90">
 								<p:commandButton icon="ui-icon-pencil" title="Alterar Revista"
 									update=":form" oncomplete="PF('dlgNovaRevista').show()">
-									<f:setPropertyActionListener value="#{fasciculo}" target="#{fasciculoBean.itemAcervo}" />
+									<f:setPropertyActionListener value="#{fasciculo}"
+										target="#{fasciculoBean.itemAcervo}" />
 								</p:commandButton>
 								<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
 									oncomplete="PF('dlgExemplares').show()"
@@ -110,14 +112,14 @@
 						</p:column>
 						<p:column>
 							<p:inputText id="tituloArtigo"
-								value="#{fasciculoBean.artigoAdd.titulo}" tabindex="1"/>
+								value="#{fasciculoBean.artigoAdd.titulo}" tabindex="1" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Página Inicial:" for="paginaInicial" />
 						</p:column>
 						<p:column>
 							<p:inputText id="paginaInicial" size="2"
-								value="#{fasciculoBean.artigoAdd.paginaInicial}"  tabindex="3"/>
+								value="#{fasciculoBean.artigoAdd.paginaInicial}" tabindex="3" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -126,14 +128,14 @@
 						</p:column>
 						<p:column>
 							<p:inputText id="assuntoArtigo"
-								value="#{fasciculoBean.artigoAdd.assunto}"  tabindex="2"/>
+								value="#{fasciculoBean.artigoAdd.assunto}" tabindex="2" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Página Final" for="paginaFinal" />
 						</p:column>
 						<p:column>
 							<p:inputText id="paginaFinal" size="2"
-								value="#{fasciculoBean.artigoAdd.paginaFinal}"  tabindex="4"/>
+								value="#{fasciculoBean.artigoAdd.paginaFinal}" tabindex="4" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -151,23 +153,28 @@
 						<p:column>
 							<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
 								process="formArtigo:autores" title="Adicionar Autor"
-								onclick="PF('dlgNovoAutor').show()"  tabindex="6"/>
+								onclick="PF('dlgNovoAutor').show()" tabindex="6" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
 				<p:toolbar
 					style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
 					<f:facet name="right">
-							<p:commandButton value="Adicionar Artigo" action="#{fasciculoBean.incluirArtigo}"
-								update="@form :form:tabelaArtigos"  tabindex="7"/>
+						<p:commandButton value="Adicionar Artigo"
+							action="#{fasciculoBean.incluirArtigo}"
+							update="@form :form:tabelaArtigos" tabindex="7" />
 					</f:facet>
 				</p:toolbar>
+				<!-- Solucioina o bug de dialog que aparece ao pressionar enter -->
+				<p:commandButton id="btnDefault" style="display:none" />
+				<p:defaultCommand target="btnDefault" />
 			</h:form>
 		</p:dialog>
 
-		<p:dialog widgetVar="dlgNovaRevista" closable="false" header="Cadastro de Revistas">
+		<p:dialog widgetVar="dlgNovaRevista" closable="false"
+			header="Cadastro de Revistas">
 			<h:form id="form">
-				<h:message for="titulo"/>
+				<h:message for="titulo" />
 				<p:panelGrid>
 					<p:row>
 						<p:column>
@@ -175,7 +182,7 @@
 						</p:column>
 						<p:column colspan="3">
 							<p:inputText id="titulo"
-								value="#{fasciculoBean.itemAcervo.titulo}" style="width:390px" >
+								value="#{fasciculoBean.itemAcervo.titulo}" style="width:390px">
 								<f:ajax event="blur" render="messages" />
 							</p:inputText>
 						</p:column>
@@ -246,10 +253,11 @@
 					<p:row>
 						<p:column colspan="5">
 							<p:dataTable value="#{fasciculoBean.fasciculo.artigos}"
-							    emptyMessage="Nenhum artigo adicionado!"
-								var="artigo" id="tabelaArtigos" style="width:650px" rowIndexVar="index">
+								emptyMessage="Nenhum artigo adicionado!" var="artigo"
+								id="tabelaArtigos" style="width:650px" rowIndexVar="index">
 								<f:facet name="header">
-									<p:commandButton value="Adicionar Artigo" onclick="PF('dlgAddArtigo').show()" immediate="true"/>
+									<p:commandButton value="Adicionar Artigo"
+										onclick="PF('dlgAddArtigo').show()" immediate="true" />
 								</f:facet>
 								<p:column headerText="Título">
 									<h:outputText value="#{artigo.titulo}" />
@@ -270,29 +278,50 @@
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-				<br/>
+				<br />
 				<p:panelGrid rendered="#{empty fasciculoBean.fasciculo.id}">
 					<f:facet name="header"> Dados do Exemplar</f:facet>
 					<p:row>
-						<p:column><p:outputLabel value="Qtd Exemplares: " /></p:column>
-						<p:column><p:spinner value="#{fasciculoBean.exemplaresAdd.quantidade}" max="300" min="1" size="3"/></p:column>
-						<p:column><p:outputLabel value="Data de Aquisição: " /></p:column>
-						<p:column><p:calendar value="#{fasciculoBean.exemplaresAdd.dataAquisicao}" locale="pt_BR" display="inline" navigator="true" size="10"/></p:column>
-						<p:column><p:outputLabel value="É Doaçao? " /></p:column>
-						<p:column><p:selectBooleanCheckbox value="#{fasciculoBean.exemplaresAdd.ehDoacao}" /></p:column>
+						<p:column>
+							<p:outputLabel value="Qtd Exemplares: " />
+						</p:column>
+						<p:column>
+							<p:spinner value="#{fasciculoBean.exemplaresAdd.quantidade}"
+								max="300" min="1" size="3" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Data de Aquisição: " />
+						</p:column>
+						<p:column>
+							<p:calendar value="#{fasciculoBean.exemplaresAdd.dataAquisicao}"
+								locale="pt_BR" display="inline" navigator="true" size="10" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="É Doaçao? " />
+						</p:column>
+						<p:column>
+							<p:selectBooleanCheckbox
+								value="#{fasciculoBean.exemplaresAdd.ehDoacao}" />
+						</p:column>
 					</p:row>
 				</p:panelGrid>
 				<!-- ....................................BOTÕES......................................................... -->
 				<p:toolbar
 					style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
 					<f:facet name="right">
-						<p:commandButton value="#{fasciculoBean.stringBotaoGravar}" onsuccess="PF('dlgNovaRevista').hide()"
-							action="#{fasciculoBean.gravar}" process="@form" update="@form :formTabela:tabela" />
+						<p:commandButton value="#{fasciculoBean.stringBotaoGravar}"
+							onsuccess="PF('dlgNovaRevista').hide()"
+							action="#{fasciculoBean.gravar}" process="@form"
+							update="@form :formTabela:tabela" />
 						<p:separator />
-						<p:commandButton value="Cancelar" update="@form" action="#{fasciculoBean.limparForm}"
-							 oncomplete="PF('dlgNovaRevista').hide()" />
+						<p:commandButton value="Cancelar" update="@form"
+							action="#{fasciculoBean.limparForm}"
+							oncomplete="PF('dlgNovaRevista').hide()" />
 					</f:facet>
 				</p:toolbar>
+				<!-- Solucioina o bug de dialog que aparece ao pressionar enter -->
+				<p:commandButton id="btnDefault" style="display:none" />
+				<p:defaultCommand target="btnDefault" />
 			</h:form>
 		</p:dialog>
 	</ui:define>

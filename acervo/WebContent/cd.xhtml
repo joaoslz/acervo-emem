@@ -13,7 +13,7 @@
 		<h:form id="form">
 
 			<!--  Formulário de cadastro de itemAcervo -->
-			<p:fieldset legend="Cadastro de CDs" toggleable="true" collapsed="true" widgetVar="cdFieldSet">
+			<p:fieldset legend="Cadastro de CDs" toggleable="true" collapsed="#{empty cdBean.CD.id}" widgetVar="cdFieldSet">
 
 				<p:layout style="min-width:100px;min-height:380px;">
 					<p:layoutUnit position="center" resizable="true"
@@ -192,7 +192,7 @@
 				<p:toolbar
 					style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
 					<f:facet name="right">
-						<p:commandButton value="#{cdBean.stringBotaoGravar}" oncomplete="PF('cdFieldSet').toggle()"
+						<p:commandButton value="#{cdBean.stringBotaoGravar}"
 							action="#{cdBean.gravar}" process="@form" update="@form :formTabela:tabela" />
 						<p:separator />
 						<p:commandButton value="Cancelar" update="@form"
@@ -201,6 +201,9 @@
 				</p:toolbar>
 			</p:fieldset>
 
+<!-- Solucioina o bug de dialog que aparece ao pressionar enter -->
+			<p:commandButton id="btnDefault" style="display:none"/>
+			<p:defaultCommand target="btnDefault" />
 		</h:form>
 
 		<br />
@@ -249,7 +252,7 @@
 				</p:column>
 				<p:column>
 					<p:commandButton icon="ui-icon-pencil" title="Alterar CD"
-						update=":form" oncomplete="PF('cdFieldSet').toggle()">
+						update=":form" >
 						<f:setPropertyActionListener value="#{cd}"
 							target="#{cdBean.itemAcervo}" />
 					</p:commandButton>
