@@ -8,39 +8,44 @@
 
 <ui:composition template="/WEB-INF/template/_template.xhtml">
 	<ui:define name="conteudo">
-		<p:fieldset legend="Cadastro de Gravadora">
-			<h:form id="formGravadora">
-				<p:messages />
-				<h:panelGrid columns="5" style="padding:3px ">
+		<p:fieldset legend="#{titulo}">
+		
+			<h:form id="form">
+				<p:panelGrid columns="5" >
 					<p:outputLabel value="Nome:" for="nome" />
-					<p:inputText id="nome" value="#{gravadoraBean.gravadora.nome}"
+					<p:inputText id="nome" value="#{bean.entity.nome}"
 						required="true" requiredMessage="Campo nome deve ser digitado" />
-
-					<p:commandButton value="Gravar" action="#{gravadoraBean.gravar}"
-						process="@form" update="@form :formTabelaGravadoras:tabelaGravadoras" />
-				</h:panelGrid>
+					<ui:insert name="camposExtra"></ui:insert>
+					<p:commandButton value="Gravar" action="#{bean.gravar}"
+						process="@form" update="@form :formtabela:tabela" />
+				</p:panelGrid>
 			</h:form>
-			<h:form id="formTabelaGravadoras">
-				<p:dataTable editable="true" rows="10" paginator="true"
-					paginatorPosition="bottom" paginatorAlwaysVisible="false" id="tabelaGravadoras"
-					value="#{gravadoraBean.gravadoras}" var="gravadora"
-					emptyMessage="Nenhuma gravadora cadastrada" style="width:700px">
-					<p:ajax event="rowEdit" listener="#{gravadoraBean.editGravadora}" />
+			
+			<h:form id="formtabela">
+				<p:dataTable id="tabela" editable="true" rows="10" paginator="true"
+					paginatorPosition="bottom" paginatorAlwaysVisible="false"
+					value="#{bean.lazyDataModel}" lazy="true" var="e"
+					emptyMessage="Nenhuma mídia cadastrada" style="width:700px">
+					
+					<p:ajax event="rowEdit" listener="#{bean.edit}" />
+					
 					<p:column headerText="Nome">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{gravadora.nome}" />
+								<h:outputText value="#{e.nome}" />
 							</f:facet>
 							<f:facet name="input">
-								<p:inputText value="#{gravadora.nome}" />
+								<p:inputText value="#{e.nome}" />
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
+					<ui:insert name="colunasExtra"></ui:insert>
 					<p:column>
 						<p:rowEditor />
 					</p:column>
 				</p:dataTable>
 			</h:form>
+			
 		</p:fieldset>
 	</ui:define>
 </ui:composition>

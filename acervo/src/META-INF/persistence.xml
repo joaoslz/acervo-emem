@@ -14,7 +14,6 @@
 		<class>ma.cultura.emem.modelo.Fasciculo</class>
 		<class>ma.cultura.emem.modelo.ItemAcervo</class>
 		<class>ma.cultura.emem.modelo.Musica</class>
-		<class>ma.cultura.emem.modelo.MusicaId</class>
 		<class>ma.cultura.emem.modelo.Obra</class>
 		<class>ma.cultura.emem.modelo.Partitura</class>
 		<class>ma.cultura.emem.modelo.Periodico</class>

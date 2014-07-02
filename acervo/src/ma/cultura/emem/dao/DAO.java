@@ -6,17 +6,11 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
 
-import ma.cultura.emem.modelo.Obra;
-
-import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 public class DAO<T> implements Serializable {

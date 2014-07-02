@@ -11,8 +11,7 @@ import ma.cultura.emem.modelo.BaseEntity;
 
 @Entity
 @NamedQueries({ 
-	@NamedQuery(name = "Midia.findAll", query = "from Midia m order by m.id desc"),
-	@NamedQuery(name = "Midia.findByNome", query = "from Midia m where m.nome like :nome order by m.nome asc")
+	@NamedQuery(name = "Midia.findAll", query = "from Midia m order by m.id desc")
 })
 public class Midia extends BaseEntity {
 

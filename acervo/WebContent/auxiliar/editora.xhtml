@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/_singleNameEntityForm.xhtml">
+	<ui:param name="bean" value="#{editoraBean}"/>
+	<ui:param name="titulo" value="Cadastro de Editora"/>
+	<ui:define name="camposExtra">
+		<p:outputLabel value="Site: " for="site" />
+		<p:inputText id="site" value="#{editoraBean.editora.site}"/>
+	</ui:define>
+	<ui:define name="colunasExtra">
+		<p:column headerText="Site">
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{e.site}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText value="#{e.site}" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+	</ui:define>
+	
+</ui:composition>
+</html>

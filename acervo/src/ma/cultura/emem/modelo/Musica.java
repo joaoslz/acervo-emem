@@ -1,6 +1,5 @@
 package ma.cultura.emem.modelo;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,8 +22,7 @@ import ma.cultura.emem.modelo.auxiliar.Compositor;
 @NamedQueries({ 
 	@NamedQuery(name = "Musica.findAll", query = "from Musica")
 })
-//@IdClass(MusicaId.class)
-public class Musica implements Serializable {
+public class Musica extends BaseEntity {
 
 	private static final long serialVersionUID = -3083428134975977541L;
 
@@ -37,7 +35,6 @@ public class Musica implements Serializable {
 	@Temporal(TemporalType.TIME)
 	private Date duracao;
 	
-//	@Id
 	@ManyToOne
 	@JoinColumn(name="cd_id")
 	private CD cd;
@@ -72,10 +69,6 @@ public class Musica implements Serializable {
 	}
 
 	@Override
-	public String toString() {
-		return faixa + " - " + titulo + " (" + getDuracaoToString() + ")";
-	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -103,5 +96,10 @@ public class Musica implements Serializable {
 	public String getDuracaoToString(){
 		SimpleDateFormat f = new SimpleDateFormat("mm:ss");
 		return f.format(duracao);
+	}
+	
+	@Override
+	public String toString() {
+		return faixa + " - " + titulo + " (" + getDuracaoToString() + ")";
 	}
 }

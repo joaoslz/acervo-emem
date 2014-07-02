@@ -14,9 +14,9 @@
 
 @font-face {
 	font-family: Yanone Kaffeesatz;
-	src: url('../fonts/YanoneKaffeesatz-Regular.eot');
+	src: url('../fonts/YanoneKaffeesatz-Regular.eot.xhtml?ln=v_1_0');
 	src: local("Yanone Kaffeesatz"),
-		url('../fonts/YanoneKaffeesatz-Regular.ttf');
+		url('../fonts/YanoneKaffeesatz-Regular.ttf.xhtml?ln=v_1_0');
 }
 
 * {
@@ -60,7 +60,7 @@ img {
 	position: relative;
 	vertical-align: middle;
 	height: 50px;
-	background: url(../images/logo.jpg) no-repeat top left;
+	background: url(../images/logo.jpg.xhtml?ln=v_1_0) no-repeat top left;
 	background-color: #357FB0;
 }
 

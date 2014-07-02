@@ -1,15 +1,15 @@
-package ma.cultura.emem.bean;
+package ma.cultura.emem.bean.auxiliar;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class ExemplarPOJO implements Serializable{
+public class ExemplarLoteAux implements Serializable{
 	private static final long serialVersionUID = 1583124054830275018L;
 	private int quantidade = 1;//Default 1
 	private boolean ehDoacao;
 	private Date dataAquisicao;
 
-	public ExemplarPOJO() {
+	public ExemplarLoteAux() {
 	}
 
 	public int getQuantidade() {

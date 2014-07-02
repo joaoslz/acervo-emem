@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import ma.cultura.emem.bean.auxiliar.ExemplarLoteAux;
 import ma.cultura.emem.dao.ExemplarDAO;
 import ma.cultura.emem.dao.ItemAcervoDAO;
 import ma.cultura.emem.dao.auxiliar.AssuntoDAO;
@@ -49,7 +50,7 @@ public abstract class AbstractItemAcervoBean implements Serializable{
 	private Editora editoraAdd = new Editora();
 	private Assunto assuntoAdd = new Assunto();
 	private Local localAdd = new Local();
-	private ExemplarPOJO exemplaresAdd = new ExemplarPOJO();
+	private ExemplarLoteAux exemplaresAdd = new ExemplarLoteAux();
 
 	private List<Exemplar> exemplares = new ArrayList<Exemplar>();
 	
@@ -117,7 +118,7 @@ public abstract class AbstractItemAcervoBean implements Serializable{
 			exemplares.add(exemplar);
 		}
 		exemplarDAO.adicionarExemplares(exemplares);
-		exemplaresAdd = new ExemplarPOJO();
+		exemplaresAdd = new ExemplarLoteAux();
 		updateListaExemplares();
 	}
 
@@ -215,11 +216,11 @@ public abstract class AbstractItemAcervoBean implements Serializable{
 		this.idiomaAdd = idiomaAdd;
 	}
 
-	public ExemplarPOJO getExemplaresAdd() {
+	public ExemplarLoteAux getExemplaresAdd() {
 		return exemplaresAdd;
 	}
 
-	public void setExemplaresAdd(ExemplarPOJO exemplaresAdd) {
+	public void setExemplaresAdd(ExemplarLoteAux exemplaresAdd) {
 		this.exemplaresAdd = exemplaresAdd;
 	}
 
