@@ -8,7 +8,7 @@ import javax.inject.Named;
 
 import ma.cultura.emem.dao.PartituraDAO;
 import ma.cultura.emem.modelo.Partitura;
-import ma.cultura.emem.modelo.Periodico;
+import ma.cultura.emem.modelo.auxiliar.Periodico;
 
 import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;

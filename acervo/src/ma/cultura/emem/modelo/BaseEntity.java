@@ -17,7 +17,7 @@ public abstract class BaseEntity implements Serializable {
 	public boolean equals(Object obj) {
 		if (!getClass().isInstance(obj))
 			return false;
-		BaseEntity other = (BaseEntity) obj;
+		final BaseEntity other = (BaseEntity) obj;
 		if (this.getId() == null || other.getId() == null)
 			return false;
 		return this.getId().equals(other.getId());

@@ -4,13 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 
 import ma.cultura.emem.modelo.BaseEntity;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = "Idioma.findAll", query = "from Idioma i order by i.nome asc") })
 public class Idioma extends BaseEntity {
 
 	private static final long serialVersionUID = -8054954052714813400L;
@@ -18,8 +15,8 @@ public class Idioma extends BaseEntity {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
-	@Column(length=100, nullable=false, unique=true )
+
+	@Column(length = 100, nullable = false, unique = true)
 	private String nome;
 
 	@Override

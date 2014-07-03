@@ -58,11 +58,14 @@
 							<p:column headerText="Título" filterBy="#{fasciculo.titulo}">
 								<h:outputText value="#{fasciculo.titulo}" />
 							</p:column>
-							<p:column headerText="Vol." width="20">
-								<h:outputText value="#{fasciculo.volume}" />
+							<p:column headerText="Ano" width="50">
+								<h:outputText value="#{fasciculo.ano}" />
 							</p:column>
 							<p:column headerText="Mês" width="50">
 								<h:outputText value="#{fasciculo.mes}" />
+							</p:column>
+							<p:column headerText="Vol." width="20">
+								<h:outputText value="#{fasciculo.volume}" />
 							</p:column>
 							<p:column headerText="Assuntos">
 								<h:outputText value="#{fasciculo.assuntosToString}" />

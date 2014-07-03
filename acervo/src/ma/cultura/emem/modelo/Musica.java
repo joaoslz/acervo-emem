@@ -11,17 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import ma.cultura.emem.modelo.auxiliar.Compositor;
 
 @Entity
-@NamedQueries({ 
-	@NamedQuery(name = "Musica.findAll", query = "from Musica")
-})
 public class Musica extends BaseEntity {
 
 	private static final long serialVersionUID = -3083428134975977541L;
@@ -31,17 +26,17 @@ public class Musica extends BaseEntity {
 	private Integer id;
 	private Integer faixa;
 	private String titulo;
-	
+
 	@Temporal(TemporalType.TIME)
 	private Date duracao;
-	
+
 	@ManyToOne
-	@JoinColumn(name="cd_id")
+	@JoinColumn(name = "cd_id")
 	private CD cd;
 
 	@ManyToMany
 	private List<Compositor> compositores = new ArrayList<Compositor>();
-	
+
 	public String getTitulo() {
 		return titulo;
 	}
@@ -59,7 +54,7 @@ public class Musica extends BaseEntity {
 	}
 
 	public List<Compositor> getCompositores() {
-		if(compositores == null)
+		if (compositores == null)
 			compositores = new ArrayList<>();
 		return compositores;
 	}
@@ -92,12 +87,12 @@ public class Musica extends BaseEntity {
 	public void setDuracao(Date duracao) {
 		this.duracao = duracao;
 	}
-	
-	public String getDuracaoToString(){
-		SimpleDateFormat f = new SimpleDateFormat("mm:ss");
+
+	public String getDuracaoToString() {
+		final SimpleDateFormat f = new SimpleDateFormat("mm:ss");
 		return f.format(duracao);
 	}
-	
+
 	@Override
 	public String toString() {
 		return faixa + " - " + titulo + " (" + getDuracaoToString() + ")";

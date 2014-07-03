@@ -11,20 +11,6 @@
 	<ui:define name="conteudo">
 		<h:form id="form">
 
-			<div style="height: 15px;">
-				<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
-				<p:ajaxStatus id="ajaxStatusPanel" styleClass="ajaxStatusPanel">
-					<f:facet name="start">
-						<h:graphicImage value="/images/ajaxloading.gif" />
-							Carregando...
-						</f:facet>
-					<f:facet name="complete">
-						<h:outputText value="" />
-					</f:facet>
-				</p:ajaxStatus>
-				<!-- ......................................................................................... -->
-			</div>
-			<p:messages id="messages" autoUpdate="true" />
 
 			<!--  Formulário de cadastro de obra -->
 			<p:panelGrid style="width:99%">

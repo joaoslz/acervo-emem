@@ -12,8 +12,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -30,10 +28,6 @@ import ma.cultura.emem.modelo.auxiliar.Local;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "item_acervo")
-@NamedQueries({
-	@NamedQuery(name = "ItemAcervo.findAll", query = "SELECT i FROM ItemAcervo i"),
-	@NamedQuery(name = "ItemAcervo.findByTitulo", query = "from Obra a where a.titulo like :titulo")
-})
 public abstract class ItemAcervo extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -41,30 +35,30 @@ public abstract class ItemAcervo extends BaseEntity {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
-	@Column(length=100, nullable=false)
+
+	@Column(length = 100, nullable = false)
 	private String titulo;
-	
-	@Column(length=100)
+
+	@Column(length = 100)
 	private String subtitulo;
-	
-//	@Temporal(TemporalType.TIMESTAMP)
-//	private Calendar dataCadastro;// XXX = Calendar.getInstance();
+
+	// @Temporal(TemporalType.TIMESTAMP)
+	// private Calendar dataCadastro;// XXX = Calendar.getInstance();
 
 	private short ano;
-	
+
 	@ManyToOne
 	private Editora editora;
-	
+
 	@ManyToOne
 	private Local local;
-	
+
 	@ManyToOne
 	private Idioma idioma;
-	
+
 	@ManyToMany
 	private List<Assunto> assuntos = new ArrayList<Assunto>();
-	
+
 	@OneToMany(mappedBy = "itemAcervo")
 	private List<Exemplar> exemplares = new ArrayList<Exemplar>();;
 
@@ -79,7 +73,7 @@ public abstract class ItemAcervo extends BaseEntity {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public void addExemplar(Exemplar exemplar) {
 		if (exemplares == null)
 			exemplares = new ArrayList<Exemplar>();
@@ -95,11 +89,11 @@ public abstract class ItemAcervo extends BaseEntity {
 
 	@Transient
 	public String getAssuntosToString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		if (getAssuntos() != null) {
-			Iterator<Assunto> it = getAssuntos().iterator();
+			final Iterator<Assunto> it = getAssuntos().iterator();
 			while (it.hasNext()) {
-				Assunto a = it.next();
+				final Assunto a = it.next();
 				builder.append(a.getNome());
 				if (it.hasNext()) {
 					builder.append(", ");

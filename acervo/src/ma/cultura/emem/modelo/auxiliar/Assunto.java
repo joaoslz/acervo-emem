@@ -4,27 +4,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 
 import ma.cultura.emem.modelo.BaseEntity;
 
 @Entity
-@NamedQueries({
-	@NamedQuery(name = "Assunto.findAll", query = "from Assunto a order by a.id desc"),
-	@NamedQuery(name = "Assunto.findByNome", query = "from Assunto a where a.nome like :nome order by a.nome asc") })
-
-public class Assunto extends BaseEntity{
+public class Assunto extends BaseEntity {
 
 	private static final long serialVersionUID = 819805863730128933L;
-
 
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
-	
-	@Column(length=100, nullable=false, unique=true )
+
+	@Column(length = 100, nullable = false, unique = true)
 	private String nome;
 
 	@Override
@@ -47,5 +39,5 @@ public class Assunto extends BaseEntity{
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	} 
+	}
 }

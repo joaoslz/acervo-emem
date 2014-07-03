@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+  version="2.1">
+ 
+	<named-query name="Assunto.findByNome">
+		<query>  SELECT x FROM Assunto x WHERE x.nome like :nome order by x.nome asc </query>
+	</named-query>
+	<named-query name="Autor.findByNome">
+		<query>  SELECT x FROM Autor x WHERE x.nome like :nome order by x.nome asc </query>
+	</named-query>
+	<named-query name="Cantor.findByNome">
+		<query>  SELECT x FROM Cantor x WHERE x.nome like :nome order by x.nome asc </query>
+	</named-query>
+	<named-query name="Compositor.findByNome">
+		<query>  SELECT x FROM Compositor x WHERE x.nome like :nome order by x.nome asc </query>
+	</named-query>
+	<named-query name="Editora.findByNome">
+		<query>  SELECT x FROM Editora x WHERE x.nome like :nome order by x.nome asc </query>
+	</named-query>
+	<named-query name="Genero.findByNome">
+		<query>  SELECT x FROM Genero x WHERE x.nome like :nome order by x.nome asc </query>
+	</named-query>
+	<named-query name="Gravadora.findByNome">
+		<query>  SELECT x FROM Gravadora x WHERE x.nome like :nome order by x.nome asc </query>
+	</named-query>
+	<named-query name="Idioma.findByNome">
+		<query>  SELECT x FROM Idioma x WHERE x.nome like :nome order by x.nome asc </query>
+	</named-query>
+	<named-query name="Instrumento.findByNome">
+		<query>  SELECT x FROM Instrumento x WHERE x.nome like :nome order by x.nome asc </query>
+	</named-query>
+	<named-query name="Local.findByNome">
+		<query>  SELECT x FROM Local x WHERE x.nome like :nome order by x.nome asc </query>
+	</named-query>
+	<named-query name="Midia.findByNome">
+		<query>  SELECT x FROM Midia x WHERE x.nome like :nome order by x.nome asc </query>
+	</named-query>
+	<named-query name="Periodico.findByNome">
+		<query>  SELECT x FROM Periodico x WHERE x.nome like :nome order by x.nome asc </query>
+	</named-query>
+	<named-query name="TipoObra.findByNome">
+		<query>  SELECT x FROM TipoObra x WHERE x.nome like :nome order by x.nome asc </query>
+	</named-query>
+</entity-mappings>

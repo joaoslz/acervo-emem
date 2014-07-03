@@ -99,7 +99,7 @@ public abstract class AbstractItemAcervoBean implements Serializable{
 	}
 	
 	public void updateListaExemplares() {
-		exemplares = exemplarDAO.pesquisarExemplaresPorItemAcervo(getItemAcervo().getId());
+		exemplares = exemplarDAO.findByItemAcervo(getItemAcervo().getId());
 	}
 
 	public void editExempar(RowEditEvent event) {

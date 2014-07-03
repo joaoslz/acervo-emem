@@ -16,15 +16,15 @@ public class ExemplarDAO extends DAO<Exemplar> {
 
 	public void adicionarExemplares(List<Exemplar> exemplares) {
 		em.getTransaction().begin();
+		logger.debug("Adicionando Exemplares: " + exemplares.size());
 		for (Exemplar ex : exemplares) {
 			em.persist(ex);
 		}
-		logger.debug("Adicionando Exemplares: " + exemplares.size());
 		em.getTransaction().commit();
 	}
 
-	public List<Exemplar> pesquisarExemplaresPorItemAcervo(Integer idItemAcervo) {
-		TypedQuery<Exemplar> query = em.createNamedQuery("Exemplar.listarPorItemAcervo", Exemplar.class);
+	public List<Exemplar> findByItemAcervo(Integer idItemAcervo) {
+		TypedQuery<Exemplar> query = em.createNamedQuery("Exemplar.findByItemAcervo", Exemplar.class);
 		query.setParameter("idItemAcervo", idItemAcervo);
 		return query.getResultList();
 	}

@@ -2,23 +2,16 @@ package ma.cultura.emem.modelo;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@NamedQueries({ 
-		@NamedQuery(name = "Exemplar.findAll", query = "from Exemplar e order by e.id desc"),
-		@NamedQuery(name = "Exemplar.listarPorItemAcervo", query = "from Exemplar e where e.itemAcervo.id = :idItemAcervo") 
-})
 public class Exemplar extends BaseEntity {
 
 	private static final long serialVersionUID = 8689410871717711520L;
@@ -26,9 +19,9 @@ public class Exemplar extends BaseEntity {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
+
 	private boolean ehDoacao;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Calendar dataAquisicao;
 
@@ -67,7 +60,7 @@ public class Exemplar extends BaseEntity {
 
 	public void setDataAquisicao(Date d) {
 		if (d != null) {
-			dataAquisicao = GregorianCalendar.getInstance();
+			dataAquisicao = Calendar.getInstance();
 			dataAquisicao.setTime(d);
 		}
 	}

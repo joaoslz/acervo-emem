@@ -14,9 +14,9 @@ import ma.cultura.emem.dao.auxiliar.AutorDAO;
 import ma.cultura.emem.modelo.Artigo;
 import ma.cultura.emem.modelo.Fasciculo;
 import ma.cultura.emem.modelo.ItemAcervo;
-import ma.cultura.emem.modelo.Periodico;
 import ma.cultura.emem.modelo.auxiliar.Autor;
 import ma.cultura.emem.modelo.auxiliar.MesEnum;
+import ma.cultura.emem.modelo.auxiliar.Periodico;
 
 import org.primefaces.context.RequestContext;
 

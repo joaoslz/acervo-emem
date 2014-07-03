@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.persistence.TypedQuery;
 
-import ma.cultura.emem.modelo.Periodico;
+import ma.cultura.emem.modelo.auxiliar.Periodico;
 
 public class PeriodicoDAO extends DAO<Periodico> {
 

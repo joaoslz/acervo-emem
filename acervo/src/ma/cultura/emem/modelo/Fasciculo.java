@@ -9,43 +9,37 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import ma.cultura.emem.modelo.auxiliar.MesEnum;
+import ma.cultura.emem.modelo.auxiliar.Periodico;
 
 @Entity
-@NamedQueries({ 
-	@NamedQuery(name = "Fasciculo.findAll", query = "from Fasciculo f order by f.id desc"),
-	@NamedQuery(name = "Fasciculo.contarTodosByPeriodico", query = "select count(f) from Fasciculo f WHERE f.periodico.id = :idPeriodico "),
-	@NamedQuery(name = "Fasciculo.findByPeriodico", query = "from Fasciculo f WHERE f.periodico.id = :idPeriodico order by f.ano desc, f.mes desc")
-})
 public class Fasciculo extends ItemAcervo {
 
 	private static final long serialVersionUID = -1467686486369558017L;
-	
+
 	private short volume;
-	
+
 	private short numPaginas;
-	
+
 	@Enumerated(EnumType.ORDINAL)
 	private MesEnum mes;
 
 	@ManyToOne
 	private Periodico periodico;
 
-	@OneToMany(mappedBy = "fasciculo", orphanRemoval=true, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "fasciculo", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<Artigo> artigos = new ArrayList<>();
 
 	@Transient
 	public String getArtigosToString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		if (getArtigos() != null && !getArtigos().isEmpty()) {
-			Iterator<Artigo> it = getArtigos().iterator();
+			final Iterator<Artigo> it = getArtigos().iterator();
 			while (it.hasNext()) {
-				Artigo a = it.next();
+				final Artigo a = it.next();
 				builder.append(a.getTitulo());
 				if (it.hasNext()) {
 					builder.append(", ");
@@ -54,7 +48,7 @@ public class Fasciculo extends ItemAcervo {
 		}
 		return builder.toString();
 	}
-	
+
 	public short getVolume() {
 		return volume;
 	}
@@ -91,7 +85,7 @@ public class Fasciculo extends ItemAcervo {
 		artigos.add(artigo);
 		artigo.setFasciculo(this);
 	}
-	
+
 	public short getNumPaginas() {
 		return numPaginas;
 	}

@@ -9,9 +9,9 @@ import javax.inject.Named;
 import ma.cultura.emem.dao.auxiliar.EditoraDAO;
 import ma.cultura.emem.dao.auxiliar.IdiomaDAO;
 import ma.cultura.emem.dao.auxiliar.LocalDAO;
-import ma.cultura.emem.modelo.Periodico;
 import ma.cultura.emem.modelo.auxiliar.Idioma;
 import ma.cultura.emem.modelo.auxiliar.PeriodicidadeEnum;
+import ma.cultura.emem.modelo.auxiliar.Periodico;
 
 @Named
 @ViewScoped

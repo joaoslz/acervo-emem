@@ -4,26 +4,21 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 
 import ma.cultura.emem.modelo.BaseEntity;
 
 @Entity
-@NamedQueries({ 
-	@NamedQuery(name = "TipoObra.findAll", query = "from TipoObra t order by t.nome asc")
-})
 public class TipoObra extends BaseEntity {
 
 	private static final long serialVersionUID = 8385561660567611471L;
-	
+
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
-	@Column(length=100, nullable=false, unique=true)
+
+	@Column(length = 100, nullable = false, unique = true)
 	private String nome;
-	
+
 	public String getNome() {
 		return nome;
 	}

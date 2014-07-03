@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 
 import ma.cultura.emem.modelo.Fasciculo;
-import ma.cultura.emem.modelo.Periodico;
+import ma.cultura.emem.modelo.auxiliar.Periodico;
 
 public class FasciculoDAO extends DAO<Fasciculo> {
 

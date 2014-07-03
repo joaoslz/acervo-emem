@@ -9,7 +9,7 @@ import javax.inject.Named;
 import ma.cultura.emem.dao.FasciculoDAO;
 import ma.cultura.emem.modelo.Fasciculo;
 import ma.cultura.emem.modelo.Obra;
-import ma.cultura.emem.modelo.Periodico;
+import ma.cultura.emem.modelo.auxiliar.Periodico;
 
 import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;

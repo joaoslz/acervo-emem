@@ -11,91 +11,88 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
 
 import ma.cultura.emem.modelo.auxiliar.Autor;
 
 @Entity
-@NamedQuery(name="Artigo.findAll", query="SELECT a FROM Artigo a")
-public class Artigo extends BaseEntity{
+public class Artigo extends BaseEntity {
 
 	private static final long serialVersionUID = -1467686486369558017L;
 
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
-	@Column(length=100, nullable=false)
-    private String titulo;
-    private String assunto;
 
-    private short paginaInicial;
-    private short paginaFinal;
+	@Column(length = 100, nullable = false)
+	private String titulo;
+	private String assunto;
 
-    @ManyToOne
-    private Fasciculo fasciculo;
+	private short paginaInicial;
+	private short paginaFinal;
 
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToOne
+	private Fasciculo fasciculo;
+
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Autor> autores;
-	
 
 	@Transient
-	public String getAutoresToString(){
-		StringBuilder builder = new StringBuilder();
-		if(getAutores() != null){
-			Iterator<Autor> it = getAutores().iterator();
-			while(it.hasNext()){
-				Autor a = it.next();
+	public String getAutoresToString() {
+		final StringBuilder builder = new StringBuilder();
+		if (getAutores() != null) {
+			final Iterator<Autor> it = getAutores().iterator();
+			while (it.hasNext()) {
+				final Autor a = it.next();
 				builder.append(a.getNome());
-				if(it.hasNext()){
+				if (it.hasNext()) {
 					builder.append(", ");
 				}
 			}
 		}
 		return builder.toString();
 	}
-	
-    public String getTitulo() {
-        return titulo;
-    }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
+	public String getTitulo() {
+		return titulo;
+	}
 
-    public String getAssunto() {
-        return assunto;
-    }
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
 
-    public void setAssunto(String assunto) {
-        this.assunto = assunto;
-    }
+	public String getAssunto() {
+		return assunto;
+	}
 
-    public short getPaginaInicial() {
-        return paginaInicial;
-    }
+	public void setAssunto(String assunto) {
+		this.assunto = assunto;
+	}
 
-    public void setPaginaInicial(short paginaInicial) {
-        this.paginaInicial = paginaInicial;
-    }
+	public short getPaginaInicial() {
+		return paginaInicial;
+	}
 
-    public short getPaginaFinal() {
-        return paginaFinal;
-    }
+	public void setPaginaInicial(short paginaInicial) {
+		this.paginaInicial = paginaInicial;
+	}
 
-    public void setPaginaFinal(short paginaFinal) {
-        this.paginaFinal = paginaFinal;
-    }
+	public short getPaginaFinal() {
+		return paginaFinal;
+	}
+
+	public void setPaginaFinal(short paginaFinal) {
+		this.paginaFinal = paginaFinal;
+	}
 
 	public List<Autor> getAutores() {
 		return autores;
 	}
-	
+
 	public void setAutores(List<Autor> autores) {
 		this.autores = autores;
 	}
-	
+
 	public void addAutor(Autor autor) {
 		if (autores == null)
 			autores = new ArrayList<Autor>();
@@ -110,6 +107,7 @@ public class Artigo extends BaseEntity{
 		this.fasciculo = fasciculo;
 	}
 
+	@Override
 	public Integer getId() {
 		return id;
 	}
