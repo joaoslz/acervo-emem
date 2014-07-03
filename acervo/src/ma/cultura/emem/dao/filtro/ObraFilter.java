@@ -1,12 +1,9 @@
 package ma.cultura.emem.dao.filtro;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import ma.cultura.emem.bean.ObraBean;
-import ma.cultura.emem.dao.auxiliar.EditoraDAO;
 import ma.cultura.emem.modelo.auxiliar.Editora;
 import ma.cultura.emem.modelo.auxiliar.TipoObra;
 
@@ -21,7 +18,6 @@ public class ObraFilter implements Serializable {
 
 	private Editora editora;
 	private List<TipoObra> tiposObra = new ArrayList<TipoObra>();
-	
 
 	public String getTitulo() {
 		return this.titulo;
@@ -38,10 +34,10 @@ public class ObraFilter implements Serializable {
 	public void setSubtitulo(String nomeCliente) {
 		this.subtitulo = nomeCliente;
 	}
+
 	public List<TipoObra> getTiposObra() {
 		return tiposObra;
 	}
-
 
 	public void setTiposObra(List<TipoObra> tiposObra) {
 		this.tiposObra = tiposObra;
