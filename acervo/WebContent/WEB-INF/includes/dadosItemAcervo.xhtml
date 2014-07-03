@@ -30,7 +30,7 @@
 				<p:column colspan="4">
 					<p:autoComplete minQueryLength="2" size="45"
 						value="#{itemAcervoBean.itemAcervo.editora}" id="editora"
-						completeMethod="#{itemAcervoBean.autocompleteEditoraByNome}"
+						completeMethod="#{itemAcervoBean.editoraDAO.findByNome}"
 						var="e" itemLabel="#{e.nome}" itemValue="#{e}"
 						converter="#{entityConverter}" forceSelection="true">
 					</p:autoComplete>
@@ -46,7 +46,7 @@
 				<p:column rowspan="2">
 					<p:autoComplete minQueryLength="2" id="assuntos"
 						value="#{itemAcervoBean.itemAcervo.assuntos}"
-						completeMethod="#{itemAcervoBean.autocompleteAssuntoByNome}"
+						completeMethod="#{itemAcervoBean.assuntoDAO.findByNome}"
 						var="a" itemLabel="#{a.nome}" itemValue="#{a}"
 						converter="#{entityConverter}" forceSelection="true"
 						multiple="true" />
@@ -64,7 +64,7 @@
 				<p:column>
 					<p:autoComplete minQueryLength="2"
 						value="#{itemAcervoBean.itemAcervo.local}" size="10" id="local"
-						completeMethod="#{itemAcervoBean.autocompleteLocalByNome}" var="l"
+						completeMethod="#{itemAcervoBean.localDAO.findByNome}" var="l"
 						itemLabel="#{l.nome}" itemValue="#{l}"
 						converter="#{entityConverter}" />
 				</p:column>

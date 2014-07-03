@@ -38,7 +38,7 @@
 					<p:column>
 						<p:autoComplete minQueryLength="2" size="45"
 							value="#{pesquisaObraBean.filtro.editora}" id="editora"
-							completeMethod="#{pesquisaObraBean.autocompleteEditoraByNome}"
+							completeMethod="#{pesquisaObraBean.obraBean.editoraDAO.findByNome}"
 							var="e" itemLabel="#{e.nome}" itemValue="#{e}"
 							converter="#{entityConverter}" forceSelection="true">
 						</p:autoComplete>

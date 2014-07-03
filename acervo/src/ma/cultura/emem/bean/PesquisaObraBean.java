@@ -8,14 +8,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
-
+import ma.cultura.emem.dao.DAO;
 import ma.cultura.emem.dao.ObraDAO;
-import ma.cultura.emem.dao.auxiliar.EditoraDAO;
 import ma.cultura.emem.dao.filtro.ObraFilter;
 import ma.cultura.emem.modelo.Obra;
 import ma.cultura.emem.modelo.auxiliar.Editora;
-import ma.cultura.emem.modelo.auxiliar.TipoObra;
 
 @Named
 @ViewScoped
@@ -33,14 +30,9 @@ public class PesquisaObraBean implements Serializable {
 	@Inject
 	private ObraBean obraBean;
 	
-	public List<Editora> autocompleteEditoraByNome(String nome) {
-		return obraBean.autocompleteEditoraByNome(nome);
-	}
-	
 	public ObraFilter getFiltro() {
 		return filtro;
 	}
-
 
 	public void pesquisar() {
 		obrasFiltradas = obraDAO.filtradas(filtro);	
@@ -49,5 +41,12 @@ public class PesquisaObraBean implements Serializable {
 	public List<Obra> getObrasFiltradas() {
 		return obrasFiltradas;
 	}
-	
+
+	public ObraDAO getObraDAO() {
+		return obraDAO;
+	}
+
+	public ObraBean getObraBean() {
+		return obraBean;
+	}
 }

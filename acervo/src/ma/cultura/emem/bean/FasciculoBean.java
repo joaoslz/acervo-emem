@@ -8,9 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ma.cultura.emem.bean.datamodel.FasciculoLazyDataModel;
-import ma.cultura.emem.dao.FasciculoDAO;
-import ma.cultura.emem.dao.PeriodicoDAO;
-import ma.cultura.emem.dao.auxiliar.AutorDAO;
+import ma.cultura.emem.dao.DAO;
 import ma.cultura.emem.modelo.Artigo;
 import ma.cultura.emem.modelo.Fasciculo;
 import ma.cultura.emem.modelo.ItemAcervo;
@@ -22,16 +20,14 @@ import org.primefaces.context.RequestContext;
 
 @Named
 @ViewScoped
-public class FasciculoBean extends AbstractItemAcervoBean {
+public class FasciculoBean extends AbstractItemAcervoBean<Fasciculo> {
 
 	private static final long serialVersionUID = -8216262637075293980L;
 	
 	@Inject
-	private AutorDAO autorDAO;
+	private DAO<Autor> autorDAO;
 	@Inject
-	private PeriodicoDAO periodicoDAO;
-	@Inject
-	private FasciculoDAO fasciculoDAO;
+	private DAO<Periodico> periodicoDAO;
 	@Inject
 	private FasciculoLazyDataModel fasciculoLazyDataModel;
 
@@ -42,7 +38,7 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 
 
 	@Override
-	protected ItemAcervo getNewItemAcervo() {
+	protected Fasciculo getNewItemAcervo() {
 		return new Fasciculo();
 	}
 
@@ -50,7 +46,7 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 	public void gravar() {
 		//se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
 		boolean isEdicao = getItemAcervo().getId() != null;
-		itemAcervo = fasciculoDAO.atualizar(getFasciculo());
+		itemAcervo = dao.atualizar(getFasciculo());
 		logger.debug("id: " + itemAcervo.getId());
 		if (!isEdicao) {
 			cadastrarExemplares();
@@ -84,8 +80,6 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 	}
 
 	public void removerArtigo(int index) {
-//		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-//		int index = Integer.parseInt(params.get("index").toString());
 		logger.debug("REMOVENDO artigo index: " + index);
 		if (!this.getFasciculo().getArtigos().isEmpty()) {
 			Artigo a = this.getFasciculo().getArtigos().remove(index);
@@ -93,20 +87,12 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 			logger.debug("REMOVIDO DA LISTA: " + a.getTitulo());
 		}
 	}
-//	
+
 	public void gravarAutor() {
 		autorDAO.adicionar(autorAdd);
 		getArtigoAdd().addAutor(autorAdd);
 		autorAdd = new Autor();
 	}
-	
-	public List<Autor> autocompleteAutorByNome(String nome) {
-		return autorDAO.findByNome(nome);
-	}
-
-//	public List<Periodico> autocompletePeriodicoByNome(String nome) {
-//		return periodicoDAO.findByNome(nome);
-//	}
 	
 	public List<Periodico> getListaPeriodicos(){
 		if(listaPeriodicos.isEmpty())
@@ -127,7 +113,7 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 	}
 
 	public Fasciculo getFasciculo() {
-		return (Fasciculo) getItemAcervo();
+		return getItemAcervo();
 	}
 
 	public Periodico getPeriodico() {
@@ -145,15 +131,15 @@ public class FasciculoBean extends AbstractItemAcervoBean {
 		return fasciculoLazyDataModel;
 	}
 
-	public void setFasciculoLazyDataModel(FasciculoLazyDataModel fasciculoLazyDataModel) {
-		this.fasciculoLazyDataModel = fasciculoLazyDataModel;
-	}
-
 	public Autor getAutorAdd() {
 		return autorAdd;
 	}
 
 	public void setAutorAdd(Autor autorAdd) {
 		this.autorAdd = autorAdd;
+	}
+
+	public DAO<Autor> getAutorDAO() {
+		return autorDAO;
 	}
 }

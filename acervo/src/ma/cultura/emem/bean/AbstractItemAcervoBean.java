@@ -8,12 +8,9 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import ma.cultura.emem.bean.auxiliar.ExemplarLoteAux;
+import ma.cultura.emem.bean.datamodel.BaseEntityLazyDataModel;
+import ma.cultura.emem.dao.DAO;
 import ma.cultura.emem.dao.ExemplarDAO;
-import ma.cultura.emem.dao.ItemAcervoDAO;
-import ma.cultura.emem.dao.auxiliar.AssuntoDAO;
-import ma.cultura.emem.dao.auxiliar.EditoraDAO;
-import ma.cultura.emem.dao.auxiliar.IdiomaDAO;
-import ma.cultura.emem.dao.auxiliar.LocalDAO;
 import ma.cultura.emem.modelo.Exemplar;
 import ma.cultura.emem.modelo.ItemAcervo;
 import ma.cultura.emem.modelo.auxiliar.Assunto;
@@ -25,7 +22,7 @@ import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
-public abstract class AbstractItemAcervoBean implements Serializable{
+public abstract class AbstractItemAcervoBean<T extends ItemAcervo> implements Serializable{
 
 	private static final long serialVersionUID = 766213803037842422L;
 
@@ -33,17 +30,19 @@ public abstract class AbstractItemAcervoBean implements Serializable{
 	protected Logger logger;
 	
 	@Inject
-	private ItemAcervoDAO itemAcervoDAO;
+	protected DAO<T> dao;
 	@Inject
-	private IdiomaDAO idiomaDAO;
+	private DAO<Idioma> idiomaDAO;
 	@Inject
-	private EditoraDAO editoraDAO;
+	private DAO<Editora> editoraDAO;
 	@Inject
-	private AssuntoDAO assuntoDAO;
+	private DAO<Assunto> assuntoDAO;
 	@Inject
-	private LocalDAO localDAO;
+	private DAO<Local> localDAO;
 	@Inject
 	private ExemplarDAO exemplarDAO;
+	
+	private BaseEntityLazyDataModel<T> lazyDataModel;
 
 	// POJO para os cadastros auxiliares
 	private Idioma idiomaAdd = new Idioma();
@@ -51,30 +50,28 @@ public abstract class AbstractItemAcervoBean implements Serializable{
 	private Assunto assuntoAdd = new Assunto();
 	private Local localAdd = new Local();
 	private ExemplarLoteAux exemplaresAdd = new ExemplarLoteAux();
-
 	private List<Exemplar> exemplares = new ArrayList<Exemplar>();
 	
-	protected ItemAcervo itemAcervo;
+	protected T itemAcervo;
 
 	@PostConstruct
 	public void init(){
 		logger.debug(this.getClass().getSimpleName() + " criado!");	
-//		logger.error(" error TESTE!");	
 		limparForm();
 	}
 
 	//A subclasse define qual a instacia de obra
-	protected abstract ItemAcervo getNewItemAcervo();
+	protected abstract T getNewItemAcervo();
 	public abstract String recarregarPagina();
 
 	public void gravar() {
 		//se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
 		boolean isEdicao = getItemAcervo().getId() != null;
 		if (isEdicao) {
-			itemAcervo = itemAcervoDAO.atualizar(getItemAcervo());
+			itemAcervo = dao.atualizar(getItemAcervo());
 			limparForm();
 		}else{
-			itemAcervo = itemAcervoDAO.adicionar(getItemAcervo());
+			itemAcervo = dao.adicionar(getItemAcervo());
 			showDialogExemplares();
 		}
 	}
@@ -157,23 +154,6 @@ public abstract class AbstractItemAcervoBean implements Serializable{
 		return idiomaDAO.findAll();
 	}
 
-	public List<Editora> autocompleteEditoraByNome(String nome) {
-		return editoraDAO.findByNome(nome);
-	}
-
-	public List<Local> autocompleteLocalByNome(String nome) {
-		return localDAO.findByNome(nome);
-	}
-
-	public List<Assunto> autocompleteAssuntoByNome(String nome) {
-		logger.debug("Find assuntos with : " + nome);
-		List<Assunto> assuntos = assuntoDAO.findByNome(nome);
-//		if(!getItemAcervo().getAssuntos().isEmpty()){
-//			logger.debug("removendo assuntos já adicionados: " + getItemAcervo().getAssuntosToString());
-//			assuntos.removeAll(getItemAcervo().getAssuntos());
-//		}
-		return assuntos;
-	}
 
 	//..................................................................GETs e SETs
 	public Editora getEditoraAdd() {
@@ -224,11 +204,29 @@ public abstract class AbstractItemAcervoBean implements Serializable{
 		this.exemplaresAdd = exemplaresAdd;
 	}
 
-	public ItemAcervo getItemAcervo() {
+	public T getItemAcervo() {
 		return itemAcervo;
 	}
 
-	public void setItemAcervo(ItemAcervo itemAcervo) {
+	public void setItemAcervo(T itemAcervo) {
 		this.itemAcervo = itemAcervo;
+	}
+
+	public DAO<Editora> getEditoraDAO() {
+		return editoraDAO;
+	}
+
+	public DAO<Assunto> getAssuntoDAO() {
+		return assuntoDAO;
+	}
+
+	public DAO<Local> getLocalDAO() {
+		return localDAO;
+	}
+
+	public BaseEntityLazyDataModel<T> getLazyDataModel() {
+		if(lazyDataModel == null)
+			lazyDataModel = new BaseEntityLazyDataModel<>(dao);
+		return lazyDataModel;
 	}
 }

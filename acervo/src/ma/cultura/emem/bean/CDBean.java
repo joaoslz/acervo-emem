@@ -1,4 +1,3 @@
-
 package ma.cultura.emem.bean;
 
 import java.util.List;
@@ -7,12 +6,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ma.cultura.emem.bean.datamodel.CDLazyDataModel;
-import ma.cultura.emem.dao.CDDAO;
-import ma.cultura.emem.dao.MidiaDAO;
-import ma.cultura.emem.dao.auxiliar.CantorDAO;
-import ma.cultura.emem.dao.auxiliar.CompositorDAO;
-import ma.cultura.emem.dao.auxiliar.GravadoraDAO;
+import ma.cultura.emem.bean.datamodel.BaseEntityLazyDataModel;
+import ma.cultura.emem.dao.DAO;
 import ma.cultura.emem.modelo.CD;
 import ma.cultura.emem.modelo.Musica;
 import ma.cultura.emem.modelo.auxiliar.Cantor;
@@ -22,49 +17,41 @@ import ma.cultura.emem.modelo.auxiliar.Midia;
 
 @Named("cdBean")
 @ViewScoped
-public class CDBean extends AbstractItemAcervoBean {
+public class CDBean extends AbstractItemAcervoBean<CD> {
 
 	private static final long serialVersionUID = 6482945063096362016L;
-	
-	@Inject
-	private CDLazyDataModel cdLazyDataModel;
 
 	@Inject
-	private CDDAO cdDAO;
+	private DAO<Midia> midiaDAO;
 	@Inject
-	private MidiaDAO midiaDAO;
-	
+	private DAO<Gravadora> gravadoraDAO;
 	@Inject
-	private GravadoraDAO gravadoraDAO;
+	private DAO<Cantor> cantorDAO;
 	@Inject
-	private CantorDAO cantorDAO;
-	@Inject
-	private CompositorDAO compositorDAO;
+	private DAO<Compositor> compositorDAO;
 
 	private Gravadora gravadoraAdd = new Gravadora();
 	private Cantor cantorAdd = new Cantor();
-	private Compositor compositorAdd =  new Compositor();
+	private Compositor compositorAdd = new Compositor();
 	private Musica musicaAdd = new Musica();
-	
-	
+
 	@Override
 	public void gravar() {
-		//se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
+		// se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
 		boolean isEdicao = getItemAcervo().getId() != null;
-		itemAcervo = cdDAO.atualizar(getCD());
+		itemAcervo = dao.atualizar(getCD());
 		logger.debug("id: " + itemAcervo.getId());
 		if (!isEdicao) {
 			cadastrarExemplares();
 		}
 		limparForm();
 	}
-	
-	
-	public void addMusica(){
+
+	public void addMusica() {
 		getCD().addMusica(musicaAdd);
 		musicaAdd = new Musica();
 	}
-	
+
 	public void removerMusica(int index) {
 		logger.debug("REMOVENDO musica index: " + index);
 		if (!this.getCD().getMusicas().isEmpty()) {
@@ -74,52 +61,48 @@ public class CDBean extends AbstractItemAcervoBean {
 		}
 	}
 
-	public void gravarCompositor(){
+	public void gravarCompositor() {
 		compositorDAO.adicionar(compositorAdd);
 		musicaAdd.getCompositores().add(compositorAdd);
 		compositorAdd = new Compositor();
 	}
-	
-	public void gravarCantor(){
+
+	public void gravarCantor() {
 		cantorDAO.adicionar(cantorAdd);
 		getCD().getCantores().add(cantorAdd);
 		cantorAdd = new Cantor();
 	}
-	
-	public void gravarGravadora(){
+
+	public void gravarGravadora() {
 		gravadoraDAO.adicionar(gravadoraAdd);
 		getCD().setGravadora(gravadoraAdd);
 		gravadoraAdd = new Gravadora();
 	}
-	
+
 	@Override
 	public CD getNewItemAcervo() {
 		return new CD();
 	}
-	
-	public CD getCD(){
-		return (CD) getItemAcervo();
+
+	public CD getCD() {
+		return getItemAcervo();
 	}
 
 	@Override
 	public String recarregarPagina() {
 		return "cd?faces-redirect=true";
 	}
-	
-	public List<Midia> getlistaMidias(){
+
+	public List<Midia> getlistaMidias() {
 		return midiaDAO.findAll();
 	}
 
-	public GravadoraDAO getGravadoraDAO() {
+	public DAO<Gravadora> getGravadoraDAO() {
 		return gravadoraDAO;
 	}
 
-	public CantorDAO getCantorDAO() {
+	public DAO<Cantor> getCantorDAO() {
 		return cantorDAO;
-	}
-
-	public CDLazyDataModel getCdLazyDataModel() {
-		return cdLazyDataModel;
 	}
 
 	public Gravadora getGravadoraAdd() {
@@ -146,15 +129,13 @@ public class CDBean extends AbstractItemAcervoBean {
 		this.musicaAdd = musicaAdd;
 	}
 
-	public CompositorDAO getCompositorDAO() {
+	public DAO<Compositor> getCompositorDAO() {
 		return compositorDAO;
 	}
-
 
 	public Compositor getCompositorAdd() {
 		return compositorAdd;
 	}
-
 
 	public void setCompositorAdd(Compositor compositorAdd) {
 		this.compositorAdd = compositorAdd;

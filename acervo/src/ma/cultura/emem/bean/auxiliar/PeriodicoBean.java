@@ -6,10 +6,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ma.cultura.emem.dao.auxiliar.EditoraDAO;
-import ma.cultura.emem.dao.auxiliar.IdiomaDAO;
-import ma.cultura.emem.dao.auxiliar.LocalDAO;
+import ma.cultura.emem.dao.DAO;
+import ma.cultura.emem.modelo.auxiliar.Editora;
 import ma.cultura.emem.modelo.auxiliar.Idioma;
+import ma.cultura.emem.modelo.auxiliar.Local;
 import ma.cultura.emem.modelo.auxiliar.PeriodicidadeEnum;
 import ma.cultura.emem.modelo.auxiliar.Periodico;
 
@@ -20,11 +20,11 @@ public class PeriodicoBean extends BaseAuxiliarBean<Periodico> {
 	private static final long serialVersionUID = -2945934767614853255L;
 
 	@Inject
-	private EditoraDAO editoraDAO;
+	private DAO<Editora> editoraDAO;
 	@Inject
-	private LocalDAO localDAO;
+	private DAO<Local> localDAO;
 	@Inject
-	private IdiomaDAO idiomaDAO;
+	private DAO<Idioma> idiomaDAO;
 	
 
 	public String recarregarPagina() {
@@ -55,11 +55,11 @@ public class PeriodicoBean extends BaseAuxiliarBean<Periodico> {
 		return new Periodico();
 	}
 
-	public EditoraDAO getEditoraDAO() {
+	public DAO<Editora> getEditoraDAO() {
 		return editoraDAO;
 	}
 
-	public LocalDAO getLocalDAO() {
+	public DAO<Local> getLocalDAO() {
 		return localDAO;
 	}
 

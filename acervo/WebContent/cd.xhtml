@@ -64,7 +64,7 @@
 								<p:column>
 									<p:autoComplete minQueryLength="2"
 										value="#{cdBean.itemAcervo.local}" size="10" id="local"
-										completeMethod="#{cdBean.autocompleteLocalByNome}" var="l"
+										completeMethod="#{cdBean.localDAO.findByNome}" var="l"
 										itemLabel="#{l.nome}" itemValue="#{l}"
 										converter="#{entityConverter}" />
 								</p:column>
@@ -99,7 +99,7 @@
 								<p:column colspan="4">
 									<p:autoComplete minQueryLength="2" id="assuntos"
 										value="#{cdBean.itemAcervo.assuntos}"
-										completeMethod="#{cdBean.autocompleteAssuntoByNome}" var="a"
+										completeMethod="#{cdBean.assuntoDAO.findByNome}" var="a"
 										itemLabel="#{a.nome}" itemValue="#{a}"
 										converter="#{entityConverter}" forceSelection="true"
 										multiple="true" />
@@ -210,7 +210,7 @@
 		<!-- ....................................TABELA......................................................... -->
 		<h:form id="formTabela">
 		<p:fieldset legend="CDs Cadastrados">
-			<p:dataTable id="tabela" value="#{cdBean.cdLazyDataModel}" var="cd"
+			<p:dataTable id="tabela" value="#{cdBean.lazyDataModel}" var="cd"
 				paginator="true" lazy="true" rows="5"
 				mptyMessage="Nenhum CD cadastrad0"
 				rowsPerPageTemplate="5 10 15 20 30 40" paginatorPosition="bottom"

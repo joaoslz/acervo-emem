@@ -148,7 +148,7 @@
 						<p:column rowspan="2" colspan="2">
 							<p:autoComplete tabindex="5" minQueryLength="2" id="autores"
 								value="#{fasciculoBean.artigoAdd.autores}"
-								completeMethod="#{fasciculoBean.autocompleteAutorByNome}"
+								completeMethod="#{fasciculoBean.autorDAO.findByNome}"
 								var="a" itemLabel="#{a.nome}" itemValue="#{a}"
 								converter="#{entityConverter}" forceSelection="true"
 								multiple="true" />
@@ -207,7 +207,7 @@
 						<p:column colspan="2">
 							<p:autoComplete minQueryLength="2" id="assuntos"
 								value="#{fasciculoBean.itemAcervo.assuntos}"
-								completeMethod="#{fasciculoBean.autocompleteAssuntoByNome}"
+								completeMethod="#{fasciculoBean.assuntoDAO.findByNome}"
 								var="a" itemLabel="#{a.nome}" itemValue="#{a}"
 								converter="#{entityConverter}" forceSelection="true"
 								multiple="true" />

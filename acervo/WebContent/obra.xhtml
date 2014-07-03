@@ -130,7 +130,7 @@
 						<p:column colspan="4">
 							<p:autoComplete minQueryLength="2" id="autores"
 								value="#{obraBean.obra.autores}"
-								completeMethod="#{obraBean.autocompleteAutorByNome}" var="a"
+								completeMethod="#{obraBean.autorDAO.findByNome}" var="a"
 								itemLabel="#{a.nome}" itemValue="#{a}"
 								converter="#{entityConverter}" forceSelection="true"
 								multiple="true" />
@@ -168,7 +168,7 @@
 		<!-- ....................................TABELA......................................................... -->
 		<p:fieldset legend="Obras Cadastradas">
 			<h:form id="formTabela">
-			<p:dataTable id="tabela" value="#{obraBean.obraLazyDataModel}"
+			<p:dataTable id="tabela" value="#{obraBean.lazyDataModel}"
 				var="obra" paginator="true" lazy="true" rows="5"
 				mptyMessage="Nenhums Obra cadastrada"
 				rowsPerPageTemplate="5 10 15 20 30 40" paginatorPosition="bottom"

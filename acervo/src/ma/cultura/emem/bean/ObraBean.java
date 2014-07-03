@@ -7,25 +7,21 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ma.cultura.emem.bean.datamodel.ObraLazyDataModel;
-import ma.cultura.emem.dao.auxiliar.AutorDAO;
-import ma.cultura.emem.dao.auxiliar.TipoObraDAO;
+import ma.cultura.emem.dao.DAO;
 import ma.cultura.emem.modelo.Obra;
 import ma.cultura.emem.modelo.auxiliar.Autor;
 import ma.cultura.emem.modelo.auxiliar.TipoObra;
 
 @Named
 @ViewScoped
-public class ObraBean extends AbstractItemAcervoBean {
+public class ObraBean extends AbstractItemAcervoBean<Obra> {
 
 	private static final long serialVersionUID = 3468148839276090985L;
 	@Inject
-	private AutorDAO autorDAO;
+	private DAO<Autor> autorDAO;
 	@Inject
-	private TipoObraDAO tipoObraDAO;
+	private DAO<TipoObra> tipoObraDAO;
 	
-	@Inject
-	private ObraLazyDataModel obraLazyDataModel;
 	
 	// FIXME Acredito que não será mais preciso este objeto (autorAdd)
 	private Autor autorAdd = new Autor();
@@ -47,21 +43,13 @@ public class ObraBean extends AbstractItemAcervoBean {
 	public String recarregarPagina() {
 		return "obra?faces-redirect=true";
 	}
-	
-	public List<Autor> autocompleteAutorByNome(String nome) {
-		List<Autor> autores = autorDAO.findByNome(nome);
-		//XXX Talvez seja interessante fazer essa exclusão via query. ???
-//		if(!getObra().getAutores().isEmpty())
-//			autores.removeAll(getObra().getAutores());
-		return autores;
-	}
-	
+		
 	public List<TipoObra> getListaTiposObra(){
 		return tipoObraDAO.findAll();
 	}
 	
 	public Obra getObra(){
-		return (Obra) getItemAcervo();
+		return getItemAcervo();
 	}
 
 	public Autor getAutorAdd() {
@@ -72,11 +60,7 @@ public class ObraBean extends AbstractItemAcervoBean {
 		this.autorAdd = autorAdd;
 	}
 
-	public ObraLazyDataModel getObraLazyDataModel() {
-		return obraLazyDataModel;
-	}
-
-	public void setObraLazyDataModel(ObraLazyDataModel obraLazyDataModel) {
-		this.obraLazyDataModel = obraLazyDataModel;
+	public DAO<Autor> getAutorDAO() {
+		return autorDAO;
 	}
 }
