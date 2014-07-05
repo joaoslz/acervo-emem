@@ -6,7 +6,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ma.cultura.emem.bean.datamodel.BaseEntityLazyDataModel;
 import ma.cultura.emem.dao.DAO;
 import ma.cultura.emem.modelo.CD;
 import ma.cultura.emem.modelo.Musica;

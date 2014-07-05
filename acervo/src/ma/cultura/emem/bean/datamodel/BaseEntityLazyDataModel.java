@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import ma.cultura.emem.dao.DAO;
+import ma.cultura.emem.dao.PaginatedResult;
 import ma.cultura.emem.modelo.BaseEntity;
 
 import org.apache.log4j.Logger;
@@ -35,16 +36,15 @@ public class BaseEntityLazyDataModel<T extends BaseEntity> extends LazyDataModel
 
 	@Override
 	public List<T> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-		List<T> result = null;
+		PaginatedResult<T> p;
 		if(filters != null && filters.size() > 0){
 			logger.debug("Usando Filtros ");
-			result = dao.findFilteredWithLike(filters);
-			setRowCount(result.size());
+			p = dao.findFilteredAndPaginate(filters, first, pageSize);
 		}else{
 			logger.debug("Sem Filtros ");
-			result = dao.findAllPaginated(first, pageSize);
-			setRowCount(dao.contarTodos());
+			p = dao.findAllAndPaginate(first, pageSize);
 		}
-		return result;
+		setRowCount(p.getCountAll());
+		return  p.getLista();
 	}
 }

@@ -8,11 +8,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ma.cultura.emem.dao.DAO;
-import ma.cultura.emem.dao.ObraDAO;
+import ma.cultura.emem.dao.PesquisaObraDAO;
 import ma.cultura.emem.dao.filtro.ObraFilter;
 import ma.cultura.emem.modelo.Obra;
-import ma.cultura.emem.modelo.auxiliar.Editora;
 
 @Named
 @ViewScoped
@@ -21,7 +19,7 @@ public class PesquisaObraBean implements Serializable {
 	private static final long serialVersionUID = -8379599414801598582L;
 	
 	@Inject
-	private ObraDAO obraDAO;
+	private PesquisaObraDAO pesquisaObraDAO;
 
 	private ObraFilter filtro = new ObraFilter();
 	private List<Obra> obrasFiltradas = new ArrayList<Obra>();
@@ -35,15 +33,15 @@ public class PesquisaObraBean implements Serializable {
 	}
 
 	public void pesquisar() {
-		obrasFiltradas = obraDAO.filtradas(filtro);	
+		obrasFiltradas = pesquisaObraDAO.filtradas(filtro);	
 	}
 	
 	public List<Obra> getObrasFiltradas() {
 		return obrasFiltradas;
 	}
 
-	public ObraDAO getObraDAO() {
-		return obraDAO;
+	public PesquisaObraDAO getPesquisaObraDAO() {
+		return pesquisaObraDAO;
 	}
 
 	public ObraBean getObraBean() {

@@ -11,7 +11,6 @@ import ma.cultura.emem.bean.datamodel.FasciculoLazyDataModel;
 import ma.cultura.emem.dao.DAO;
 import ma.cultura.emem.modelo.Artigo;
 import ma.cultura.emem.modelo.Fasciculo;
-import ma.cultura.emem.modelo.ItemAcervo;
 import ma.cultura.emem.modelo.auxiliar.Autor;
 import ma.cultura.emem.modelo.auxiliar.MesEnum;
 import ma.cultura.emem.modelo.auxiliar.Periodico;
@@ -28,7 +27,7 @@ public class FasciculoBean extends AbstractItemAcervoBean<Fasciculo> {
 	private DAO<Autor> autorDAO;
 	@Inject
 	private DAO<Periodico> periodicoDAO;
-	@Inject
+
 	private FasciculoLazyDataModel fasciculoLazyDataModel;
 
 	private List<Periodico> listaPeriodicos = new ArrayList<Periodico>();
@@ -122,12 +121,15 @@ public class FasciculoBean extends AbstractItemAcervoBean<Fasciculo> {
 
 	public void setPeriodico(Periodico periodico) {
 		logger.debug("Set Periodico: " + periodico);
-		fasciculoLazyDataModel.setPeriodico(periodico);
+		getFasciculoLazyDataModel().setPeriodico(periodico);
 		getFasciculo().setPeriodico(periodico);
 		this.periodico = periodico;
 	}
 
 	public FasciculoLazyDataModel getFasciculoLazyDataModel() {
+		if(fasciculoLazyDataModel == null){
+			fasciculoLazyDataModel = new FasciculoLazyDataModel(dao);
+		}
 		return fasciculoLazyDataModel;
 	}
 

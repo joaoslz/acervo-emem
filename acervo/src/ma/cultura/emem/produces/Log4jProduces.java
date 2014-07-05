@@ -1,11 +1,11 @@
-package ma.cultura.emem.log4j;
+package ma.cultura.emem.produces;
 
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 
 import org.apache.log4j.Logger;
 
-public class Log4jUtil {
+public class Log4jProduces {
 
 	@Produces
 	public Logger getLogger(InjectionPoint ip){

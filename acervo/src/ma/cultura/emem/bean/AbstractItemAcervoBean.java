@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 
 import ma.cultura.emem.bean.auxiliar.ExemplarLoteAux;
 import ma.cultura.emem.bean.datamodel.BaseEntityLazyDataModel;
 import ma.cultura.emem.dao.DAO;
-import ma.cultura.emem.dao.ExemplarDAO;
 import ma.cultura.emem.modelo.Exemplar;
 import ma.cultura.emem.modelo.ItemAcervo;
 import ma.cultura.emem.modelo.auxiliar.Assunto;
@@ -19,6 +20,7 @@ import ma.cultura.emem.modelo.auxiliar.Idioma;
 import ma.cultura.emem.modelo.auxiliar.Local;
 
 import org.apache.log4j.Logger;
+import org.hibernate.exception.ConstraintViolationException;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
@@ -40,7 +42,7 @@ public abstract class AbstractItemAcervoBean<T extends ItemAcervo> implements Se
 	@Inject
 	private DAO<Local> localDAO;
 	@Inject
-	private ExemplarDAO exemplarDAO;
+	private DAO<Exemplar> exemplarDAO;
 	
 	private BaseEntityLazyDataModel<T> lazyDataModel;
 
@@ -96,7 +98,7 @@ public abstract class AbstractItemAcervoBean<T extends ItemAcervo> implements Se
 	}
 	
 	public void updateListaExemplares() {
-		exemplares = exemplarDAO.findByItemAcervo(getItemAcervo().getId());
+		exemplares = exemplarDAO.findByProperty("itemAcervo.id", getItemAcervo().getId());
 	}
 
 	public void editExempar(RowEditEvent event) {
@@ -114,7 +116,7 @@ public abstract class AbstractItemAcervoBean<T extends ItemAcervo> implements Se
 			exemplar.setDataAquisicao(exemplaresAdd.getDataAquisicao());
 			exemplares.add(exemplar);
 		}
-		exemplarDAO.adicionarExemplares(exemplares);
+		exemplarDAO.adicionarLote(exemplares);
 		exemplaresAdd = new ExemplarLoteAux();
 		updateListaExemplares();
 	}
@@ -138,9 +140,14 @@ public abstract class AbstractItemAcervoBean<T extends ItemAcervo> implements Se
 	}
 
 	public void gravarEditora() {
-		editoraDAO.adicionar(editoraAdd);
-		getItemAcervo().setEditora(editoraAdd);
-		editoraAdd = new Editora();
+		try{
+			editoraDAO.adicionar(editoraAdd);
+			getItemAcervo().setEditora(editoraAdd);
+			editoraAdd = new Editora();
+		}catch(ConstraintViolationException exc){
+			logger.error(exc.getMessage(), exc);
+			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nome já Existente", exc.getMessage()));
+		}
 	}
 	
 	public String getStringBotaoGravar(){
