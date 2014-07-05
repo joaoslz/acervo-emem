@@ -15,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import ma.cultura.emem.modelo.auxiliar.Assunto;
 import ma.cultura.emem.modelo.auxiliar.Editora;
@@ -36,15 +39,16 @@ public abstract class ItemAcervo extends BaseEntity {
 	@GeneratedValue
 	private Integer id;
 
+	@NotNull(message="O título é um campo obrigatório")
+    @Size(min=2, max=100, message="O título deve possuir no máximo 100 caracteres")
 	@Column(length = 100, nullable = false)
 	private String titulo;
 
+    @Size(min=2, max=100, message="O subtitulo deve possuir no máximo 100 caracteres")
 	@Column(length = 100)
 	private String subtitulo;
 
-	// @Temporal(TemporalType.TIMESTAMP)
-	// private Calendar dataCadastro;// XXX = Calendar.getInstance();
-
+    @Min(1800)
 	private short ano;
 
 	@ManyToOne

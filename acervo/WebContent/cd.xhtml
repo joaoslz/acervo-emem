@@ -195,8 +195,7 @@
 						<p:commandButton value="#{cdBean.stringBotaoGravar}"
 							action="#{cdBean.gravar}" process="@form" update="@form :formTabela:tabela" />
 						<p:separator />
-						<p:commandButton value="Cancelar" update="@form"
-							action="#{cdBean.recarregarPagina}" immediate="true" />
+						<p:commandButton value="Cancelar" action="#{cdBean.recarregarPagina}" immediate="true" />
 					</f:facet>
 				</p:toolbar>
 			</p:fieldset>

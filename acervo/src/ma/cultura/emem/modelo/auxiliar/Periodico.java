@@ -11,12 +11,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-import ma.cultura.emem.modelo.BaseEntity;
 import ma.cultura.emem.modelo.Fasciculo;
 
 @Entity
-public class Periodico extends BaseEntity {
+public class Periodico extends BaseAuxiliarEntity {
 
 	private static final long serialVersionUID = -112232541131788319L;
 
@@ -24,8 +25,12 @@ public class Periodico extends BaseEntity {
 	@GeneratedValue
 	private Integer id;
 
+	@NotNull(message="Nome é um campo obrigatório")
+    @Size(min=2, max=150, message="O nome deve possuir no mínimo 2 e no máximo 150 caracteres")
+	@Column(length = 150, nullable = false)
 	private String nome;
 
+    @Size(max=20, message="O ISSN deve possuir no máximo 20 caracteres")
 	@Column(length = 20)
 	private String issn;
 

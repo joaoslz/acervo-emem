@@ -12,12 +12,20 @@
 		
 			<h:form id="form">
 				<p:panelGrid columns="5" >
-					<p:outputLabel value="Nome:" for="nome" />
-					<p:inputText id="nome" value="#{bean.entity.nome}"
-						required="true" requiredMessage="Campo nome deve ser digitado" />
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Nome:" for="nome" />
+						</p:column>
+						<p:column>
+							<p:message for="nome" />
+							<p:inputText id="nome" value="#{bean.entity.nome}" required="true" requiredMessage="Nome é um campo obrigatório!"/>
+						</p:column>
+						<p:column>
+							<p:commandButton value="Gravar" action="#{bean.gravar}"
+								process="@form" update="@form :formtabela:tabela" />
+						</p:column>
+					</p:row>
 					<ui:insert name="camposExtra"></ui:insert>
-					<p:commandButton value="Gravar" action="#{bean.gravar}"
-						process="@form" update="@form :formtabela:tabela" />
 				</p:panelGrid>
 			</h:form>
 			

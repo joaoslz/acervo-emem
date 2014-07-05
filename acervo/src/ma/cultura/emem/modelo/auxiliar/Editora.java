@@ -7,12 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-import ma.cultura.emem.modelo.BaseEntity;
 import ma.cultura.emem.modelo.ItemAcervo;
 
 @Entity
-public class Editora extends BaseEntity {
+public class Editora extends BaseAuxiliarEntity {
 
 	private static final long serialVersionUID = -7971911155752471160L;
 
@@ -20,6 +21,8 @@ public class Editora extends BaseEntity {
 	@GeneratedValue
 	private Integer id;
 
+	@NotNull(message="Nome é um campo obrigatório!")
+    @Size(min=2, max=100, message="O campo nome deve possuir no mínimo 2 e no máximo 100 caracteres!")
 	@Column(length = 100, nullable = false, unique = true)
 	private String nome;
 

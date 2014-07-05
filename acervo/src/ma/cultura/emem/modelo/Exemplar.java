@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Past;
 
 @Entity
 public class Exemplar extends BaseEntity {
@@ -22,6 +23,7 @@ public class Exemplar extends BaseEntity {
 
 	private boolean ehDoacao;
 
+	@Past(message="A data de aquisição deve ser anterior a data atual!")
 	@Temporal(TemporalType.DATE)
 	private Calendar dataAquisicao;
 

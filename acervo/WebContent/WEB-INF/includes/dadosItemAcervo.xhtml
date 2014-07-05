@@ -9,6 +9,7 @@
 					<p:outputLabel value="Titulo:" for="titulo" />
 				</p:column>
 				<p:column colspan="5">
+					<p:message for="titulo"/>
 					<p:inputText id="titulo"
 						value="#{itemAcervoBean.itemAcervo.titulo}" style="width:390px"
 						required="true" requiredMessage="Título obrigatório">

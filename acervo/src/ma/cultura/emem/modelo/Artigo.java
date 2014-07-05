@@ -6,12 +6,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import ma.cultura.emem.modelo.auxiliar.Autor;
 
@@ -24,6 +25,8 @@ public class Artigo extends BaseEntity {
 	@GeneratedValue
 	private Integer id;
 
+	@NotNull(message="O título é um campo obrigatório")
+    @Size(min=2, max=100, message="O título deve possuir no máximo 100 caracteres")
 	@Column(length = 100, nullable = false)
 	private String titulo;
 	private String assunto;
@@ -34,7 +37,7 @@ public class Artigo extends BaseEntity {
 	@ManyToOne
 	private Fasciculo fasciculo;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
 	private List<Autor> autores;
 
 	@Transient

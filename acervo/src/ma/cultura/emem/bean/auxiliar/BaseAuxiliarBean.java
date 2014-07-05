@@ -8,12 +8,12 @@ import javax.inject.Inject;
 
 import ma.cultura.emem.bean.datamodel.BaseEntityLazyDataModel;
 import ma.cultura.emem.dao.DAO;
-import ma.cultura.emem.modelo.BaseEntity;
+import ma.cultura.emem.modelo.auxiliar.BaseAuxiliarEntity;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.RowEditEvent;
 
-public abstract class BaseAuxiliarBean<T extends BaseEntity> implements Serializable {
+public abstract class BaseAuxiliarBean<T extends BaseAuxiliarEntity> implements Serializable {
 
 	private static final long serialVersionUID = 3847398251913840437L;
 
@@ -30,14 +30,13 @@ public abstract class BaseAuxiliarBean<T extends BaseEntity> implements Serializ
 	protected abstract T newEntityInstance();
 
 	public void gravar() {
-		try {
+		if (dao.getByNome(getEntity().getNome()).size() <= 0) {
 			logger.debug("Gravando entity: " + entity.getClass().getSimpleName());
 			dao.atualizar(entity);
 			entity = newEntityInstance();
-		} catch (final Exception e) {
-			logger.error(e.getMessage(), e);
-			FacesContext.getCurrentInstance().addMessage(e.getMessage(),
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao cadastrar", e.getMessage()));
+		} else {
+			String msg = "Já existe um cadastrado de " + entity.getClass().getSimpleName() + " com o nome " + entity.getNome() + "!";
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, ""));
 		}
 	}
 

@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import ma.cultura.emem.modelo.auxiliar.Autor;
 import ma.cultura.emem.modelo.auxiliar.TipoObra;
@@ -20,12 +22,16 @@ public class Obra extends ItemAcervo {
 
 	private String classificacao;
 
-	@Column(length = 6, nullable = false)
+	@NotNull
+	@Size(min=5, max=5, message="O cutter deve possuir 5 caracteres")
+	@Column(length = 5, nullable = false)
 	private String cutter;
 
 	private Short edicao;
 	private boolean ehIlustrado;
 
+
+	@Size(max=20, message="O ISBN não pode ser superior a 20 caracteres")
 	@Column(length = 20)
 	private String isbn;
 	private Short numPaginas;

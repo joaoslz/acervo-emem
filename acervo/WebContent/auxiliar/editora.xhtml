@@ -10,8 +10,11 @@
 	<ui:param name="bean" value="#{editoraBean}"/>
 	<ui:param name="titulo" value="Cadastro de Editora"/>
 	<ui:define name="camposExtra">
-		<p:outputLabel value="Site: " for="site" />
-		<p:inputText id="site" value="#{editoraBean.editora.site}"/>
+		<p:row>
+			<p:column><p:outputLabel value="Site: " for="site" /></p:column>
+			<p:column><p:inputText id="site" value="#{editoraBean.editora.site}"/></p:column>
+			<p:column></p:column>
+		</p:row>
 	</ui:define>
 	<ui:define name="colunasExtra">
 		<p:column headerText="Site">

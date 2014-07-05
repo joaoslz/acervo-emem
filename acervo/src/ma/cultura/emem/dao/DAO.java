@@ -67,10 +67,14 @@ public class DAO<T> implements Serializable {
 	 * @return
 	 */
 	public List<T> findByNome(String nome) {
+		return getByNome("%"+nome+"%");
+	}
+
+	public List<T> getByNome(String nome) {
 		try{
 			logger.debug("findByNome para entidade " + classe.getSimpleName());
 			TypedQuery<T> query = em.createNamedQuery(classe.getSimpleName()+".findByNome", classe);
-			query.setParameter("nome", "%" + nome + "%");
+			query.setParameter("nome", nome);
 			return query.getResultList();
 		}catch(IllegalArgumentException exc){
 			logger.error("NamedQuery não existe para esta entidade", exc);
