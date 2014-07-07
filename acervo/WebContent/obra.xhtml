@@ -217,14 +217,23 @@
 			<ui:param name="bean" value="#{obraBean}" />
 			<ui:param name="camposToUpdate" value=":form:autores" />
 		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogAssunto.xhtml">
+			<ui:param name="itemAcervoBean" value="#{obraBean}" />
+		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogEditora.xhtml">
+			<ui:param name="itemAcervoBean" value="#{obraBean}" />
+		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogLocal.xhtml">
+			<ui:param name="itemAcervoBean" value="#{obraBean}" />
+		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogIdioma.xhtml">
+			<ui:param name="itemAcervoBean" value="#{obraBean}" />
+		</ui:include>
 		
 		<ui:include src="/WEB-INF/includes/dialogExemplares.xhtml">
 			<ui:param name="itemAcervoBean" value="#{obraBean}" />
 		</ui:include>
 
-		<ui:include src="/WEB-INF/includes/dialogsAux.xhtml">
-			<ui:param name="itemAcervoBean" value="#{obraBean}" />
-		</ui:include>
 	</ui:define>
 </ui:composition>
 </html>

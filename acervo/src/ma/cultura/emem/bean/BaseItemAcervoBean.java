@@ -6,8 +6,10 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.validator.ValidatorException;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 import ma.cultura.emem.bean.auxiliar.ExemplarLoteAux;
 import ma.cultura.emem.bean.datamodel.BaseEntityLazyDataModel;
@@ -20,17 +22,16 @@ import ma.cultura.emem.modelo.auxiliar.Idioma;
 import ma.cultura.emem.modelo.auxiliar.Local;
 
 import org.apache.log4j.Logger;
-import org.hibernate.exception.ConstraintViolationException;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
-public abstract class AbstractItemAcervoBean<T extends ItemAcervo> implements Serializable{
+public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serializable{
 
 	private static final long serialVersionUID = 766213803037842422L;
 
 	@Inject
 	protected Logger logger;
-	
+
 	@Inject
 	protected DAO<T> dao;
 	@Inject
@@ -43,7 +44,7 @@ public abstract class AbstractItemAcervoBean<T extends ItemAcervo> implements Se
 	private DAO<Local> localDAO;
 	@Inject
 	private DAO<Exemplar> exemplarDAO;
-	
+
 	private BaseEntityLazyDataModel<T> lazyDataModel;
 
 	// POJO para os cadastros auxiliares
@@ -53,7 +54,7 @@ public abstract class AbstractItemAcervoBean<T extends ItemAcervo> implements Se
 	private Local localAdd = new Local();
 	private ExemplarLoteAux exemplaresAdd = new ExemplarLoteAux();
 	private List<Exemplar> exemplares = new ArrayList<Exemplar>();
-	
+
 	protected T itemAcervo;
 
 	@PostConstruct
@@ -67,23 +68,30 @@ public abstract class AbstractItemAcervoBean<T extends ItemAcervo> implements Se
 	public abstract String recarregarPagina();
 
 	public void gravar() {
-		//se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
-		boolean isEdicao = getItemAcervo().getId() != null;
-		if (isEdicao) {
-			itemAcervo = dao.atualizar(getItemAcervo());
-			limparForm();
-		}else{
-			itemAcervo = dao.adicionar(getItemAcervo());
-			showDialogExemplares();
+		try{
+			//se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
+			boolean isEdicao = getItemAcervo().getId() != null;
+			if (isEdicao) {
+				itemAcervo = dao.atualizar(getItemAcervo());
+				limparForm();
+			}else{
+				itemAcervo = dao.adicionar(getItemAcervo());
+				showDialogExemplares();
+			}
+		}catch(ConstraintViolationException ex){
+			logger.error(ex.getMessage());
+			for(ConstraintViolation cv: ex.getConstraintViolations()){
+				FacesContext.getCurrentInstance().addMessage(cv.getPropertyPath().toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, cv.getMessage(), ""));
+			}
 		}
 	}
-	
+
 	public void limparForm() {
 		//a subclasse define qual a instacia de obra
 		itemAcervo = getNewItemAcervo();
 		logger.debug("limpando form " + this.getClass().getSimpleName() + "...");
 	}
-	
+
 	protected void showDialogExemplares(){
 		//XXX Chamando o dialogo aqui para correcao de um bug.
 		//BUG: Ao chamar o dialogo direto do <p:commandButton ha uma falha com relacao a validacao.
@@ -92,11 +100,11 @@ public abstract class AbstractItemAcervoBean<T extends ItemAcervo> implements Se
 		//o metodo gravar caso haja erro de validacao.
 		RequestContext.getCurrentInstance().execute("PF('dlgConfirmaExemplares').show()");
 	}
-	
+
 	public void limparListaExemplares(){
 		exemplares.clear();
 	}
-	
+
 	public void updateListaExemplares() {
 		exemplares = exemplarDAO.findByProperty("itemAcervo.id", getItemAcervo().getId());
 	}
@@ -126,7 +134,7 @@ public abstract class AbstractItemAcervoBean<T extends ItemAcervo> implements Se
 		getItemAcervo().setIdioma(idiomaAdd);
 		idiomaAdd = new Idioma();
 	}
-	
+
 	public void gravarAssunto() {
 		assuntoDAO.adicionar(assuntoAdd);
 		getItemAcervo().addAssunto(assuntoAdd);
@@ -140,23 +148,18 @@ public abstract class AbstractItemAcervoBean<T extends ItemAcervo> implements Se
 	}
 
 	public void gravarEditora() {
-		try{
-			editoraDAO.adicionar(editoraAdd);
-			getItemAcervo().setEditora(editoraAdd);
-			editoraAdd = new Editora();
-		}catch(ConstraintViolationException exc){
-			logger.error(exc.getMessage(), exc);
-			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nome já Existente", exc.getMessage()));
-		}
+		editoraDAO.adicionar(editoraAdd);
+		getItemAcervo().setEditora(editoraAdd);
+		editoraAdd = new Editora();
 	}
-	
+
 	public String getStringBotaoGravar(){
 		if(getItemAcervo().getId() == null)
 			return "Gravar";
 		else
 			return "Gravar Alterações";
 	}
-	
+
 	public List<Idioma> getListaIdiomas(){
 		return idiomaDAO.findAll();
 	}
@@ -234,6 +237,6 @@ public abstract class AbstractItemAcervoBean<T extends ItemAcervo> implements Se
 	public BaseEntityLazyDataModel<T> getLazyDataModel() {
 		if(lazyDataModel == null)
 			lazyDataModel = new BaseEntityLazyDataModel<>(dao);
-		return lazyDataModel;
+			return lazyDataModel;
 	}
 }

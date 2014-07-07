@@ -8,12 +8,13 @@ import javax.inject.Named;
 
 import ma.cultura.emem.dao.DAO;
 import ma.cultura.emem.modelo.Partitura;
+import ma.cultura.emem.modelo.auxiliar.Autor;
 import ma.cultura.emem.modelo.auxiliar.Genero;
 import ma.cultura.emem.modelo.auxiliar.Instrumento;
 
 @Named
 @ViewScoped
-public class PartituraBean extends AbstractItemAcervoBean<Partitura> implements Serializable {
+public class PartituraBean extends BaseItemAcervoBean<Partitura> implements Serializable {
 
 	private static final long serialVersionUID = -5763773183540321467L;
 
@@ -21,14 +22,24 @@ public class PartituraBean extends AbstractItemAcervoBean<Partitura> implements 
 	private DAO<Instrumento> instrumentoDAO;
 	@Inject
 	private DAO<Genero> generoDAO;
+	@Inject
+	private DAO<Autor> autorDAO;
 	
 	private Instrumento instrumentoAdd = new Instrumento();
 	private Genero generoAdd = new Genero();
+	private Autor autorAdd = new Autor();
 
+	public void gravarAutor() {
+		autorDAO.adicionar(autorAdd);
+		logger.debug("AUTOR ADD: " + autorAdd);
+		getPartitura().addAutor(autorAdd);
+		logger.debug("AUTORES: " + getPartitura().getAutores());
+		autorAdd = new Autor();
+	}
 
 	public void gravarInstrumento() {
 		instrumentoDAO.adicionar(instrumentoAdd);
-		getPartitura().setInstrumento(instrumentoAdd);
+		getPartitura().addInstrumento(instrumentoAdd);
 		instrumentoAdd = new Instrumento();
 	}
 
@@ -81,5 +92,17 @@ public class PartituraBean extends AbstractItemAcervoBean<Partitura> implements 
 
 	public DAO<Genero> getGeneroDAO() {
 		return generoDAO;
+	}
+
+	public DAO<Autor> getAutorDAO() {
+		return autorDAO;
+	}
+
+	public Autor getAutorAdd() {
+		return autorAdd;
+	}
+
+	public void setAutorAdd(Autor autorAdd) {
+		this.autorAdd = autorAdd;
 	}
 }

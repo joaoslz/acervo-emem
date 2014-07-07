@@ -11,14 +11,14 @@
 			<h:form>
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Nome:" for="nome" />
-					<p:inputText id="nome" value="#{obraBean.editoraAdd.nome}"
+					<p:inputText id="nome" value="#{itemAcervoBean.editoraAdd.nome}"
 						required="true"
 						requiredMessage="O campo nome da editora deve ser digitado" />
 
 					<p:outputLabel value="Site:" for="site" />
-					<p:inputText id="site" value="#{obraBean.editoraAdd.site}" />
+					<p:inputText id="site" value="#{itemAcervoBean.editoraAdd.site}" />
 
-					<p:commandButton value="Gravar" action="#{obraBean.gravarEditora}"
+					<p:commandButton value="Gravar" action="#{itemAcervoBean.gravarEditora}"
 						oncomplete="PF('dlgNovaEditora').hide();" process="@form"
 						update="@form :form:editora" />
 				</h:panelGrid>

@@ -9,10 +9,11 @@
 					<p:outputLabel value="Titulo:" for="titulo" />
 				</p:column>
 				<p:column colspan="5">
+					<h:message for="titulo"/>
 					<p:message for="titulo"/>
 					<p:inputText id="titulo"
 						value="#{itemAcervoBean.itemAcervo.titulo}" style="width:390px"
-						required="true" requiredMessage="Título obrigatório">
+						 required="true" requiredMessage="Titulo é um campo obrigatório!">
 						<f:ajax event="blur" render="messages" />
 					</p:inputText>
 				</p:column>
@@ -20,6 +21,8 @@
 					<p:outputLabel value="Subtitulo:" for="subtitulo" />
 				</p:column>
 				<p:column colspan="5">
+					<h:message for="subtitulo"/>
+					<p:message for="subtitulo"/>
 					<p:inputText id="subtitulo"
 						value="#{itemAcervoBean.itemAcervo.subtitulo}" style="width:390px" />
 				</p:column>

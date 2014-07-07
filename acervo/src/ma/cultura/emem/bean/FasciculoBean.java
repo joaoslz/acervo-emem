@@ -19,7 +19,7 @@ import org.primefaces.context.RequestContext;
 
 @Named
 @ViewScoped
-public class FasciculoBean extends AbstractItemAcervoBean<Fasciculo> {
+public class FasciculoBean extends BaseItemAcervoBean<Fasciculo> {
 
 	private static final long serialVersionUID = -8216262637075293980L;
 	

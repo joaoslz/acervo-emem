@@ -16,7 +16,7 @@ import ma.cultura.emem.modelo.auxiliar.Midia;
 
 @Named("cdBean")
 @ViewScoped
-public class CDBean extends AbstractItemAcervoBean<CD> {
+public class CDBean extends BaseItemAcervoBean<CD> {
 
 	private static final long serialVersionUID = 6482945063096362016L;
 

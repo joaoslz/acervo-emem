@@ -19,6 +19,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import ma.cultura.emem.modelo.auxiliar.Assunto;
 import ma.cultura.emem.modelo.auxiliar.Editora;
 import ma.cultura.emem.modelo.auxiliar.Idioma;
@@ -39,16 +41,16 @@ public abstract class ItemAcervo extends BaseEntity {
 	@GeneratedValue
 	private Integer id;
 
-	@NotNull(message="O título é um campo obrigatório")
-    @Size(min=2, max=100, message="O título deve possuir no máximo 100 caracteres")
+	@NotEmpty(message="O título é um campo obrigatório")
+    @Size(max=100, message="O título deve possuir no máximo 100 caracteres!")
 	@Column(length = 100, nullable = false)
 	private String titulo;
 
-    @Size(min=2, max=100, message="O subtitulo deve possuir no máximo 100 caracteres")
+    @Size(max=100, message="O subtitulo deve possuir no máximo 100 caracteres!")
 	@Column(length = 100)
 	private String subtitulo;
 
-    @Min(1800)
+//    @Min(1500)
 	private short ano;
 
 	@ManyToOne

@@ -14,7 +14,7 @@ import ma.cultura.emem.modelo.auxiliar.TipoObra;
 
 @Named
 @ViewScoped
-public class ObraBean extends AbstractItemAcervoBean<Obra> {
+public class ObraBean extends BaseItemAcervoBean<Obra> {
 
 	private static final long serialVersionUID = 3468148839276090985L;
 	@Inject
@@ -22,8 +22,6 @@ public class ObraBean extends AbstractItemAcervoBean<Obra> {
 	@Inject
 	private DAO<TipoObra> tipoObraDAO;
 	
-	
-	// FIXME Acredito que não será mais preciso este objeto (autorAdd)
 	private Autor autorAdd = new Autor();
 
 	public void gravarAutor() {
