@@ -29,6 +29,18 @@ public class PartituraBean extends BaseItemAcervoBean<Partitura> implements Seri
 	private Genero generoAdd = new Genero();
 	private Autor autorAdd = new Autor();
 
+	@Override
+	public void gravar() {
+		// se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
+		boolean isEdicao = getItemAcervo().getId() != null;
+		itemAcervo = dao.atualizar(getPartitura());
+		logger.debug("id: " + itemAcervo.getId());
+		if (!isEdicao) {
+			cadastrarExemplares();
+		}
+		limparForm();
+	}
+	
 	public void gravarAutor() {
 		autorDAO.adicionar(autorAdd);
 		logger.debug("AUTOR ADD: " + autorAdd);

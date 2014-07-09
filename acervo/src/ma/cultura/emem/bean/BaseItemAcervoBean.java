@@ -71,15 +71,14 @@ public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serial
 		try{
 			//se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
 			boolean isEdicao = getItemAcervo().getId() != null;
+			itemAcervo = dao.atualizar(getItemAcervo());
 			if (isEdicao) {
-				itemAcervo = dao.atualizar(getItemAcervo());
 				limparForm();
 			}else{
-				itemAcervo = dao.adicionar(getItemAcervo());
 				showDialogExemplares();
 			}
 		}catch(ConstraintViolationException ex){
-			logger.error(ex.getMessage());
+			logger.error(ex.getMessage(), ex);
 			for(ConstraintViolation cv: ex.getConstraintViolations()){
 				FacesContext.getCurrentInstance().addMessage(cv.getPropertyPath().toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, cv.getMessage(), ""));
 			}
