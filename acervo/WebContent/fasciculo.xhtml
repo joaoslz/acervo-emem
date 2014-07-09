@@ -71,7 +71,17 @@
 								<h:outputText value="#{fasciculo.assuntosToString}" />
 							</p:column>
 							<p:column headerText="Artigos">
-								<h:outputText value="#{fasciculo.artigosToString}" />
+								<p:dataList value="#{fasciculo.artigos}" var="artigo" type="definition">
+							        <h:outputText id="x" value="#{artigo}" style="cursor:default"/>
+									<p:overlayPanel for="x" showEffect="fade" 
+										hideEffect="fade" showEvent="mouseover" hideEvent="mouseout"
+										dismissable="false" showCloseIcon="true" at="right top">
+										<p:dataList value="#{artigo.autores}" var="a" type="definition" emptyMessage="Não Cadastrado">
+											<f:facet name="header">Autores</f:facet>
+											<p:column>#{a.nome}</p:column>
+										</p:dataList>						
+									</p:overlayPanel>
+								</p:dataList>
 							</p:column>
 
 							<p:column width="90">
@@ -272,7 +282,7 @@
 								<p:column headerText="Autores">
 									<h:outputText value="#{artigo.autoresToString}" />
 								</p:column>
-								<p:column width="25">
+								<p:column width="35">
 									<p:commandButton icon="ui-icon-trash" title="Excluir Artigo"
 										action="#{fasciculoBean.removerArtigo(index)}"
 										update=":form:tabelaArtigos" />

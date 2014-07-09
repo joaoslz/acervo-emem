@@ -12,6 +12,13 @@
 /* 	padding: 7px; */
 }
 
+/*Sobreescrevendo css do prime*/
+.ui-widget-header{
+	background: #F2FAFD
+		none
+		no-repeat;
+}
+
 @font-face {
 	font-family: Yanone Kaffeesatz;
 	src: url('../fonts/YanoneKaffeesatz-Regular.eot.xhtml?ln=v_1_0');
