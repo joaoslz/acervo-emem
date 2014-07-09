@@ -25,8 +25,8 @@ public class Artigo extends BaseEntity {
 	@GeneratedValue
 	private Integer id;
 
-	@NotNull(message="O título é um campo obrigatório")
-    @Size(min=2, max=100, message="O título deve possuir no máximo 100 caracteres")
+//	@NotNull(message="O título é um campo obrigatório")
+//    @Size(min=2, max=100, message="O título deve possuir no máximo 100 caracteres")
 	@Column(length = 100, nullable = false)
 	private String titulo;
 	private String assunto;

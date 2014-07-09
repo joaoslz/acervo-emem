@@ -23,7 +23,7 @@ public class Exemplar extends BaseEntity {
 
 	private boolean ehDoacao;
 
-	@Past(message="A data de aquisição deve ser anterior a data atual!")
+//	@Past(message="A data de aquisição deve ser anterior a data atual!")
 	@Temporal(TemporalType.DATE)
 	private Calendar dataAquisicao;
 

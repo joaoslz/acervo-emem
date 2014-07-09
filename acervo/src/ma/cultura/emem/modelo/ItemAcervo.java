@@ -41,12 +41,12 @@ public abstract class ItemAcervo extends BaseEntity {
 	@GeneratedValue
 	private Integer id;
 
-	@NotEmpty(message="O título é um campo obrigatório")
-    @Size(max=100, message="O título deve possuir no máximo 100 caracteres!")
+//	@NotEmpty(message="O título é um campo obrigatório")
+//    @Size(max=100, message="O título deve possuir no máximo 100 caracteres!")
 	@Column(length = 100, nullable = false)
 	private String titulo;
 
-    @Size(max=100, message="O subtitulo deve possuir no máximo 100 caracteres!")
+//    @Size(max=100, message="O subtitulo deve possuir no máximo 100 caracteres!")
 	@Column(length = 100)
 	private String subtitulo;
 

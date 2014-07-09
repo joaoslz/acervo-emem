@@ -22,8 +22,8 @@ public class Obra extends ItemAcervo {
 
 	private String classificacao;
 
-	@NotNull
-	@Size(min=5, max=5, message="O cutter deve possuir 5 caracteres")
+//	@NotNull
+//	@Size(min=5, max=5, message="O cutter deve possuir 5 caracteres")
 	@Column(length = 5, nullable = false)
 	private String cutter;
 
@@ -31,7 +31,7 @@ public class Obra extends ItemAcervo {
 	private boolean ehIlustrado;
 
 
-	@Size(max=20, message="O ISBN não pode ser superior a 20 caracteres")
+//	@Size(max=20, message="O ISBN não pode ser superior a 20 caracteres")
 	@Column(length = 20)
 	private String isbn;
 	private Short numPaginas;

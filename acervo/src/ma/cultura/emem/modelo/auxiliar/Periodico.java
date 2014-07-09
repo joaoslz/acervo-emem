@@ -25,12 +25,9 @@ public class Periodico extends BaseAuxiliarEntity {
 	@GeneratedValue
 	private Integer id;
 
-	@NotNull(message="Nome é um campo obrigatório")
-    @Size(min=2, max=150, message="O nome deve possuir no mínimo 2 e no máximo 150 caracteres")
 	@Column(length = 150, nullable = false)
 	private String nome;
 
-    @Size(max=20, message="O ISSN deve possuir no máximo 20 caracteres")
 	@Column(length = 20)
 	private String issn;
 
