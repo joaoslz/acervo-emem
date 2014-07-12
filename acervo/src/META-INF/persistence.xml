@@ -9,27 +9,27 @@
 		<mapping-file>META-INF/consultas/findByNome.xml</mapping-file>
 		<mapping-file>META-INF/consultas/findAll.xml</mapping-file>
 		<mapping-file>META-INF/consultas/findBy.xml</mapping-file>
-		<class>ma.cultura.emem.modelo.Artigo</class>
-		<class>ma.cultura.emem.modelo.CD</class>
-		<class>ma.cultura.emem.modelo.Exemplar</class>
-		<class>ma.cultura.emem.modelo.Fasciculo</class>
-		<class>ma.cultura.emem.modelo.ItemAcervo</class>
-		<class>ma.cultura.emem.modelo.Musica</class>
-		<class>ma.cultura.emem.modelo.Obra</class>
-		<class>ma.cultura.emem.modelo.Partitura</class>
-		<class>ma.cultura.emem.modelo.auxiliar.Assunto</class>
-		<class>ma.cultura.emem.modelo.auxiliar.Autor</class>
-		<class>ma.cultura.emem.modelo.auxiliar.Cantor</class>
-		<class>ma.cultura.emem.modelo.auxiliar.Compositor</class>
-		<class>ma.cultura.emem.modelo.auxiliar.Editora</class>
-		<class>ma.cultura.emem.modelo.auxiliar.Genero</class>
-		<class>ma.cultura.emem.modelo.auxiliar.Gravadora</class>
-		<class>ma.cultura.emem.modelo.auxiliar.Idioma</class>
-		<class>ma.cultura.emem.modelo.auxiliar.Instrumento</class>
-		<class>ma.cultura.emem.modelo.auxiliar.Local</class>
-		<class>ma.cultura.emem.modelo.auxiliar.Midia</class>
-		<class>ma.cultura.emem.modelo.auxiliar.Periodico</class>
-		<class>ma.cultura.emem.modelo.auxiliar.TipoObra</class>
+		<class>ma.cultura.emem.acervo.modelo.Artigo</class>
+		<class>ma.cultura.emem.acervo.modelo.CD</class>
+		<class>ma.cultura.emem.acervo.modelo.Exemplar</class>
+		<class>ma.cultura.emem.acervo.modelo.Fasciculo</class>
+		<class>ma.cultura.emem.acervo.modelo.ItemAcervo</class>
+		<class>ma.cultura.emem.acervo.modelo.Musica</class>
+		<class>ma.cultura.emem.acervo.modelo.Obra</class>
+		<class>ma.cultura.emem.acervo.modelo.Partitura</class>
+		<class>ma.cultura.emem.acervo.modelo.auxiliar.Assunto</class>
+		<class>ma.cultura.emem.acervo.modelo.auxiliar.Autor</class>
+		<class>ma.cultura.emem.acervo.modelo.auxiliar.Cantor</class>
+		<class>ma.cultura.emem.acervo.modelo.auxiliar.Compositor</class>
+		<class>ma.cultura.emem.acervo.modelo.auxiliar.Editora</class>
+		<class>ma.cultura.emem.acervo.modelo.auxiliar.Genero</class>
+		<class>ma.cultura.emem.acervo.modelo.auxiliar.Gravadora</class>
+		<class>ma.cultura.emem.acervo.modelo.auxiliar.Idioma</class>
+		<class>ma.cultura.emem.acervo.modelo.auxiliar.Instrumento</class>
+		<class>ma.cultura.emem.acervo.modelo.auxiliar.Local</class>
+		<class>ma.cultura.emem.acervo.modelo.auxiliar.Midia</class>
+		<class>ma.cultura.emem.acervo.modelo.auxiliar.Periodico</class>
+		<class>ma.cultura.emem.acervo.modelo.auxiliar.TipoObra</class>
 				
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
