@@ -18,7 +18,9 @@
 						</p:column>
 						<p:column>
 							<p:message for="nome" />
-							<p:inputText id="nome" value="#{bean.entity.nome}" required="true" requiredMessage="Nome é um campo obrigatório!"/>
+							<p:inputText id="nome" value="#{bean.entity.nome}" 
+										required="true" requiredMessage="Nome é um campo obrigatório!"
+										validator="#{bean.validarNomeDuplicado}"/>
 						</p:column>
 						<p:column>
 							<p:commandButton value="Gravar" action="#{bean.gravar}"

@@ -15,4 +15,9 @@ public class AssuntoBean extends BaseAuxiliarBean<Assunto> {
 	protected Assunto newEntityInstance() {
 		return new Assunto();
 	}
+
+	@Override
+	protected String getNomeEntity() {
+		return getEntity().getNome();
+	}
 }

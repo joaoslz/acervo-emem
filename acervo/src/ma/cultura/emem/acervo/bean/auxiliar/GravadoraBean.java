@@ -15,4 +15,9 @@ public class GravadoraBean extends BaseAuxiliarBean<Gravadora> {
 	protected Gravadora newEntityInstance() {
 		return new Gravadora();
 	}
+
+	@Override
+	protected String getNomeEntity() {
+		return getEntity().getNome();
+	}
 }

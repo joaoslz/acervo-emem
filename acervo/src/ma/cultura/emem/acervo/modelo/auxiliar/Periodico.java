@@ -11,13 +11,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
+import ma.cultura.emem.acervo.modelo.BaseEntity;
 import ma.cultura.emem.acervo.modelo.Fasciculo;
 
 @Entity
-public class Periodico extends BaseAuxiliarEntity {
+public class Periodico extends BaseEntity {
 
 	private static final long serialVersionUID = -112232541131788319L;
 

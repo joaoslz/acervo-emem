@@ -14,4 +14,9 @@ public class CompositorBean extends BaseAuxiliarBean<Compositor> {
 	protected Compositor newEntityInstance() {
 		return new Compositor();
 	}
+
+	@Override
+	protected String getNomeEntity() {
+		return getEntity().getNome();
+	}
 }

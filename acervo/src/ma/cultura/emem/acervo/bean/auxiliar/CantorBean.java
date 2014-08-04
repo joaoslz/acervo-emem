@@ -15,4 +15,9 @@ public class CantorBean extends BaseAuxiliarBean<Cantor> {
 	protected Cantor newEntityInstance() {
 		return new Cantor();
 	}
+
+	@Override
+	protected String getNomeEntity() {
+		return getEntity().getNome();
+	}
 }

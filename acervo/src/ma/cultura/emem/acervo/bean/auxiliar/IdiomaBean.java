@@ -15,4 +15,9 @@ public class IdiomaBean extends BaseAuxiliarBean<Idioma> {
 	protected Idioma newEntityInstance() {
 		return new Idioma();
 	}
+
+	@Override
+	protected String getNomeEntity() {
+		return getEntity().getNome();
+	}
 }

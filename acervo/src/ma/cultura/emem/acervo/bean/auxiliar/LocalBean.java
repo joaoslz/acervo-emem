@@ -15,4 +15,9 @@ public class LocalBean extends BaseAuxiliarBean<Local> {
 	protected Local newEntityInstance() {
 		return new Local();
 	}
+
+	@Override
+	protected String getNomeEntity() {
+		return getEntity().getNome();
+	}
 }

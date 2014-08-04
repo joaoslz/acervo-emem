@@ -14,4 +14,9 @@ public class MidiaBean extends BaseAuxiliarBean<Midia> {
 	protected Midia newEntityInstance() {
 		return new Midia();
 	}
+
+	@Override
+	protected String getNomeEntity() {
+		return getEntity().getNome();
+	}
 }

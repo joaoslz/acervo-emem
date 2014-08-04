@@ -25,7 +25,12 @@ public class PeriodicoBean extends BaseAuxiliarBean<Periodico> {
 	private DAO<Local> localDAO;
 	@Inject
 	private DAO<Idioma> idiomaDAO;
-	
+
+
+	@Override
+	protected String getNomeEntity() {
+		return getEntity().getNome();
+	}
 
 	public String recarregarPagina() {
 		return "periodico?faces-redirect=true";

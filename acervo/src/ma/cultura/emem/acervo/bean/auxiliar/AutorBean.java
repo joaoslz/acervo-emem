@@ -15,4 +15,9 @@ public class AutorBean extends BaseAuxiliarBean<Autor> {
 	protected Autor newEntityInstance() {
 		return new Autor();
 	}
+
+	@Override
+	protected String getNomeEntity() {
+		return getEntity().getNome();
+	}
 }

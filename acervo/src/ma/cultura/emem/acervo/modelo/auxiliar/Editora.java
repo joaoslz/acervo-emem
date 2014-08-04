@@ -7,13 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
+import ma.cultura.emem.acervo.modelo.BaseEntity;
 import ma.cultura.emem.acervo.modelo.ItemAcervo;
 
 @Entity
-public class Editora extends BaseAuxiliarEntity {
+public class Editora extends BaseEntity {
 
 	private static final long serialVersionUID = -7971911155752471160L;
 

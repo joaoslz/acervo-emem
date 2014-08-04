@@ -8,10 +8,12 @@
 		<p:dialog header="Cadastro de Autor" widgetVar="dlgNovoAutor"
 			resizable="false" modal="true">
 			<h:form>
-				<h:panelGrid columns="2">
+				<p:message for="nome" />
+				<h:panelGrid columns="3">
 					<p:outputLabel value="Nome:" for="nome" />
 					<p:inputText id="nome" value="#{bean.autorAdd.nome}"
-						required="true" requiredMessage="Campo nome deve ser digitado" />
+							required="true" requiredMessage="Nome é um campo obrigatório!"
+							validator="#{autorBean.validarNomeDuplicado}"/>
 
 					<p:commandButton value="Gravar" action="#{bean.gravarAutor}"
 						oncomplete="PF('dlgNovoAutor').hide();" process="@form"

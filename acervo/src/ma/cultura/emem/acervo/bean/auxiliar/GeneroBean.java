@@ -15,4 +15,9 @@ public class GeneroBean extends BaseAuxiliarBean<Genero> {
 	protected Genero newEntityInstance() {
 		return new Genero();
 	}
+
+	@Override
+	protected String getNomeEntity() {
+		return getEntity().getNome();
+	}
 }

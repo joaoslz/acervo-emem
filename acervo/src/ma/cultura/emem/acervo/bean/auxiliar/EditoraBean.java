@@ -19,4 +19,9 @@ public class EditoraBean extends BaseAuxiliarBean<Editora> {
 	public Editora getEditora(){
 		return getEntity();
 	}
+
+	@Override
+	protected String getNomeEntity() {
+		return getEntity().getNome();
+	}
 }

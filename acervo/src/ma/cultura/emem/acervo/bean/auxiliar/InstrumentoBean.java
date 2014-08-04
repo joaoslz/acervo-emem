@@ -15,4 +15,9 @@ public class InstrumentoBean extends BaseAuxiliarBean<Instrumento> {
 	protected Instrumento newEntityInstance() {
 		return new Instrumento();
 	}
+
+	@Override
+	protected String getNomeEntity() {
+		return getEntity().getNome();
+	}
 }

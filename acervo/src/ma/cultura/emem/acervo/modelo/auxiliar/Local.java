@@ -2,11 +2,11 @@ package ma.cultura.emem.acervo.modelo.auxiliar;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
+import ma.cultura.emem.acervo.modelo.BaseEntity;
 
 @Entity
-public class Local extends BaseAuxiliarEntity {
+public class Local extends BaseEntity {
 
 	private static final long serialVersionUID = -2155196826342300173L;
 
