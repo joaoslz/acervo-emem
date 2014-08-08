@@ -1,12 +1,10 @@
-package ma.cultura.emem.acervo.produces;
+package ma.cultura.emem.acervo.dao;
 
 import java.lang.reflect.ParameterizedType;
 
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.persistence.EntityManager;
-
-import ma.cultura.emem.acervo.dao.DAO;
 
 public class DAOProduces<T> {
 

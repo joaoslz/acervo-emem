@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import ma.cultura.emem.acervo.bean.datamodel.BaseEntityLazyDataModel;
 import ma.cultura.emem.acervo.dao.DAO;
+import ma.cultura.emem.acervo.jpa.Transactional;
 import ma.cultura.emem.acervo.modelo.BaseEntity;
 
 import org.apache.log4j.Logger;
@@ -43,6 +44,7 @@ public abstract class BaseAuxiliarBean<T extends BaseEntity> implements Serializ
 		}
 	}
 
+	@Transactional
 	public void gravar() {
 		logger.debug("Gravando entity: " + entity.getClass().getSimpleName());
 		dao.atualizar(entity);
@@ -50,6 +52,7 @@ public abstract class BaseAuxiliarBean<T extends BaseEntity> implements Serializ
 	}
 
 	@SuppressWarnings("unchecked")
+	@Transactional
 	public void edit(RowEditEvent event) {
 		logger.debug("Editando entity: " + entity.getClass().getSimpleName());
 		T t = (T) event.getObject();

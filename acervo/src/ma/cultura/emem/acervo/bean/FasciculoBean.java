@@ -9,6 +9,7 @@ import javax.inject.Named;
 
 import ma.cultura.emem.acervo.bean.datamodel.FasciculoLazyDataModel;
 import ma.cultura.emem.acervo.dao.DAO;
+import ma.cultura.emem.acervo.jpa.Transactional;
 import ma.cultura.emem.acervo.modelo.Artigo;
 import ma.cultura.emem.acervo.modelo.Fasciculo;
 import ma.cultura.emem.acervo.modelo.auxiliar.Autor;
@@ -41,6 +42,7 @@ public class FasciculoBean extends BaseItemAcervoBean<Fasciculo> {
 		return new Fasciculo();
 	}
 
+	@Transactional
 	@Override
 	public void gravar() {
 		//se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.

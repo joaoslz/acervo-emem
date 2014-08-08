@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ma.cultura.emem.acervo.dao.DAO;
+import ma.cultura.emem.acervo.jpa.Transactional;
 import ma.cultura.emem.acervo.modelo.Partitura;
 import ma.cultura.emem.acervo.modelo.auxiliar.Autor;
 import ma.cultura.emem.acervo.modelo.auxiliar.Genero;
@@ -29,6 +30,7 @@ public class PartituraBean extends BaseItemAcervoBean<Partitura> implements Seri
 	private Genero generoAdd = new Genero();
 	private Autor autorAdd = new Autor();
 
+	@Transactional
 	@Override
 	public void gravar() {
 		// se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
@@ -40,7 +42,8 @@ public class PartituraBean extends BaseItemAcervoBean<Partitura> implements Seri
 		}
 		limparForm();
 	}
-	
+
+	@Transactional
 	public void gravarAutor() {
 		autorDAO.adicionar(autorAdd);
 		logger.debug("AUTOR ADD: " + autorAdd);
@@ -49,12 +52,14 @@ public class PartituraBean extends BaseItemAcervoBean<Partitura> implements Seri
 		autorAdd = new Autor();
 	}
 
+	@Transactional
 	public void gravarInstrumento() {
 		instrumentoDAO.adicionar(instrumentoAdd);
 		getPartitura().addInstrumento(instrumentoAdd);
 		instrumentoAdd = new Instrumento();
 	}
 
+	@Transactional
 	public void gravarGenero() {
 		generoDAO.adicionar(generoAdd);
 		getPartitura().setGenero(generoAdd);

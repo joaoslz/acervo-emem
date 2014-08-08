@@ -47,7 +47,7 @@
 	%X = 
 -->
 <log4j:configuration threshold="debug" debug="false" xmlns:log4j='http://jakarta.apache.org/log4j/'>
-	<appender name="MAIL" class="ma.cultura.emem.acervo.util.GmailSMTPAppender">
+	<appender name="MAIL" class="ma.cultura.emem.acervo.log4j.GmailSMTPAppender">
 		<param name="BufferSize" value="10" />
 		<param name="SMTPHost" value="smtp.gmail.com" />
 		<param name="SMTPPort" value="587" />

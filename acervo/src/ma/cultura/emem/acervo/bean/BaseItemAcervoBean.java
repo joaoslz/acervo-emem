@@ -14,6 +14,7 @@ import javax.validation.ConstraintViolationException;
 import ma.cultura.emem.acervo.bean.auxiliar.ExemplarLoteAux;
 import ma.cultura.emem.acervo.bean.datamodel.BaseEntityLazyDataModel;
 import ma.cultura.emem.acervo.dao.DAO;
+import ma.cultura.emem.acervo.jpa.Transactional;
 import ma.cultura.emem.acervo.modelo.Exemplar;
 import ma.cultura.emem.acervo.modelo.ItemAcervo;
 import ma.cultura.emem.acervo.modelo.auxiliar.Assunto;
@@ -67,6 +68,7 @@ public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serial
 	protected abstract T getNewItemAcervo();
 	public abstract String recarregarPagina();
 
+	@Transactional
 	public void gravar() {
 		try{
 			//se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
@@ -108,11 +110,13 @@ public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serial
 		exemplares = exemplarDAO.findByProperty("itemAcervo.id", getItemAcervo().getId());
 	}
 
+	@Transactional
 	public void editExempar(RowEditEvent event) {
 		Exemplar e = (Exemplar) event.getObject();
 		exemplarDAO.atualizar(e);
 	}
 
+	@Transactional
 	public void cadastrarExemplares() {
 		List<Exemplar> exemplares = new ArrayList<Exemplar>();
 		for (int i = 0; i < exemplaresAdd.getQuantidade(); i++) {
@@ -128,24 +132,28 @@ public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serial
 		updateListaExemplares();
 	}
 
+	@Transactional
 	public void gravarIdioma() {
 		idiomaDAO.adicionar(idiomaAdd);
 		getItemAcervo().setIdioma(idiomaAdd);
 		idiomaAdd = new Idioma();
 	}
 
+	@Transactional
 	public void gravarAssunto() {
 		assuntoDAO.adicionar(assuntoAdd);
 		getItemAcervo().addAssunto(assuntoAdd);
 		assuntoAdd = new Assunto();
 	}
 
+	@Transactional
 	public void gravarLocal() {
 		localDAO.adicionar(localAdd);
 		getItemAcervo().setLocal(localAdd);
 		localAdd = new Local();
 	}
 
+	@Transactional
 	public void gravarEditora() {
 		editoraDAO.adicionar(editoraAdd);
 		getItemAcervo().setEditora(editoraAdd);

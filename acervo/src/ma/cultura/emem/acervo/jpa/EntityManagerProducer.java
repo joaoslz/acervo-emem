@@ -1,5 +1,6 @@
-package ma.cultura.emem.acervo.produces;
+package ma.cultura.emem.acervo.jpa;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
@@ -7,9 +8,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class EntityManagerProduces  {
-	
-	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("acervo_emem");
+@ApplicationScoped
+public class EntityManagerProducer {
+
+	private EntityManagerFactory emf;
+
+	public EntityManagerProducer() {
+		this.emf = Persistence.createEntityManagerFactory("acervo_emem");
+	}
 	
 	// Anotacao para que o CDI reconheca este metodo com um produto para o EntityManager
 	@Produces

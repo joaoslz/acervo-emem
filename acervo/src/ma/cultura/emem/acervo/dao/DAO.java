@@ -17,7 +17,7 @@ public class DAO<T> implements Serializable {
 
 	private static final long serialVersionUID = -4361432740747336731L;
 
-	protected Logger logger;
+	private Logger logger;
 
 	private final Class<T> classe;
 
@@ -31,33 +31,27 @@ public class DAO<T> implements Serializable {
 	}
 
 	public T adicionar(T t) {
-		em.getTransaction().begin();
 		em.persist(t);
-		em.getTransaction().commit();
 		return t;
 	}
-	
+
 	public void adicionarLote(List<T> lote) {
-		em.getTransaction().begin();
 		logger.debug("Quantidade : " + lote.size());
 		for (T t: lote) {
 			em.persist(t);
 		}
-		em.getTransaction().commit();
 	}
 
 
 	public T atualizar(T t) {
-		em.getTransaction().begin();
 		t = em.merge(t);
-		em.getTransaction().commit();
+		logger.debug("merge: " + t.getClass());
 		return t;
 	}
 
+
 	public void remover(T t) {
-		em.getTransaction().begin();
 		em.remove(em.merge(t));
-		em.getTransaction().commit();
 	}
 
 	/**
@@ -82,13 +76,15 @@ public class DAO<T> implements Serializable {
 		return new ArrayList<T>();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<T> findByProperty(String property, Object value){
 		Session session = em.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(classe);
 		criteria = criteria.add(Restrictions.eq(property, value));	
 		return criteria.list();
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	public PaginatedResult<T> findByPropertyAndPaginate(String property, Object value, int firstResult, int maxResultsByPage){
 		Session session = em.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(classe);
@@ -104,7 +100,6 @@ public class DAO<T> implements Serializable {
 
 	public List<T> findAll() {
 		// IMPORTANTE:Cada entidade deve implementar a named query Entidade.findAll 
-		List<T> lista = null;
 		String namedQuery = classe.getSimpleName() + ".findAll";
 		TypedQuery<T> q = em.createNamedQuery(namedQuery, classe);
 		return q.getResultList();
@@ -137,6 +132,7 @@ public class DAO<T> implements Serializable {
 	 * @param filters
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public PaginatedResult<T> findFilteredAndPaginate(Map<String, Object> filters, int firstResult, int maxResultsByPage){
 		Session session = em.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(classe);

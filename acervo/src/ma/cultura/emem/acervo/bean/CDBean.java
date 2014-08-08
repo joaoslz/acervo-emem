@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ma.cultura.emem.acervo.dao.DAO;
+import ma.cultura.emem.acervo.jpa.Transactional;
 import ma.cultura.emem.acervo.modelo.CD;
 import ma.cultura.emem.acervo.modelo.Musica;
 import ma.cultura.emem.acervo.modelo.auxiliar.Cantor;
@@ -34,6 +35,7 @@ public class CDBean extends BaseItemAcervoBean<CD> {
 	private Compositor compositorAdd = new Compositor();
 	private Musica musicaAdd = new Musica();
 
+	@Transactional
 	@Override
 	public void gravar() {
 		// se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
@@ -60,18 +62,21 @@ public class CDBean extends BaseItemAcervoBean<CD> {
 		}
 	}
 
+	@Transactional
 	public void gravarCompositor() {
 		compositorDAO.adicionar(compositorAdd);
 		musicaAdd.getCompositores().add(compositorAdd);
 		compositorAdd = new Compositor();
 	}
 
+	@Transactional
 	public void gravarCantor() {
 		cantorDAO.adicionar(cantorAdd);
 		getCD().getCantores().add(cantorAdd);
 		cantorAdd = new Cantor();
 	}
 
+	@Transactional
 	public void gravarGravadora() {
 		gravadoraDAO.adicionar(gravadoraAdd);
 		getCD().setGravadora(gravadoraAdd);

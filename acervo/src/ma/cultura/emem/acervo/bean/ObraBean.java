@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ma.cultura.emem.acervo.dao.DAO;
+import ma.cultura.emem.acervo.jpa.Transactional;
 import ma.cultura.emem.acervo.modelo.Obra;
 import ma.cultura.emem.acervo.modelo.auxiliar.Autor;
 import ma.cultura.emem.acervo.modelo.auxiliar.TipoObra;
@@ -24,6 +25,7 @@ public class ObraBean extends BaseItemAcervoBean<Obra> {
 	
 	private Autor autorAdd = new Autor();
 
+	@Transactional
 	public void gravarAutor() {
 		autorDAO.adicionar(autorAdd);
 		logger.debug("AUTOR ADD: " + autorAdd);

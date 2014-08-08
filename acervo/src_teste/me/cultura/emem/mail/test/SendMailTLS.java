@@ -1,4 +1,4 @@
-package ma.cultura.emem.acervo.util;
+package me.cultura.emem.mail.test;
 
 import java.util.Properties;
 
