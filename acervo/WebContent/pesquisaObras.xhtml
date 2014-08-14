@@ -14,65 +14,105 @@
 			<p:messages id="messages" autoUpdate="true" closable="true" />
 
 			<p:fieldset>
-				<p:panelGrid columns="2">
-					<p:outputLabel value="Título" for="titulo" />
-					<p:inputText id="titulo" value="#{pesquisaObraBean.filtro.titulo}" />
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Título" for="titulo" />
+						</p:column>
+						<p:column>
+							<p:inputText id="titulo"
+								value="#{pesquisaObraBean.filtro.titulo}" />
 
-					<p:outputLabel value="Subtítulo" for="subtitulo" />
-					<p:inputText id="subtitulo"
-						value="#{pesquisaObraBean.filtro.subtitulo}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Subtítulo" for="subtitulo" />
+						</p:column>
+						<p:column>
+							<p:inputText id="subtitulo"
+								value="#{pesquisaObraBean.filtro.subtitulo}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Autores:" for="autores" />
+						</p:column>
+						<p:column >
+							<p:autoComplete minQueryLength="2" id="autores"
+								value="#{pesquisaObraBean.filtro.autores}"
+								completeMethod="#{obraBean.autorDAO.findByNome}" var="a"
+								itemLabel="#{a.nome}" itemValue="#{a.id}"
+								converter="#{entityConverter}" forceSelection="true"
+								multiple="true" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Editora:" for="editora" />
+						</p:column>
+						<p:column>
+							<p:autoComplete minQueryLength="2" size="45"
+								value="#{pesquisaObraBean.filtro.editora}" id="editora"
+								completeMethod="#{pesquisaObraBean.obraBean.editoraDAO.findByNome}"
+								var="e" itemLabel="#{e.nome}" itemValue="#{e}"
+								converter="#{entityConverter}" forceSelection="true">
+							</p:autoComplete>
+						</p:column>
+					</p:row>
 
-					<p:outputLabel value="Ano" />
-					<h:panelGroup>
-						<p:inputText size="10"
-							value="#{pesquisaObraBean.filtro.anoInicio}" /> até
-	    				<p:inputText size="10"
-							value="#{pesquisaObraBean.filtro.anoFim}" />
-					</h:panelGroup>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Ano" />
+						</p:column>
+						<p:column>
+							<p:inputText size="2"
+								value="#{pesquisaObraBean.filtro.anoInicio}" /> até
+	    				<p:inputText size="2" value="#{pesquisaObraBean.filtro.anoFim}" />
+						</p:column>
 
-
-					<p:column>
-						<p:outputLabel value="Editora:" for="editora" />
-					</p:column>
-					<p:column>
-						<p:autoComplete minQueryLength="2" size="45"
-							value="#{pesquisaObraBean.filtro.editora}" id="editora"
-							completeMethod="#{pesquisaObraBean.obraBean.editoraDAO.findByNome}"
-							var="e" itemLabel="#{e.nome}" itemValue="#{e}"
-							converter="#{entityConverter}" forceSelection="true">
-						</p:autoComplete>
-					</p:column>
-
-					<p:outputLabel vaslue="Tipo:" for="cbTipoObra" />
-					<p:selectManyCheckbox value="#{pesquisaObraBean.filtro.tiposObra}"
-						id="cbTipoObra" converter="#{entityConverter}">
-						<f:selectItems value="#{obraBean.listaTiposObra}" var="tipoObra"
-							itemValue="#{tipoObra}" itemLabel="#{tipoObra.nome}" />
-					</p:selectManyCheckbox>
-
-					<p:commandButton value="Buscar"
-						action="#{pesquisaObraBean.pesquisar}" update="tabelaObras" />
+						<p:column>
+							<p:outputLabel value="Tipo:" for="cbTipoObra" />
+						</p:column>
+						<p:column>
+							<p:selectManyCheckbox
+								value="#{pesquisaObraBean.filtro.tiposObra}" id="cbTipoObra"
+								converter="#{entityConverter}">
+								<f:selectItems value="#{obraBean.listaTiposObra}" var="tipoObra"
+									itemValue="#{tipoObra}" itemLabel="#{tipoObra.nome}" />
+							</p:selectManyCheckbox>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Assuntos:" for="assuntos" />
+						</p:column>
+						<p:column>
+							<p:autoComplete minQueryLength="2" id="assuntos"
+								value="#{pesquisaObraBean.filtro.assuntos}"
+								completeMethod="#{obraBean.assuntoDAO.findByNome}"
+								var="a" itemLabel="#{a.nome}" itemValue="#{a.id}"
+								converter="#{entityConverter}" forceSelection="true"
+								multiple="true" />
+						</p:column>
+						<p:column>
+							<p:commandButton value="Buscar"
+								action="#{pesquisaObraBean.pesquisar}" update="tabelaObras" />
+						</p:column>
+					</p:row>
 				</p:panelGrid>
+				<p:dataTable rows="10" paginator="true" paginatorPosition="bottom"
+					id="tabelaObras" value="#{pesquisaObraBean.obrasFiltradas}"
+					var="obra" emptyMessage="Nenhuma Obra Localizada">
+		
+					<p:column headerText="Tipo" width="50">
+						<h:outputText value="#{obra.tipoObra}" />
+					</p:column>
+					<p:column headerText="Título">
+						<h:outputText value="#{obra.titulo}" />
+					</p:column>
+					<p:column headerText="Editora" width="100">
+						<h:outputText value="#{obra.editora.nome}" />
+					</p:column>
+					<p:column headerText="Ano" style="width: 100px; text-align: center" width="50">
+						<h:outputText value="#{obra.ano}" />
+					</p:column>
+		
+				</p:dataTable>
 			</p:fieldset>
 
-			<p:dataTable rows="10" paginator="true" paginatorPosition="bottom"
-				id="tabelaObras" value="#{pesquisaObraBean.obrasFiltradas}"
-				var="obra" emptyMessage="Nenhuma Obra Localizada">
-
-				<p:column headerText="Tipo" style="width: 100px">
-					<h:outputText value="#{obra.tipoObra}" />
-				</p:column>
-				<p:column headerText="Título">
-					<h:outputText value="#{obra.titulo}" />
-				</p:column>
-				<p:column headerText="Editora">
-					<h:outputText value="#{obra.editora.nome}" />
-				</p:column>
-				<p:column headerText="Ano" style="width: 100px; text-align: center" >
-					<h:outputText value="#{obra.ano}" />
-				</p:column>
-
-			</p:dataTable>
 		</h:form>
 
 
