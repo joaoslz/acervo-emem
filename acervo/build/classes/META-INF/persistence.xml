@@ -11,12 +11,14 @@
 		<mapping-file>META-INF/consultas/findBy.xml</mapping-file>
 		<class>ma.cultura.emem.acervo.modelo.Artigo</class>
 		<class>ma.cultura.emem.acervo.modelo.CD</class>
+		<class>ma.cultura.emem.acervo.modelo.Emprestimo</class>
 		<class>ma.cultura.emem.acervo.modelo.Exemplar</class>
 		<class>ma.cultura.emem.acervo.modelo.Fasciculo</class>
 		<class>ma.cultura.emem.acervo.modelo.ItemAcervo</class>
 		<class>ma.cultura.emem.acervo.modelo.Musica</class>
 		<class>ma.cultura.emem.acervo.modelo.Obra</class>
 		<class>ma.cultura.emem.acervo.modelo.Partitura</class>
+		<class>ma.cultura.emem.acervo.modelo.Usuario</class>
 		<class>ma.cultura.emem.acervo.modelo.auxiliar.Assunto</class>
 		<class>ma.cultura.emem.acervo.modelo.auxiliar.Autor</class>
 		<class>ma.cultura.emem.acervo.modelo.auxiliar.Cantor</class>

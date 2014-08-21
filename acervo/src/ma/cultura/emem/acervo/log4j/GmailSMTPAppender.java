@@ -146,7 +146,6 @@ public class GmailSMTPAppender extends SMTPAppender implements Serializable {
 			t.connect(getSMTPHost(), getSMTPUsername(), getSMTPPassword());
 			t.sendMessage(msg, msg.getAllRecipients());
 		} finally {
-			System.out.println("Response: " + t.getLastServerResponse());
 			t.close();
 		}
 	}

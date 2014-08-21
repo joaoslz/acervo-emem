@@ -12,7 +12,6 @@ public class DAOProduces<T> {
 	public DAO<T> createDAO(InjectionPoint ip, EntityManager em) {
 		ParameterizedType type = (ParameterizedType) ip.getType();
 		Class<T> classe = (Class<T>) type.getActualTypeArguments()[0];
-		System.out.println("...............createDAO: "+classe);
 		return new DAO<T>(classe, em);
 	}
 }

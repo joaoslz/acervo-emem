@@ -2,15 +2,16 @@ package ma.cultura.emem.acervo.modelo;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Past;
 
 @Entity
 public class Exemplar extends BaseEntity {
@@ -22,6 +23,7 @@ public class Exemplar extends BaseEntity {
 	private Integer id;
 
 	private boolean ehDoacao;
+	private boolean disponivel;
 
 //	@Past(message="A data de aquisição deve ser anterior a data atual!")
 	@Temporal(TemporalType.DATE)
@@ -35,7 +37,7 @@ public class Exemplar extends BaseEntity {
 
 	@ManyToOne
 	private Fasciculo fasciculo;
-
+	
 	public boolean isEhDoacao() {
 		return ehDoacao;
 	}
@@ -90,5 +92,13 @@ public class Exemplar extends BaseEntity {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public boolean isDisponivel() {
+		return disponivel;
+	}
+
+	public void setDisponivel(boolean disponivel) {
+		this.disponivel = disponivel;
 	}
 }
