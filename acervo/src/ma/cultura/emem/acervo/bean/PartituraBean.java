@@ -31,24 +31,9 @@ public class PartituraBean extends BaseItemAcervoBean<Partitura> implements Seri
 	private Autor autorAdd = new Autor();
 
 	@Transactional
-	@Override
-	public void gravar() {
-		// se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
-		boolean isEdicao = getItemAcervo().getId() != null;
-		itemAcervo = dao.atualizar(getPartitura());
-		logger.debug("id: " + itemAcervo.getId());
-		if (!isEdicao) {
-			cadastrarExemplares();
-		}
-		limparForm();
-	}
-
-	@Transactional
 	public void gravarAutor() {
 		autorDAO.adicionar(autorAdd);
-		logger.debug("AUTOR ADD: " + autorAdd);
 		getPartitura().addAutor(autorAdd);
-		logger.debug("AUTORES: " + getPartitura().getAutores());
 		autorAdd = new Autor();
 	}
 
@@ -64,13 +49,6 @@ public class PartituraBean extends BaseItemAcervoBean<Partitura> implements Seri
 		generoDAO.adicionar(generoAdd);
 		getPartitura().setGenero(generoAdd);
 		generoAdd = new Genero();
-	}
-		
-	@Override
-	protected void showDialogExemplares() {
-		/*Sebrescrevendo este método para não exibir os exemplares na tela de partituras.
-		  por isso ele está em branco, chamando apenas o limparForm.*/
-		limparForm();
 	}
 
 	@Override

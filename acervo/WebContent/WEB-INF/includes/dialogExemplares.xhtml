@@ -16,11 +16,15 @@
 			<b><h:outputText value="Título: " /></b>
 			<h:outputText value="#{itemAcervoBean.itemAcervo.titulo}" />
 			<br/><br/>
+			<p:message for="qtd" />
 			<p:panelGrid style="width:100%">
-				<f:facet name="header"> Dados do Exemplar</f:facet>
 				<p:row>
 					<p:column><p:outputLabel value="Qtd Exemplares: " /></p:column>
-					<p:column><p:spinner value="#{itemAcervoBean.exemplaresAdd.quantidade}" max="300" min="1" size="3"/></p:column>
+					<p:column>
+					<p:spinner id="qtd" value="#{itemAcervoBean.exemplaresAdd.quantidade}" max="300" min="1" size="3" validatorMessage="Você deve cadastrar no mínimo 1 exemplar!">
+						<f:validateLongRange minimum="1" for="qtd" />
+					</p:spinner>
+					</p:column>
 					<p:column><p:outputLabel value="Data de Aquisição: " /></p:column>
 					<p:column><p:calendar value="#{itemAcervoBean.exemplaresAdd.dataAquisicao}" locale="pt_BR" display="inline" navigator="true" size="10"/></p:column>
 					<p:column><p:outputLabel value="É Doaçao? " /></p:column>
@@ -32,18 +36,19 @@
 				<f:facet name="right">
 					<p:commandButton value="Gravar"
 						action="#{itemAcervoBean.cadastrarExemplares}"
-						update="@form :formExemplares:tabelaExemplares" />
+						update="@form :formExemplares:tabelaExemplares " />
 						
 					<p:separator />
 						
 					<!--............Ao sair da tela de exemplares é preciso limpar form e a lista de exemplares....-->
 					<p:commandButton value="Sair" action="#{itemAcervoBean.limparForm}"
-						actionListener="#{itemAcervoBean.limparListaExemplares}"
+						actionListener="#{itemAcervoBean.limparListaExemplares}" immediate="true"
 						oncomplete="PF('dlgExemplares').hide()" update=":form" />
 
 				</f:facet>
 			</p:toolbar>
 
+			<p:messages autoUpdate="true" globalOnly="true" style="color:#0f0;" />
 			<p:dataTable id="tabelaExemplares" value="#{itemAcervoBean.exemplares}"
 				var="exemplar" emptyMessage="Nenhum Exemplar cadastrado"
 				editable="true">

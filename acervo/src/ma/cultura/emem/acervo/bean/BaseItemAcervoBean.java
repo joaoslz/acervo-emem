@@ -5,14 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 
 import ma.cultura.emem.acervo.bean.auxiliar.ExemplarLoteAux;
 import ma.cultura.emem.acervo.bean.datamodel.BaseEntityLazyDataModel;
+import ma.cultura.emem.acervo.bean.util.FacesMessages;
 import ma.cultura.emem.acervo.dao.DAO;
 import ma.cultura.emem.acervo.jpa.Transactional;
 import ma.cultura.emem.acervo.modelo.Exemplar;
@@ -23,15 +20,16 @@ import ma.cultura.emem.acervo.modelo.auxiliar.Idioma;
 import ma.cultura.emem.acervo.modelo.auxiliar.Local;
 
 import org.apache.log4j.Logger;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
 public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serializable{
 
-	private static final long serialVersionUID = 766213803037842422L;
+	private static long serialVersionUID = 766213803037842422L;
 
 	@Inject
 	protected Logger logger;
+	@Inject
+	protected FacesMessages facesMsg;
 
 	@Inject
 	protected DAO<T> dao;
@@ -70,39 +68,24 @@ public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serial
 
 	@Transactional
 	public void gravar() {
-		try{
-			//se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
-			boolean isEdicao = getItemAcervo().getId() != null;
-			itemAcervo = dao.atualizar(getItemAcervo());
-			if (isEdicao) {
-				limparForm();
-			}else{
-				showDialogExemplares();
-			}
-		}catch(ConstraintViolationException ex){
-			logger.error(ex.getMessage(), ex);
-			for(ConstraintViolation cv: ex.getConstraintViolations()){
-				FacesContext.getCurrentInstance().addMessage(cv.getPropertyPath().toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, cv.getMessage(), ""));
-			}
+		//se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
+		boolean isEdicao = getItemAcervo().getId() != null;
+		itemAcervo = dao.atualizar(getItemAcervo());
+		logger.debug("id: " + itemAcervo.getId());			
+		if (!isEdicao) {
+			cadastrarExemplares();
 		}
+		limparForm();
 	}
 
 	public void limparForm() {
+		logger.debug("limpando form " + this.getClass().getSimpleName() + "...");
 		//a subclasse define qual a instacia de obra
 		itemAcervo = getNewItemAcervo();
-		logger.debug("limpando form " + this.getClass().getSimpleName() + "...");
-	}
-
-	protected void showDialogExemplares(){
-		//XXX Chamando o dialogo aqui para correcao de um bug.
-		//BUG: Ao chamar o dialogo direto do <p:commandButton ha uma falha com relacao a validacao.
-		//Pois mesmo que haja erro de validacao, ele continua executando a exibicao do dialogo.
-		//SOLUCAO: Ao chamar o dialogo aqui no bean o problema eh corrigido, pois o JSF nao executa 
-		//o metodo gravar caso haja erro de validacao.
-		RequestContext.getCurrentInstance().execute("PF('dlgConfirmaExemplares').show()");
 	}
 
 	public void limparListaExemplares(){
+		logger.debug("limpando exemplares...");
 		exemplares.clear();
 	}
 
@@ -120,7 +103,6 @@ public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serial
 	public void cadastrarExemplares() {
 		List<Exemplar> exemplares = new ArrayList<Exemplar>();
 		for (int i = 0; i < exemplaresAdd.getQuantidade(); i++) {
-			logger.debug(i + "-" + getItemAcervo().getId());
 			Exemplar exemplar = new Exemplar();
 			exemplar.setItemAcervo(getItemAcervo());
 			exemplar.setEhDoacao(exemplaresAdd.isEhDoacao());
@@ -128,6 +110,7 @@ public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serial
 			exemplares.add(exemplar);
 		}
 		exemplarDAO.adicionarLote(exemplares);
+		facesMsg.globalInfo("Exemplares cadastrados com sucesso!");
 		exemplaresAdd = new ExemplarLoteAux();
 		updateListaExemplares();
 	}
@@ -244,6 +227,6 @@ public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serial
 	public BaseEntityLazyDataModel<T> getLazyDataModel() {
 		if(lazyDataModel == null)
 			lazyDataModel = new BaseEntityLazyDataModel<>(dao);
-			return lazyDataModel;
+		return lazyDataModel;
 	}
 }

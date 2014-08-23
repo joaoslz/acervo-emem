@@ -117,6 +117,7 @@ public class Obra extends ItemAcervo {
 	}
 
 	public void setNumPaginas(Short numPaginas) {
+		naoPaginado = numPaginas <= 0;
 		this.numPaginas = numPaginas;
 	}
 

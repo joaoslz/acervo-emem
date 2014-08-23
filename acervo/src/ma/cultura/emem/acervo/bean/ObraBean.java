@@ -28,9 +28,7 @@ public class ObraBean extends BaseItemAcervoBean<Obra> {
 	@Transactional
 	public void gravarAutor() {
 		autorDAO.adicionar(autorAdd);
-		logger.debug("AUTOR ADD: " + autorAdd);
 		getObra().addAutor(autorAdd);
-		logger.debug("AUTORES: " + getObra().getAutores());
 		autorAdd = new Autor();
 	}
 

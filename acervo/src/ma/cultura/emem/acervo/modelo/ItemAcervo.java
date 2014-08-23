@@ -68,8 +68,6 @@ public abstract class ItemAcervo extends BaseEntity {
 	@OneToMany(mappedBy = "itemAcervo")
 	private List<Exemplar> exemplares = new ArrayList<Exemplar>();;
 
-	public ItemAcervo() {
-	}
 
 	@Override
 	public Integer getId() {
@@ -78,6 +76,10 @@ public abstract class ItemAcervo extends BaseEntity {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public int getQtdExemplares(){
+		return getExemplares().size();
 	}
 
 	public void addExemplar(Exemplar exemplar) {

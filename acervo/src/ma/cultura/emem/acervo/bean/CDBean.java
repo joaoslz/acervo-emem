@@ -35,19 +35,6 @@ public class CDBean extends BaseItemAcervoBean<CD> {
 	private Compositor compositorAdd = new Compositor();
 	private Musica musicaAdd = new Musica();
 
-	@Override
-	@Transactional
-	public void gravar() {
-		// se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
-		boolean isEdicao = getItemAcervo().getId() != null;
-		itemAcervo = dao.atualizar(getCD());
-		logger.debug("id: " + itemAcervo.getId());
-		if (!isEdicao) {
-			cadastrarExemplares();
-		}
-		limparForm();
-	}
-
 	public void addMusica() {
 		getCD().addMusica(musicaAdd);
 		musicaAdd = new Musica();
