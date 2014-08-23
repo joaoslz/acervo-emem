@@ -33,18 +33,21 @@ public class PesquisaObraDAO implements Serializable {
 
 		Criteria criteria = session.createCriteria(Obra.class, "obra");
 
+		if (StringUtils.isNotBlank(filtro.getIsbn())) {
+			// pesquisa em qualquer substring que aparece em qualquer parte do
+			// Título da Obra
+			criteria.add(Restrictions.ilike("isbn", filtro.getIsbn(), MatchMode.ANYWHERE));
+		}
 		if (StringUtils.isNotBlank(filtro.getTitulo())) {
 			// pesquisa em qualquer substring que aparece em qualquer parte do
 			// Título da Obra
-			criteria.add(Restrictions.ilike("titulo", filtro.getTitulo(),
-					MatchMode.ANYWHERE));
+			criteria.add(Restrictions.ilike("titulo", filtro.getTitulo(), MatchMode.ANYWHERE));
 		}
 
 		if (StringUtils.isNotBlank(filtro.getSubtitulo())) {
 			// pesquisa em qualquer substring que aparece em qualquer parte do
 			// subtítulo da Obra
-			criteria.add(Restrictions.ilike("subtitulo", filtro.getSubtitulo(),
-					MatchMode.ANYWHERE));
+			criteria.add(Restrictions.ilike("subtitulo", filtro.getSubtitulo(), MatchMode.ANYWHERE));
 		}
 
 		if (filtro.getAnoInicio() != null && filtro.getAnoInicio() > 0) {
@@ -66,8 +69,7 @@ public class PesquisaObraDAO implements Serializable {
 		}
 
 		if (filtro.getEditora() != null && filtro.getEditora().getId() != null) {
-			criteria.add(Restrictions.eq("editora.id", filtro.getEditora()
-					.getId()));
+			criteria.add(Restrictions.eq("editora.id", filtro.getEditora().getId()));
 		}
 		if (filtro.getAutores() != null && filtro.getAutores().size() > 0) {
 			// http://stackoverflow.com/questions/17701147/hibernate-criteria-join-query-one-to-many

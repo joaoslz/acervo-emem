@@ -11,7 +11,6 @@
 	<ui:define name="conteudo">
 
 		<h:form>
-			<p:messages id="messages" autoUpdate="true" closable="true" />
 
 			<p:fieldset>
 				<p:panelGrid>
@@ -34,7 +33,7 @@
 						<p:column>
 							<p:outputLabel value="Autores:" for="autores" />
 						</p:column>
-						<p:column >
+						<p:column>
 							<p:autoComplete minQueryLength="2" id="autores"
 								value="#{pesquisaObraBean.filtro.autores}"
 								completeMethod="#{obraBean.autorDAO.findByNome}" var="a"
@@ -42,19 +41,28 @@
 								converter="#{entityConverter}" forceSelection="true"
 								multiple="true" />
 						</p:column>
+					</p:row>
+					<p:row>
 						<p:column>
-							<p:outputLabel value="Editora:" for="editora" />
+							<p:outputLabel value="ISBN:" for="isbn" />
 						</p:column>
 						<p:column>
-							<p:autoComplete minQueryLength="2" size="45"
-								value="#{pesquisaObraBean.filtro.editora}" id="editora"
-								completeMethod="#{pesquisaObraBean.obraBean.editoraDAO.findByNome}"
-								var="e" itemLabel="#{e.nome}" itemValue="#{e}"
-								converter="#{entityConverter}" forceSelection="true">
-							</p:autoComplete>
+							<p:inputText id="isbn" value="#{pesquisaObraBean.filtro.isbn}" />
+						</p:column>
+						<p:column></p:column>
+						<p:column></p:column>
+						<p:column>
+							<p:outputLabel value="Assuntos:" for="assuntos" />
+						</p:column>
+						<p:column>
+							<p:autoComplete minQueryLength="2" id="assuntos"
+								value="#{pesquisaObraBean.filtro.assuntos}"
+								completeMethod="#{obraBean.assuntoDAO.findByNome}" var="a"
+								itemLabel="#{a.nome}" itemValue="#{a.id}"
+								converter="#{entityConverter}" forceSelection="true"
+								multiple="true" />
 						</p:column>
 					</p:row>
-
 					<p:row>
 						<p:column>
 							<p:outputLabel value="Ano" />
@@ -77,15 +85,15 @@
 							</p:selectManyCheckbox>
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Assuntos:" for="assuntos" />
+							<p:outputLabel value="Editora:" for="editora" />
 						</p:column>
 						<p:column>
-							<p:autoComplete minQueryLength="2" id="assuntos"
-								value="#{pesquisaObraBean.filtro.assuntos}"
-								completeMethod="#{obraBean.assuntoDAO.findByNome}"
-								var="a" itemLabel="#{a.nome}" itemValue="#{a.id}"
-								converter="#{entityConverter}" forceSelection="true"
-								multiple="true" />
+							<p:autoComplete minQueryLength="2" size="45"
+								value="#{pesquisaObraBean.filtro.editora}" id="editora"
+								completeMethod="#{pesquisaObraBean.obraBean.editoraDAO.findByNome}"
+								var="e" itemLabel="#{e.nome}" itemValue="#{e}"
+								converter="#{entityConverter}" forceSelection="true">
+							</p:autoComplete>
 						</p:column>
 						<p:column>
 							<p:commandButton value="Buscar"
@@ -93,23 +101,35 @@
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-				<p:dataTable rows="10" paginator="true" paginatorPosition="bottom"
+				<p:dataTable rows="20" paginator="true" paginatorPosition="bottom"
 					id="tabelaObras" value="#{pesquisaObraBean.obrasFiltradas}"
 					var="obra" emptyMessage="Nenhuma Obra Localizada">
-		
-					<p:column headerText="Tipo" width="50">
+
+					<p:column headerText="Tipo" width="40">
 						<h:outputText value="#{obra.tipoObra}" />
 					</p:column>
 					<p:column headerText="Título">
 						<h:outputText value="#{obra.titulo}" />
 					</p:column>
-					<p:column headerText="Editora" width="100">
+					<p:column headerText="ISBN" width="120">
+						<h:outputText value="#{obra.isbn}" />
+					</p:column>
+					<p:column headerText="Editora">
 						<h:outputText value="#{obra.editora.nome}" />
 					</p:column>
-					<p:column headerText="Ano" style="width: 100px; text-align: center" width="50">
+					<p:column headerText="Ano" width="30">
 						<h:outputText value="#{obra.ano}" />
 					</p:column>
-		
+					<p:column headerText="Local" width="100">
+						<h:outputText value="#{obra.local.nome}" />
+					</p:column>
+					<p:column headerText="Autores">
+						<h:outputText value="#{obra.autoresToString}" />
+					</p:column>
+					<p:column headerText="Assuntos">
+						<h:outputText value="#{obra.assuntosToString}" />
+					</p:column>
+
 				</p:dataTable>
 			</p:fieldset>
 
