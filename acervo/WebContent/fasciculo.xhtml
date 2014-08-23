@@ -55,10 +55,19 @@
 								<p:commandButton value="Cadastrar Revista" update="@form"
 									action="#{fasciculoBean.showDialogCadastroRevista}" />
 							</f:facet>
+							
+							<p:column headerText="Expl." width="40">
+								<p:commandButton title="Incluir Exemplares"
+									oncomplete="PF('dlgExemplares').show()" value="#{fasciculo.qtdExemplares}"
+									action="#{fasciculoBean.updateListaExemplares}"
+									update="@form :formExemplares">
+									<f:setPropertyActionListener value="#{fasciculo}" target="#{fasciculoBean.itemAcervo}" />
+								</p:commandButton>
+							</p:column>
 							<p:column headerText="Título" filterBy="#{fasciculo.titulo}">
 								<h:outputText value="#{fasciculo.titulo}" />
 							</p:column>
-							<p:column headerText="Ano" width="50">
+							<p:column headerText="Ano" width="30">
 								<h:outputText value="#{fasciculo.ano}" />
 							</p:column>
 							<p:column headerText="Mês" width="50">
@@ -72,7 +81,7 @@
 							</p:column>
 							<p:column headerText="Artigos">
 								<p:dataList value="#{fasciculo.artigos}" var="artigo" type="definition">
-							        <h:outputText id="x" value="#{artigo}" style="cursor:default"/>
+							        <h:outputText id="x" value="#{artigo.titulo}" style="cursor:default"/>
 									<p:overlayPanel for="x" showEffect="fade" 
 										hideEffect="fade" showEvent="mouseover" hideEvent="mouseout"
 										dismissable="false" showCloseIcon="true" at="right top">
@@ -84,19 +93,12 @@
 								</p:dataList>
 							</p:column>
 
-							<p:column width="90">
+							<p:column width="40">
 								<p:commandButton icon="ui-icon-pencil" title="Alterar Revista"
 									update=":form" oncomplete="PF('dlgNovaRevista').show()">
 									<f:setPropertyActionListener value="#{fasciculo}"
 										target="#{fasciculoBean.itemAcervo}" />
-								</p:commandButton>
-								<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
-									oncomplete="PF('dlgExemplares').show()"
-									action="#{fasciculoBean.updateListaExemplares}"
-									update=":formExemplares">
-									<f:setPropertyActionListener value="#{fasciculo}"
-										target="#{fasciculoBean.itemAcervo}" />
-								</p:commandButton>
+								</p:commandButton>								
 							</p:column>
 						</p:dataTable>
 					</p:layoutUnit>
@@ -194,8 +196,10 @@
 							<p:outputLabel value="Titulo:" for="titulo" />
 						</p:column>
 						<p:column colspan="3">
+							<p:message for="titulo"/>
 							<p:inputText id="titulo"
-								value="#{fasciculoBean.itemAcervo.titulo}" style="width:390px">
+								value="#{fasciculoBean.itemAcervo.titulo}" style="width:390px"
+								 required="true" requiredMessage="Titulo é um campo obrigatório!">
 								<f:ajax event="blur" render="messages" />
 							</p:inputText>
 						</p:column>
@@ -299,8 +303,10 @@
 							<p:outputLabel value="Qtd Exemplares: " />
 						</p:column>
 						<p:column>
-							<p:spinner value="#{fasciculoBean.exemplaresAdd.quantidade}"
-								max="300" min="1" size="3" />
+							<p:message for="qtd" />
+							<p:spinner id="qtd" value="#{fasciculoBean.exemplaresAdd.quantidade}" max="300" min="1" size="3" validatorMessage="Você deve cadastrar no mínimo 1 exemplar!">
+								<f:validateLongRange minimum="1" for="qtd" />
+							</p:spinner>
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Data de Aquisição: " />

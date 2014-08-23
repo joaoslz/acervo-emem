@@ -98,7 +98,12 @@
 					<f:facet name="header"> Dados do Exemplar</f:facet>
 					<p:row>
 						<p:column><p:outputLabel value="Qtd Exemplares: " /></p:column>
-						<p:column><p:spinner value="#{partituraBean.exemplaresAdd.quantidade}" max="300" min="1" size="3"/></p:column>
+						<p:column>
+							<p:message for="qtd" />
+							<p:spinner id="qtd" value="#{partituraBean.exemplaresAdd.quantidade}" max="300" min="1" size="3" validatorMessage="Você deve cadastrar no mínimo 1 exemplar!">
+								<f:validateLongRange minimum="1" for="qtd" />
+							</p:spinner>
+						</p:column>
 						<p:column><p:outputLabel value="Data de Aquisição: " /></p:column>
 						<p:column><p:calendar value="#{partituraBean.exemplaresAdd.dataAquisicao}" locale="pt_BR" display="inline" navigator="true" size="10"/></p:column>
 						<p:column><p:outputLabel value="É Doaçao? " /></p:column>
@@ -137,20 +142,28 @@
 					rowsPerPageTemplate="5 10 15 20 30 40" paginatorPosition="bottom"
 					paginatorAlwaysVisible="false">
 
+					<p:column headerText="Expl." width="40">
+						<p:commandButton title="Incluir Exemplares"
+							oncomplete="PF('dlgExemplares').show()" value="#{partitura.qtdExemplares}"
+							action="#{partituraBean.updateListaExemplares}"
+							update="@form :formExemplares">
+							<f:setPropertyActionListener value="#{partitura}" target="#{partituraBean.itemAcervo}" />
+						</p:commandButton>
+					</p:column>
 					<p:column filterBy="#{partitura.titulo}" filterMatchMode="contains"
 						headerText="Título">
 						<h:outputText value="#{partitura.titulo}" />
 					</p:column>
-					<p:column headerText="Gênero" style="width: 100px">
+					<p:column headerText="Gênero" width="100">
 						<h:outputText value="#{partitura.genero.nome}" />
 					</p:column>
-					<p:column headerText="Idioma" style="width: 60px">
+					<p:column headerText="Idioma" width="60">
 						<h:outputText value="#{partitura.idioma.nome}" />
 					</p:column>
 					<p:column headerText="Editora">
 						<h:outputText value="#{partitura.editora.nome}" />
 					</p:column>
-					<p:column headerText="Local" style="width: 100px">
+					<p:column headerText="Local" width="100">
 						<h:outputText value="#{partitura.local.nome}" />
 					</p:column>
 					<p:column headerText="Autores">
@@ -162,16 +175,9 @@
 					<p:column headerText="Instrumentos">
 						<h:outputText value="#{partitura.instrumentosToString}" />
 					</p:column>
-					<p:column headerText="Alterar" style="width: 80px">
+					<p:column headerText="Alterar" width="40">
 						<p:commandButton icon="ui-icon-pencil" title="Alterar Partitura"
 							update=":form">
-							<f:setPropertyActionListener value="#{partitura}"
-								target="#{partituraBean.itemAcervo}" />
-						</p:commandButton>
-						<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
-							oncomplete="PF('dlgExemplares').show()"
-							action="#{partituraBean.updateListaExemplares}"
-							update="@form :formExemplares">
 							<f:setPropertyActionListener value="#{partitura}"
 								target="#{partituraBean.itemAcervo}" />
 						</p:commandButton>

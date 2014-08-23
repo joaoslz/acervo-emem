@@ -159,7 +159,12 @@
 							<f:facet name="header"> Dados do Exemplar</f:facet>
 							<p:row>
 								<p:column><p:outputLabel value="Qtd Exemplares: " /></p:column>
-								<p:column><p:spinner value="#{cdBean.exemplaresAdd.quantidade}" max="300" min="1" size="3"/></p:column>
+								<p:column>
+									<p:message for="qtd" />
+									<p:spinner id="qtd" value="#{cdBean.exemplaresAdd.quantidade}" max="300" min="1" size="3" validatorMessage="Você deve cadastrar no mínimo 1 exemplar!">
+										<f:validateLongRange minimum="1" for="qtd" />
+									</p:spinner>
+								</p:column>
 								<p:column><p:outputLabel value="Data de Aquisição: " /></p:column>
 								<p:column><p:calendar value="#{cdBean.exemplaresAdd.dataAquisicao}" locale="pt_BR" display="inline" navigator="true" size="10"/></p:column>
 								<p:column><p:outputLabel value="É Doaçao? " /></p:column>
@@ -215,6 +220,14 @@
 				rowsPerPageTemplate="5 10 15 20 30 40" paginatorPosition="bottom"
 				paginatorAlwaysVisible="false">
 
+				<p:column headerText="Expl." width="40">
+					<p:commandButton title="Incluir Exemplares"
+						oncomplete="PF('dlgExemplares').show()" value="#{cd.qtdExemplares}"
+						action="#{cdBean.updateListaExemplares}"
+						update="@form :formExemplares">
+						<f:setPropertyActionListener value="#{cd}" target="#{cdBean.itemAcervo}" />
+					</p:commandButton>
+				</p:column>
 				<p:column headerText="Mídia">
 					<h:outputText value="#{cd.midia}" />
 				</p:column>
@@ -249,16 +262,9 @@
 						</p:overlayPanel>
 					</p:dataList>
 				</p:column>
-				<p:column>
+				<p:column width="40">
 					<p:commandButton icon="ui-icon-pencil" title="Alterar CD"
 						update=":form" >
-						<f:setPropertyActionListener value="#{cd}"
-							target="#{cdBean.itemAcervo}" />
-					</p:commandButton>
-					<p:commandButton icon="ui-icon-tag" title="Incluir Exemplares"
-						oncomplete="PF('dlgExemplares').show()"
-						action="#{cdBean.updateListaExemplares}"
-						update="@form :formExemplares ">
 						<f:setPropertyActionListener value="#{cd}"
 							target="#{cdBean.itemAcervo}" />
 					</p:commandButton>
@@ -296,7 +302,10 @@
 							<p:outputLabel value="Faixa: " for="faixa" />
 						</p:column>
 						<p:column>
-							<p:spinner id="faixa" value="#{cdBean.musicaAdd.faixa}"  max="99" min="1" size="2"/>
+							<p:message for="faixa"/>
+							<p:spinner id="faixa" value="#{cdBean.musicaAdd.faixa}"  max="99" min="0" size="2" validatorMessage="Faixa é um campo obrigatório!">
+								<f:validateLongRange minimum="1" for="faixa" />
+							</p:spinner>
 						</p:column>
 					</p:row>
 					<p:row>
@@ -304,7 +313,8 @@
 							<p:outputLabel value="Título:" for="titulo" />
 						</p:column>
 						<p:column>
-							<p:inputText id="titulo" value="#{cdBean.musicaAdd.titulo}" />
+							<p:message for="titulo"/>
+							<p:inputText id="titulo" value="#{cdBean.musicaAdd.titulo}" required="true" requiredMessage="Título é um campo obrigatório!"/>
 						</p:column>
 					</p:row>
 					<p:row>
@@ -312,8 +322,9 @@
 							<p:outputLabel value="Duração:" for="duracao" />
 						</p:column>
 						<p:column>
+							<p:message for="duracao"/>
 							<p:inputMask mask="99:99" id="duracao"
-								value="#{cdBean.musicaAdd.duracao}">
+								value="#{cdBean.musicaAdd.duracao}" required="true" requiredMessage="Duração é um campo obrigatório!">
 								<f:convertDateTime pattern="mm:ss" timeZone="GMT-03:00"
 									type="time" timeStyle="short" />
 							</p:inputMask>
