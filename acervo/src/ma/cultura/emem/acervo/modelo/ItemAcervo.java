@@ -66,7 +66,7 @@ public abstract class ItemAcervo extends BaseEntity {
 	private List<Assunto> assuntos = new ArrayList<Assunto>();
 
 	@OneToMany(mappedBy = "itemAcervo")
-	private List<Exemplar> exemplares = new ArrayList<Exemplar>();;
+	private List<Exemplar> exemplares = new ArrayList<Exemplar>();
 
 
 	@Override

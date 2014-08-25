@@ -37,6 +37,9 @@
 	<named-query name="Autor.findAll">
 		<query>  SELECT x FROM Autor x order by x.id desc </query>
 	</named-query>
+	<named-query name="Arranjador.findAll">
+		<query>  SELECT x FROM Arranjador x order by x.id desc </query>
+	</named-query>
 	<named-query name="Cantor.findAll">
 		<query>  SELECT x FROM Cantor x order by x.id desc </query>
 	</named-query>

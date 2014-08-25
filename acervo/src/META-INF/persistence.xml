@@ -19,6 +19,7 @@
 		<class>ma.cultura.emem.acervo.modelo.Obra</class>
 		<class>ma.cultura.emem.acervo.modelo.Partitura</class>
 		<class>ma.cultura.emem.acervo.modelo.Usuario</class>
+		<class>ma.cultura.emem.acervo.modelo.auxiliar.Arranjador</class>
 		<class>ma.cultura.emem.acervo.modelo.auxiliar.Assunto</class>
 		<class>ma.cultura.emem.acervo.modelo.auxiliar.Autor</class>
 		<class>ma.cultura.emem.acervo.modelo.auxiliar.Cantor</class>

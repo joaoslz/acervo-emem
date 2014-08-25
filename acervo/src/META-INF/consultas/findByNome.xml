@@ -10,6 +10,9 @@
 	<named-query name="Autor.findByNome">
 		<query>  SELECT x FROM Autor x WHERE x.nome like :nome order by x.nome asc </query>
 	</named-query>
+	<named-query name="Arranjador.findByNome">
+		<query>  SELECT x FROM Arranjador x WHERE x.nome like :nome order by x.nome asc </query>
+	</named-query>
 	<named-query name="Cantor.findByNome">
 		<query>  SELECT x FROM Cantor x WHERE x.nome like :nome order by x.nome asc </query>
 	</named-query>

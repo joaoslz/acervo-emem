@@ -9,6 +9,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import ma.cultura.emem.acervo.modelo.auxiliar.Arranjador;
 import ma.cultura.emem.acervo.modelo.auxiliar.Autor;
 import ma.cultura.emem.acervo.modelo.auxiliar.Genero;
 import ma.cultura.emem.acervo.modelo.auxiliar.Instrumento;
@@ -21,6 +22,8 @@ public class Partitura extends ItemAcervo {
 	@ManyToOne
 	private Genero genero;
 
+	@ManyToMany
+	private List<Arranjador> arranjadores = new ArrayList<>();
 	@ManyToMany
 	private List<Instrumento> instrumentos = new ArrayList<>();
 	
@@ -62,6 +65,9 @@ public class Partitura extends ItemAcervo {
 	public void addAutor(Autor autor) {
 		getAutores().add(autor);
 	}
+	public void addArranjador(Arranjador a) {
+		getArranjadores().add(a);
+	}
 
 	@Transient
 	public String getAutoresToString() {
@@ -70,6 +76,22 @@ public class Partitura extends ItemAcervo {
 			final Iterator<Autor> it = getAutores().iterator();
 			while (it.hasNext()) {
 				final Autor a = it.next();
+				builder.append(a.getNome());
+				if (it.hasNext()) {
+					builder.append(", ");
+				}
+			}
+		}
+		return builder.toString();
+	}
+
+	@Transient
+	public String getArranjadoresToString() {
+		final StringBuilder builder = new StringBuilder();
+		if (getArranjadores() != null) {
+			final Iterator<Arranjador> it = getArranjadores().iterator();
+			while (it.hasNext()) {
+				final Arranjador a = it.next();
 				builder.append(a.getNome());
 				if (it.hasNext()) {
 					builder.append(", ");
@@ -92,5 +114,15 @@ public class Partitura extends ItemAcervo {
 			}
 		}
 		return builder.toString();
+	}
+
+	public List<Arranjador> getArranjadores() {
+		if (arranjadores == null)
+			arranjadores = new ArrayList<>();
+		return arranjadores;
+	}
+
+	public void setArranjadores(List<Arranjador> arranjadores) {
+		this.arranjadores = arranjadores;
 	}
 }

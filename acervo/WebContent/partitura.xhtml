@@ -52,8 +52,6 @@
 								icon="ui-icon-plus" immediate="true" title="Adicionar Gênero"
 								onclick="PF('dlgNovoGenero').show()" />
 						</p:column>
-					</p:row>
-					<p:row>
 						<p:column>
 							<p:outputLabel value="Instrumento:" for="instrumentos" />
 						</p:column>
@@ -87,8 +85,24 @@
 						</p:column>
 						<p:column>
 							<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
-								process="form:autores" title="Adicionar Autor"
+								process="form:autores" title="Adicionar Autor" immediate="true"
 								onclick="PF('dlgNovoAutor').show()" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Arranjadores:" for="arranjadores" />
+						</p:column>
+						<p:column>
+							<p:autoComplete minQueryLength="2" id="arranjadores"
+								value="#{partituraBean.partitura.arranjadores}"
+								completeMethod="#{partituraBean.arranjadorDAO.findByNome}" var="a"
+								itemLabel="#{a.nome}" itemValue="#{a}"
+								converter="#{entityConverter}" forceSelection="true"
+								multiple="true" />
+						</p:column>
+						<p:column>
+							<p:commandButton id="showAddArranjadorButton" icon="ui-icon-plus"
+								process="form:arranjadores" title="Adicionar Arranjador" immediate="true"
+								onclick="PF('dlgNovoArranjador').show()" />
 						</p:column>
 					</p:row>
 				
@@ -169,6 +183,9 @@
 					<p:column headerText="Autores">
 						<h:outputText value="#{partitura.autoresToString}" />
 					</p:column>
+					<p:column headerText="Arranjadores">
+						<h:outputText value="#{partitura.arranjadoresToString}" />
+					</p:column>
 					<p:column headerText="Assuntos">
 						<h:outputText value="#{partitura.assuntosToString}" />
 					</p:column>
@@ -189,6 +206,10 @@
 		<ui:include src="/WEB-INF/includes/dialogAutor.xhtml">
 			<ui:param name="bean" value="#{partituraBean}" />
 			<ui:param name="camposToUpdate" value=":form:autores" />
+		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogArranjador.xhtml">
+			<ui:param name="bean" value="#{partituraBean}" />
+			<ui:param name="camposToUpdate" value=":form:arranjadores" />
 		</ui:include>
 		<ui:include src="/WEB-INF/includes/dialogAssunto.xhtml">
 			<ui:param name="itemAcervoBean" value="#{partituraBean}" />

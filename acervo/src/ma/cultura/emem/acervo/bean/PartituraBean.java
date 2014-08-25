@@ -9,6 +9,7 @@ import javax.inject.Named;
 import ma.cultura.emem.acervo.dao.DAO;
 import ma.cultura.emem.acervo.jpa.Transactional;
 import ma.cultura.emem.acervo.modelo.Partitura;
+import ma.cultura.emem.acervo.modelo.auxiliar.Arranjador;
 import ma.cultura.emem.acervo.modelo.auxiliar.Autor;
 import ma.cultura.emem.acervo.modelo.auxiliar.Genero;
 import ma.cultura.emem.acervo.modelo.auxiliar.Instrumento;
@@ -20,6 +21,8 @@ public class PartituraBean extends BaseItemAcervoBean<Partitura> implements Seri
 	private static final long serialVersionUID = -5763773183540321467L;
 
 	@Inject
+	private DAO<Arranjador> arranjadorDAO;
+	@Inject
 	private DAO<Instrumento> instrumentoDAO;
 	@Inject
 	private DAO<Genero> generoDAO;
@@ -29,7 +32,15 @@ public class PartituraBean extends BaseItemAcervoBean<Partitura> implements Seri
 	private Instrumento instrumentoAdd = new Instrumento();
 	private Genero generoAdd = new Genero();
 	private Autor autorAdd = new Autor();
+	private Arranjador arranjadorAdd = new Arranjador();
 
+	@Transactional
+	public void gravarArranjador() {
+		arranjadorDAO.adicionar(arranjadorAdd);
+		getPartitura().addArranjador(arranjadorAdd);
+		arranjadorAdd = new Arranjador();
+	}
+	
 	@Transactional
 	public void gravarAutor() {
 		autorDAO.adicionar(autorAdd);
@@ -99,5 +110,17 @@ public class PartituraBean extends BaseItemAcervoBean<Partitura> implements Seri
 
 	public void setAutorAdd(Autor autorAdd) {
 		this.autorAdd = autorAdd;
+	}
+
+	public DAO<Arranjador> getArranjadorDAO() {
+		return arranjadorDAO;
+	}
+
+	public Arranjador getArranjadorAdd() {
+		return arranjadorAdd;
+	}
+
+	public void setArranjadorAdd(Arranjador arranjadorAdd) {
+		this.arranjadorAdd = arranjadorAdd;
 	}
 }
