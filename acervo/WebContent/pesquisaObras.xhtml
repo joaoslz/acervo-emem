@@ -49,8 +49,14 @@
 						<p:column>
 							<p:inputText id="isbn" value="#{pesquisaObraBean.filtro.isbn}" />
 						</p:column>
-						<p:column></p:column>
-						<p:column></p:column>
+						<p:column>
+							<p:outputLabel value="Ano" />
+						</p:column>
+						<p:column>
+							<p:inputText size="2"
+								value="#{pesquisaObraBean.filtro.anoInicio}" /> até
+	    				<p:inputText size="2" value="#{pesquisaObraBean.filtro.anoFim}" />
+						</p:column>
 						<p:column>
 							<p:outputLabel value="Assuntos:" for="assuntos" />
 						</p:column>
@@ -62,17 +68,8 @@
 								converter="#{entityConverter}" forceSelection="true"
 								multiple="true" />
 						</p:column>
-						<p:column></p:column>
 					</p:row>
 					<p:row>
-						<p:column>
-							<p:outputLabel value="Ano" />
-						</p:column>
-						<p:column>
-							<p:inputText size="2"
-								value="#{pesquisaObraBean.filtro.anoInicio}" /> até
-	    				<p:inputText size="2" value="#{pesquisaObraBean.filtro.anoFim}" />
-						</p:column>
 
 						<p:column>
 							<p:outputLabel value="Tipo:" for="cbTipoObra" />
@@ -96,8 +93,8 @@
 								converter="#{entityConverter}" forceSelection="true">
 							</p:autoComplete>
 						</p:column>
-						<p:column>
-							<p:commandButton value="Buscar"
+						<p:column colspan="2">
+							<p:commandButton value="Buscar" icon="ui-icon-search"
 								action="#{pesquisaObraBean.pesquisar}" update="tabelaObras" />
 						</p:column>
 					</p:row>
