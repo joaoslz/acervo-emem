@@ -9,15 +9,15 @@ import javax.inject.Inject;
 
 import ma.cultura.emem.acervo.bean.auxiliar.ExemplarLoteAux;
 import ma.cultura.emem.acervo.bean.datamodel.BaseEntityLazyDataModel;
-import ma.cultura.emem.acervo.bean.util.FacesMessages;
 import ma.cultura.emem.acervo.dao.DAO;
-import ma.cultura.emem.acervo.jpa.Transactional;
 import ma.cultura.emem.acervo.modelo.Exemplar;
 import ma.cultura.emem.acervo.modelo.ItemAcervo;
 import ma.cultura.emem.acervo.modelo.auxiliar.Assunto;
 import ma.cultura.emem.acervo.modelo.auxiliar.Editora;
 import ma.cultura.emem.acervo.modelo.auxiliar.Idioma;
 import ma.cultura.emem.acervo.modelo.auxiliar.Local;
+import ma.cultura.emem.acervo.util.jpa.Transactional;
+import ma.cultura.emem.acervo.util.jsf.FacesMessages;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.RowEditEvent;
@@ -110,7 +110,7 @@ public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serial
 			exemplares.add(exemplar);
 		}
 		exemplarDAO.adicionarLote(exemplares);
-		facesMsg.globalInfo("Exemplares cadastrados com sucesso!");
+		facesMsg.infoGlobal("Exemplares cadastrados com sucesso!");
 		exemplaresAdd = new ExemplarLoteAux();
 		updateListaExemplares();
 	}

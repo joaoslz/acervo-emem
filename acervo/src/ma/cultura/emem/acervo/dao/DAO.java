@@ -11,22 +11,24 @@ import javax.persistence.TypedQuery;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
 public class DAO<T> implements Serializable {
 
 	private static final long serialVersionUID = -4361432740747336731L;
 
-	private Logger logger;
+	private final Logger logger;
 
+	private final String className;
 	private final Class<T> classe;
-
-	private EntityManager em;
+	private final EntityManager em;
 
 	public DAO(Class<T> classe, EntityManager em) {
 		logger = Logger.getLogger(getClass());
 		this.classe = classe;
 		this.em = em;
+		className = classe.getSimpleName();
 		logger.debug("...::::" + classe);
 	}
 
@@ -52,6 +54,12 @@ public class DAO<T> implements Serializable {
 
 	public void remover(T t) {
 		em.remove(em.merge(t));
+	}
+	
+	public List<T> findById(String id){
+		TypedQuery query = em.createQuery("from " + className +" t where CAST(t.id as string) like :id", classe);
+		query.setParameter("id", "%"+id+"%");
+		return query.getResultList();		
 	}
 
 	/**

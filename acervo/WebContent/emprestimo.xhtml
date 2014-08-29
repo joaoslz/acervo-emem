@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="WEB-INF/template/_template.xhtml">
+	<ui:define name="conteudo">
+
+		<p:fieldset legend="Empréstimo de Obras">
+
+			<h:form id="form">
+				<!-- Solucioina o bug de dialog que aparece ao pressionar enter -->
+				<p:commandButton id="btnDefault" style="display:none" />
+				<p:defaultCommand target="btnDefault" />
+
+				<div style="width:900px">
+					<p:panelGrid columns="2" style="width:100%">
+						<p:outputLabel value="Número do Exemplar (Tombo)" for="exemplar" />
+						<p:autoComplete id="exemplar" minQueryLength="1" required="true"
+							size="82" 
+							requiredMessage="O Tombo do Equipamento deve ser preenchido corretamente!"
+							value="#{emprestimoBean.exemplar}"
+							completeMethod="#{emprestimoBean.findExemplar}" var="e"
+							itemLabel="#{e}" itemValue="#{e}" converter="#{entityConverter}">
+							<p:ajax listener="#{emprestimoBean.verificarStatusEmprestimo}"
+								update="toolbar" process="@this" event="blur" />
+						</p:autoComplete>
+						<p:outputLabel value="Usuário: " for="usuario" />
+						<p:autoComplete id="usuario" minQueryLength="1" required="true"
+							size="82" value="#{emprestimoBean.usuario}"
+							completeMethod="#{emprestimoBean.findUsuario}" var="e"
+							itemLabel="#{e}" itemValue="#{e}" converter="#{entityConverter}" />
+					</p:panelGrid>
+
+
+
+					<p:toolbar name="footer" id="toolbar">
+						<f:facet name="right">
+							<p:commandButton value="Efetuar Empréstimo" process="@form" />
+						</f:facet>
+					</p:toolbar>
+				</div>
+			</h:form>
+
+		</p:fieldset>
+
+	</ui:define>
+</ui:composition>
+
+</html>

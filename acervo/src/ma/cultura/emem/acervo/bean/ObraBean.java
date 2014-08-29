@@ -8,10 +8,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ma.cultura.emem.acervo.dao.DAO;
-import ma.cultura.emem.acervo.jpa.Transactional;
 import ma.cultura.emem.acervo.modelo.Obra;
 import ma.cultura.emem.acervo.modelo.auxiliar.Autor;
 import ma.cultura.emem.acervo.modelo.auxiliar.TipoObra;
+import ma.cultura.emem.acervo.util.jpa.Transactional;
 
 @Named
 @ViewScoped

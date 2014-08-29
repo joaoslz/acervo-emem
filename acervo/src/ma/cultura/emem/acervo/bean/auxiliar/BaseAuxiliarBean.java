@@ -9,10 +9,10 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 
 import ma.cultura.emem.acervo.bean.datamodel.BaseEntityLazyDataModel;
-import ma.cultura.emem.acervo.bean.util.FacesMessages;
 import ma.cultura.emem.acervo.dao.DAO;
-import ma.cultura.emem.acervo.jpa.Transactional;
 import ma.cultura.emem.acervo.modelo.BaseEntity;
+import ma.cultura.emem.acervo.util.jpa.Transactional;
+import ma.cultura.emem.acervo.util.jsf.FacesMessages;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.RowEditEvent;

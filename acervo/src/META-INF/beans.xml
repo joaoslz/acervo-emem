@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
 	
 	<interceptors>
-		<class>ma.cultura.emem.acervo.jpa.TransactionInterceptor</class>
+		<class>ma.cultura.emem.acervo.util.jpa.TransactionInterceptor</class>
 	</interceptors>
 
 </beans>

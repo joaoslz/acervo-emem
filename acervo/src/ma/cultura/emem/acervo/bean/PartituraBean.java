@@ -7,12 +7,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ma.cultura.emem.acervo.dao.DAO;
-import ma.cultura.emem.acervo.jpa.Transactional;
 import ma.cultura.emem.acervo.modelo.Partitura;
 import ma.cultura.emem.acervo.modelo.auxiliar.Arranjador;
 import ma.cultura.emem.acervo.modelo.auxiliar.Autor;
 import ma.cultura.emem.acervo.modelo.auxiliar.Genero;
 import ma.cultura.emem.acervo.modelo.auxiliar.Instrumento;
+import ma.cultura.emem.acervo.util.jpa.Transactional;
 
 @Named
 @ViewScoped

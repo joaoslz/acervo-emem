@@ -1,5 +1,6 @@
 package ma.cultura.emem.acervo.modelo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,7 +15,9 @@ public class Usuario extends BaseEntity {
 	private Integer id;
 
 	private String nome;
+	@Column(unique = true)
 	private String cpf;
+	@Column(unique = true)
 	private String email;
 	private String telefone;
 
@@ -58,4 +61,10 @@ public class Usuario extends BaseEntity {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		return nome + " [" +email+ "]";
+	}
+	
 }

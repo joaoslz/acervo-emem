@@ -1,4 +1,4 @@
-package ma.cultura.emem.acervo.log4j;
+package ma.cultura.emem.acervo.util.log4j;
 
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;

@@ -1,4 +1,4 @@
-package ma.cultura.emem.acervo.jpa;
+package ma.cultura.emem.acervo.util.jpa;
 
 import java.io.Serializable;
 

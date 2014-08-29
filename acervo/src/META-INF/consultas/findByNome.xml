@@ -46,4 +46,7 @@
 	<named-query name="TipoObra.findByNome">
 		<query>  SELECT x FROM TipoObra x WHERE x.nome like :nome order by x.nome asc </query>
 	</named-query>
+	<named-query name="Usuario.findByNome">
+		<query>  SELECT x FROM Usuario x WHERE x.nome like :nome order by x.nome asc </query>
+	</named-query>
 </entity-mappings>

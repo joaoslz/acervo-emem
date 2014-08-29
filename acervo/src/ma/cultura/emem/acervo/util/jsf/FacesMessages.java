@@ -1,4 +1,4 @@
-package ma.cultura.emem.acervo.bean.util;
+package ma.cultura.emem.acervo.util.jsf;
 
 import java.io.Serializable;
 
@@ -15,22 +15,26 @@ public class FacesMessages implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(id, msg);
 	}
 	
-	public void globalInfo(String message) {
+	public void infoGlobal(String message) {
 		add(null, message, "", FacesMessage.SEVERITY_INFO);
 	}
 
+	public void warnGlobal(String message) {
+		add(null, message, "", FacesMessage.SEVERITY_WARN);
+	}
 	
-	public void globalError(String message) {
+	public void errorGlobal(String message) {
 		add(null, message, "", FacesMessage.SEVERITY_ERROR);
 	}
 	
-	public void globalError(String message, String details) {
+	public void errorGlobal(String message, String details) {
 		add(null, message, details, FacesMessage.SEVERITY_ERROR);
 	}
 
 	public void error(String id, String message) {
 		add(id, message, "",  FacesMessage.SEVERITY_ERROR);
 	}
+	
 	public void error(String id, String message, String details) {
 		add(id, message, details,  FacesMessage.SEVERITY_ERROR);
 	}

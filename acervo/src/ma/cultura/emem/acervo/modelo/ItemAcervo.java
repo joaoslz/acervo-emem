@@ -113,7 +113,7 @@ public abstract class ItemAcervo extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return titulo;
+		return "["+getClass().getSimpleName() +"] "+ titulo;
 	}
 
 	public String getSubtitulo() {

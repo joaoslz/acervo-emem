@@ -101,4 +101,9 @@ public class Exemplar extends BaseEntity {
 	public void setDisponivel(boolean disponivel) {
 		this.disponivel = disponivel;
 	}
+
+	@Override
+	public String toString() {
+		return id + " - " + getItemAcervo().toString();
+	}
 }
