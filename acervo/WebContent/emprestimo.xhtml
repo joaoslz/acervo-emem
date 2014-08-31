@@ -23,24 +23,29 @@
 						<p:autoComplete id="exemplar" minQueryLength="1" required="true"
 							size="82" 
 							requiredMessage="O Tombo do Equipamento deve ser preenchido corretamente!"
-							value="#{emprestimoBean.exemplar}"
+							value="#{emprestimoBean.emprestimo.exemplar}"
 							completeMethod="#{emprestimoBean.findExemplar}" var="e"
 							itemLabel="#{e}" itemValue="#{e}" converter="#{entityConverter}">
 							<p:ajax listener="#{emprestimoBean.verificarStatusEmprestimo}"
-								update="toolbar" process="@this" event="blur" />
+								update="toolbar @form" process="@this" event="blur" />
 						</p:autoComplete>
-						<p:outputLabel value="Usuário: " for="usuario" />
-						<p:autoComplete id="usuario" minQueryLength="1" required="true"
-							size="82" value="#{emprestimoBean.usuario}"
-							completeMethod="#{emprestimoBean.findUsuario}" var="e"
+						<p:outputLabel value="Usuário: " for="usuario" rendered="#{emprestimoBean.efetuarEmprestimo}"/>
+						<p:autoComplete id="usuario" minQueryLength="1" required="true" rendered="#{emprestimoBean.efetuarEmprestimo}"
+							requiredMessage="O campo Usuário deve ser preenchido!"
+							size="82" value="#{emprestimoBean.emprestimo.usuario}"
+							completeMethod="#{emprestimoBean.findUsuario}" var="e" 
 							itemLabel="#{e}" itemValue="#{e}" converter="#{entityConverter}" />
+							
+						<p:outputLabel value="Observação: " for="obs" rendered="#{emprestimoBean.efetuarEmprestimo}"/>
+						<h:inputTextarea id="obs" value="#{emprestimoBean.emprestimo.observacao}" style="width:610px" rendered="#{emprestimoBean.efetuarEmprestimo}"/>
 					</p:panelGrid>
-
-
 
 					<p:toolbar name="footer" id="toolbar">
 						<f:facet name="right">
-							<p:commandButton value="Efetuar Empréstimo" process="@form" />
+							<p:commandButton value="Efetuar Empréstimo" rendered="#{emprestimoBean.efetuarEmprestimo}" 
+							action="#{emprestimoBean.efetuarEmprestimo}" process="@form" update="@form"/>
+							<p:commandButton value="Efetuar Devolução" rendered="#{!emprestimoBean.efetuarEmprestimo}" 
+							action="#{emprestimoBean.efetuarEmprestimo}" process="@form" update="@form" immediate="true"/>
 						</f:facet>
 					</p:toolbar>
 				</div>

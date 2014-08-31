@@ -51,9 +51,10 @@
 					</p:submenu>
 				</p:submenu>
 				<p:submenu label="Empréstimo">
-					<p:menuitem value="Empréstimo/Devolução" outcome="/emprestimo" />
-						<p:separator />
-						<p:menuitem value="Cadastrar Usuários" action="/auxiliar/usuario?faces-redirect=true" />	
+					<p:menuitem value="Empréstimo/Devolução" action="/emprestimo?faces-redirect=true" />
+					<p:menuitem value="Visualizar Empréstimos" action="/listaemprestimos?faces-redirect=true" />
+					<p:separator />
+					<p:menuitem value="Cadastrar Usuários" action="/auxiliar/usuario?faces-redirect=true" />	
 				</p:submenu>
 				<p:menuitem value="Pesquisa" icon="ui-icon-search" outcome="/pesquisaObras" />
 				<p:menuitem value="Sair" icon="ui-icon-circle-close" />

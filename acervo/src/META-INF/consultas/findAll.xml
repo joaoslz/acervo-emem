@@ -28,6 +28,9 @@
 	<named-query name="Exemplar.findAll">
 		<query>  SELECT x FROM Exemplar x order by x.id desc </query>
 	</named-query>
+	<named-query name="Emprestimo.findAll">
+		<query>  SELECT x FROM Emprestimo x order by x.id desc </query>
+	</named-query>
 
 
 
