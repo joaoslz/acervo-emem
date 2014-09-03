@@ -36,6 +36,9 @@
 							completeMethod="#{emprestimoBean.findUsuario}" var="e" 
 							itemLabel="#{e}" itemValue="#{e}" converter="#{entityConverter}" />
 							
+						<p:outputLabel value="Data Prevista: " for="dataPrevista" rendered="#{emprestimoBean.efetuarEmprestimo}"/>
+						<p:calendar id="dataPrevista" value="#{emprestimoBean.emprestimo.dataPrevista.time}" pattern="dd/MM/yyyy HH:mm" rendered="#{emprestimoBean.efetuarEmprestimo}"/>
+						
 						<p:outputLabel value="Observação: " for="obs" rendered="#{emprestimoBean.efetuarEmprestimo}"/>
 						<h:inputTextarea id="obs" value="#{emprestimoBean.emprestimo.observacao}" style="width:610px" rendered="#{emprestimoBean.efetuarEmprestimo}"/>
 					</p:panelGrid>

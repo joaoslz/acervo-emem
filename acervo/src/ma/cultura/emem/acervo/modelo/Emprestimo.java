@@ -1,6 +1,7 @@
 package ma.cultura.emem.acervo.modelo;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,6 +27,16 @@ public class Emprestimo extends BaseEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dataDevolucao;
 
+	public Emprestimo(){
+		if(dataPrevista == null){
+			//data prevista de entrega, até as 18h do mesmo dia.
+			dataPrevista = GregorianCalendar.getInstance();
+			dataPrevista.set(Calendar.HOUR_OF_DAY, 18);
+			dataPrevista.set(Calendar.MINUTE, 0);
+			dataPrevista.set(Calendar.SECOND, 0);
+		}
+	}
+	
 	@Column(length = 256)
 	private String observacao;
 

@@ -78,8 +78,10 @@ public class EmprestimoBean implements Serializable {
 	public void verificarStatusEmprestimo(){
 		if(!emprestimo.getExemplar().isDisponivel()){
 			Emprestimo emp = emprestimoDAO.findUltimoEmprestimoEmAberto(emprestimo.getExemplar());
-			String nomeUsuario = emp.getUsuario().getNome();
-			facesMsg.warnGlobal("O exemplar <" + emprestimo.getExemplar().toString() + "> já está emprestado para " + nomeUsuario + "!");
+			if(emp != null){
+				String nomeUsuario = emp.getUsuario().getNome();
+				facesMsg.warnGlobal("O exemplar " + emprestimo.getExemplar().toString() + " já está emprestado para " + nomeUsuario + "!");
+			}
 		}
 	}
 

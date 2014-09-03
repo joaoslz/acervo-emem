@@ -19,6 +19,11 @@
 		no-repeat;
 }
 
+.botaoVerde{
+	background-color: #0F0;
+}
+
+
 @font-face {
 	font-family: Yanone Kaffeesatz;
 	src: url('../fonts/YanoneKaffeesatz-Regular.eot.xhtml?ln=v_1_0');

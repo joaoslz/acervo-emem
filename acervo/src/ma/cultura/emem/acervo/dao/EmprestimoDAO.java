@@ -19,7 +19,6 @@ public class EmprestimoDAO implements Serializable{
 
 	@Inject
 	private Logger logger;
-
 	@Inject
 	private EntityManager em;
 
@@ -30,7 +29,11 @@ public class EmprestimoDAO implements Serializable{
 		String jpql = "from Emprestimo e where e.dataDevolucao is null and e.exemplar.id = :idExemplar order by e.id desc";
 		TypedQuery<Emprestimo> query = em.createQuery(jpql, Emprestimo.class);
 		query.setParameter("idExemplar", ex.getId());
-		return query.getResultList().get(0);
+		List<Emprestimo> list = query.getResultList();
+		if(list != null && list.size() > 0)
+			return query.getResultList().get(0);
+		else 
+			return null;
 	}
 
 	public Emprestimo adicionar(Emprestimo t) {

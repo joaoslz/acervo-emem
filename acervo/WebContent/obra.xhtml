@@ -200,7 +200,7 @@
 					<p:commandButton title="Incluir Exemplares"
 						oncomplete="PF('dlgExemplares').show()" value="#{obra.qtdExemplares}"
 						action="#{obraBean.updateListaExemplares}"
-						update="@form :formExemplares">
+						update="@form :formExemplares" styleClass="botaoVerde">
 						<f:setPropertyActionListener value="#{obra}"
 							target="#{obraBean.itemAcervo}" />
 					</p:commandButton>
@@ -213,6 +213,12 @@
 				</p:column>
 				<p:column headerText="Editora">
 					<h:outputText value="#{obra.editora.nome}" />
+				</p:column>
+				<p:column headerText="Classificação" >
+					<h:outputText value="#{obra.classificacao}" />
+				</p:column>
+				<p:column headerText="Cutter" width="40">
+					<h:outputText value="#{obra.cutter}" />
 				</p:column>
 				<p:column headerText="Local" width="100">
 					<h:outputText value="#{obra.local.nome}" />

@@ -74,7 +74,7 @@ public class Obra extends ItemAcervo {
 
 	@Override
 	public String toString() {
-		return "["+getTipoObra().getNome() +"] "+ getTitulo();
+		return "["+ tipoObra +"] "+ getTitulo();
 	}
 	
 	public String getClassificacao() {

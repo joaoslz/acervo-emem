@@ -34,6 +34,6 @@ public class TipoObra extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return this.nome;
+		return nome;
 	}
 }
