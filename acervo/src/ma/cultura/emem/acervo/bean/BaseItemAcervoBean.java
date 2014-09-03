@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import ma.cultura.emem.acervo.bean.auxiliar.ExemplarLoteAux;
 import ma.cultura.emem.acervo.bean.datamodel.BaseEntityLazyDataModel;
 import ma.cultura.emem.acervo.dao.DAO;
+import ma.cultura.emem.acervo.dao.ExemplarDAO;
 import ma.cultura.emem.acervo.modelo.Exemplar;
 import ma.cultura.emem.acervo.modelo.ItemAcervo;
 import ma.cultura.emem.acervo.modelo.auxiliar.Assunto;
@@ -22,7 +23,7 @@ import ma.cultura.emem.acervo.util.jsf.FacesMessages;
 import org.apache.log4j.Logger;
 import org.primefaces.event.RowEditEvent;
 
-public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serializable{
+public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serializable {
 
 	private static long serialVersionUID = 766213803037842422L;
 
@@ -42,7 +43,7 @@ public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serial
 	@Inject
 	private DAO<Local> localDAO;
 	@Inject
-	private DAO<Exemplar> exemplarDAO;
+	private ExemplarDAO exemplarDAO;
 
 	private BaseEntityLazyDataModel<T> lazyDataModel;
 
@@ -57,21 +58,23 @@ public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serial
 	protected T itemAcervo;
 
 	@PostConstruct
-	public void init(){
-		logger.debug(this.getClass().getSimpleName() + " criado!");	
+	public void init() {
+		logger.debug("init: " + getClass().getSimpleName());
+		lazyDataModel = new BaseEntityLazyDataModel<>(dao);
 		limparForm();
 	}
 
-	//A subclasse define qual a instacia de obra
+	// A subclasse define qual a instacia de obra
 	protected abstract T getNewItemAcervo();
+
 	public abstract String recarregarPagina();
 
 	@Transactional
 	public void gravar() {
-		//se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
+		// se ja possui um id eh uma edicao de livro(autalizacao), senao eh um novo livro sendo cadastrado.
 		boolean isEdicao = getItemAcervo().getId() != null;
 		itemAcervo = dao.atualizar(getItemAcervo());
-		logger.debug("id: " + itemAcervo.getId());			
+		logger.debug("id: " + itemAcervo.getId());
 		if (!isEdicao) {
 			cadastrarExemplares();
 		}
@@ -80,11 +83,11 @@ public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serial
 
 	public void limparForm() {
 		logger.debug("limpando form " + this.getClass().getSimpleName() + "...");
-		//a subclasse define qual a instacia de obra
+		// a subclasse define qual a instacia de obra
 		itemAcervo = getNewItemAcervo();
 	}
 
-	public void limparListaExemplares(){
+	public void limparListaExemplares() {
 		logger.debug("limpando exemplares...");
 		exemplares.clear();
 	}
@@ -143,19 +146,53 @@ public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serial
 		editoraAdd = new Editora();
 	}
 
-	public String getStringBotaoGravar(){
-		if(getItemAcervo().getId() == null)
+	public String getStringBotaoGravar() {
+		if (getItemAcervo().getId() == null)
 			return "Gravar";
 		else
 			return "Gravar Alterações";
 	}
 
-	public List<Idioma> getListaIdiomas(){
+	public List<Idioma> getListaIdiomas() {
 		return idiomaDAO.findAll();
 	}
 
+	public String getCorBotaoExemplares(ItemAcervo it) {
+		int total = exemplarDAO.countExemplares(it);
+		int disponiveis = exemplarDAO.countExemplaresDisponiveis(it);
+		logger.debug("TOTAL: " + total + " || Disponiveis: " + disponiveis);
+		// Calcula a porcentagem de exemplares disponíveis.
+		int porcentagem = (disponiveis * 100) / total;
+		// transforma a porcentagem em uma escala de 1 a 10
+		porcentagem = (porcentagem > 10 ? porcentagem / 10 : porcentagem);
+		switch (porcentagem) {
+		case 0:
+			return "#FF3300";
+		case 1:
+			return "#FF8800";
+		case 2:
+			return "#FF9900";
+		case 3:
+			return "#FFAA00";
+		case 4:
+			return "#FFBB00";
+		case 5:
+			return "#FFCC00";
+		case 6:
+			return "#FFDD00";
+		case 7:
+			return "#FFEE00";
+		case 8:
+			return "#FFFF00";
+		case 9:
+			return "#BBFF00";
+		case 10:
+			return "#33FF00";
+		}
+		return "";
+	}
 
-	//..................................................................GETs e SETs
+	// ..................................................................GETs e SETs
 	public Editora getEditoraAdd() {
 		return editoraAdd;
 	}
@@ -225,8 +262,6 @@ public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serial
 	}
 
 	public BaseEntityLazyDataModel<T> getLazyDataModel() {
-		if(lazyDataModel == null)
-			lazyDataModel = new BaseEntityLazyDataModel<>(dao);
 		return lazyDataModel;
 	}
 }

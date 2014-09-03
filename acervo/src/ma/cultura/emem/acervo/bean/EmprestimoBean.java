@@ -49,23 +49,32 @@ public class EmprestimoBean implements Serializable {
 	
 	@Transactional
 	public void efetuarEmprestimo(){
-		logger.debug(".."+emprestimo.getObservacao());
-		if(emprestimo.getExemplar().isDisponivel()){
-			emprestimo.setDataEmprestimo(GregorianCalendar.getInstance());
-			//		emprestimo.setDataPrevista(null);//TODO estabelecer a regra para data prevista
-			emprestimo.getExemplar().setDisponivel(false);
-			emprestimoDAO.adicionar(emprestimo);
-			exemplarDAO.atualizar(emprestimo.getExemplar());
-			facesMsg.infoGlobal("Empréstimo realizado com sucesso!");
-		}else{
-			Emprestimo emp = emprestimoDAO.findUltimoEmprestimoEmAberto(emprestimo.getExemplar());
-			emp.setDataDevolucao(GregorianCalendar.getInstance());
-			emp.getExemplar().setDisponivel(true);
-			emprestimoDAO.atualizar(emp);
-			facesMsg.infoGlobal("Devolução realizada com sucesso!");
-		}
+		emprestimo.setDataEmprestimo(GregorianCalendar.getInstance());
+		emprestimoDAO.adicionar(emprestimo);
+		emprestimo.getExemplar().setDisponivel(false);//precisa do merge pq este exemplar veio de outra request.
+		exemplarDAO.atualizar(emprestimo.getExemplar());
+		facesMsg.infoGlobal("Empréstimo realizado com sucesso! Item: " + emprestimo.getExemplar().toString());
 		emprestimo = new Emprestimo();
-	}	
+	}
+
+	@Transactional
+	public void efetuarDevolucao(){
+		Emprestimo e = emprestimoDAO.findUltimoEmprestimoEmAberto(emprestimo.getExemplar());
+		e.setDataDevolucao(GregorianCalendar.getInstance());
+		e.getExemplar().setDisponivel(true);//seta direto no banco, pq o EneityManager ainda está aberto.
+		emprestimoDAO.atualizar(e);
+		facesMsg.infoGlobal("Devolução realizada com sucesso! Item: " + e.getExemplar().toString());
+		emprestimo = new Emprestimo();
+	}
+
+	@Transactional
+	public void efetuarDevolucaoPorID(Integer idEmprestimo){
+		emprestimo= emprestimoDAO.buscarPorId(idEmprestimo);
+		emprestimo.setDataDevolucao(GregorianCalendar.getInstance());
+		emprestimo.getExemplar().setDisponivel(true);
+		emprestimoDAO.atualizar(emprestimo);
+		facesMsg.infoGlobal("Devolução realizada com sucesso! Item: " + emprestimo.getExemplar().toString());
+	}
 	
 	public List<Exemplar> findExemplar(String id){
 		return exemplarDAO.findById(id);

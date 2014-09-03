@@ -156,14 +156,17 @@
 					rowsPerPageTemplate="5 10 15 20 30 40" paginatorPosition="bottom"
 					paginatorAlwaysVisible="false">
 
-					<p:column headerText="Expl." width="40">
-						<p:commandButton title="Incluir Exemplares"
-							oncomplete="PF('dlgExemplares').show()" value="#{partitura.qtdExemplares}"
-							action="#{partituraBean.updateListaExemplares}"
-							update="@form :formExemplares">
-							<f:setPropertyActionListener value="#{partitura}" target="#{partituraBean.itemAcervo}" />
-						</p:commandButton>
-					</p:column>
+				<p:column headerText="Expl." width="40">
+					<p:commandButton title="Gerenciar Exemplares"
+						oncomplete="PF('dlgExemplares').show()" 
+						value="#{partitura.qtdExemplares}"
+						action="#{partituraBean.updateListaExemplares}"
+						update="@form :formExemplares" 
+						style="background-image:none;background-color:#{partituraBean.getCorBotaoExemplares(partitura)};">
+						<f:setPropertyActionListener value="#{partitura}"
+							target="#{partituraBean.itemAcervo}" />
+					</p:commandButton>
+				</p:column>
 					<p:column filterBy="#{partitura.titulo}" filterMatchMode="contains"
 						headerText="Título">
 						<h:outputText value="#{partitura.titulo}" />

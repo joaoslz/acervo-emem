@@ -197,10 +197,12 @@
 				paginatorAlwaysVisible="false">
 
 				<p:column headerText="Expl." width="40">
-					<p:commandButton title="Incluir Exemplares"
-						oncomplete="PF('dlgExemplares').show()" value="#{obra.qtdExemplares}"
+					<p:commandButton title="Gerenciar Exemplares"
+						oncomplete="PF('dlgExemplares').show()" 
+						value="#{obra.qtdExemplares}"
 						action="#{obraBean.updateListaExemplares}"
-						update="@form :formExemplares" styleClass="botaoVerde">
+						update="@form :formExemplares" 
+						style="background-image:none;background-color:#{obraBean.getCorBotaoExemplares(obra)};">
 						<f:setPropertyActionListener value="#{obra}"
 							target="#{obraBean.itemAcervo}" />
 					</p:commandButton>

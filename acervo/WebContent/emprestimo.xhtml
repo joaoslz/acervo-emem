@@ -19,7 +19,7 @@
 
 				<div style="width:900px">
 					<p:panelGrid columns="2" style="width:100%">
-						<p:outputLabel value="Número do Exemplar (Tombo)" for="exemplar" />
+						<p:outputLabel value="ID do Exemplar (Tombo)" for="exemplar" />
 						<p:autoComplete id="exemplar" minQueryLength="1" required="true"
 							size="82" 
 							requiredMessage="O Tombo do Equipamento deve ser preenchido corretamente!"
@@ -48,7 +48,7 @@
 							<p:commandButton value="Efetuar Empréstimo" rendered="#{emprestimoBean.efetuarEmprestimo}" 
 							action="#{emprestimoBean.efetuarEmprestimo}" process="@form" update="@form"/>
 							<p:commandButton value="Efetuar Devolução" rendered="#{!emprestimoBean.efetuarEmprestimo}" 
-							action="#{emprestimoBean.efetuarEmprestimo}" process="@form" update="@form" immediate="true"/>
+							action="#{emprestimoBean.efetuarDevolucao}" process="@form" update="@form" immediate="true"/>
 						</f:facet>
 					</p:toolbar>
 				</div>

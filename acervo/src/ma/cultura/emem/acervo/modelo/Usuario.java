@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.br.CPF;
+
 @Entity
 public class Usuario extends BaseEntity {
 
@@ -15,9 +18,11 @@ public class Usuario extends BaseEntity {
 	private Integer id;
 
 	private String nome;
-	@Column(unique = true)
+//	@Column(unique = true)
+//	@CPF(message="CPF inválido!")
 	private String cpf;
-	@Column(unique = true)
+//	@Column(unique = true)
+//	@Email(message="Email inválido!")
 	private String email;
 	private String telefone;
 

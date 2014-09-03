@@ -4,7 +4,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:stella="http://stella.caelum.com.br/faces2"> 
 
 <ui:composition template="/WEB-INF/template/_template.xhtml">
 
@@ -26,7 +27,11 @@
 							<p:outputLabel value="CPF: " for="cpf" />
 						</p:column>
 						<p:column>
-							<p:inputText id="cpf" value="#{usuarioBean.usuario.cpf}" />
+							<p:message for="cpf"/>
+							<p:inputMask id="cpf" value="#{usuarioBean.usuario.cpf}" mask="999.999.999-99" 
+							validator="#{usuarioBean.validarCPFDuplicado}" >
+								<stella:validateCPF formatted="true" />
+							</p:inputMask>
 						</p:column>
 						<p:column></p:column>
 					</p:row>
@@ -35,14 +40,17 @@
 							<p:outputLabel value="Email: " for="email" />
 						</p:column>
 						<p:column>
-							<p:inputText id="email" value="#{usuarioBean.usuario.email}" />
+							<p:message for="email"/>
+							<p:inputText id="email" value="#{usuarioBean.usuario.email}" validatorMessage="Email Inválido!">
+								 <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+							</p:inputText>
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Telefone: " for="telefone" />
 						</p:column>
 						<p:column>
-							<p:inputText id="telefone"
-								value="#{usuarioBean.usuario.telefone}" />
+							<p:inputMask id="telefone"
+								value="#{usuarioBean.usuario.telefone}" mask="(99) 9999-9999"/>
 						</p:column>
 						<p:column>
 							<p:commandButton value="Gravar" action="#{usuarioBean.gravar}"
@@ -92,7 +100,7 @@
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
-					<p:column headerText="Telefone">
+					<p:column headerText="Telefone" width="100" >
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{e.telefone}" />
@@ -102,7 +110,7 @@
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
-					<p:column>
+					<p:column width="15">
 						<p:rowEditor />
 					</p:column>
 				</p:dataTable>

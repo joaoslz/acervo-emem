@@ -15,4 +15,11 @@
 		<query>  select count(f) from Fasciculo f WHERE f.periodico.id = :idPeriodico </query>
 	</named-query>	
 	
+	<named-query name="Exemplar.countExemplaresDisponiveisByItemAcervo">
+		<query>  select count(e) from Exemplar e WHERE e.itemAcervo.id = :idItemAcervo and e.disponivel = true </query>
+	</named-query>	
+	
+	<named-query name="Exemplar.countExemplaresByItemAcervo">
+		<query>  select count(e) from Exemplar e WHERE e.itemAcervo.id = :idItemAcervo </query>
+	</named-query>	
 </entity-mappings>

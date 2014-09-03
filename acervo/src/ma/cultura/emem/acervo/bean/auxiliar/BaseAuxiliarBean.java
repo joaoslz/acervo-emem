@@ -2,11 +2,14 @@ package ma.cultura.emem.acervo.bean.auxiliar;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 import ma.cultura.emem.acervo.bean.datamodel.BaseEntityLazyDataModel;
 import ma.cultura.emem.acervo.dao.DAO;
@@ -37,13 +40,20 @@ public abstract class BaseAuxiliarBean<T extends BaseEntity> implements Serializ
 
 	protected abstract String getNomeEntity();
 
+	@PostConstruct
+	public void init(){
+		logger.debug("init: " + getClass().getSimpleName());
+		lazyDataModel = new BaseEntityLazyDataModel<T>(dao);
+	}
+
 	public void validarNomeDuplicado(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-		int size = dao.getByNome(value.toString()).size();
-		if (size > 0) {
-			String msg = "Já existe um cadastrado com o nome " + value + "!";
-			FacesMessage message = new FacesMessage(msg);
-			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-			throw new ValidatorException(message);
+		if(value != null){
+			int size = dao.getByNome(value.toString()).size();
+			if (size > 0) {
+				String msg = "Já existe um cadastrado com o nome " + value + "!";
+				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
+				throw new ValidatorException(message);
+			}
 		}
 	}
 
@@ -52,6 +62,15 @@ public abstract class BaseAuxiliarBean<T extends BaseEntity> implements Serializ
 		logger.debug("Gravando entity: " + entity.getClass().getSimpleName());
 		dao.atualizar(entity);
 		entity = newEntityInstance();
+		//		}catch(ConstraintException exc){
+		//			//FIXME para solucionar a incompatibilidade com o mojarra 2.2.6
+		//			//Não atualizei o mojarra pois ele está dando problema com o @ViewScoped
+		//			for(ConstraintViolation cv: exc.getConstraintViolations()){
+		//				facesMsg.error(cv.getPropertyPath().toString(), cv.getMessageTemplate());
+		//				System.out.println("... " + cv);
+		//			}
+		//			throw new RuntimeException(exc);
+		//		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -63,10 +82,6 @@ public abstract class BaseAuxiliarBean<T extends BaseEntity> implements Serializ
 	}
 
 	public BaseEntityLazyDataModel<T> getLazyDataModel() {
-		if (lazyDataModel == null) {
-			logger.debug("instanciando o lazyDataModel");
-			lazyDataModel = new BaseEntityLazyDataModel<T>(dao);
-		}
 		return lazyDataModel;
 	}
 

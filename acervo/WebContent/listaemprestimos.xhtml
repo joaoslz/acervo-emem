@@ -12,7 +12,7 @@
 
 		<p:fieldset legend="Empréstimos Realizados">
 			<h:form>
-				<p:dataTable rows="20" paginator="true" paginatorPosition="bottom"
+				<p:dataTable rows="10" paginator="true" paginatorPosition="bottom"
 					id="tabela" value="#{emprestimoBean.lazyDataModel}" lazy="true"
 					var="emprestimo" emptyMessage="Nenhum Empréstimo Localizado">
 
@@ -22,9 +22,9 @@
 					<p:column headerText="Usuário">
 						<h:outputText value="#{emprestimo.usuario}" />
 					</p:column>
-					<p:column headerText="Data Empréstimo" width="130" style="text-align:center">
+					<p:column headerText="Data Empréstimo" width="140" style="text-align:center">
 						<h:outputText value="#{emprestimo.dataEmprestimo.time}">
-                  			<f:convertDateTime pattern="dd/MM/yyyy HH:mm" type="both" />
+                  			<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" type="both" />
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Data Prevista" width="130" style="text-align:center">
@@ -32,11 +32,14 @@
                   			<f:convertDateTime pattern="dd/MM/yyyy HH:mm" type="both" />
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Data Devolução" width="130" style="text-align:center">
-						<h:outputText value="#{emprestimo.dataDevolucao.time}">
-                  			<f:convertDateTime pattern="dd/MM/yyyy HH:mm" type="both" />
+					<p:column headerText="Data Devolução" width="140" style="text-align:center">
+						<h:outputText value="#{emprestimo.dataDevolucao.time}" style="font-weight:bold;" rendered="#{emprestimoBean.emprestimo.id == emprestimo.id}">
+                  			<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" type="both" />
 						</h:outputText>
-						<h:outputText value="[Aguardando]" style="color:red;" rendered="#{empty emprestimo.dataDevolucao}"/>
+						<h:outputText value="#{emprestimo.dataDevolucao.time}" rendered="#{emprestimoBean.emprestimo.id != emprestimo.id}">
+                  			<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" type="both" />
+						</h:outputText>
+						<p:commandButton value="Devolver" action="#{emprestimoBean.efetuarDevolucaoPorID(emprestimo.id)}" update="@form"  rendered="#{empty emprestimo.dataDevolucao}"/>
 					</p:column>
 					<p:column headerText="Observação">
 						<h:outputText value="#{emprestimo.observacao}" />

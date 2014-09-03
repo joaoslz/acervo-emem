@@ -5,10 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-
 			
-<ui:composition template="WEB-INF/template/_template.xhtml">
-	<ui:define name="conteudo">
 
 
 		<h:form id="formPesquisa">
@@ -17,31 +14,17 @@
 
 			<p:fieldset>
 				<p:panelGrid columns="3">
-					<p:selectOneMenu>
-						<f:selectItems value="" />
-					</p:selectOneMenu>
-
+					
 					<p:inputText id="txtPesquisa"
 						value="" required="true"
 						size="60"></p:inputText>
 
-					<p:commandButton value="Buscar" process="" update="tabelaObras" />
+					<p:commandButton value="Buscar" process=""  />
 				</p:panelGrid>
 			</p:fieldset>
 
-			<p:dataTable rows="10" paginator="true" paginatorPosition="bottom"
-				id="tabelaObras" value="" var="obra"
-				emptyMessage="Nenhuma Obra Cadastrado">
-
-				<p:column>
-					<f:facet name="header">Título</f:facet>
-					<h:outputText value="" />
-				</p:column>
-			</p:dataTable>
 		</h:form>
 
 
-	</ui:define>
-</ui:composition>
 
 </html>

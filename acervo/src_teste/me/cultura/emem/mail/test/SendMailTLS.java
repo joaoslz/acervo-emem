@@ -11,8 +11,23 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class SendMailTLS {
- 
+	
 	public static void main(String[] args) {
+		
+
+		int total = 3;
+		int disponiveis = 0;
+		
+		int perc = (disponiveis * 100) / total;//80%  13  6
+
+		System.out.println(perc);
+		
+		perc = (perc > 10 ? perc / 10 : perc);//transforma a porcentagem em uma escala de 1 a 10
+		
+		System.out.println(perc);
+	}
+ 
+	public static void main2(String[] args) {
  
 		final String username = "log4j.smtp@gmail.com";
 		final String password = "smtp.log4j";
