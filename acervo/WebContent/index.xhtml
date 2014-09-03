@@ -16,13 +16,29 @@
 			<p:growl autoUpdate="true" />
 
 			<p:fieldset>
-				<p:panelGrid columns="3">
+				<p:panelGrid >
 					
-					<p:inputText id="txtPesquisa"
-						value="" required="true"
-						size="60"></p:inputText>
-
-					<p:commandButton value="Buscar" process=""  />
+					<p:row>
+					
+						<p:column> 						
+							 <p:panel id="obras" header="Livros e Métodos" footer="Details" >
+							 </p:panel>						
+						</p:column>
+						<p:column> 						
+							 <p:panel id="partituras" header="Partituras" footer="Details" >
+							 </p:panel>						
+						</p:column>
+						<p:column> 						
+							 <p:panel id="fasciculos" header="Revistas" footer="Details" >
+							 </p:panel>						
+						</p:column>
+						<p:column> 						
+							 <p:panel id="cds" header="CDs e DVDs" footer="Details" >
+							 </p:panel>						
+						</p:column>
+					
+					</p:row>
+					
 				</p:panelGrid>
 			</p:fieldset>
 
