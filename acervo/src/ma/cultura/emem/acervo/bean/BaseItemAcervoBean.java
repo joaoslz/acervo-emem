@@ -107,6 +107,7 @@ public abstract class BaseItemAcervoBean<T extends ItemAcervo> implements Serial
 		List<Exemplar> exemplares = new ArrayList<Exemplar>();
 		for (int i = 0; i < exemplaresAdd.getQuantidade(); i++) {
 			Exemplar exemplar = new Exemplar();
+			exemplar.setDisponivel(true);
 			exemplar.setItemAcervo(getItemAcervo());
 			exemplar.setEhDoacao(exemplaresAdd.isEhDoacao());
 			exemplar.setDataAquisicao(exemplaresAdd.getDataAquisicao());

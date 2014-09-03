@@ -24,7 +24,7 @@
 								</p:column>
 							</p:row>
 							<p:row>
-								<p:column>
+								<p:column style="padding-bottom:20px;">
 								        <p:selectOneListbox id="periodico" required="true"
 										requiredMessage="você deve selecionar o periódico"
 										value="#{fasciculoBean.periodico}"
@@ -40,6 +40,11 @@
 											#{t.nome}
 											</p:column>
 								        </p:selectOneListbox>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:commandButton value="Novo Periódico" action="/auxiliar/periodico?faces-redirect=true" immediate="true"/>
 								</p:column>
 							</p:row>
 						</p:panelGrid>
