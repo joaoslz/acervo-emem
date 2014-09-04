@@ -5,47 +5,39 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-			
 
 <ui:composition template="WEB-INF/template/_template.xhtml">
 	<ui:define name="conteudo">
 
-
-		<h:form id="formPesquisa">
-			<p:messages id="messages" autoUpdate="true" />
-			<p:growl autoUpdate="true" />
-
-			<p:fieldset>
-				<p:panelGrid >
-					
-					<p:row>
-					
-						<p:column> 						
-							 <p:panel id="obras" header="Livros e Métodos" footer="Details" >
-							 </p:panel>						
-						</p:column>
-						<p:column> 						
-							 <p:panel id="partituras" header="Partituras" footer="Details" >
-							 </p:panel>						
-						</p:column>
-						<p:column> 						
-							 <p:panel id="fasciculos" header="Revistas" footer="Details" >
-							 </p:panel>						
-						</p:column>
-						<p:column> 						
-							 <p:panel id="cds" header="CDs e DVDs" footer="Details" >
-							 </p:panel>						
-						</p:column>
-					
-					</p:row>
-					
-				</p:panelGrid>
-			</p:fieldset>
-
-		</h:form>
-
+		<p:fieldset legend="Controle de Acervo Biliográfico - EMEM" style="padding:50px;">
+			<h:form>
+				<div align="center">
+					<p:panelGrid columns="4" columnClasses="semBordas, semBordas, semBordas, semBordas" styleClass="semBordas" style="width:100%;">
+						<p:panel id="obras" header="Livros e Métodos" footer="Total Cadastrado: #{estatisticaBean.totalObras}" >
+							<p:commandLink action="obra?faces-redirect=true">
+								<p:graphicImage library="v_1_0" name="images/inicio/books.png" />
+							</p:commandLink>
+						</p:panel>
+						<p:panel id="partituras" header="Partituras" footer="Total Cadastrado: #{estatisticaBean.totalPartituras}">
+							<p:commandLink action="partitura?faces-redirect=true">
+								<p:graphicImage library="v_1_0" name="images/inicio/partitura.png" />
+							</p:commandLink>
+						</p:panel>
+						<p:panel id="fasciculos" header="Revistas" footer="Total Cadastrado: #{estatisticaBean.totalFasciculo}">
+							<p:commandLink action="fasciculo?faces-redirect=true">
+								<p:graphicImage library="v_1_0" name="images/inicio/periodicos.png" />
+							</p:commandLink>
+						</p:panel>
+						<p:panel id="cds" header="CDs e DVDs" footer="Total Cadastrado: #{estatisticaBean.totalCDs}">
+							<p:commandLink action="cd?faces-redirect=true">
+								<p:graphicImage library="v_1_0" name="images/inicio/cd.png" />
+							</p:commandLink>
+						</p:panel>
+					</p:panelGrid>
+				</div>
+			</h:form>
+		</p:fieldset>
 
 	</ui:define>
 </ui:composition>
-
 </html>

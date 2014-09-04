@@ -22,6 +22,9 @@
 .botaoVerde{
 	background-color: #0F0;
 }
+.semBordas {
+	border-width: 0px !important;
+}
 
 
 @font-face {
