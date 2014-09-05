@@ -60,10 +60,6 @@ public class EmprestimoDAO implements Serializable{
 		return dao.findByNome(nome);
 	}
 
-	public int hashCode() {
-		return dao.hashCode();
-	}
-
 	public List<Emprestimo> getByNome(String nome) {
 		return dao.getByNome(nome);
 	}
@@ -84,10 +80,6 @@ public class EmprestimoDAO implements Serializable{
 		return dao.findAll(maxResult);
 	}
 
-	public boolean equals(Object obj) {
-		return dao.equals(obj);
-	}
-
 	public PaginatedResult<Emprestimo> findAllAndPaginate(int firstResult, int maxResultsByPage) {
 		return dao.findAllAndPaginate(firstResult, maxResultsByPage);
 	}
@@ -102,10 +94,6 @@ public class EmprestimoDAO implements Serializable{
 
 	public int contarTodos() {
 		return dao.contarTodos();
-	}
-
-	public String toString() {
-		return dao.toString();
 	}
 
 	public DAO<Emprestimo> getDao() {

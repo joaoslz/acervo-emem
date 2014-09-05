@@ -47,7 +47,6 @@ public class DAO<T> implements Serializable {
 
 	public T atualizar(T t) {
 		t = em.merge(t);
-		logger.debug("merge: " + t.getClass());
 		return t;
 	}
 
@@ -57,7 +56,7 @@ public class DAO<T> implements Serializable {
 	}
 	
 	public List<T> findById(String id){
-		TypedQuery query = em.createQuery("from " + className +" t where CAST(t.id as string) like :id", classe);
+		TypedQuery<T> query = em.createQuery("from " + className +" t where CAST(t.id as string) like :id", classe);
 		query.setParameter("id", "%"+id+"%");
 		return query.getResultList();		
 	}
@@ -74,8 +73,8 @@ public class DAO<T> implements Serializable {
 
 	public List<T> getByNome(String nome) {
 		try{
-			logger.debug("findByNome para entidade " + classe.getSimpleName());
-			TypedQuery<T> query = em.createNamedQuery(classe.getSimpleName()+".findByNome", classe);
+			logger.debug("findByNome para entidade " + className);
+			TypedQuery<T> query = em.createNamedQuery(className+".findByNome", classe);
 			query.setParameter("nome", nome);
 			return query.getResultList();
 		}catch(IllegalArgumentException exc){
@@ -108,7 +107,7 @@ public class DAO<T> implements Serializable {
 
 	public List<T> findAll() {
 		// IMPORTANTE:Cada entidade deve implementar a named query Entidade.findAll 
-		String namedQuery = classe.getSimpleName() + ".findAll";
+		String namedQuery = className + ".findAll";
 		TypedQuery<T> q = em.createNamedQuery(namedQuery, classe);
 		return q.getResultList();
 	}
@@ -116,7 +115,7 @@ public class DAO<T> implements Serializable {
 	public List<T> findAll(int maxResult) {
 		// IMPORTANTE:Cada entidade deve implementar a named query Entidade.findAll 
 		List<T> lista = null;
-		String namedQuery = classe.getSimpleName() + ".findAll";
+		String namedQuery = className + ".findAll";
 		lista = em.createNamedQuery(namedQuery, classe).setMaxResults(maxResult).getResultList();
 		logger.debug("lista com max result: " + maxResult);
 		return lista;
@@ -125,7 +124,7 @@ public class DAO<T> implements Serializable {
 	public PaginatedResult<T>  findAllAndPaginate(int firstResult, int maxResultsByPage) {
 		logger.debug("utilizando lista paginada...");
 		// IMPORTANTE:Cada entidade deve implementar a named query Entidade.findAll 
-		String namedQuery = classe.getSimpleName() + ".findAll";
+		String namedQuery = className + ".findAll";
 		TypedQuery<T> q = em.createNamedQuery(namedQuery, classe);
 		int count = q.getResultList().size();
 		List<T> lista = q.setFirstResult(firstResult).setMaxResults(maxResultsByPage).getResultList();
@@ -167,7 +166,7 @@ public class DAO<T> implements Serializable {
 	}
 
 	public int contarTodos() {
-		String hql = "select count(n) from " + classe.getSimpleName() + " n";
+		String hql = "select count(n) from " + className + " n";
 		return Integer.parseInt(em.createQuery(hql).getSingleResult().toString());
 	}
 }
