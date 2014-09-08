@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+		<!-- DIALOG Idioma............................................................................................ -->
+		<p:dialog header="Cadastro de Gravadora" widgetVar="dlgGravadora"
+			resizable="false" modal="true">
+			<h:form>
+			<p:message for="nome" />
+			<h:panelGrid columns="3">
+				<p:outputLabel value="Nome:" for="nome" />
+				<p:inputText id="nome" value="#{gravadoraBean.entity.nome}"
+					required="true" requiredMessage="Nome é um campo obrigatório!"
+					validator="#{gravadoraBean.validarNomeDuplicado}" />
+
+				<p:commandButton value="Gravar"
+					actionListener="#{gravadoraBean.gravarViaDialog}"
+					process="@form" update="@form :form:gravadora">
+					<f:setPropertyActionListener value="#{gravadoraBean.entity}" target="#{itemAcervoBean.entity.gravadora}"/>
+				</p:commandButton>
+			</h:panelGrid>
+			</h:form>
+		</p:dialog>
+</ui:composition>

@@ -1,0 +1,99 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+		<p:panelGrid style="width:99%">
+			<p:row>
+				<p:column>
+					<p:outputLabel value="Titulo:" for="titulo" />
+				</p:column>
+				<p:column colspan="5">
+					<p:message for="titulo"/>
+					<p:inputText id="titulo"
+						value="#{itemAcervoBean.entity.titulo}" style="width:390px"
+						 required="true" requiredMessage="Titulo é um campo obrigatório!">
+						<f:ajax event="blur" render="messages" />
+					</p:inputText>
+				</p:column>
+				<p:column>
+					<p:outputLabel value="Subtitulo:" for="subtitulo" />
+				</p:column>
+				<p:column colspan="5">
+					<h:message for="subtitulo"/>
+					<p:message for="subtitulo"/>
+					<p:inputText id="subtitulo"
+						value="#{itemAcervoBean.entity.subtitulo}" style="width:390px" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:outputLabel value="Editora:" for="editora" />
+				</p:column>
+				<p:column colspan="4">
+					<p:autoComplete minQueryLength="2" size="45"
+						value="#{itemAcervoBean.entity.editora}" id="editora"
+						completeMethod="#{itemAcervoBean.findEditoras}"
+						var="e" itemLabel="#{e.nome}" itemValue="#{e}"
+						converter="#{entityConverter}" forceSelection="true">
+					</p:autoComplete>
+				</p:column>
+				<p:column>
+					<p:commandButton type="button" id="showAddEditoraButton"
+						icon="ui-icon-plus" immediate="true" title="Adicionar Editora"
+						onclick="PF('dlgEditora').show();" />
+				</p:column>
+				<p:column rowspan="2">
+					<p:outputLabel value="Assuntos:" for="assuntos" />
+				</p:column>
+				<p:column rowspan="2">
+					<p:autoComplete minQueryLength="2" id="assuntos"
+						value="#{itemAcervoBean.entity.assuntos}"
+						completeMethod="#{itemAcervoBean.findAssuntos}"
+						var="a" itemLabel="#{a.nome}" itemValue="#{a}"
+						converter="#{entityConverter}" forceSelection="true"
+						multiple="true" />
+				</p:column>
+				<p:column rowspan="2">
+					<p:commandButton id="showAddAssuntoButton" icon="ui-icon-plus"
+						process="form:assuntos" title="Adicionar Assunto" immediate="true"
+						onclick="PF('dlgAssunto').show()" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:outputLabel value="Local:" for="local" />
+				</p:column>
+				<p:column>
+					<p:autoComplete minQueryLength="2"
+						value="#{itemAcervoBean.entity.local}" size="10" id="local"
+						completeMethod="#{itemAcervoBean.findLocais}" var="l"
+						itemLabel="#{l.nome}" itemValue="#{l}"
+						converter="#{entityConverter}" />
+				</p:column>
+				<p:column>
+					<p:commandButton id="showAddLocalButton" icon="ui-icon-plus"
+						immediate="true" title="Adicionar Local"
+						onclick="PF('dlgLocal').show()" />
+				</p:column>
+				<p:column>
+					<p:outputLabel value="Idioma:" for="idioma" />
+				</p:column>
+				<p:column>
+					<p:selectOneMenu id="idioma"
+						value="#{itemAcervoBean.entity.idioma}"
+						converter="#{entityConverter}">
+						<f:selectItem itemLabel="Selecione o Idioma" itemValue="#{null}" />
+						<f:selectItems value="#{itemAcervoBean.listaIdiomas}" var="i"
+							itemLabel="#{i.nome}" itemValue="#{i}" />
+					</p:selectOneMenu>
+				</p:column>
+				<p:column>
+					<p:commandButton type="button" id="showAddIdiomaButton"
+						icon="ui-icon-plus" immediate="true" title="Adicionar Idioma"
+						onclick="PF('dlgIdioma').show();" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+</ui:composition>

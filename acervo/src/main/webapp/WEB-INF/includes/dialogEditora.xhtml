@@ -1,0 +1,32 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<!--DIALOG EDITORA........................................................................................... -->
+	<p:dialog header="Cadastro de Editora" widgetVar="dlgEditora"
+		resizable="false" modal="true">
+		<h:form>
+			<p:message for="nome" />
+			<h:panelGrid columns="5">
+				<p:outputLabel value="Nome:" for="nome" />
+				<p:inputText id="nome" value="#{editoraBean.entity.nome}"
+					required="true" requiredMessage="Nome é um campo obrigatório!"
+					validator="#{editoraBean.validarNomeDuplicado}" />
+					
+				<p:outputLabel value="Site:" for="site" />
+				<p:inputText id="site" value="#{editoraBean.entity.site}" />
+
+				<p:commandButton value="Gravar"
+					actionListener="#{editoraBean.gravarViaDialog}"
+					process="@form" update="@form :form:editora">
+					<f:setPropertyActionListener value="#{editoraBean.entity}" target="#{itemAcervoBean.entity.editora}"/>
+				</p:commandButton>
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+
+
+</ui:composition>

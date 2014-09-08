@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+
+	<persistence-unit name="acervo_emem" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+   		
+		<mapping-file>META-INF/consultas/findByNome.xml</mapping-file>
+		<mapping-file>META-INF/consultas/findAll.xml</mapping-file>
+		<mapping-file>META-INF/consultas/findBy.xml</mapping-file>
+		<class>ma.cultura.emem.acervo.model.Artigo</class>
+		<class>ma.cultura.emem.acervo.model.CD</class>
+		<class>ma.cultura.emem.acervo.model.Emprestimo</class>
+		<class>ma.cultura.emem.acervo.model.Exemplar</class>
+		<class>ma.cultura.emem.acervo.model.Fasciculo</class>
+		<class>ma.cultura.emem.acervo.model.ItemAcervo</class>
+		<class>ma.cultura.emem.acervo.model.Musica</class>
+		<class>ma.cultura.emem.acervo.model.Obra</class>
+		<class>ma.cultura.emem.acervo.model.Partitura</class>
+		<class>ma.cultura.emem.acervo.model.RootEntity</class>
+		<class>ma.cultura.emem.acervo.model.Usuario</class>
+		<class>ma.cultura.emem.acervo.model.auxiliar.Arranjador</class>
+		<class>ma.cultura.emem.acervo.model.auxiliar.Assunto</class>
+		<class>ma.cultura.emem.acervo.model.auxiliar.Autor</class>
+		<class>ma.cultura.emem.acervo.model.auxiliar.AuxiliarEntity</class>
+		<class>ma.cultura.emem.acervo.model.auxiliar.Cantor</class>
+		<class>ma.cultura.emem.acervo.model.auxiliar.Compositor</class>
+		<class>ma.cultura.emem.acervo.model.auxiliar.Editora</class>
+		<class>ma.cultura.emem.acervo.model.auxiliar.Genero</class>
+		<class>ma.cultura.emem.acervo.model.auxiliar.Gravadora</class>
+		<class>ma.cultura.emem.acervo.model.auxiliar.Idioma</class>
+		<class>ma.cultura.emem.acervo.model.auxiliar.Instrumento</class>
+		<class>ma.cultura.emem.acervo.model.auxiliar.Local</class>
+		<class>ma.cultura.emem.acervo.model.auxiliar.Midia</class>
+		<class>ma.cultura.emem.acervo.model.auxiliar.Periodico</class>
+		<class>ma.cultura.emem.acervo.model.auxiliar.TipoObra</class>
+				
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/acervodb" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="root" />
+
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+		</properties>
+	</persistence-unit>
+
+</persistence>

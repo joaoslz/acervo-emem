@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/_template.xhtml">
+
+	<ui:define name="conteudo">
+		<h:outputScript library="v_1_0" name="js/traducaoCalendario.js"/> 
+
+		<p:fieldset legend="Cadastro de Periódico">
+			<h:form id="form">
+				<!-- ....................................DADOS DO PERIODICO................................................ -->
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Nome:" for="nome" />
+						</p:column>
+						<p:column>
+							<p:inputText id="nome" value="#{periodicoBean.periodico.nome}" size="45"/>
+						</p:column>
+						<p:column>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="ISSN:" for="issn" />
+						</p:column>
+						<p:column>
+							<p:inputText id="issn" value="#{periodicoBean.periodico.issn}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Editora:" for="editora" />
+						</p:column>
+						<p:column >
+							<p:autoComplete minQueryLength="2" size="45"
+								value="#{periodicoBean.periodico.editora}" id="editora"
+								completeMethod="#{periodicoBean.findEditoras}"
+								var="e" itemLabel="#{e.nome}" itemValue="#{e}"
+								converter="#{entityConverter}" forceSelection="true">
+							</p:autoComplete>
+						</p:column>
+						<p:column>
+							<p:commandButton type="button" id="showAddEditoraButton"
+								icon="ui-icon-plus" immediate="true" title="Adicionar Editora"
+								onclick="PF('dlgEditora').show();" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="É assinado?" for="ehAssinado" />
+						</p:column>
+						<p:column>
+							<p:selectBooleanCheckbox id="ehAssinado"
+								value="#{periodicoBean.periodico.ehAssinado}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Local:" for="local" />
+						</p:column>
+						<p:column>
+							<p:autoComplete minQueryLength="2"
+								value="#{periodicoBean.periodico.local}" id="local"
+								completeMethod="#{periodicoBean.findLocais}" var="l"
+								itemLabel="#{l.nome}" itemValue="#{l}"
+								converter="#{entityConverter}" />
+						</p:column>
+						<p:column>
+							<p:commandButton id="showAddLocalButton" icon="ui-icon-plus"
+								immediate="true" title="Adicionar Local"
+								onclick="PF('dlgLocal').show()" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Periodicidade:" for="periodicidade" />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="periodicidade"
+								value="#{periodicoBean.periodico.periodicidade}">
+								<f:selectItem itemLabel="Selecione a Periodicidade" itemValue="" />
+								<f:selectItems value="#{periodicoBean.listaPeriodicidade}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Idioma:" for="idioma" />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="idioma"
+								value="#{periodicoBean.periodico.idioma}"
+								converter="#{entityConverter}">
+								<f:selectItem itemLabel="Selecione o Idioma" itemValue="#{null}" />
+								<f:selectItems value="#{periodicoBean.listaIdiomas}" var="i"
+									itemLabel="#{i.nome}" itemValue="#{i}" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+							<p:commandButton type="button" id="showAddIdiomaButton"
+								icon="ui-icon-plus" immediate="true" title="Adicionar Idioma"
+								onclick="PF('dlgIdioma').show();" />
+						</p:column>					
+						<p:column colspan="2">
+							<p:commandButton value="#{periodicoBean.stringBotaoGravar}"
+								action="#{periodicoBean.gravar}" process="@form"
+								update="@form :formTabela:tabela" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<!-- Solucioina o bug de dialog que aparece ao pressionar enter -->
+				<p:commandButton id="btnDefault" style="display:none" />
+				<p:defaultCommand target="btnDefault" />
+			</h:form>
+			<!-- ....................................TABELA......................................................... -->
+			<h:form id="formTabela">
+				<p:dataTable id="tabela"
+					value="#{periodicoBean.lazyDataModel}" var="periodico"
+					paginator="true" lazy="true" rows="5"
+					rowsPerPageTemplate="5 10 15 20 30 40" paginatorPosition="bottom"
+					paginatorAlwaysVisible="false"
+					emptyMessage="Nenhum Periódico cadastrado">
+
+					<p:column headerText="Nome" filterBy="#{periodico.nome}">
+						<h:outputText value="#{periodico.nome}" />
+					</p:column>
+					<p:column headerText="ISSN" filterBy="#{periodico.issn}" width="150">
+						<h:outputText value="#{periodico.issn}" />
+					</p:column>
+					<p:column headerText="Periodicidade" width="90">
+						<h:outputText value="#{periodico.periodicidade}" />
+					</p:column>
+					<p:column headerText="É Assinado?" width="90">
+						<h:outputText value="Sim" rendered="#{periodico.ehAssinado}" />
+						<h:outputText value="Não" rendered="#{!periodico.ehAssinado}" />
+					</p:column>
+					<p:column headerText="Editora">
+						<h:outputText value="#{periodico.editora.nome}" />
+					</p:column>
+					<p:column headerText="Local" width="110">
+						<h:outputText value="#{periodico.local.nome}" />
+					</p:column>
+					<p:column headerText="Idioma" width="70">
+						<h:outputText value="#{periodico.idioma.nome}" />
+					</p:column>
+					<p:column width="40">
+						<p:commandButton icon="ui-icon-pencil" title="Alterar Periódico"
+							update=":form">
+							<f:setPropertyActionListener value="#{periodico}"
+								target="#{periodicoBean.periodico}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:fieldset>
+		
+		
+		<ui:include src="/WEB-INF/includes/dialogEditora.xhtml">
+			<ui:param name="itemAcervoBean" value="#{periodicoBean}" />
+		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogLocal.xhtml">
+			<ui:param name="itemAcervoBean" value="#{periodicoBean}" />
+		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogIdioma.xhtml">
+			<ui:param name="itemAcervoBean" value="#{periodicoBean}" />
+		</ui:include>
+	</ui:define>
+</ui:composition>
+</html>

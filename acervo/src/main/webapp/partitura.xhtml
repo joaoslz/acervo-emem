@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/_template.xhtml">
+
+	<ui:define name="conteudo">
+		<script type="text/javascript" src="js/traducaoCalendario.js"></script>
+		<h:form id="form">
+
+			<!--  Formulário de cadastro de itemAcervo -->
+			<p:fieldset legend="Cadastro de Partitura" toggleable="true"
+				collapsed="#{empty partituraBean.partitura.id}">
+
+				<!-- ....................................DADOS DE ITEM ACERVO......................................... -->
+				<ui:include src="/WEB-INF/includes/dadosItemAcervo.xhtml">
+					<ui:param name="titulo" value="Dados da Partitura" />
+					<ui:param name="itemAcervoBean" value="#{partituraBean}" />
+				</ui:include>
+
+				<br />
+				<!-- ....................................DADOS DA Partitura................................................ -->
+				<p:panelGrid >
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Ano:" for="ano" />
+						</p:column>
+						<p:column>
+							<p:message for="ano"/>
+							<p:inputMask id="ano" value="#{partituraBean.partitura.ano}" mask="9999"
+								size="2" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Gênero:" for="genero" />
+						</p:column>
+						<p:column>
+							<p:autoComplete minQueryLength="2" size="45"
+								value="#{partituraBean.partitura.genero}" id="genero"
+								completeMethod="#{partituraBean.findGeneros}"
+								var="g" itemLabel="#{g.nome}" itemValue="#{g}"
+								converter="#{entityConverter}" forceSelection="true">
+							</p:autoComplete>
+						</p:column>
+						<p:column>
+							<p:commandButton type="button" id="showAddGeneroButton"
+								icon="ui-icon-plus" immediate="true" title="Adicionar Gênero"
+								onclick="PF('dlgGenero').show()" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Instrumento:" for="instrumentos" />
+						</p:column>
+						<p:column>
+							<p:autoComplete minQueryLength="2" size="45" multiple="true"
+								value="#{partituraBean.partitura.instrumentos}" id="instrumentos"
+								completeMethod="#{partituraBean.findInstrumentos}"
+								var="instr" itemLabel="#{instr.nome}" itemValue="#{instr}"
+								converter="#{entityConverter}" forceSelection="true">
+							</p:autoComplete>
+						</p:column>
+						<p:column>
+							<p:commandButton type="button" id="showAddInstrumentoButton"
+								icon="ui-icon-plus" immediate="true"
+								title="Adicionar Instrumento"
+								onclick="PF('dlgInstrumento').show()" />
+						</p:column>
+					</p:row>
+					<p:row>
+
+						<p:column>
+							<p:outputLabel value="Autores:" for="autores" />
+						</p:column>
+						<p:column>
+							<p:autoComplete minQueryLength="2" id="autores"
+								value="#{partituraBean.partitura.autores}" 
+								completeMethod="#{partituraBean.findAutores}" var="a"
+								itemLabel="#{a.nome}" itemValue="#{a}"
+								converter="#{entityConverter}" forceSelection="true"
+								multiple="true" />
+						</p:column>
+						<p:column>
+							<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
+								process="form:autores" title="Adicionar Autor" immediate="true"
+								onclick="PF('dlgAutor').show()" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Arranjadores:" for="arranjadores" />
+						</p:column>
+						<p:column>
+							<p:autoComplete minQueryLength="2" id="arranjadores"
+								value="#{partituraBean.partitura.arranjadores}"
+								completeMethod="#{partituraBean.findArranjadores}" var="a"
+								itemLabel="#{a.nome}" itemValue="#{a}"
+								converter="#{entityConverter}" forceSelection="true"
+								multiple="true" />
+						</p:column>
+						<p:column>
+							<p:commandButton id="showAddArranjadorButton" icon="ui-icon-plus"
+								process="form:arranjadores" title="Adicionar Arranjador" immediate="true"
+								onclick="PF('dlgArranjador').show()" />
+						</p:column>
+					</p:row>
+				
+				</p:panelGrid>
+				<br/>
+				<p:panelGrid rendered="#{empty partituraBean.partitura.id}">
+					<f:facet name="header"> Dados do Exemplar</f:facet>
+					<p:row>
+						<p:column><p:outputLabel value="Qtd Exemplares: " /></p:column>
+						<p:column>
+							<p:message for="qtd" />
+							<p:spinner id="qtd" value="#{partituraBean.exemplaresLote.quantidade}" max="300" min="1" size="3" validatorMessage="Você deve cadastrar no mínimo 1 exemplar!">
+								<f:validateLongRange minimum="1" for="qtd" />
+							</p:spinner>
+						</p:column>
+						<p:column><p:outputLabel value="Data de Aquisição: " /></p:column>
+						<p:column><p:calendar value="#{partituraBean.exemplaresLote.dataAquisicao}" display="inline" navigator="true" size="10"/></p:column>
+						<p:column><p:outputLabel value="É Doaçao? " /></p:column>
+						<p:column><p:selectBooleanCheckbox value="#{partituraBean.exemplaresLote.ehDoacao}" /></p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<!-- ....................................BOTÕES......................................................... -->
+				<p:toolbar
+					style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
+					<f:facet name="right">
+
+						<p:commandButton value="#{partituraBean.stringBotaoGravar}"
+							action="#{partituraBean.gravar}" process="@form"
+							update="@form :formTabela:tabela" />
+
+						<p:separator />
+
+						<p:commandButton value="Cancelar" update="@form"
+							action="#{partituraBean.recarregarPagina}" immediate="true" />
+
+					</f:facet>
+				</p:toolbar>
+			</p:fieldset>
+			<!-- Solucioina o bug de dialog que aparece ao pressionar enter -->
+			<p:commandButton id="btnDefault" style="display:none" />
+			<p:defaultCommand target="btnDefault" />
+		</h:form>
+		<br />
+		<!-- ....................................TABELA......................................................... -->
+		<p:fieldset legend="Partituras Cadastradas">
+			<h:form id="formTabela">
+				<p:dataTable id="tabela" value="#{partituraBean.lazyDataModel}"
+					var="partitura" paginator="true" lazy="true" rows="5"
+					mptyMessage="Nenhuma Partitura cadastrada"
+					rowsPerPageTemplate="5 10 15 20 30 40" paginatorPosition="bottom"
+					paginatorAlwaysVisible="false">
+
+				<p:column headerText="Expl." width="40">
+					<p:commandButton title="Gerenciar Exemplares"
+						oncomplete="PF('dlgExemplares').show()" immediate="true"
+						value="#{partituraBean.getQtdExemplares(partitura)}"
+						update="@form :formExemplares" 
+						style="background-image:none;background-color:#{partituraBean.getCorBotaoExemplares(partitura)};">
+						<f:setPropertyActionListener value="#{partitura}" target="#{partituraBean.entity}" />
+					</p:commandButton>
+				</p:column>
+					<p:column filterBy="#{partitura.titulo}" filterMatchMode="contains"
+						headerText="Título">
+						<h:outputText value="#{partitura.titulo}" />
+					</p:column>
+					<p:column headerText="Gênero" width="100">
+						<h:outputText value="#{partitura.genero.nome}" />
+					</p:column>
+					<p:column headerText="Idioma" width="60">
+						<h:outputText value="#{partitura.idioma.nome}" />
+					</p:column>
+					<p:column headerText="Editora">
+						<h:outputText value="#{partitura.editora.nome}" />
+					</p:column>
+					<p:column headerText="Local" width="100">
+						<h:outputText value="#{partitura.local.nome}" />
+					</p:column>
+					<p:column headerText="Autores">
+						<h:outputText value="#{partitura.autoresToString}" />
+					</p:column>
+					<p:column headerText="Arranjadores">
+						<h:outputText value="#{partitura.arranjadoresToString}" />
+					</p:column>
+					<p:column headerText="Assuntos">
+						<h:outputText value="#{partitura.assuntosToString}" />
+					</p:column>
+					<p:column headerText="Instrumentos">
+						<h:outputText value="#{partitura.instrumentosToString}" />
+					</p:column>
+					<p:column headerText="Alterar" width="40">
+						<p:commandButton icon="ui-icon-pencil" title="Alterar Partitura"
+							update=":form">
+							<f:setPropertyActionListener value="#{partitura}"
+								target="#{partituraBean.entity}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:fieldset>
+
+		<ui:include src="/WEB-INF/includes/dialogAutor.xhtml">
+			<ui:param name="itemAcervoBean" value="#{partituraBean}" />
+		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogArranjador.xhtml">
+			<ui:param name="itemAcervoBean" value="#{partituraBean}" />
+		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogAssunto.xhtml">
+			<ui:param name="itemAcervoBean" value="#{partituraBean}" />
+		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogEditora.xhtml">
+			<ui:param name="itemAcervoBean" value="#{partituraBean}" />
+		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogLocal.xhtml">
+			<ui:param name="itemAcervoBean" value="#{partituraBean}" />
+		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogIdioma.xhtml">
+			<ui:param name="itemAcervoBean" value="#{partituraBean}" />
+		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogInstrumento.xhtml">
+			<ui:param name="itemAcervoBean" value="#{partituraBean}" />
+		</ui:include>
+		<ui:include src="/WEB-INF/includes/dialogGenero.xhtml">
+			<ui:param name="itemAcervoBean" value="#{partituraBean}" />
+		</ui:include>
+
+		<ui:include src="/WEB-INF/includes/dialogExemplares.xhtml">
+			<ui:param name="itemAcervoBean" value="#{partituraBean}" />
+		</ui:include>
+
+	</ui:define>
+</ui:composition>
+</html>

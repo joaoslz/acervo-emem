@@ -1,0 +1,28 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<!-- DIALOG LOCAL............................................................................................ -->
+	<p:dialog header="Cadastro de Gênero" widgetVar="dlgGenero"
+		resizable="false" modal="true">
+		<h:form>
+			<p:message for="nome" />
+			<h:panelGrid columns="3">
+				<p:outputLabel value="Nome:" for="nome" />
+				<p:inputText id="nome" value="#{generoBean.entity.nome}"
+					required="true" requiredMessage="Nome é um campo obrigatório!"
+					validator="#{generoBean.validarNomeDuplicado}" />
+
+				<p:commandButton value="Gravar"
+					actionListener="#{generoBean.gravarViaDialog}" process="@form"
+					update="@form :form:genero">
+					<f:setPropertyActionListener value="#{generoBean.entity}"
+						target="#{itemAcervoBean.entity.genero}" />
+				</p:commandButton>
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+
+</ui:composition>

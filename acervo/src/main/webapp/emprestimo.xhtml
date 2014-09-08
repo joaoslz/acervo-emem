@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="WEB-INF/template/_template.xhtml">
+	<ui:define name="conteudo">
+
+		<p:fieldset legend="Empréstimo de Obras">
+
+			<h:form id="form">
+				<!-- Solucioina o bug de dialog que aparece ao pressionar enter -->
+				<p:commandButton id="btnDefault" style="display:none" />
+				<p:defaultCommand target="btnDefault" />
+
+				<div style="width: 900px">
+					<p:message for="exemplar" />
+					<p:message for="usuario" />
+					<p:panelGrid style="width:100%" id="tb2">
+						<p:row>
+							<p:column>
+								<p:outputLabel value="ID do Exemplar (Tombo)" for="exemplar" />
+							</p:column>
+							<p:column>
+								<p:autoComplete id="exemplar" minQueryLength="1" required="true"
+									size="82"
+									requiredMessage="O Tombo do Equipamento deve ser preenchido corretamente!"
+									value="#{emprestimoBean.emprestimo.exemplar}"
+									completeMethod="#{emprestimoBean.findExemplar}" var="e"
+									itemLabel="#{e}" itemValue="#{e}"
+									converter="#{entityConverter}">
+
+									<p:ajax listener="#{emprestimoBean.verificarStatusEmprestimo}"
+										update="toolbar usuario dataPrevista obs" process="@this" event="blur" />
+								</p:autoComplete>
+							</p:column>
+						</p:row>
+						<p:row id="row1" rendered="#{emprestimoBean.efetuarEmprestimo}" >
+							<p:column>
+								<p:outputLabel value="Usuário: " for="usuario" rendered="#{emprestimoBean.efetuarEmprestimo}" />
+							</p:column>
+							<p:column>
+								<p:autoComplete id="usuario" minQueryLength="1" required="true"
+									requiredMessage="O campo Usuário deve ser preenchido!"
+									size="82" value="#{emprestimoBean.emprestimo.usuario}"
+									completeMethod="#{emprestimoBean.findUsuario}" var="e"
+									itemLabel="#{e}" itemValue="#{e}" 
+									disabled="#{!emprestimoBean.efetuarEmprestimo}"
+									converter="#{entityConverter}">
+								</p:autoComplete>
+							</p:column>
+						</p:row>
+						<p:row id="row2" rendered="#{emprestimoBean.efetuarEmprestimo}">
+							<p:column>
+								<p:outputLabel value="Data Prevista: " for="dataPrevista"  rendered="#{emprestimoBean.efetuarEmprestimo}" />
+							</p:column>
+							<p:column>
+								<p:calendar id="dataPrevista" disabled="#{!emprestimoBean.efetuarEmprestimo}"
+									value="#{emprestimoBean.emprestimo.dataPrevista.time}"
+									pattern="dd/MM/yyyy HH:mm"  />
+							</p:column>
+						</p:row>
+						<p:row id="row3" rendered="#{emprestimoBean.efetuarEmprestimo}">
+							<p:column>
+								<p:outputLabel value="Observação: " for="obs"  rendered="#{emprestimoBean.efetuarEmprestimo}" />
+							</p:column>
+							<p:column>
+								<h:inputTextarea id="obs" disabled="#{!emprestimoBean.efetuarEmprestimo}"
+									value="#{emprestimoBean.emprestimo.observacao}"
+									style="width:610px"  />
+							</p:column>
+						</p:row>
+
+					</p:panelGrid>
+
+					<p:toolbar name="footer" id="toolbar" style="margin-top: 10px">
+						<f:facet name="right">
+							<p:commandButton value="Efetuar Empréstimo"
+								rendered="#{emprestimoBean.efetuarEmprestimo}"
+								action="#{emprestimoBean.efetuarEmprestimo}" process="@form"
+								update="@form" />
+							<p:commandButton value="Efetuar Devolução"
+								rendered="#{!emprestimoBean.efetuarEmprestimo}"
+								action="#{emprestimoBean.efetuarDevolucao}" process="@form"
+								update="@form" immediate="true" />
+						</f:facet>
+					</p:toolbar>
+				</div>
+			</h:form>
+
+		</p:fieldset>
+
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<!-- DIALOG Compositor.......................................................................................... -->
+		<p:dialog header="Cadastro de Compositor" widgetVar="dlgCompositor"
+			resizable="false" modal="true">
+			<h:form>
+			<p:message for="nome" />
+			<h:panelGrid columns="3">
+				<p:outputLabel value="Nome:" for="nome" />
+				<p:inputText id="nome" value="#{compositorBean.entity.nome}"
+					required="true" requiredMessage="Nome é um campo obrigatório!"
+					validator="#{compositorBean.validarNomeDuplicado}" />
+
+				<p:commandButton value="Gravar"
+					actionListener="#{compositorBean.gravarViaDialog}"
+					process="@form" update="@form :formMusica:compositores">
+					<f:setPropertyActionListener value="#{compositorBean.entity}" target="#{itemAcervoBean.compositor}"/>
+				</p:commandButton>
+			</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+</ui:composition>
