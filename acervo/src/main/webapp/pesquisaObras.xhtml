@@ -36,7 +36,7 @@
 						<p:column>
 							<p:autoComplete minQueryLength="2" id="autores"
 								value="#{pesquisaObraBean.filtro.autores}"
-								completeMethod="#{obraBean.autorDAO.findByNome}" var="a"
+								completeMethod="#{obraBean.findAutores}" var="a"
 								itemLabel="#{a.nome}" itemValue="#{a.id}"
 								converter="#{entityConverter}" forceSelection="true"
 								multiple="true" />
@@ -63,7 +63,7 @@
 						<p:column>
 							<p:autoComplete minQueryLength="2" id="assuntos"
 								value="#{pesquisaObraBean.filtro.assuntos}"
-								completeMethod="#{obraBean.assuntoDAO.findByNome}" var="a"
+								completeMethod="#{obraBean.findAssuntos}" var="a"
 								itemLabel="#{a.nome}" itemValue="#{a.id}"
 								converter="#{entityConverter}" forceSelection="true"
 								multiple="true" />
@@ -88,7 +88,7 @@
 						<p:column>
 							<p:autoComplete minQueryLength="2" size="45"
 								value="#{pesquisaObraBean.filtro.editora}" id="editora"
-								completeMethod="#{pesquisaObraBean.obraBean.editoraDAO.findByNome}"
+								completeMethod="#{pesquisaObraBean.findEditoras}"
 								var="e" itemLabel="#{e.nome}" itemValue="#{e}"
 								converter="#{entityConverter}" forceSelection="true">
 							</p:autoComplete>
@@ -99,7 +99,7 @@
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-				<p:dataTable rows="20" paginator="true" paginatorPosition="bottom"
+				<p:dataTable rows="20" paginator="false" paginatorPosition="bottom"
 					id="tabelaObras" value="#{pesquisaObraBean.obrasFiltradas}"
 					var="obra" emptyMessage="Nenhuma Obra Localizada">
 
