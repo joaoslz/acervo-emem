@@ -34,7 +34,7 @@ public class ItemAcervoService implements Serializable {
 	
 	@Inject
 	private Logger logger;
-
+	
 	@Inject
 	private CRUDRepository crudRepository;
 	@Inject

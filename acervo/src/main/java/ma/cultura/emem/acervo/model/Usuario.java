@@ -8,7 +8,7 @@ import ma.cultura.emem.acervo.model.auxiliar.AuxiliarEntity;
 public class Usuario extends AuxiliarEntity {
 	
 	private static final long serialVersionUID = 879436850825266203L;
-
+	
 	// @Column(unique = true)
 	// @CPF(message="CPF inválido!")
 	private String cpf;

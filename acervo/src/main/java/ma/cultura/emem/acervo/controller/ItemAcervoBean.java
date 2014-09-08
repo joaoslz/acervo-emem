@@ -171,7 +171,7 @@ public abstract class ItemAcervoBean<T extends ItemAcervo> implements Serializab
 	public List<Instrumento> findInstrumentos(String nome) {
 		return itemAcervoService.findInstrumentos(nome);
 	}
-
+	
 	public List<Arranjador> findArranjadores(String nome) {
 		return itemAcervoService.findArranjadores(nome);
 	}

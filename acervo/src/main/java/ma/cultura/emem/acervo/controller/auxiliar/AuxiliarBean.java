@@ -20,40 +20,39 @@ import org.apache.log4j.Logger;
 import org.primefaces.event.RowEditEvent;
 
 public abstract class AuxiliarBean<T extends AuxiliarEntity> implements Serializable {
-
+	
 	private static final long serialVersionUID = 3847398251913840437L;
-
+	
 	@Inject
 	protected Logger logger;
 	@Inject
 	protected FacesMessages facesMsg;
-
+	
 	@Inject
 	protected CRUDService crudService;
-	@Inject 
+	@Inject
 	protected ConsultasService<T> consultasService;
-
+	
 	@Inject
 	private RootEntityLazyDataModel<T> lazyDataModel;
 	
-
 	private T entity;
 	
 	private String entityName;
-
+	
 	protected abstract T newEntityInstance();
-
+	
 	protected abstract String getNomeEntity();
-
+	
 	@PostConstruct
-	public void init(){
-		entity = newEntityInstance();	
+	public void init() {
+		entity = newEntityInstance();
 		entityName = entity.getClass().getSimpleName();
 		logger.debug("init: " + entityName);
 	}
-
+	
 	public void validarNomeDuplicado(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-		if(value != null){
+		if (value != null) {
 			int size = consultasService.findByNome(value.toString()).size();
 			if (size > 0) {
 				String msg = "Já existe um cadastrado com o nome " + value + "!";
@@ -62,18 +61,18 @@ public abstract class AuxiliarBean<T extends AuxiliarEntity> implements Serializ
 			}
 		}
 	}
-
+	
 	public void gravar() {
 		logger.debug("Gravando entity: " + entityName);
 		crudService.atualizar(entity);
-		entity = newEntityInstance();		
+		entity = newEntityInstance();
 	}
-
+	
 	public void gravarViaDialog() {
 		logger.debug("Gravando via dialog: " + entityName);
 		entity = (T) crudService.atualizar(entity);
 		
-		//Fecha o Dialog aqui para evitar bug na validação.
+		// Fecha o Dialog aqui para evitar bug na validação.
 		FacesUtil.hideDialog("dlg" + entityName);
 		logger.debug("hide dialog: dlg" + entityName);
 	}
@@ -83,18 +82,18 @@ public abstract class AuxiliarBean<T extends AuxiliarEntity> implements Serializ
 		logger.debug("Editando entity: " + t.getClass().getSimpleName());
 		crudService.atualizar(t);
 	}
-
+	
 	public RootEntityLazyDataModel<T> getLazyDataModel() {
 		return lazyDataModel;
 	}
-
+	
 	public T getEntity() {
 		if (entity == null) {
 			entity = newEntityInstance();
 		}
 		return entity;
 	}
-
+	
 	public void setEntity(T entity) {
 		this.entity = entity;
 	}

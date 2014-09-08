@@ -17,42 +17,41 @@ import ma.cultura.emem.acervo.service.ItemAcervoService;
 @Named
 @ViewScoped
 public class PeriodicoBean extends AuxiliarBean<Periodico> {
-
+	
 	private static final long serialVersionUID = -2945934767614853255L;
-
+	
 	@Inject
 	private ItemAcervoService itemAcervoService;
-
+	
 	@Override
 	protected String getNomeEntity() {
 		return getEntity().getNome();
 	}
-
+	
 	public String recarregarPagina() {
 		return "periodico?faces-redirect=true";
 	}
 	
-	public String getStringBotaoGravar(){
+	public String getStringBotaoGravar() {
 		return getPeriodico().getId() == null ? "Gravar" : "Gravar Alterações";
 	}
 	
-	public PeriodicidadeEnum[] getListaPeriodicidade(){
+	public PeriodicidadeEnum[] getListaPeriodicidade() {
 		return PeriodicidadeEnum.values();
 	}
 	
-	public Periodico getPeriodico(){
+	public Periodico getPeriodico() {
 		return getEntity();
 	}
 	
-	public void setPeriodico(Periodico p){
+	public void setPeriodico(Periodico p) {
 		setEntity(p);
 	}
-
+	
 	@Override
 	protected Periodico newEntityInstance() {
 		return new Periodico();
 	}
-
 	
 	public List<Editora> findEditoras(String nome) {
 		return itemAcervoService.findEditoras(nome);
@@ -65,8 +64,8 @@ public class PeriodicoBean extends AuxiliarBean<Periodico> {
 	public List<Local> findLocais(String nome) {
 		return itemAcervoService.findLocais(nome);
 	}
-
-	public List<Idioma>  getListaIdiomas() {
+	
+	public List<Idioma> getListaIdiomas() {
 		return itemAcervoService.findAllIdiomas();
-	}	
+	}
 }

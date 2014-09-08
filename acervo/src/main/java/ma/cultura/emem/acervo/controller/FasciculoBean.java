@@ -2,7 +2,6 @@ package ma.cultura.emem.acervo.controller;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -13,7 +12,6 @@ import ma.cultura.emem.acervo.model.Fasciculo;
 import ma.cultura.emem.acervo.model.auxiliar.Autor;
 import ma.cultura.emem.acervo.model.auxiliar.Periodico;
 import ma.cultura.emem.acervo.model.auxiliar.enums.MesEnum;
-import ma.cultura.emem.acervo.service.ConsultasService;
 
 import org.primefaces.context.RequestContext;
 
@@ -28,8 +26,7 @@ public class FasciculoBean extends ItemAcervoBean<Fasciculo> {
 	
 	private Periodico periodico = new Periodico();
 	private Artigo artigoAdd = new Artigo();
-
-
+	
 	@Override
 	protected Fasciculo getNewItemAcervo() {
 		return new Fasciculo();
@@ -76,7 +73,7 @@ public class FasciculoBean extends ItemAcervoBean<Fasciculo> {
 	}
 	
 	// ...........................................CADASTRO DE ARTIGO < < < < <
-
+	
 	public Periodico getPeriodico() {
 		return periodico;
 	}

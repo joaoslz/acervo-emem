@@ -19,10 +19,10 @@ import org.primefaces.component.calendar.Calendar;
 
 @Named
 public class CalendarConverter implements Converter {
-
+	
 	@Inject
 	private Logger logger;
-
+	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value != null && !value.isEmpty()) {
@@ -39,7 +39,7 @@ public class CalendarConverter implements Converter {
 			return null;
 		}
 	}
-
+	
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		String convertedValue = null;
@@ -53,13 +53,13 @@ public class CalendarConverter implements Converter {
 		}
 		return convertedValue;
 	}
-
+	
 	private Date convertToDate(FacesContext context, Calendar pCalendar, String value) throws ParseException {
 		DateFormat format = new SimpleDateFormat(pCalendar.getPattern(), pCalendar.calculateLocale(context));
 		format.setTimeZone(pCalendar.calculateTimeZone());
 		return format.parse(value);
 	}
-
+	
 	private String convertToString(FacesContext context, Calendar pCalendar, java.util.Calendar cal) throws ParseException {
 		DateFormat format = new SimpleDateFormat(pCalendar.getPattern(), pCalendar.calculateLocale(context));
 		format.setTimeZone(pCalendar.calculateTimeZone());

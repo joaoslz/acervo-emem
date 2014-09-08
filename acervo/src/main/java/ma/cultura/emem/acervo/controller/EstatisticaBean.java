@@ -11,25 +11,25 @@ import ma.cultura.emem.acervo.service.EstatisticaService;
 @Named
 @ViewScoped
 public class EstatisticaBean implements Serializable {
-
+	
 	private static final long serialVersionUID = -1L;
 	
 	@Inject
 	private EstatisticaService service;
 	
-	public int getTotalObras(){
+	public int getTotalObras() {
 		return service.countAllObras();
 	}
 	
-	public int getTotalPartituras(){
+	public int getTotalPartituras() {
 		return service.countAllPartituras();
 	}
-
-	public int getTotalFasciculo(){
+	
+	public int getTotalFasciculo() {
 		return service.countAllFasciculos();
 	}
 	
-	public int getTotalCDs(){
+	public int getTotalCDs() {
 		return service.countAllCDs();
 	}
 }

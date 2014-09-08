@@ -51,7 +51,8 @@ import com.sun.mail.smtp.SMTPTransport;
  * Extension of Log4j {@link SMTPAppender} for Gmail support
  * 
  * @author abhinav@tgerm.com
- * @see <a href="http://code.google.com/p/log4j-gmail-smtp-appender/">Google Code Project</a> <br/>
+ * @see <a href="http://code.google.com/p/log4j-gmail-smtp-appender/">Google
+ *      Code Project</a> <br/>
  *      <a href="http://www.tgerm.com">My Blog</a>
  */
 public class GmailSMTPAppender extends SMTPAppender implements Serializable {
@@ -59,11 +60,11 @@ public class GmailSMTPAppender extends SMTPAppender implements Serializable {
 	 * Cached session for later use i.e. while sending emails
 	 */
 	protected Session session;
-
+	
 	public GmailSMTPAppender() {
 		super();
 	}
-
+	
 	/**
 	 * Create mail session.
 	 * 
@@ -73,7 +74,7 @@ public class GmailSMTPAppender extends SMTPAppender implements Serializable {
 		Properties props = new Properties();
 		props.put("mail.smtps.host", getSMTPHost());
 		props.put("mail.smtps.auth", "true");
-
+		
 		Authenticator auth = null;
 		if (getSMTPPassword() != null && getSMTPUsername() != null) {
 			auth = new Authenticator() {
@@ -91,14 +92,14 @@ public class GmailSMTPAppender extends SMTPAppender implements Serializable {
 		}
 		return session;
 	}
-
+	
 	/**
 	 * Send the contents of the cyclic buffer as an e-mail message.
 	 */
 	protected void sendBuffer() {
 		try {
 			MimeBodyPart part = new MimeBodyPart();
-
+			
 			StringBuffer sbuf = new StringBuffer();
 			String t = layout.getHeader();
 			if (t != null)
@@ -121,20 +122,21 @@ public class GmailSMTPAppender extends SMTPAppender implements Serializable {
 			if (t != null)
 				sbuf.append(t);
 			part.setContent(sbuf.toString(), layout.getContentType());
-
+			
 			Multipart mp = new MimeMultipart();
 			mp.addBodyPart(part);
 			msg.setContent(mp);
-
+			
 			msg.setSentDate(new Date());
 			send(msg);
 		} catch (Exception e) {
 			LogLog.error("Error occured while sending e-mail notification.", e);
 		}
 	}
-
+	
 	/**
-	 * Pulled email send stuff i.e. Transport.send()/Transport.sendMessage(). So that on required this logic can be enhanced.
+	 * Pulled email send stuff i.e. Transport.send()/Transport.sendMessage(). So
+	 * that on required this logic can be enhanced.
 	 * 
 	 * @param msg
 	 *            Email Message

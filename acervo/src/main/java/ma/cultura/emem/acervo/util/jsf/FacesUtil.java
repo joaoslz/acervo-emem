@@ -5,10 +5,10 @@ import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
 public class FacesUtil {
-
+	
 	public static <T> T getBean(String name, Class<T> classe) {
 		FacesContext ctx = FacesContext.getCurrentInstance();
-		return ctx.getApplication().evaluateExpressionGet(ctx, "#{"+name+"}", classe);
+		return ctx.getApplication().evaluateExpressionGet(ctx, "#{" + name + "}", classe);
 	}
 	
 	public static String getRequestParameter(String name) {
@@ -23,7 +23,7 @@ public class FacesUtil {
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(key, value);
 	}
 	
-	public static void hideDialog(String dialogName){
+	public static void hideDialog(String dialogName) {
 		RequestContext.getCurrentInstance().execute("PF('" + dialogName + "').hide();");
 	}
 }

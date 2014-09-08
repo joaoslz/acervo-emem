@@ -14,9 +14,9 @@ import org.apache.log4j.Logger;
 @Interceptor
 @Transactional
 public class TransactionInterceptor implements Serializable {
-
+	
 	private static final long serialVersionUID = 1L;
-
+	
 	@Inject
 	private Logger logger;
 	
@@ -28,11 +28,12 @@ public class TransactionInterceptor implements Serializable {
 		logger.debug("transação");
 		EntityTransaction transaction = manager.getTransaction();
 		boolean owner = false;
-
+		
 		try {
 			if (!transaction.isActive()) {
 				// truque para fazer rollback no que já passou
-				// (senão, um futuro commit, confirmaria até mesmo operações sem transação)
+				// (senão, um futuro commit, confirmaria até mesmo operações sem
+				// transação)
 				transaction.begin();
 				transaction.rollback();
 				// agora sim inicia a transação

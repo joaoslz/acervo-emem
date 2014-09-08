@@ -11,7 +11,7 @@ import ma.cultura.emem.acervo.model.RootEntity;
  */
 @MappedSuperclass
 public class AuxiliarEntity extends RootEntity {
-
+	
 	/**
 	 *
 	 */
@@ -31,7 +31,7 @@ public class AuxiliarEntity extends RootEntity {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	
 	@Override
 	public String toString() {
 		return nome;

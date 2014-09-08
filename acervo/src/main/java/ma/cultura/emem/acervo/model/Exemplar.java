@@ -26,7 +26,7 @@ public class Exemplar extends RootEntity {
 	
 	@ManyToOne
 	private ItemAcervo itemAcervo;
-		
+	
 	public boolean isEhDoacao() {
 		return ehDoacao;
 	}
@@ -51,7 +51,7 @@ public class Exemplar extends RootEntity {
 		this.dataAquisicao = dataAquisicao;
 	}
 	
-	//FIXME Usar apenas o Calendar #1
+	// FIXME Usar apenas o Calendar #1
 	public void setDataAquisicao(Date d) {
 		if (d != null) {
 			dataAquisicao = Calendar.getInstance();
@@ -67,7 +67,6 @@ public class Exemplar extends RootEntity {
 		this.itemAcervo = itemAcervo;
 	}
 	
-	
 	public boolean isDisponivel() {
 		return disponivel;
 	}
@@ -78,6 +77,6 @@ public class Exemplar extends RootEntity {
 	
 	@Override
 	public String toString() {
-		return getId() + " - " +  (itemAcervo == null ? "NULL" : itemAcervo.toString());
+		return getId() + " - " + (itemAcervo == null ? "NULL" : itemAcervo.toString());
 	}
 }

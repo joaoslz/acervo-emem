@@ -11,12 +11,12 @@ import ma.cultura.emem.acervo.repository.ConsultasRepository;
 import ma.cultura.emem.acervo.service.ConsultasService;
 
 public class RootEntityLazeDataModelProduces<T extends RootEntity> {
-
+	
 	@Produces
 	public RootEntityLazyDataModel<T> create(InjectionPoint ip, EntityManager em) {
 		ParameterizedType type = (ParameterizedType) ip.getType();
 		Class<T> classe = (Class<T>) type.getActualTypeArguments()[0];
-		ConsultasRepository<T> repository = new  ConsultasRepository<>(classe, em);
+		ConsultasRepository<T> repository = new ConsultasRepository<>(classe, em);
 		ConsultasService<T> service = new ConsultasService<>(repository);
 		return new RootEntityLazyDataModel<>(service);
 	}

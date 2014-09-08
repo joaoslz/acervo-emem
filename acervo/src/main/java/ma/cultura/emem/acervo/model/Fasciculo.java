@@ -33,7 +33,7 @@ public class Fasciculo extends ItemAcervo {
 	@OneToMany(mappedBy = "fasciculo", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<Artigo> artigos = new ArrayList<>();
 	
-	//FIXME remover
+	// FIXME remover
 	@Transient
 	public String getArtigosToString() {
 		final StringBuilder builder = new StringBuilder();

@@ -19,19 +19,19 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 public class PesquisaObraRepository implements Serializable {
-
+	
 	private static final long serialVersionUID = -451616595796258543L;
-
+	
 	@Inject
 	private EntityManager em;
 	@Inject
 	private Logger logger;
-
+	
 	public List<Obra> filtrarObras(ObraFilter filtro) {
 		Session session = this.em.unwrap(Session.class);
-
+		
 		Criteria criteria = session.createCriteria(Obra.class, "obra");
-
+		
 		if (StringUtils.isNotBlank(filtro.getIsbn())) {
 			// pesquisa em qualquer substring que aparece em qualquer parte do
 			// Título da Obra
@@ -42,31 +42,31 @@ public class PesquisaObraRepository implements Serializable {
 			// Título da Obra
 			criteria.add(Restrictions.ilike("titulo", filtro.getTitulo(), MatchMode.ANYWHERE));
 		}
-
+		
 		if (StringUtils.isNotBlank(filtro.getSubtitulo())) {
 			// pesquisa em qualquer substring que aparece em qualquer parte do
 			// subtítulo da Obra
 			criteria.add(Restrictions.ilike("subtitulo", filtro.getSubtitulo(), MatchMode.ANYWHERE));
 		}
-
+		
 		if (filtro.getAnoInicio() != null && filtro.getAnoInicio() > 0) {
 			logger.debug(filtro.getAnoInicio());
 			// id deve ser maior ou igual (ge = greater or equals) a
 			// filtro.anoInicio
 			criteria.add(Restrictions.ge("ano", filtro.getAnoInicio()));
 		}
-
+		
 		if (filtro.getAnoFim() != null && filtro.getAnoFim() > 0) {
 			logger.debug(filtro.getAnoFim());
 			// id deve ser menor ou igual (le = lower or equal) a filtro.anoFim
 			criteria.add(Restrictions.le("ano", filtro.getAnoFim()));
 		}
-
+		
 		if (filtro.getTiposObra() != null && !(filtro.getTiposObra().isEmpty())) {
 			// adicionamos uma restrição "in", passando uma lista de tipoObra
 			criteria.add(Restrictions.in("tipoObra", filtro.getTiposObra()));
 		}
-
+		
 		if (filtro.getEditora() != null && filtro.getEditora().getId() != null) {
 			criteria.add(Restrictions.eq("editora.id", filtro.getEditora().getId()));
 		}
@@ -81,7 +81,7 @@ public class PesquisaObraRepository implements Serializable {
 			criteria.add(Restrictions.in("s.id", filtro.getAssuntos()));
 			criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		}
-
+		
 		return criteria.addOrder(Order.asc("titulo")).list();
 	}
 }

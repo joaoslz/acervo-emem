@@ -16,7 +16,7 @@ import ma.cultura.emem.acervo.model.auxiliar.TipoObra;
 @Entity
 public class Obra extends ItemAcervo {
 	private static final long serialVersionUID = 5321138938658904716L;
-
+	
 	@Column(length = 20, nullable = true)
 	private String classificacao;
 	
@@ -24,7 +24,7 @@ public class Obra extends ItemAcervo {
 	// @Size(min=5, max=5, message="O cutter deve possuir 5 caracteres")
 	@Column(length = 5, nullable = false)
 	private String cutter;
-
+	
 	@Column(length = 5, nullable = true)
 	private Short edicao;
 	private boolean ehIlustrado;
@@ -124,8 +124,8 @@ public class Obra extends ItemAcervo {
 	}
 	
 	public void setNumPaginas(Short numPaginas) {
-		if(numPaginas != null)
-		naoPaginado = numPaginas <= 0;
+		if (numPaginas != null)
+			naoPaginado = numPaginas <= 0;
 		this.numPaginas = numPaginas;
 	}
 	

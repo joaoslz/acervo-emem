@@ -40,7 +40,7 @@ public class EmprestimoService implements Serializable {
 		emprestimo.setDataEmprestimo(Calendar.getInstance());
 		crudRepository.adicionar(emprestimo);
 		
-		// precisa do merge pq este exemplar veio de  outra request.
+		// precisa do merge pq este exemplar veio de outra request.
 		emprestimo.getExemplar().setDisponivel(false);
 		crudRepository.atualizar(emprestimo.getExemplar());
 		

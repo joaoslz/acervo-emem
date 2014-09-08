@@ -12,38 +12,38 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 public class RootEntityLazyDataModel<T extends RootEntity> extends LazyDataModel<T> {
-
+	
 	private static final long serialVersionUID = 1764206779658823028L;
-
+	
 	private Logger logger = Logger.getLogger(getClass());
 	private ConsultasService<T> service;
-
+	
 	public RootEntityLazyDataModel(ConsultasService<T> service) {
 		this.service = service;
 	}
-
+	
 	@Override
 	public T getRowData(String rowKey) {
 		logger.debug("buscando por id: " + rowKey);
 		return service.findById(Integer.valueOf(rowKey));
 	}
-
+	
 	@Override
 	public Object getRowKey(RootEntity t) {
 		return t.getId();
 	}
-
+	
 	@Override
 	public List<T> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 		PaginatedResult<T> p;
-		if(filters != null && filters.size() > 0){
+		if (filters != null && filters.size() > 0) {
 			logger.debug("Usando Filtros ");
 			p = service.findFilteredAndPaginate(filters, first, pageSize);
-		}else{
+		} else {
 			logger.debug("Sem Filtros ");
 			p = service.findAllAndPaginate(first, pageSize);
 		}
 		setRowCount(p.getCountAll());
-		return  p.getLista();
+		return p.getLista();
 	}
 }

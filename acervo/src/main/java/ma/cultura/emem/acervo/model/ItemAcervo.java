@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
@@ -41,7 +40,7 @@ public abstract class ItemAcervo extends RootEntity {
 	private String subtitulo;
 	
 	// @Min(1500)
-	@Column(length = 4, nullable=true)
+	@Column(length = 4, nullable = true)
 	private short ano;
 	
 	@ManyToOne

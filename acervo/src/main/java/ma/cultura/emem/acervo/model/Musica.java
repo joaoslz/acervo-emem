@@ -75,7 +75,7 @@ public class Musica extends RootEntity {
 	}
 	
 	public String getDuracaoToString() {
-		if(duracao == null)
+		if (duracao == null)
 			return "00:00";
 		return new SimpleDateFormat("mm:ss").format(duracao);
 	}

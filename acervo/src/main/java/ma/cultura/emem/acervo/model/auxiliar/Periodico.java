@@ -23,7 +23,7 @@ public class Periodico extends AuxiliarEntity {
 	
 	@Column(length = 20)
 	private String issn;
-
+	
 	private Boolean ehAssinado;
 	
 	@Enumerated(EnumType.STRING)

@@ -10,12 +10,12 @@ import ma.cultura.emem.acervo.repository.PesquisaObraRepository;
 import ma.cultura.emem.acervo.repository.dto.ObraFilter;
 
 public class PesquisaService implements Serializable {
-
+	
 	private static final long serialVersionUID = 103622249416771602L;
 	@Inject
 	private PesquisaObraRepository pesquisaObraRepository;
-
+	
 	public List<Obra> filtrarObras(ObraFilter filtro) {
 		return pesquisaObraRepository.filtrarObras(filtro);
-	}	
+	}
 }
