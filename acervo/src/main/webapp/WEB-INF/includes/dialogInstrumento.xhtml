@@ -18,7 +18,7 @@
 					<p:commandButton value="Gravar"
 						actionListener="#{instrumentoBean.gravarViaDialog}"
 						process="@form" update="@form :form:instrumentos">
-						<f:setPropertyActionListener value="#{instrumentoBean.entity}" target="#{itemAcervoBean.instrumento}"/>
+						<f:setPropertyActionListener value="#{instrumentoBean.entityTransfer}" target="#{itemAcervoBean.instrumento}"/>
 					</p:commandButton>
 				</h:panelGrid>
 			</h:form>

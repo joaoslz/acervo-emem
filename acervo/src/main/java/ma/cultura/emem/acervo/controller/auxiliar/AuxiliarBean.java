@@ -37,6 +37,8 @@ public abstract class AuxiliarBean<T extends AuxiliarEntity> implements Serializ
 	private RootEntityLazyDataModel<T> lazyDataModel;
 	
 	private T entity;
+	//Esta entity será utilizada para transferencia deste bean para outro bean, via setPropertyActionListener.
+	private T entityTransfer;
 	
 	private String entityName;
 	
@@ -70,8 +72,10 @@ public abstract class AuxiliarBean<T extends AuxiliarEntity> implements Serializ
 	
 	public void gravarViaDialog() {
 		logger.debug("Gravando via dialog: " + entityName);
-		entity = (T) crudService.atualizar(entity);
-		
+		//Entidade que será enviada para outro ManagedBean
+		entityTransfer = (T) crudService.atualizar(entity);
+		//Limpa o formulário do dialog.
+		entity = newEntityInstance();
 		// Fecha o Dialog aqui para evitar bug na validação.
 		FacesUtil.hideDialog("dlg" + entityName);
 		logger.debug("hide dialog: dlg" + entityName);
@@ -96,5 +100,13 @@ public abstract class AuxiliarBean<T extends AuxiliarEntity> implements Serializ
 	
 	public void setEntity(T entity) {
 		this.entity = entity;
+	}
+
+	public T getEntityTransfer() {
+		return entityTransfer;
+	}
+
+	public void setEntityTransfer(T entityTransfer) {
+		this.entityTransfer = entityTransfer;
 	}
 }

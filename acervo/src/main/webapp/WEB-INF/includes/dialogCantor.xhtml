@@ -18,7 +18,7 @@
 				<p:commandButton value="Gravar"
 					actionListener="#{cantorBean.gravarViaDialog}"
 					process="@form" update="@form :form:cantores">
-					<f:setPropertyActionListener value="#{cantorBean.entity}" target="#{itemAcervoBean.cantor}"/>
+					<f:setPropertyActionListener value="#{cantorBean.entityTransfer}" target="#{itemAcervoBean.cantor}"/>
 				</p:commandButton>
 			</h:panelGrid>
 			</h:form>

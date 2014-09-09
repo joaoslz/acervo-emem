@@ -18,7 +18,7 @@
 				<p:commandButton value="Gravar"
 					actionListener="#{generoBean.gravarViaDialog}" process="@form"
 					update="@form :form:genero">
-					<f:setPropertyActionListener value="#{generoBean.entity}"
+					<f:setPropertyActionListener value="#{generoBean.entityTransfer}"
 						target="#{itemAcervoBean.entity.genero}" />
 				</p:commandButton>
 			</h:panelGrid>

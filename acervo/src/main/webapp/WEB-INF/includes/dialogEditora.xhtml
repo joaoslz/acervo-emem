@@ -22,7 +22,7 @@
 				<p:commandButton value="Gravar"
 					actionListener="#{editoraBean.gravarViaDialog}"
 					process="@form" update="@form :form:editora">
-					<f:setPropertyActionListener value="#{editoraBean.entity}" target="#{itemAcervoBean.entity.editora}"/>
+					<f:setPropertyActionListener value="#{editoraBean.entityTransfer}" target="#{itemAcervoBean.entity.editora}"/>
 				</p:commandButton>
 			</h:panelGrid>
 		</h:form>
