@@ -31,7 +31,7 @@ public abstract class ItemAcervoBean<T extends ItemAcervo> implements Serializab
 	private static final long serialVersionUID = 490085903681173331L;
 	
 	@Inject
-	protected Logger logger;
+	protected transient Logger logger;
 	@Inject
 	protected FacesMessages facesMsg;
 	

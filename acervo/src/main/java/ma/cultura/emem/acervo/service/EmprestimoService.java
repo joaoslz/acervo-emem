@@ -21,7 +21,7 @@ public class EmprestimoService implements Serializable {
 	private static final long serialVersionUID = 5113390920723403596L;
 	
 	@Inject
-	private Logger logger;
+	private transient Logger logger;
 	
 	@Inject
 	private CRUDRepository crudRepository;

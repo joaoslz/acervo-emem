@@ -4,8 +4,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-    xmlns:stella="http://stella.caelum.com.br/faces2"> 
+	xmlns:p="http://primefaces.org/ui" > 
 
 <ui:composition template="/WEB-INF/template/_template.xhtml">
 
@@ -29,7 +28,6 @@
 							<p:message for="cpf"/>
 							<p:inputMask id="cpf" value="#{usuarioBean.usuario.cpf}" mask="999.999.999-99" 
 							validator="#{usuarioBean.validarCPFDuplicado}" >
-								<stella:validateCPF formatted="true" />
 							</p:inputMask>
 						</p:column>
 						<p:column></p:column>
@@ -41,7 +39,6 @@
 						<p:column>
 							<p:message for="email"/>
 							<p:inputText id="email" value="#{usuarioBean.usuario.email}" validatorMessage="Email Inválido!">
-								 <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
 							</p:inputText>
 						</p:column>
 						<p:column>

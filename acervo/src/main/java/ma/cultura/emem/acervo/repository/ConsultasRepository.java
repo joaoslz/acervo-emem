@@ -21,7 +21,7 @@ public class ConsultasRepository<T> implements Serializable {
 	private static final long serialVersionUID = 3070442360970860184L;
 	
 	private EntityManager em;
-	private Logger logger;
+	private transient Logger logger;
 	private String entityName;
 	private Class<T> classe;
 	

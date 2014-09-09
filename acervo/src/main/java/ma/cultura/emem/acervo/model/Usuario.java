@@ -4,16 +4,19 @@ import javax.persistence.Entity;
 
 import ma.cultura.emem.acervo.model.auxiliar.AuxiliarEntity;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.br.CPF;
+
 @Entity
 public class Usuario extends AuxiliarEntity {
 	
 	private static final long serialVersionUID = 879436850825266203L;
 	
 	// @Column(unique = true)
-	// @CPF(message="CPF inválido!")
+	 @CPF(message="CPF inválido!")
 	private String cpf;
 	// @Column(unique = true)
-	// @Email(message="Email inválido!")
+	 @Email(message="Email inválido!")
 	private String email;
 	private String telefone;
 	

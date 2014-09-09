@@ -24,7 +24,7 @@ public class EmprestimoBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private Logger logger;
+	private transient Logger logger;
 	@Inject
 	private FacesMessages facesMsg;
 	

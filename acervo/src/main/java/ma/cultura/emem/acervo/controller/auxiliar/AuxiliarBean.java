@@ -24,7 +24,7 @@ public abstract class AuxiliarBean<T extends AuxiliarEntity> implements Serializ
 	private static final long serialVersionUID = 3847398251913840437L;
 	
 	@Inject
-	protected Logger logger;
+	protected transient Logger logger;
 	@Inject
 	protected FacesMessages facesMsg;
 	

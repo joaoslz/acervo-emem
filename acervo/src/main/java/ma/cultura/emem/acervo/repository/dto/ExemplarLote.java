@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 
 public class ExemplarLote implements Serializable {
 	private static final long serialVersionUID = 1583124054830275018L;
-	private final Logger logger = Logger.getLogger(getClass());
+	private final transient Logger logger = Logger.getLogger(getClass());
 	private int quantidade = 0;// Default 1
 	private boolean ehDoacao;
 	// FIXME Usar apenas o Calendar #1

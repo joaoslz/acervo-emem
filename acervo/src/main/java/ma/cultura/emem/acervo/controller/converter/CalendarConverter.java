@@ -21,7 +21,7 @@ import org.primefaces.component.calendar.Calendar;
 public class CalendarConverter implements Converter {
 	
 	@Inject
-	private Logger logger;
+	private transient Logger logger;
 	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {

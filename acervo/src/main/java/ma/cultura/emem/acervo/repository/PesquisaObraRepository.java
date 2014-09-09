@@ -25,7 +25,7 @@ public class PesquisaObraRepository implements Serializable {
 	@Inject
 	private EntityManager em;
 	@Inject
-	private Logger logger;
+	private transient Logger logger;
 	
 	public List<Obra> filtrarObras(ObraFilter filtro) {
 		Session session = this.em.unwrap(Session.class);

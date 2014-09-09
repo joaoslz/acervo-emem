@@ -16,7 +16,7 @@ public class ExemplarRepository implements Serializable {
 	private static final long serialVersionUID = 5208469530887373682L;
 	
 	@Inject
-	private Logger logger;
+	private transient Logger logger;
 	@Inject
 	private EntityManager em;
 	

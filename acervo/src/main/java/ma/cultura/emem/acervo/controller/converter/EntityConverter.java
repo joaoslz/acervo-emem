@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 public class EntityConverter implements Converter {
 	
 	@Inject
-	private Logger logger;
+	private transient Logger logger;
 	
 	public Object getAsObject(FacesContext ctx, UIComponent component, String value) {
 		return component.getAttributes().get(value);

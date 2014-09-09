@@ -23,7 +23,7 @@ public class FasciculoLazyDataModel extends LazyDataModel<Fasciculo> {
 	private static final long serialVersionUID = -8766651202218907745L;
 	
 	@Inject
-	private Logger logger;
+	private transient Logger logger;
 	// FIXME Não consegui injetar o service.
 	@Inject
 	private ConsultasRepository<Fasciculo> service;

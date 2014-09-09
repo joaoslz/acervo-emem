@@ -13,7 +13,7 @@ public class CRUDRepository implements Serializable {
 	private static final long serialVersionUID = -4361432740747336731L;
 	
 	@Inject
-	private Logger logger;
+	private transient Logger logger;
 	@Inject
 	private EntityManager em;
 	

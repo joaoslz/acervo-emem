@@ -15,7 +15,7 @@ public class RootEntityLazyDataModel<T extends RootEntity> extends LazyDataModel
 	
 	private static final long serialVersionUID = 1764206779658823028L;
 	
-	private Logger logger = Logger.getLogger(getClass());
+	private transient Logger logger = Logger.getLogger(getClass());
 	private ConsultasService<T> service;
 	
 	public RootEntityLazyDataModel(ConsultasService<T> service) {
