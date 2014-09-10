@@ -1,6 +1,5 @@
 package ma.cultura.emem.acervo.model;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -19,7 +18,7 @@ public class Exemplar extends RootEntity {
 	
 	// @Past(message="A data de aquisição deve ser anterior a data atual!")
 	@Temporal(TemporalType.DATE)
-	private Calendar dataAquisicao;
+	private Date dataAquisicao;
 	
 	@Column(columnDefinition = "text")
 	private String observacao;
@@ -43,22 +42,14 @@ public class Exemplar extends RootEntity {
 		this.observacao = observacao;
 	}
 	
-	public Calendar getDataAquisicao() {
+	public Date getDataAquisicao() {
 		return dataAquisicao;
 	}
 	
-	public void setDataAquisicao(Calendar dataAquisicao) {
+	public void setDataAquisicao(Date dataAquisicao) {
 		this.dataAquisicao = dataAquisicao;
 	}
-	
-	// FIXME Usar apenas o Calendar #1
-	public void setDataAquisicao(Date d) {
-		if (d != null) {
-			dataAquisicao = Calendar.getInstance();
-			dataAquisicao.setTime(d);
-		}
-	}
-	
+		
 	public ItemAcervo getItemAcervo() {
 		return itemAcervo;
 	}

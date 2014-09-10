@@ -15,7 +15,6 @@ public class ExemplarLote implements Serializable {
 	private final transient Logger logger = Logger.getLogger(getClass());
 	private int quantidade = 0;// Default 1
 	private boolean ehDoacao;
-	// FIXME Usar apenas o Calendar #1
 	private Date dataAquisicao;
 	
 	public ExemplarLote() {
