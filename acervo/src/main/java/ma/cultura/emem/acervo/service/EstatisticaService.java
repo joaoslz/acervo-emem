@@ -8,20 +8,20 @@ import ma.cultura.emem.acervo.model.CD;
 import ma.cultura.emem.acervo.model.Fasciculo;
 import ma.cultura.emem.acervo.model.Obra;
 import ma.cultura.emem.acervo.model.Partitura;
-import ma.cultura.emem.acervo.repository.ConsultasRepository;
+import ma.cultura.emem.acervo.repository.Consultas;
 
 public class EstatisticaService implements Serializable {
 	
 	private static final long serialVersionUID = -2300198285854739813L;
 	
 	@Inject
-	private ConsultasRepository<Obra> crudObra;
+	private Consultas<Obra> crudObra;
 	@Inject
-	private ConsultasRepository<Partitura> crudPartitura;
+	private Consultas<Partitura> crudPartitura;
 	@Inject
-	private ConsultasRepository<Fasciculo> crudFasciculo;
+	private Consultas<Fasciculo> crudFasciculo;
 	@Inject
-	private ConsultasRepository<CD> crudCD;
+	private Consultas<CD> crudCD;
 	
 	public int countAllObras() {
 		return crudObra.countAll();

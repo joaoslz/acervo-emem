@@ -11,7 +11,7 @@ import javax.inject.Inject;
 
 import ma.cultura.emem.acervo.controller.datamodel.RootEntityLazyDataModel;
 import ma.cultura.emem.acervo.model.auxiliar.AuxiliarEntity;
-import ma.cultura.emem.acervo.service.CRUDService;
+import ma.cultura.emem.acervo.service.InsercoesService;
 import ma.cultura.emem.acervo.service.ConsultasService;
 import ma.cultura.emem.acervo.util.jsf.FacesMessages;
 import ma.cultura.emem.acervo.util.jsf.FacesUtil;
@@ -29,7 +29,7 @@ public abstract class AuxiliarBean<T extends AuxiliarEntity> implements Serializ
 	protected FacesMessages facesMsg;
 	
 	@Inject
-	protected CRUDService crudService;
+	protected InsercoesService crudService;
 	@Inject
 	protected ConsultasService<T> consultasService;
 	

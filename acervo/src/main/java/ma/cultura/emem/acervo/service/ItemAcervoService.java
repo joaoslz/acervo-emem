@@ -21,8 +21,8 @@ import ma.cultura.emem.acervo.model.auxiliar.Local;
 import ma.cultura.emem.acervo.model.auxiliar.Midia;
 import ma.cultura.emem.acervo.model.auxiliar.Periodico;
 import ma.cultura.emem.acervo.model.auxiliar.TipoObra;
-import ma.cultura.emem.acervo.repository.CRUDRepository;
-import ma.cultura.emem.acervo.repository.ConsultasRepository;
+import ma.cultura.emem.acervo.repository.Insercoes;
+import ma.cultura.emem.acervo.repository.Consultas;
 import ma.cultura.emem.acervo.repository.dto.ExemplarLote;
 import ma.cultura.emem.acervo.util.jpa.Transactional;
 
@@ -36,49 +36,49 @@ public class ItemAcervoService implements Serializable {
 	private transient Logger logger;
 	
 	@Inject
-	private CRUDRepository crudRepository;
+	private Insercoes crudRepository;
 	@Inject
-	private ConsultasRepository<Exemplar> exemplarRepository;
+	private Consultas<Exemplar> exemplarRepository;
 	@Inject
-	private ConsultasRepository<ItemAcervo> itemAcervoRepository;
+	private Consultas<ItemAcervo> itemAcervoRepository;
 	
 	// ItemAcervo
 	@Inject
-	private ConsultasRepository<Editora> editoraRepository;
+	private Consultas<Editora> editoraRepository;
 	@Inject
-	private ConsultasRepository<Assunto> assuntoRepository;
+	private Consultas<Assunto> assuntoRepository;
 	@Inject
-	private ConsultasRepository<Local> localRepository;
+	private Consultas<Local> localRepository;
 	
 	// Obra
 	@Inject
-	private ConsultasRepository<Autor> autorRepository;
+	private Consultas<Autor> autorRepository;
 	@Inject
-	private ConsultasRepository<Idioma> crudIdioma;
+	private Consultas<Idioma> crudIdioma;
 	@Inject
-	private ConsultasRepository<TipoObra> crudTipoObra;
+	private Consultas<TipoObra> crudTipoObra;
 	
 	// Partitura
 	@Inject
-	private ConsultasRepository<Genero> generoRepository;
+	private Consultas<Genero> generoRepository;
 	@Inject
-	private ConsultasRepository<Arranjador> arranjadorRepository;
+	private Consultas<Arranjador> arranjadorRepository;
 	@Inject
-	private ConsultasRepository<Instrumento> instrumentoRepository;
+	private Consultas<Instrumento> instrumentoRepository;
 	
 	// CD
 	@Inject
-	private ConsultasRepository<Gravadora> gravadoraRepository;
+	private Consultas<Gravadora> gravadoraRepository;
 	@Inject
-	private ConsultasRepository<Cantor> cantorRepository;
+	private Consultas<Cantor> cantorRepository;
 	@Inject
-	private ConsultasRepository<Compositor> compositorRepository;
+	private Consultas<Compositor> compositorRepository;
 	@Inject
-	private ConsultasRepository<Midia> midiaRepository;
+	private Consultas<Midia> midiaRepository;
 	
 	// Fasciculo
 	@Inject
-	private ConsultasRepository<Periodico> periodicoRepository;
+	private Consultas<Periodico> periodicoRepository;
 	
 	@Transactional
 	public void cadastrarItemAcervo(ItemAcervo itemAcervo, ExemplarLote lote) {

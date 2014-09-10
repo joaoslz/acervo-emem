@@ -6,12 +6,12 @@ import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.persistence.EntityManager;
 
-public class ConsultasRepositoryProducer<T> {
+public class ConsultasProducer<T> {
 	
 	@Produces
-	public ConsultasRepository<T> create(InjectionPoint ip, EntityManager em) {
+	public Consultas<T> create(InjectionPoint ip, EntityManager em) {
 		ParameterizedType type = (ParameterizedType) ip.getType();
 		Class<T> classe = (Class<T>) type.getActualTypeArguments()[0];
-		return new ConsultasRepository<T>(classe, em);
+		return new Consultas<T>(classe, em);
 	}
 }

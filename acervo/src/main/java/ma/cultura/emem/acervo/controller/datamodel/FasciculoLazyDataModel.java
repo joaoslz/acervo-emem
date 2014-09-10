@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import ma.cultura.emem.acervo.model.Fasciculo;
 import ma.cultura.emem.acervo.model.auxiliar.Periodico;
-import ma.cultura.emem.acervo.repository.ConsultasRepository;
+import ma.cultura.emem.acervo.repository.Consultas;
 import ma.cultura.emem.acervo.repository.dto.PaginatedResult;
 
 import org.apache.log4j.Logger;
@@ -26,7 +26,7 @@ public class FasciculoLazyDataModel extends LazyDataModel<Fasciculo> {
 	private transient Logger logger;
 	// FIXME Não consegui injetar o service.
 	@Inject
-	private ConsultasRepository<Fasciculo> service;
+	private Consultas<Fasciculo> service;
 	
 	private Periodico periodico;
 	

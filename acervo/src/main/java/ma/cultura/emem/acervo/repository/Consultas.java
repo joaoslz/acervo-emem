@@ -16,7 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
-public class ConsultasRepository<T> implements Serializable {
+public class Consultas<T> implements Serializable {
 	
 	private static final long serialVersionUID = 3070442360970860184L;
 	
@@ -25,7 +25,7 @@ public class ConsultasRepository<T> implements Serializable {
 	private String entityName;
 	private Class<T> classe;
 	
-	public ConsultasRepository(Class<T> classe, EntityManager em) {
+	public Consultas(Class<T> classe, EntityManager em) {
 		logger = Logger.getLogger(getClass());
 		entityName = classe.getSimpleName();
 		this.classe = classe;

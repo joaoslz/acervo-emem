@@ -11,7 +11,7 @@ import ma.cultura.emem.acervo.model.ItemAcervo;
 
 import org.apache.log4j.Logger;
 
-public class ExemplarRepository implements Serializable {
+public class Exemplares implements Serializable {
 	
 	private static final long serialVersionUID = 5208469530887373682L;
 	

@@ -9,9 +9,9 @@ import javax.inject.Inject;
 import ma.cultura.emem.acervo.model.Emprestimo;
 import ma.cultura.emem.acervo.model.Exemplar;
 import ma.cultura.emem.acervo.model.Usuario;
-import ma.cultura.emem.acervo.repository.CRUDRepository;
-import ma.cultura.emem.acervo.repository.ConsultasRepository;
-import ma.cultura.emem.acervo.repository.EmprestimoRepository;
+import ma.cultura.emem.acervo.repository.Insercoes;
+import ma.cultura.emem.acervo.repository.Consultas;
+import ma.cultura.emem.acervo.repository.Emprestimos;
 import ma.cultura.emem.acervo.util.jpa.Transactional;
 
 import org.apache.log4j.Logger;
@@ -24,15 +24,15 @@ public class EmprestimoService implements Serializable {
 	private transient Logger logger;
 	
 	@Inject
-	private CRUDRepository crudRepository;
+	private Insercoes crudRepository;
 	@Inject
-	private EmprestimoRepository emprestimoRepository;
+	private Emprestimos emprestimos;
 	@Inject
-	private ConsultasRepository<Emprestimo> consultasEmprestimoRepository;
+	private Consultas<Emprestimo> consultasEmprestimoRepository;
 	@Inject
-	private ConsultasRepository<Exemplar> consultasExemplarRepository;
+	private Consultas<Exemplar> consultasExemplarRepository;
 	@Inject
-	private ConsultasRepository<Usuario> consultasUsuarioRepository;
+	private Consultas<Usuario> consultasUsuarioRepository;
 	
 	@Transactional
 	public void efetuarEmprestimo(Emprestimo emprestimo) {
@@ -49,7 +49,7 @@ public class EmprestimoService implements Serializable {
 	
 	@Transactional
 	public void efetuarDevolucao(Exemplar exemplar) {
-		Emprestimo e = emprestimoRepository.findUltimoEmprestimoEmAberto(exemplar);
+		Emprestimo e = emprestimos.findUltimoEmprestimoEmAberto(exemplar);
 		if (e != null) {
 			e.setDataDevolucao(Calendar.getInstance());
 			// seta direto no banco, pq o EneityManager ainda está aberto.
@@ -74,6 +74,6 @@ public class EmprestimoService implements Serializable {
 	}
 	
 	public Emprestimo findUltimoEmprestimoEmAberto(Exemplar ex) {
-		return emprestimoRepository.findUltimoEmprestimoEmAberto(ex);
+		return emprestimos.findUltimoEmprestimoEmAberto(ex);
 	}
 }

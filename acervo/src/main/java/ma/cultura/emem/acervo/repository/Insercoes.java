@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 
 import org.apache.log4j.Logger;
 
-public class CRUDRepository implements Serializable {
+public class Insercoes implements Serializable {
 	
 	private static final long serialVersionUID = -4361432740747336731L;
 	

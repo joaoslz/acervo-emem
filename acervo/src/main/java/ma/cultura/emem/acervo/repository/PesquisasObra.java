@@ -18,7 +18,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-public class PesquisaObraRepository implements Serializable {
+public class PesquisasObra implements Serializable {
 	
 	private static final long serialVersionUID = -451616595796258543L;
 	

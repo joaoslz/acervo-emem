@@ -10,7 +10,7 @@ import javax.persistence.TypedQuery;
 import ma.cultura.emem.acervo.model.Emprestimo;
 import ma.cultura.emem.acervo.model.Exemplar;
 
-public class EmprestimoRepository implements Serializable {
+public class Emprestimos implements Serializable {
 	
 	private static final long serialVersionUID = 904899603185385875L;
 	

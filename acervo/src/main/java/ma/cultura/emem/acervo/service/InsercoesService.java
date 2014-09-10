@@ -5,15 +5,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ma.cultura.emem.acervo.repository.CRUDRepository;
+import ma.cultura.emem.acervo.repository.Insercoes;
 import ma.cultura.emem.acervo.util.jpa.Transactional;
 
-public class CRUDService implements Serializable {
+public class InsercoesService implements Serializable {
 	
 	private static final long serialVersionUID = 8820257464842703051L;
 	
 	@Inject
-	private CRUDRepository repository;
+	private Insercoes repository;
 	
 	@Transactional
 	public void adicionar(Object t) {

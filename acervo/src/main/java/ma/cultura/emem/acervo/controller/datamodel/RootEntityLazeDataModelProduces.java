@@ -7,7 +7,7 @@ import javax.enterprise.inject.spi.InjectionPoint;
 import javax.persistence.EntityManager;
 
 import ma.cultura.emem.acervo.model.RootEntity;
-import ma.cultura.emem.acervo.repository.ConsultasRepository;
+import ma.cultura.emem.acervo.repository.Consultas;
 import ma.cultura.emem.acervo.service.ConsultasService;
 
 public class RootEntityLazeDataModelProduces<T extends RootEntity> {
@@ -16,7 +16,7 @@ public class RootEntityLazeDataModelProduces<T extends RootEntity> {
 	public RootEntityLazyDataModel<T> create(InjectionPoint ip, EntityManager em) {
 		ParameterizedType type = (ParameterizedType) ip.getType();
 		Class<T> classe = (Class<T>) type.getActualTypeArguments()[0];
-		ConsultasRepository<T> repository = new ConsultasRepository<>(classe, em);
+		Consultas<T> repository = new Consultas<>(classe, em);
 		ConsultasService<T> service = new ConsultasService<>(repository);
 		return new RootEntityLazyDataModel<>(service);
 	}

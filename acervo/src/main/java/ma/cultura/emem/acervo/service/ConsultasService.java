@@ -4,16 +4,16 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import ma.cultura.emem.acervo.repository.ConsultasRepository;
+import ma.cultura.emem.acervo.repository.Consultas;
 import ma.cultura.emem.acervo.repository.dto.PaginatedResult;
 
 public class ConsultasService<T> implements Serializable {
 	
 	private static final long serialVersionUID = 8820257464842703051L;
 	
-	private ConsultasRepository<T> repository;
+	private Consultas<T> repository;
 	
-	public ConsultasService(ConsultasRepository<T> repository) {
+	public ConsultasService(Consultas<T> repository) {
 		this.repository = repository;
 	}
 	

@@ -25,6 +25,7 @@ public class CalendarConverter implements Converter {
 	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
+		logger.debug("Convertendo data: " + value);
 		if (value != null && !value.isEmpty()) {
 			java.util.Calendar cal = null;
 			try {
