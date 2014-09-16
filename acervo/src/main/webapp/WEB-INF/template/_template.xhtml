@@ -25,7 +25,6 @@
 			</div>
 		</div>
 		<h:form id="formMenu">
-			<p:messages id="messages" autoUpdate="true" closable="true" showDetail="false" showSummary="true" globalOnly="true" showIcon="true" />
 			<p:menubar autoDisplay="false">
 				<p:menuitem value="Home" icon="ui-icon-home" outcome="/index"/>
 				<p:submenu label="Cadastros">
@@ -60,12 +59,16 @@
 				</p:submenu>
 				<p:menuitem value="Pesquisa" icon="ui-icon-search" outcome="/pesquisaObras" />
 				<p:menuitem value="Sair" icon="ui-icon-circle-close" />
-				
 			</p:menubar>
 		</h:form>
 
 		<div id="conteudo">
-			<h:form><div style="height: 20px;margin: 0;text-align: right;"><ui:include src="/WEB-INF/includes/ajaxStatusPanel.xhtml" /></div></h:form>
+			<h:form>
+				<p:messages id="messages" autoUpdate="true" closable="true" showDetail="false" showSummary="true" globalOnly="true" showIcon="true" />
+			</h:form>
+			<h:form>
+				<div style="height: 20px;margin: 0;text-align: right;"><ui:include src="/WEB-INF/includes/ajaxStatusPanel.xhtml" /></div>
+			</h:form>
 			<ui:insert name="conteudo"></ui:insert>
 		</div>
 

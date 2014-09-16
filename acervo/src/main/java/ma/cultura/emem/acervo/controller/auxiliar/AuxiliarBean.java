@@ -67,6 +67,7 @@ public abstract class AuxiliarBean<T extends AuxiliarEntity> implements Serializ
 	public void gravar() {
 		logger.debug("Gravando entity: " + entityName);
 		crudService.atualizar(entity);
+		facesMsg.infoGlobal("Informações gravadas com sucesso para o Item:  " + entity);
 		entity = newEntityInstance();
 	}
 	
