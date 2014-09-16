@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+
+	<!-- DIALOG EXEMPLARES...................................................................................... -->
+
+	<p:dialog header="Cadastro de Exemplares" widgetVar="dlgExemplares"
+		resizable="false" closable="true" modal="true" width="700px">
+		<h:form id="formExemplares">
+
+			<b><h:outputText value="Título: " /></b>
+			<h:outputText value="#{itemAcervoBean.entity.titulo}" />
+			<br/><br/>
+
+			<p:messages autoUpdate="true" globalOnly="true" style="color:#0f0;" />
+			<p:dataTable id="tabelaExemplares" value="#{itemAcervoBean.listaExemplares}"
+				var="exemplar" emptyMessage="Nenhum Exemplar cadastrado"
+				editable="false">
+				<p:column headerText="ID " width="20">
+					<h:outputText value="#{exemplar.id}" />
+				</p:column>
+				<p:column headerText="É Doação">
+					<h:outputText rendered="#{exemplar.ehDoacao}" value="Sim" />
+					<h:outputText rendered="#{!exemplar.ehDoacao}" value="Não" />
+				</p:column>
+				<p:column headerText="Data de Aquisição">
+					<h:outputText value="#{exemplar.dataAquisicao}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Observação" >
+					<h:outputText value="#{exemplar.observacao}" />
+				</p:column>
+				<p:column headerText="Disponível?" >
+					<h:outputText value=  "Sim" style="color:#33FF00" rendered="#{exemplar.disponivel}" />
+					<h:outputText value=  "Não" style="color:#FF3300" rendered="#{!exemplar.disponivel}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</p:dialog>
+
+	<!-- DIALOG DESEJA CADASTRAR EXEMPLARES...................................................................... -->
+	<p:dialog header="Cadastro de Exemplar(es)"
+		widgetVar="dlgConfirmaExemplares" closable="false" modal="true"
+		resizable="false">
+		<h:form>
+			<h:panelGrid columns="3">
+				<p:outputLabel value="Deseja cadastrar algum exemplar? " />
+
+				<p:commandButton value="Sim"
+					oncomplete="PF('dlgConfirmaExemplares').hide();PF('dlgExemplares').show()"
+					process="@form"
+					update=":formExemplares :formExemplares:tabelaExemplares" />
+				<p:commandButton value="Não"
+					oncomplete="PF('dlgConfirmaExemplares').hide();"
+					action="#{itemAcervoBean.limparForm}" process="@form"
+					update=":form" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+
+</ui:composition>
