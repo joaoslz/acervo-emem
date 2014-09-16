@@ -181,14 +181,14 @@
 							var="musica" rowIndexVar="index">
 							<f:facet name="header">
 								<p:commandButton id="showAddMusicaButton" icon="ui-icon-plus"
-									title="Adicionar Música" value="Adicionar Música"
+									title="Adicionar Música" value="Adicionar Música" immediate="true"
 									onclick="PF('dlgMusica').show()" />
 							</f:facet>
 							<p:column>
 								<h:outputText value="#{musica} " style="display:inline-block" />
 							</p:column>
 							<p:column width="40">
-								<p:commandButton icon="ui-icon-trash"
+								<p:commandButton icon="ui-icon-trash" immediate="true"
 									action="#{cdBean.removerMusica(index)}" update=":form:musicas"
 									title="Remover Música" />
 							</p:column>
@@ -361,7 +361,7 @@
 						<p:commandButton value="Adicionar" action="#{cdBean.adicionarMusica}"
 										process="@form" update="@form :form:musicas" />
 						<p:separator />
-						<p:commandButton value="Cancelar" actionListener="#{cdBean.limparForm}" update="@form" oncomplete="PF('dlgMusica').hide()" immediate="true" />
+						<p:commandButton value="Cancelar" update="@form" oncomplete="PF('dlgMusica').hide()" immediate="true" />
 					</f:facet>
 				</p:toolbar>
 			</h:form>
