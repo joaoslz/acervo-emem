@@ -120,17 +120,19 @@
 		</ui:include>
 		<ui:include src="/WEB-INF/includes/dialogAutor.xhtml">
 			<ui:param name="itemAcervoBean" value="#{fasciculoBean}" />
+			<ui:param name="camposToUpdate" value=":formArtigo:autores" />
 		</ui:include>
 
-			<h:form id="form">
-		<p:dialog header="Artigos" widgetVar="dlgAddArtigo">
-				<p:panelGrid>
+		<p:dialog header="Artigos" widgetVar="dlgArtigo">
+	<h:form id="formArtigo">
+				<p:panelGrid id="pgArtigo">
 					<p:row>
 						<p:column>
 							<p:outputLabel value="Título:" for="tituloArtigo" />
 						</p:column>
 						<p:column>
-							<p:inputText id="tituloArtigo"
+							<p:message for="tituloArtigo" />
+							<p:inputText id="tituloArtigo" required="true" requiredMessage="Campo Obrigatório"
 								value="#{fasciculoBean.artigoAdd.titulo}" tabindex="1" />
 						</p:column>
 						<p:column>
@@ -171,28 +173,26 @@
 						</p:column>
 						<p:column>
 							<p:commandButton id="showAddAutorButton" icon="ui-icon-plus"
-								process="form:autores" title="Adicionar Autor" immediate="true"
+								process="formArtigo:autores" title="Adicionar Autor" immediate="true"
 								onclick="PF('dlgAutor').show()" tabindex="6" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-				<p:toolbar
-					style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
+				<p:toolbar style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
 					<f:facet name="right">
-						<p:commandButton value="Adicionar Artigo"
+						<p:commandButton value="Adicionar Artigo" 
 							action="#{fasciculoBean.incluirArtigo}"
-							update="@form :form:tabelaArtigos" tabindex="7" />
+							update="pgArtigo :form:pgRevista" tabindex="7"  />
 					</f:facet>
 				</p:toolbar>
 				<!-- Solucioina o bug de dialog que aparece ao pressionar enter -->
 <!-- 				<p:commandButton id="btnDefault" style="display:none" /> -->
 <!-- 				<p:defaultCommand target="btnDefault" /> -->
+	</h:form>
 		</p:dialog>
-
-		<p:dialog widgetVar="dlgNovaRevista" closable="false"
-			header="Cadastro de Revistas">
-				<h:message for="titulo" />
-				<p:panelGrid>
+		<p:dialog widgetVar="dlgNovaRevista" closable="false" header="Cadastro de Revistas">
+	<h:form id="form">
+				<p:panelGrid id="pgRevista">
 					<p:row>
 						<p:column>
 							<p:outputLabel value="Titulo:" for="titulo" />
@@ -276,7 +276,7 @@
 								id="tabelaArtigos" style="width:650px" rowIndexVar="index">
 								<f:facet name="header">
 									<p:commandButton value="Adicionar Artigo"
-										onclick="PF('dlgAddArtigo').show()" immediate="true" />
+										onclick="PF('dlgArtigo').show()" immediate="true" />
 								</f:facet>
 								<p:column headerText="Título">
 									<h:outputText value="#{artigo.titulo}" />
@@ -298,7 +298,7 @@
 					</p:row>
 				</p:panelGrid>
 				<br />
-				<p:panelGrid rendered="#{empty fasciculoBean.fasciculo.id}">
+				<p:panelGrid rendered="#{empty fasciculoBean.fasciculo.id}" id="pgExemplares">
 					<f:facet name="header"> Dados do Exemplar</f:facet>
 					<p:row>
 						<p:column>
@@ -327,24 +327,21 @@
 					</p:row>
 				</p:panelGrid>
 				<!-- ....................................BOTÕES......................................................... -->
-				<p:toolbar
-					style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
+				<p:toolbar style="margin-top: 10px; margin-bottom: 10px; width: 98%;">
 					<f:facet name="right">
 						<p:commandButton value="#{fasciculoBean.stringBotaoGravar}"
-							onsuccess="PF('dlgNovaRevista').hide()"
 							action="#{fasciculoBean.gravar}" process="@form"
 							update="@form :formTabela:tabela" />
 						<p:separator />
 						<p:commandButton value="Cancelar" update="@form"
-							action="#{fasciculoBean.limparForm}" immediate="true"
-							oncomplete="PF('dlgNovaRevista').hide()" />
+							action="#{fasciculoBean.cancelar}" immediate="true" />
 					</f:facet>
 				</p:toolbar>
 				<!-- Solucioina o bug de dialog que aparece ao pressionar enter -->
 				<p:commandButton id="btnDefault" style="display:none" />
 				<p:defaultCommand target="btnDefault" />
-		</p:dialog>
 			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

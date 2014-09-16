@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 public class Consultas<T> implements Serializable {
@@ -91,7 +92,7 @@ public class Consultas<T> implements Serializable {
 	
 	public PaginatedResult<T> findByPropertyAndPaginate(String property, Object value, int firstResult, int maxResultsByPage) {
 		Criteria criteria = em.unwrap(Session.class).createCriteria(classe);
-		criteria = criteria.add(Restrictions.eq(property, value));
+		criteria = criteria.add(Restrictions.eq(property, value)).addOrder(Order.desc("id"));
 		int count = criteria.list().size();
 		criteria.setFirstResult(firstResult);
 		criteria.setMaxResults(maxResultsByPage);

@@ -12,6 +12,7 @@ import ma.cultura.emem.acervo.model.Fasciculo;
 import ma.cultura.emem.acervo.model.auxiliar.Autor;
 import ma.cultura.emem.acervo.model.auxiliar.Periodico;
 import ma.cultura.emem.acervo.model.auxiliar.enums.MesEnum;
+import ma.cultura.emem.acervo.util.jsf.FacesUtil;
 
 import org.primefaces.context.RequestContext;
 
@@ -46,9 +47,10 @@ public class FasciculoBean extends ItemAcervoBean<Fasciculo> {
 	}
 	
 	public void incluirArtigo() {
+		logger.debug("incluindo artigo...");
 		getFasciculo().addArtigo(artigoAdd);
 		limparFormArtigo();
-		RequestContext.getCurrentInstance().execute("PF('dlgAddArtigo').hide()");
+		FacesUtil.hideDialog("dlgArtigo");
 	}
 	
 	public void removerArtigo(int index) {
@@ -99,5 +101,18 @@ public class FasciculoBean extends ItemAcervoBean<Fasciculo> {
 	
 	public FasciculoLazyDataModel getFasciculoLazyDataModel() {
 		return fasciculoLazyDataModel;
+	}
+
+	@Override
+	public void gravar() {
+		super.gravar();
+		limparFormArtigo();
+		FacesUtil.hideDialog("dlgNovaRevista");
+	}
+	
+	public void cancelar(){
+		limparFormArtigo();
+		limparForm();
+		FacesUtil.hideDialog("dlgNovaRevista");
 	}
 }

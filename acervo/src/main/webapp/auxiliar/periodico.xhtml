@@ -20,7 +20,8 @@
 							<p:outputLabel value="Nome:" for="nome" />
 						</p:column>
 						<p:column>
-							<p:inputText id="nome" value="#{periodicoBean.periodico.nome}" size="45"/>
+							<p:message for="nome"/>
+							<p:inputText id="nome" value="#{periodicoBean.periodico.nome}" size="45" required="true" requiredMessage="Campo Obrigatório!"/>
 						</p:column>
 						<p:column>
 						</p:column>

@@ -6,7 +6,16 @@
 .hide-column-names table thead,.hide-column-names table thead tr {
 	display: none;
 }
-
+.ui-messages-info, .ui-message-info {
+color: #0097E2;
+background-color: #00FC8D;
+border-color: #bce8f1;
+}
+.ui-messages-warn, .ui-message-warn {
+color: #C57D00;
+background-color: #FFE660;
+border-color: #fbeed5;
+}
 .ui-messages-error {
 	margin: 0;
 /* 	padding: 7px; */
