@@ -30,7 +30,7 @@ public class UsuarioBean extends AuxiliarBean<Usuario> {
 	}
 	
 	public void validarCPFDuplicado(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-		if (value != null) {
+		if (value != null && !value.toString().isEmpty()) {
 			int size = consultasService.findByProperty("cpf", value.toString()).size();
 			if (size > 0) {
 				String msg = "Já existe cadastrado para o CPF " + value + "!";

@@ -30,4 +30,8 @@ public class EntityManagerProducer {
 	public void close(@Disposes EntityManager em) {
 		em.close();
 	}
+	
+	public void closeFactory(){
+		emf.close();
+	}
 }
