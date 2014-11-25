@@ -55,7 +55,7 @@ article,aside,figure,footer,header,hgroup,nav,section {
 
 body {
 	font: normal .85em arial, sans-serif;
-	color: #555;
+	color: #555; 
 	margin-left: auto;
 	margin-right: auto;
 	background: #357FB0;
@@ -75,7 +75,7 @@ img {
 
 #conteudo {
 	padding: 10px;
-	background: #000;
+	background: #5a9fcd; 
 }
 
 #logo {

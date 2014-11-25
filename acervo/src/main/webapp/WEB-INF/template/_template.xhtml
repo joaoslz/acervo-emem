@@ -58,6 +58,10 @@
 					<p:menuitem value="Cadastrar Usuários" action="/auxiliar/usuario?faces-redirect=true" />	
 				</p:submenu>
 				<p:menuitem value="Pesquisa" icon="ui-icon-search" outcome="/pesquisaObras" />
+				
+				<p:submenu label="Relatórios">
+				   <p:menuitem value="Etiquetas" icon="ui-icon-print" outcome="/relatorios/relatorioEtiquetasObras" />
+				</p:submenu>
 				<p:menuitem value="Sair" icon="ui-icon-circle-close" />
 			</p:menubar>
 		</h:form>
