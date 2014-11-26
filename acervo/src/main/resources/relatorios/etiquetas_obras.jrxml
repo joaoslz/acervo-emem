@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="etiquetas_obras" columnCount="2" pageWidth="595" pageHeight="842" columnWidth="277" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="802a7182-25c9-4ddb-84a9-780cce188d19">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_inicial" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_final" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     obra.`classificacao` AS obra_classificacao,
+     obra.`cutter` AS obra_cutter,
+     item_acervo.`ano` AS item_acervo_ano
+FROM
+     `item_acervo` item_acervo INNER JOIN `obra` obra ON item_acervo.`id` = obra.`id`
+     INNER JOIN `exemplar` exemplar ON item_acervo.`id` = exemplar.`itemAcervo_id`
+WHERE
+     exemplar.`id` BETWEEN $P{id_inicial} and $P{id_final}]]>
+	</queryString>
+	<field name="obra_classificacao" class="java.lang.String"/>
+	<field name="obra_cutter" class="java.lang.String"/>
+	<field name="item_acervo_ano" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="97" splitType="Stretch">
+			<staticText>
+				<reportElement x="102" y="24" width="46" height="15" uuid="12c4c260-04b5-4ebb-809d-21336f922a04"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMEM]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="102" y="40" width="100" height="15" uuid="ae3b6e67-b85e-44aa-9cee-4231bb695ad9"/>
+				<textFieldExpression><![CDATA[$F{obra_classificacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="57" width="100" height="15" uuid="f4a0c6c4-99ff-4e40-a600-132d0193f3bf"/>
+				<textFieldExpression><![CDATA[$F{obra_cutter}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="73" width="100" height="15" uuid="e0d41553-d03b-44ae-ba78-48da4b94dab5"/>
+				<textFieldExpression><![CDATA[$F{item_acervo_ano}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
