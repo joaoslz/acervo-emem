@@ -29,22 +29,22 @@ WHERE
 	<detail>
 		<band height="97" splitType="Stretch">
 			<staticText>
-				<reportElement x="102" y="24" width="46" height="15" uuid="12c4c260-04b5-4ebb-809d-21336f922a04"/>
+				<reportElement x="102" y="26" width="46" height="15" uuid="12c4c260-04b5-4ebb-809d-21336f922a04"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[EMEM]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="102" y="40" width="100" height="15" uuid="ae3b6e67-b85e-44aa-9cee-4231bb695ad9"/>
+				<reportElement x="102" y="41" width="100" height="15" uuid="ae3b6e67-b85e-44aa-9cee-4231bb695ad9"/>
 				<textFieldExpression><![CDATA[$F{obra_classificacao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="102" y="57" width="100" height="15" uuid="f4a0c6c4-99ff-4e40-a600-132d0193f3bf"/>
+				<reportElement x="102" y="58" width="100" height="15" uuid="f4a0c6c4-99ff-4e40-a600-132d0193f3bf"/>
 				<textFieldExpression><![CDATA[$F{obra_cutter}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="102" y="73" width="100" height="15" uuid="e0d41553-d03b-44ae-ba78-48da4b94dab5"/>
+				<reportElement x="102" y="74" width="100" height="15" uuid="e0d41553-d03b-44ae-ba78-48da4b94dab5"/>
 				<textFieldExpression><![CDATA[$F{item_acervo_ano}]]></textFieldExpression>
 			</textField>
 		</band>
