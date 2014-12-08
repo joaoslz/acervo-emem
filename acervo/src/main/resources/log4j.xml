@@ -55,7 +55,7 @@
 		<param name="SMTPPassword" value="smtp.log4j" />
 		<param name="From" value="log4j.smtp@gmail.com" />
 		<param name="To" value="thiagonasper@gmail.com" />
-		<param name="Subject" value="Testando Log4j mail appender" />
+		<param name="Subject" value="[Acervo] Logs" />
 		
 	 	<evaluator type="log4net.Core.LevelEvaluator">
 	    	<threshold value="WARN"/>
