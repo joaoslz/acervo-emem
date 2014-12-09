@@ -29,6 +29,7 @@ public class CDBean extends ItemAcervoBean<CD> {
 	
 	private int getProximaFaixa() {
 		int proximaFaixa = 1;
+		logger.debug(getCD().getMusicas().size());
 		for (Musica m : getCD().getMusicas())
 			if (m.getFaixa() >= proximaFaixa)
 				proximaFaixa = m.getFaixa() + 1;
@@ -38,7 +39,6 @@ public class CDBean extends ItemAcervoBean<CD> {
 	public void adicionarMusica() {
 		getCD().addMusica(musicaAdd);
 		musicaAdd = new Musica();
-		musicaAdd.setFaixa(getProximaFaixa());
 		FacesUtil.hideDialog("dlgMusica");
 	}
 	
@@ -52,6 +52,7 @@ public class CDBean extends ItemAcervoBean<CD> {
 	}
 	
 	public Musica getMusicaAdd() {
+		musicaAdd.setFaixa(getProximaFaixa());
 		return musicaAdd;
 	}
 	

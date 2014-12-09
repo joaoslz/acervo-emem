@@ -6,7 +6,7 @@
     version="2.2">
     
 	<application>
-		<message-bundle>ma.cultura.emem.acervo.Messages</message-bundle>
+		<message-bundle>ma.cultura.emem.Messages</message-bundle>
 
 		<locale-config>
 			<default-locale>pt_BR</default-locale>
