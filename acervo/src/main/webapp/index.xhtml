@@ -33,6 +33,30 @@
 								<p:graphicImage library="v_1_0" name="images/inicio/cd.png" />
 							</p:commandLink>
 						</p:panel>
+						
+						<p:panel id="pesquisa" header="Pesquisas" footer="Pesquisa Obras ...">
+							<p:commandLink action="pesquisaObras?faces-redirect=true">
+								<p:graphicImage library="v_1_0" name="images/inicio/pesquisa.jpg" />
+							</p:commandLink>
+						</p:panel>
+						
+						
+						<p:panel id="relatorios" header="Relatórios e Etiquetas" footer="relatórios / etiquetas" >
+							<p:commandLink action="/relatorios/relatorioEtiquetasObras?faces-redirect=true">
+								<p:graphicImage library="v_1_0" name="images/inicio/relatorios.png" />
+							</p:commandLink>
+						</p:panel>
+						<p:panel id="cadastrosAuxiliares" header="Termos Controlados" footer="Cadastros auxiliares">
+							<p:commandLink action="#">
+								<p:graphicImage library="v_1_0" name="images/inicio/cadastrosAuxiliares.png" />
+							</p:commandLink>
+						</p:panel>
+						<p:panel id="usuarios" header="Usuarios" footer="Pefis e usuários do sistema">
+							<p:commandLink action="#">
+								<p:graphicImage library="v_1_0" name="images/inicio/usuarios.png" />
+							</p:commandLink>
+						</p:panel>
+												
 					</p:panelGrid>
 				</div>
 			</h:form>

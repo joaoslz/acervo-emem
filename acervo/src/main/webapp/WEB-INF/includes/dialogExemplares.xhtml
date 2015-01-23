@@ -15,89 +15,118 @@
 
 			<b><h:outputText value="Título: " /></b>
 			<h:outputText value="#{itemAcervoBean.entity.titulo}" />
-			<br/><br/>
+			<br />
+			<br />
 			<p:message for="qtd" />
-			<p:panelGrid style="width:100%">
-				<p:row>
-					<p:column><p:outputLabel value="Qtd Exemplares: " /></p:column>
-					<p:column>
-					<p:spinner id="qtd" value="#{itemAcervoBean.exemplaresLote.quantidade}" max="300" min="1" size="3" validatorMessage="Você deve cadastrar no mínimo 1 exemplar!">
-						<f:validateLongRange minimum="1" for="qtd" />
-					</p:spinner>
+
+			<p:fieldset legend="Adicionar exemplares">
+				<p:panelGrid style="width:100%">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Qtd Exemplares: " />
+						</p:column>
+						<p:column>
+							<p:spinner id="qtd"
+								value="#{itemAcervoBean.exemplaresLote.quantidade}" max="300"
+								min="1" size="3"
+								validatorMessage="Você deve cadastrar no mínimo 1 exemplar!">
+								<f:validateLongRange minimum="1" for="qtd" />
+							</p:spinner>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Data de Aquisição: " />
+						</p:column>
+						<p:column>
+							<p:calendar
+								value="#{itemAcervoBean.exemplaresLote.dataAquisicao}"
+								pattern="dd/MM/yyyy" display="inline" navigator="true" size="10" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="É Doaçao? " />
+						</p:column>
+						<p:column>
+							<p:selectBooleanCheckbox
+								value="#{itemAcervoBean.exemplaresLote.ehDoacao}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<p:toolbar style="margin-top: 2px;margin-bottom:10px;">
+					<f:facet name="right">
+						<p:commandButton value="Gravar"
+							action="#{itemAcervoBean.cadastrarExemplares}"
+							update="@form :formExemplares:tabelaExemplares :formTabela:tabela" />
+
+						<p:separator />
+
+						<!--............Ao sair da tela de exemplares é preciso limpar form e a lista de exemplares....-->
+						<p:commandButton value="Sair"
+							action="#{itemAcervoBean.limparForm}" immediate="true"
+							oncomplete="PF('dlgExemplares').hide()"
+							update=":form :formTabela:tabela" />
+
+					</f:facet>
+				</p:toolbar>
+			</p:fieldset>
+
+			<p:fieldset legend="Editar Exemplares">
+
+				<p:messages autoUpdate="true" globalOnly="true" style="color:#0f0;" />
+				<p:dataTable id="tabelaExemplares"
+					value="#{itemAcervoBean.listaExemplares}" var="exemplar"
+					emptyMessage="Nenhum Exemplar cadastrado" editable="true">
+					<p:ajax event="rowEdit" listener="#{itemAcervoBean.editExempar}"
+						update=":formExemplares:tabelaExemplares" />
+
+					<p:column headerText="ID " width="20">
+						<h:outputText value="#{exemplar.id}" />
 					</p:column>
-					<p:column><p:outputLabel value="Data de Aquisição: " /></p:column>
-					<p:column><p:calendar value="#{itemAcervoBean.exemplaresLote.dataAquisicao}" pattern="dd/MM/yyyy" display="inline" navigator="true" size="10"/></p:column>
-					<p:column><p:outputLabel value="É Doaçao? " /></p:column>
-					<p:column><p:selectBooleanCheckbox value="#{itemAcervoBean.exemplaresLote.ehDoacao}" /></p:column>
-				</p:row>
-			</p:panelGrid>
+					<p:column headerText="É Doação">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText rendered="#{exemplar.ehDoacao}" value="Sim" />
+								<h:outputText rendered="#{!exemplar.ehDoacao}" value="Não" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectBooleanCheckbox value="#{exemplar.ehDoacao}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Data de Aquisição">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{exemplar.dataAquisicao}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar value="#{exemplar.dataAquisicao}"
+									pattern="dd/MM/yyyy" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Observação">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{exemplar.observacao}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{exemplar.observacao}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Disponível?">
+						<h:outputText value="Sim" style="color:#33FF00"
+							rendered="#{exemplar.disponivel}" />
+						<h:outputText value="Não" style="color:#FF3300"
+							rendered="#{!exemplar.disponivel}" />
+					</p:column>
+					<p:column headerText="Alterar">
+						<p:rowEditor />
+					</p:column>
+				</p:dataTable>
 
-			<p:toolbar style="margin-top: 2px;margin-bottom:10px;">
-				<f:facet name="right">
-					<p:commandButton value="Gravar"
-						action="#{itemAcervoBean.cadastrarExemplares}"
-						update="@form :formExemplares:tabelaExemplares :formTabela:tabela" />
-						
-					<p:separator />
-						
-					<!--............Ao sair da tela de exemplares é preciso limpar form e a lista de exemplares....-->
-					<p:commandButton value="Sair" action="#{itemAcervoBean.limparForm}"  immediate="true"
-						oncomplete="PF('dlgExemplares').hide()" update=":form :formTabela:tabela" />
-
-				</f:facet>
-			</p:toolbar>
-
-			<p:messages autoUpdate="true" globalOnly="true" style="color:#0f0;" />
-			<p:dataTable id="tabelaExemplares" value="#{itemAcervoBean.listaExemplares}"
-				var="exemplar" emptyMessage="Nenhum Exemplar cadastrado"
-				editable="true">
-				<p:ajax event="rowEdit" listener="#{itemAcervoBean.editExempar}"
-					update=":formExemplares:tabelaExemplares" />
-
-				<p:column headerText="ID " width="20">
-					<h:outputText value="#{exemplar.id}" />
-				</p:column>
-				<p:column headerText="É Doação">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText rendered="#{exemplar.ehDoacao}" value="Sim" />
-							<h:outputText rendered="#{!exemplar.ehDoacao}" value="Não" />
-						</f:facet>
-						<f:facet name="input">
-							<p:selectBooleanCheckbox value="#{exemplar.ehDoacao}" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-				<p:column headerText="Data de Aquisição">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{exemplar.dataAquisicao}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</h:outputText>
-						</f:facet>
-						<f:facet name="input">
-							<p:calendar value="#{exemplar.dataAquisicao}"  pattern="dd/MM/yyyy" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-				<p:column headerText="Observação" >
-					<p:cellEditor >
-						<f:facet name="output">
-							<h:outputText value="#{exemplar.observacao}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{exemplar.observacao}" />
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-				<p:column headerText="Disponível?" >
-					<h:outputText value=  "Sim" style="color:#33FF00" rendered="#{exemplar.disponivel}" />
-					<h:outputText value=  "Não" style="color:#FF3300" rendered="#{!exemplar.disponivel}" />
-				</p:column>
-				<p:column headerText="Alterar">
-					<p:rowEditor />
-				</p:column>
-			</p:dataTable>
+			</p:fieldset>
 		</h:form>
 	</p:dialog>
 
