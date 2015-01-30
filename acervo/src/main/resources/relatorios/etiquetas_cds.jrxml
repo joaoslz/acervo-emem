@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="etiquetas_cds" columnCount="6" pageWidth="595" pageHeight="842" columnWidth="90" columnSpacing="3" leftMargin="20" rightMargin="20" topMargin="28" bottomMargin="28" uuid="802a7182-25c9-4ddb-84a9-780cce188d19">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_inicial" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_final" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     exemplar.`id` AS exemplar_id,
+     item_acervo.`ano` AS item_acervo_ano,
+     midia.`nome` AS midia_nome
+FROM
+     `item_acervo` item_acervo INNER JOIN `exemplar` exemplar ON item_acervo.`id` = exemplar.`itemAcervo_id`
+     INNER JOIN `cd` cd ON item_acervo.`id` = cd.`id`
+     INNER JOIN `midia` midia ON cd.`midia_id` = midia.`id`
+WHERE
+     exemplar.`id` BETWEEN $P{id_inicial} and $P{id_final}]]>
+	</queryString>
+	<field name="exemplar_id" class="java.lang.Integer"/>
+	<field name="item_acervo_ano" class="java.lang.Integer"/>
+	<field name="midia_nome" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="13" y="5" width="46" height="15" uuid="12c4c260-04b5-4ebb-809d-21336f922a04"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMEM]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="19" y="18" width="63" height="12" uuid="0c8fa880-292f-4b3d-bead-7e5ffa58a115"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{exemplar_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="29" width="59" height="12" uuid="ec43bcc3-3719-412b-92af-2c783cd814ea"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{midia_nome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

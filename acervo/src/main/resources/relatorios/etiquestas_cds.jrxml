@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="etiquestas_cds" language="groovy" columnCount="6" pageWidth="595" pageHeight="842" columnWidth="87" columnSpacing="6" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4fa9ea49-8360-4de4-bed9-2719467df388">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_inicial" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_final" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     exemplar.`id` AS exemplar_id,
+     midia.`nome` AS midia_nome
+FROM
+     `item_acervo` item_acervo INNER JOIN `exemplar` exemplar ON item_acervo.`id` = exemplar.`itemAcervo_id`
+     INNER JOIN `cd` cd ON item_acervo.`id` = cd.`id`
+     INNER JOIN `midia` midia ON cd.`midia_id` = midia.`id`
+WHERE
+     exemplar.`id` BETWEEN $P{id_inicial} and $P{id_final}]]>
+	</queryString>
+	<field name="exemplar_id" class="java.lang.Integer"/>
+	<field name="midia_nome" class="java.lang.String"/>
+	<detail>
+		<band height="37" splitType="Stretch">
+			<textField>
+				<reportElement x="12" y="12" width="55" height="12" uuid="c0f89675-7899-49cd-bfa5-8501fab07577"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{exemplar_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="12" y="23" width="55" height="12" uuid="aa1c7a4c-4bc4-4d4b-aa27-bca02875afed"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{midia_nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="1" width="55" height="15" uuid="baa1f5c8-ab00-4b6d-8762-13ed66a19a23"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[EMEM]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
