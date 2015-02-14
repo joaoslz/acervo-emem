@@ -17,8 +17,7 @@ public class EntityManagerProducer {
 		this.emf = Persistence.createEntityManagerFactory("acervo_emem");
 	}
 	
-	// Anotacao para que o CDI reconheca este metodo com um produto para o
-	// EntityManager
+	// Anotacao para que o CDI reconheca este metodo com um produto para o EntityManager
 	@Produces
 	@RequestScoped
 	public EntityManager getEntityManager() {
@@ -31,7 +30,4 @@ public class EntityManagerProducer {
 		em.close();
 	}
 	
-	public void closeFactory(){
-		emf.close();
-	}
 }

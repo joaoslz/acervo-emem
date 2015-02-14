@@ -22,6 +22,6 @@ public class EntityManagerTest {
 		em.getTransaction().commit();
 		
 		prod.close(em);
-		prod.closeFactory();
+//		prod.closeFactory();
 	}
 }

@@ -4,13 +4,13 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-		<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
-		<p:ajaxStatus id="ajaxStatusPanel" styleClass="ajaxStatusPanel">
-			<f:facet name="start">
-				Carregando...
-				<h:graphicImage value="/images/ajaxloading.gif" />
-			</f:facet>
-		</p:ajaxStatus>
-		<!-- ......................................................................................... -->
+	<!-- .............CÓDIGO PARA EXIBIR TEMPORIZADOR DO AJAX..................................... -->
+	<p:ajaxStatus id="ajaxStatusPanel" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" />
+	<p:dialog widgetVar="statusDialog" modal="false" draggable="false" 
+			  closable="false" resizable="false" showHeader="false"
+			  style="text-align:center">
+		Aguarde...<br/>
+		<h:graphicImage library="v_1_0" name="images/ajaxloading.gif" height="200"/>
+	</p:dialog>
 
 </ui:composition>
