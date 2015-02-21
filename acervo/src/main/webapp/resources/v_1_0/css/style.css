@@ -20,7 +20,11 @@ border-color: #fbeed5;
 	margin: 0;
 /* 	padding: 7px; */
 }
-
+.dataListItem{
+	padding: 3px;
+	padding-bottom: 5px;
+	border-bottom: 1px dashed #ccc;
+}
 /*Sobreescrevendo css do prime*/
 .ui-widget-header{
 	background: #F2FAFD

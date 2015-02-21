@@ -11,7 +11,6 @@
 	<ui:define name="conteudo">
 		<script type="text/javascript" src="js/traducaoCalendario.js"></script>
 		<h:form id="form">
-
 			<!--  Formulário de cadastro de itemAcervo -->
 			<p:fieldset legend="Cadastro de CDs" toggleable="true" collapsed="#{empty cdBean.CD.id}" widgetVar="cdFieldSet">
 
@@ -232,11 +231,28 @@
 						<f:setPropertyActionListener value="#{cd}" target="#{cdBean.entity}" />
 					</p:commandButton>
 				</p:column>
-				<p:column headerText="Mídia">
+				<p:column headerText="Mídia" width="40">
 					<h:outputText value="#{cd.midia}" />
 				</p:column>
 				<p:column headerText="Título" filterBy="#{cd.titulo}">
-					<h:outputText value="#{cd.titulo}" />
+					<h:commandLink onclick="PF('#{cd.id}').show();return false;"><h:outputText value="#{cd.titulo}" id="tituloCD" /></h:commandLink>
+					<p:dialog widgetVar="#{cd.id}" header="#{cd.titulo}" modal="true" closeOnEscape="true">
+						<p:dataList value="#{cd.musicas}" var="musica" type="definition" itemStyleClass="dataListItem">
+					        <h:outputText value="#{musica.faixa} - " style="cursor:default;" />
+					        <h:outputText id="x" value="#{musica.titulo}" style="cursor:default;" />
+					        <h:outputText value=" [" style="cursor:default;" />
+					        <h:outputText value="#{musica.duracaoToString}" style="cursor:default;color:rgb(255, 97, 57);" />
+					        <h:outputText value="]" style="cursor:default;" />
+							<p:overlayPanel for="x" showEffect="fade" 
+								hideEffect="fade" showEvent="mouseover" hideEvent="mouseout"
+								dismissable="false" showCloseIcon="true" at="right top">
+								<p:dataList value="#{musica.compositores}" var="c" type="definition" emptyMessage="Não Cadastrado" itemStyleClass="dataListItem">
+									<f:facet name="header">Compositores</f:facet>
+									<p:column>#{c.nome}</p:column>
+								</p:dataList>						
+							</p:overlayPanel>
+						</p:dataList>
+					</p:dialog>
 				</p:column>
 				<p:column headerText="Gravadora">
 					<h:outputText value="#{cd.gravadora}" />
@@ -252,19 +268,6 @@
 				</p:column>
 				<p:column headerText="Assuntos">
 					#{cd.assuntosToString}
-				</p:column>
-				<p:column headerText="Músicas" width="250">
-					<p:dataList value="#{cd.musicas}" var="musica" type="definition">
-					        <h:outputText id="x" value="#{musica}" style="cursor:default"/>
-						<p:overlayPanel for="x" showEffect="fade" 
-							hideEffect="fade" showEvent="mouseover" hideEvent="mouseout"
-							dismissable="false" showCloseIcon="true" at="right top">
-							<p:dataList value="#{musica.compositores}" var="c" type="definition" emptyMessage="Não Cadastrado">
-								<f:facet name="header">Compositores</f:facet>
-								<p:column>#{c.nome}</p:column>
-							</p:dataList>						
-						</p:overlayPanel>
-					</p:dataList>
 				</p:column>
 				<p:column width="40">
 					<p:commandButton icon="ui-icon-pencil" title="Alterar CD"

@@ -82,6 +82,6 @@ public class Musica extends RootEntity {
 	
 	@Override
 	public String toString() {
-		return faixa + " - " + titulo + " (" + getDuracaoToString() + ")";
+		return faixa + " - " + titulo + " [" + getDuracaoToString() + "]";
 	}
 }
