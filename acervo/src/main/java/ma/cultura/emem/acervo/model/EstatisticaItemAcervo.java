@@ -3,7 +3,7 @@ package ma.cultura.emem.acervo.model;
 import java.io.Serializable;
 
 /**
- * TODO Implementar esta para encapsular o resultado dos calculos estatísticos
+ * Encapsula o resultado dos calculos estatísticos
  * para cada tipo de item de acervo.
  * 
  * @author Thiago Nasper

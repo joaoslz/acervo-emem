@@ -237,7 +237,7 @@
 				<p:column headerText="Título" filterBy="#{cd.titulo}">
 					<h:commandLink onclick="PF('#{cd.id}').show();return false;"><h:outputText value="#{cd.titulo}" id="tituloCD" /></h:commandLink>
 					<p:dialog widgetVar="#{cd.id}" header="#{cd.titulo}" modal="true" closeOnEscape="true">
-						<p:dataList value="#{cd.musicas}" var="musica" type="definition" itemStyleClass="dataListItem">
+						<p:dataList value="#{cd.musicas}" var="musica" type="definition" itemStyleClass="dataListItem" >
 					        <h:outputText value="#{musica.faixa} - " style="cursor:default;" />
 					        <h:outputText id="x" value="#{musica.titulo}" style="cursor:default;" />
 					        <h:outputText value=" [" style="cursor:default;" />

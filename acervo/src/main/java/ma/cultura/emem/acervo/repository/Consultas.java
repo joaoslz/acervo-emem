@@ -149,8 +149,7 @@ public class Consultas<T> implements Serializable {
 				logger.debug("add Filtro: " + e.getKey() + " LIKE %" + e.getValue().toString() + "%");
 				criteria = criteria.add(Restrictions.ilike(e.getKey(), "%" + e.getValue().toString() + "%"));
 			}
-			// TODO Pode ser feito também para filtro com listas, usando
-			// operador in.
+			// TODO Pode ser feito também para filtro com listas, usando operador in.
 		}
 		
 		int count = criteria.list().size();

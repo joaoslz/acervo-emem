@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioObras" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="735a4847-3d6a-40cd-b2d4-af4fb16b267c">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.4641000000000006"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="ano" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[null
+]]></defaultValueExpression>
+	</parameter>
+	<parameter name="editora" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     ( SELECT count(exemplar.`id`) FROM `exemplar` exemplar where item_acervo.`id` = exemplar.id )     AS quantidadeExemplares,
+     ( SELECT count(exemplar.`id`) FROM `exemplar` exemplar where item_acervo.`id` = exemplar.id )  AS quantidadeExemplares,
      item_acervo.`titulo`,
      item_acervo.`ano`,
-      editora.`nome` AS editora
+     editora.`nome` AS editora
 FROM
-     `item_acervo` item_acervo INNER JOIN `obra` obra ON item_acervo.`id` = obra.`id`
+     `item_acervo` item_acervo
+     INNER JOIN `obra` obra ON item_acervo.`id` = obra.`id`
      INNER JOIN `editora` editora ON item_acervo.`editora_id` = editora.`id`
 ORDER BY
      item_acervo.`titulo` ASC,
@@ -43,13 +51,13 @@ ORDER BY
 				<text><![CDATA[SECRETARIA DE ESTADO DA CULTURA DO MARANHÃO
 Escola de Música do Estado do Maranhão - Lilah Lisboa de Araújo]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="55" y="35" width="500" height="20" uuid="c9cbb358-83f6-4667-a4c9-0115b98cb771"/>
-				<textElement>
+			<staticText>
+				<reportElement x="55" y="35" width="500" height="20" uuid="544e28d3-03d2-479a-a1f7-7b0575ddcc0f"/>
+				<textElement markup="none">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[Relatório de Obras]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[Relatório de Obras]]></text>
+			</staticText>
 			<image>
 				<reportElement x="9" y="4" width="36" height="48" uuid="70c893db-dfe8-4dbc-b354-22e15346a83a"/>
 				<imageExpression><![CDATA["logoEmem.png"]]></imageExpression>
@@ -71,45 +79,53 @@ Escola de Música do Estado do Maranhão - Lilah Lisboa de Araújo]]></text>
 				<reportElement x="0" y="0" width="555" height="1" forecolor="#333333" uuid="fd6e7e7b-00aa-46e2-9bd4-aae47a3fbe87"/>
 			</line>
 			<staticText>
-				<reportElement x="0" y="0" width="138" height="20" uuid="db72083d-0d82-4483-a3a2-e3116602b934"/>
-				<text><![CDATA[quantidadeExemplares]]></text>
+				<reportElement x="0" y="0" width="45" height="25" uuid="db72083d-0d82-4483-a3a2-e3116602b934"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Qtd. Ex.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="138" y="0" width="138" height="20" uuid="d865f530-9d63-4c23-84d9-1e10edb7522b"/>
-				<text><![CDATA[titulo]]></text>
+				<reportElement x="45" y="0" width="317" height="25" uuid="d865f530-9d63-4c23-84d9-1e10edb7522b"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Título]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="276" y="0" width="138" height="20" uuid="6493aff9-ef76-468a-9e36-84b45efcbe79"/>
-				<text><![CDATA[ano]]></text>
+				<reportElement x="362" y="0" width="52" height="25" uuid="6493aff9-ef76-468a-9e36-84b45efcbe79"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Ano]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="414" y="0" width="138" height="20" uuid="26c0c7af-077a-4626-a8d9-069de4f662a3"/>
-				<text><![CDATA[editora]]></text>
+				<reportElement x="414" y="0" width="138" height="25" uuid="26c0c7af-077a-4626-a8d9-069de4f662a3"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Editora]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="30" splitType="Stretch">
+		<band height="23" splitType="Stretch">
 			<line>
-				<reportElement x="7" y="29" width="542" height="1" uuid="638e8744-344f-4a88-a4f0-e18c06e24214"/>
+				<reportElement x="7" y="21" width="542" height="1" uuid="638e8744-344f-4a88-a4f0-e18c06e24214"/>
 				<graphicElement>
 					<pen lineStyle="Dotted" lineColor="#CCCCCC"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="0" y="0" width="138" height="20" uuid="3a49e145-a33d-498e-83b6-c8771a25de76"/>
+				<reportElement x="0" y="0" width="45" height="20" uuid="3a49e145-a33d-498e-83b6-c8771a25de76"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{quantidadeExemplares}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="138" y="0" width="138" height="20" uuid="a839c0b0-6052-4c3d-b917-6ab0987e34c1"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="45" y="0" width="317" height="20" uuid="a839c0b0-6052-4c3d-b917-6ab0987e34c1"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="276" y="0" width="138" height="20" uuid="61a6559a-39d3-482d-9de1-d7ae453ba518"/>
+				<reportElement x="362" y="0" width="52" height="20" uuid="61a6559a-39d3-482d-9de1-d7ae453ba518"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{ano}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="414" y="0" width="138" height="20" uuid="16d73903-d651-471d-930a-41d8cfec2f0d"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{editora}]]></textFieldExpression>
 			</textField>
 		</band>
