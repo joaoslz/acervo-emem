@@ -39,7 +39,34 @@ public class RelatorioEtiquetaObrasBean implements Serializable {
 	@Inject
 	private transient Logger logger;
 
-	public void emitir() {
+	public void emitirEtiquetasCds() {
+		Map<String, Object> parametros = new HashMap<>();
+		parametros.put( "id_inicial", this.getIdInicial() );
+		parametros.put( "id_final",   this.getIdFinal()   );
+		
+		logger.debug( "idInical : " + this.getIdInicial() );
+		logger.debug( "idFinal : "  + this.getIdFinal() );
+
+		ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/etiquetas_cds.jasper", 
+				                                           this.response, parametros,
+				                                           "RelatorioEtiquetasCDs.pdf");
+
+		Session session = manager.unwrap(Session.class);
+		session.doWork(executor);
+
+		if (executor.isRelatorioGerado()) {
+			// interrompe a execução do JSF para renderizar a página
+			facesContext.responseComplete();
+
+		} else {
+			FacesUtil.addErrorMessage("A execução do relatório não retornou dados");
+		}
+
+		session.doWork(executor);
+	}
+
+	
+	public void emitirEtiquetasObras() {
 		Map<String, Object> parametros = new HashMap<>();
 		parametros.put( "id_inicial", this.getIdInicial() );
 		parametros.put( "id_final",   this.getIdFinal()   );

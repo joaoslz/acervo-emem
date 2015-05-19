@@ -81,6 +81,12 @@ public abstract class ItemAcervoBean<T extends ItemAcervo> implements Serializab
 		exemplaresLote = new ExemplarLote();
 	}
 	
+	public void removerExemplar(Exemplar exemplar){
+		itemAcervoService.remover(exemplar);
+		System.out.println("removeu...");
+		facesMsg.infoGlobal("Exemplar removido com sucesso!");
+	}
+	
 	public List<Exemplar> getListaExemplares() {
 		return itemAcervoService.findExemplares(getEntity().getId());
 	}

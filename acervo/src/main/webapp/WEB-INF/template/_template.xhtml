@@ -1,15 +1,12 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<title>Sistema de Controle de Acervo - EMEM</title>
 	<meta name="description" content="acervo escola de música do estado do maranhão" />
 	<meta name="keywords" content="acervo, emem, escola de música" />
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-	<link rel="icon" href="/acervo/resources/v_1_0/images/iconeEmem.ico" type="image/ico" /> 
+	<link rel="icon" href="/acervo/resources/v_1_0/images/iconeEmem.ico" type="image/ico" />
 	<ui:insert name="head"></ui:insert>
 </h:head>
 
@@ -17,7 +14,7 @@
 	<f:facet name="last">
 		<h:outputStylesheet library="v_1_0" name="css/style.css" />
 	</f:facet>
-	<div id="main">		
+	<div id="main">
 		<div id="logo">
 			<div align="center">
 				<!-- class="logo_colour", allows you to change the colour of the text -->
@@ -27,10 +24,10 @@
 		</div>
 		<h:form id="formMenu">
 			<p:menubar autoDisplay="false">
-				<p:menuitem value="Home" icon="ui-icon-home" outcome="/index"/>
+				<p:menuitem value="Home" icon="ui-icon-home" outcome="/index" />
 				<p:submenu label="Cadastros">
-					<p:menuitem value="Obra" action="/obra?faces-redirect=true"  />
-					<p:menuitem value="Partitura" action="/partitura?faces-redirect=true"  />
+					<p:menuitem value="Obra" action="/obra?faces-redirect=true" />
+					<p:menuitem value="Partitura" action="/partitura?faces-redirect=true" />
 					<p:menuitem value="Revista" action="/fasciculo?faces-redirect=true" />
 					<p:menuitem value="CD/Músicas" action="/cd?faces-redirect=true" />
 					<p:separator />
@@ -49,41 +46,45 @@
 						<p:menuitem value="Compositores" action="/auxiliar/compositor?faces-redirect=true" />
 						<p:menuitem value="Arranjadores" action="/auxiliar/arranjador?faces-redirect=true" />
 						<p:menuitem value="Instrumentos" action="/auxiliar/instrumento?faces-redirect=true" />
-						
 					</p:submenu>
 				</p:submenu>
 				<p:submenu label="Empréstimo">
 					<p:menuitem value="Empréstimo/Devolução" action="/emprestimo?faces-redirect=true" />
 					<p:menuitem value="Visualizar Empréstimos" action="/listaemprestimos?faces-redirect=true" />
 					<p:separator />
-					<p:menuitem value="Cadastrar Usuários" action="/auxiliar/usuario?faces-redirect=true" />	
+					<p:menuitem value="Cadastrar Usuários" action="/auxiliar/usuario?faces-redirect=true" />
 				</p:submenu>
-				<p:menuitem value="Pesquisa" icon="ui-icon-search" outcome="/pesquisaObras" />
-				
+				<p:menuitem value="Pesquisar Obras" icon="ui-icon-search" outcome="/pesquisaObras" />
+				<p:menuitem value="Pesquisar Cds" icon="ui-icon-search" outcome="/pesquisaCds" />
+
 				<p:submenu label="Relatórios">
-				   <p:menuitem value="Etiquetas - Obras" icon="ui-icon-print" outcome="/relatorios/relatorioEtiquetasObras" />
-				   <p:menuitem value="Etiquetas - CDs" icon="ui-icon-print" outcome="/relatorios/relatorioEtiquetasObras" />
-				   
+					<p:menuitem value="Etiquetas - Obras" icon="ui-icon-print" outcome="/relatorios/relatorioEtiquetasObras" />
+					<p:menuitem value="Etiquetas - CDs" icon="ui-icon-print" outcome="/relatorios/relatorioEtiquetasCds" />
 				</p:submenu>
 				<p:menuitem value="Sair" icon="ui-icon-circle-close" />
 			</p:menubar>
 		</h:form>
 
 		<div id="conteudo">
-			<h:form>
+			<h:form id="formMessages">
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+					<div align="center">
+						<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</div>
+				</p:confirmDialog>
 				<p:messages id="messages" autoUpdate="true" closable="true" showDetail="false" showSummary="true" globalOnly="true" showIcon="true" />
 			</h:form>
-			<h:form><ui:include src="/WEB-INF/includes/ajaxStatusPanel.xhtml" /></h:form>
+			<h:form>
+				<ui:include src="/WEB-INF/includes/ajaxStatusPanel.xhtml" />
+			</h:form>
 			<ui:insert name="conteudo"></ui:insert>
 		</div>
 
 		<footer>
 			<p>
-				<a href="obra.xhtml">Livros/Métodos</a> 
-				| <a href="partitura.xhtml">Partituras</a>
-				| <a href="cd.xhtml">DVD-VHS</a> 
-				| <a href="relatorios.xhtml">Relatórios</a>
-				| <a href="">Fale Conosco</a>
+				<a href="obra.xhtml">Livros/Métodos</a> | <a href="partitura.xhtml">Partituras</a> | <a href="cd.xhtml">DVD-VHS</a> | <a
+					href="relatorios.xhtml">Relatórios</a> | <a href="">Fale Conosco</a>
 			</p>
 		</footer>
 	</div>

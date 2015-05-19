@@ -39,8 +39,8 @@ public class ItemAcervoService implements Serializable {
 	private Insercoes crudRepository;
 	@Inject
 	private Consultas<Exemplar> exemplarRepository;
-	@Inject
-	private Consultas<ItemAcervo> itemAcervoRepository;
+//	@Inject
+//	private Consultas<ItemAcervo> itemAcervoRepository;
 	
 	// ItemAcervo
 	@Inject
@@ -89,6 +89,11 @@ public class ItemAcervoService implements Serializable {
 			crudRepository.adicionarLote(lote.gerarExemplares(itemAcervo));
 		}
 		logger.debug("cadastro de item acervo");
+	}
+
+	@Transactional
+	public void remover(Exemplar exemplar){
+		crudRepository.remover(exemplar);
 	}
 	
 	@Transactional

@@ -124,6 +124,9 @@
 					<p:column headerText="Alterar">
 						<p:rowEditor />
 					</p:column>
+					<p:column headerText="Remover">
+						<p:commandButton icon="ui-icon-trash" action="#{itemAcervoBean.removerExemplar(exemplar)}" update="@form" immediate="true"/>
+					</p:column>
 				</p:dataTable>
 
 			</p:fieldset>

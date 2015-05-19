@@ -5,17 +5,23 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import ma.cultura.emem.acervo.model.CD;
 import ma.cultura.emem.acervo.model.Obra;
-import ma.cultura.emem.acervo.repository.PesquisasObra;
+import ma.cultura.emem.acervo.repository.Pesquisas;
+import ma.cultura.emem.acervo.repository.dto.CDFilter;
 import ma.cultura.emem.acervo.repository.dto.ObraFilter;
 
 public class PesquisaService implements Serializable {
 	
 	private static final long serialVersionUID = 103622249416771602L;
 	@Inject
-	private PesquisasObra pesquisasObra;
+	private Pesquisas pesquisas;
 	
 	public List<Obra> filtrarObras(ObraFilter filtro) {
-		return pesquisasObra.filtrarObras(filtro);
+		return pesquisas.filtrarObras(filtro);
+	}
+
+	public List<CD> filtrarCDs(CDFilter filtro) {
+		return pesquisas.filtrarCDs(filtro);
 	}
 }
