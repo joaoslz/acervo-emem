@@ -54,12 +54,15 @@
 					<p:separator />
 					<p:menuitem value="Cadastrar Usuários" action="/auxiliar/usuario?faces-redirect=true" />
 				</p:submenu>
-				<p:menuitem value="Pesquisar Obras" icon="ui-icon-search" outcome="/pesquisaObras" />
-				<p:menuitem value="Pesquisar Cds" icon="ui-icon-search" outcome="/pesquisaCds" />
+				<p:submenu label="Pesquisar" icon="ui-icon-search">
+					<p:menuitem value="Obras" outcome="/pesquisaObras" />
+					<p:menuitem value="CDs" outcome="/pesquisaCds" />
+					<p:menuitem value="Partituras" outcome="/pesquisaPartituras" />
+				</p:submenu>
 
-				<p:submenu label="Relatórios">
-					<p:menuitem value="Etiquetas - Obras" icon="ui-icon-print" outcome="/relatorios/relatorioEtiquetasObras" />
-					<p:menuitem value="Etiquetas - CDs" icon="ui-icon-print" outcome="/relatorios/relatorioEtiquetasCds" />
+				<p:submenu label="Relatórios" icon="ui-icon-print">
+					<p:menuitem value="Etiquetas - Obras" icon="ui-icon-tag" outcome="/relatorios/relatorioEtiquetasObras" />
+					<p:menuitem value="Etiquetas - CDs" icon="ui-icon-tag" outcome="/relatorios/relatorioEtiquetasCds" />
 				</p:submenu>
 				<p:menuitem value="Sair" icon="ui-icon-circle-close" />
 			</p:menubar>

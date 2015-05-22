@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+	version="2.1">
+	
+	<named-query name="ItemAcervo.findAll">
+		<query>  SELECT x FROM ItemAcervo x order by x.id desc </query>
+	</named-query>
+	<named-query name="Obra.findAll">
+		<query>  SELECT x FROM Obra x order by x.id desc </query>
+	</named-query>
+	<named-query name="Fasciculo.findAll">
+		<query>  SELECT x FROM Fasciculo x order by x.id desc </query>
+	</named-query>
+	<named-query name="CD.findAll">
+		<query>  SELECT x FROM CD x order by x.id desc </query>
+	</named-query>
+	<named-query name="Partitura.findAll">
+		<query>  SELECT x FROM Partitura x order by x.id desc </query>
+	</named-query>
+	<named-query name="Musica.findAll">
+		<query>  SELECT x FROM Musica x order by x.id desc </query>
+	</named-query>
+	<named-query name="Artigo.findAll">
+		<query>  SELECT x FROM Artigo x order by x.id desc </query>
+	</named-query>
+	<named-query name="Exemplar.findAll">
+		<query>  SELECT x FROM Exemplar x order by x.id desc </query>
+	</named-query>
+	<named-query name="Emprestimo.findAll">
+		<query>  SELECT x FROM Emprestimo x order by x.id desc </query>
+	</named-query>
+
+
+
+	<named-query name="Assunto.findAll">
+		<query>  SELECT x FROM Assunto x order by x.id desc </query>
+	</named-query>
+	<named-query name="Autor.findAll">
+		<query>  SELECT x FROM Autor x order by x.id desc </query>
+	</named-query>
+	<named-query name="Arranjador.findAll">
+		<query>  SELECT x FROM Arranjador x order by x.id desc </query>
+	</named-query>
+	<named-query name="Cantor.findAll">
+		<query>  SELECT x FROM Cantor x order by x.id desc </query>
+	</named-query>
+	<named-query name="Compositor.findAll">
+		<query>  SELECT x FROM Compositor x order by x.id desc </query>
+	</named-query>
+	<named-query name="Editora.findAll">
+		<query>  SELECT x FROM Editora x order by x.id desc </query>
+	</named-query>
+	<named-query name="Genero.findAll">
+		<query>  SELECT x FROM Genero x order by x.id desc </query>
+	</named-query>
+	<named-query name="Gravadora.findAll">
+		<query>  SELECT x FROM Gravadora x order by x.id desc </query>
+	</named-query>
+	<named-query name="Idioma.findAll">
+		<query>  SELECT x FROM Idioma x order by x.id desc </query>
+	</named-query>
+	<named-query name="Instrumento.findAll">
+		<query>  SELECT x FROM Instrumento x order by x.id desc </query>
+	</named-query>
+	<named-query name="Local.findAll">
+		<query>  SELECT x FROM Local x order by x.nome asc </query>
+	</named-query>
+	<named-query name="Midia.findAll">
+		<query>  SELECT x FROM Midia x order by x.id desc </query>
+	</named-query>
+	<named-query name="Periodico.findAll">
+		<query>  SELECT x FROM Periodico x order by x.id desc </query>
+	</named-query>
+	<named-query name="TipoObra.findAll">
+		<query>  SELECT x FROM TipoObra x order by x.id desc </query>
+	</named-query>
+	<named-query name="Usuario.findAll">
+		<query>  SELECT x FROM Usuario x order by x.id desc </query>
+	</named-query>
+
+</entity-mappings>

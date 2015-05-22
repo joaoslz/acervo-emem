@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="WEB-INF/template/_template.xhtml">
+	<ui:define name="conteudo">
+
+		<p:fieldset>
+			<h:form id="form">
+				<p:panelGrid style="width:100%">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Título" for="titulo" />
+						</p:column>
+						<p:column>
+							<p:inputText id="titulo" value="#{pesquisaPartituraBean.filtro.titulo}" size="53" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Subtítulo" for="subtitulo" />
+						</p:column>
+						<p:column>
+							<p:inputText id="subtitulo" value="#{pesquisaPartituraBean.filtro.subtitulo}" size="53" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Instrumentos" for="instrumentos" />
+						</p:column>
+						<p:column>
+							<p:autoComplete id="instrumentos" value="#{pesquisaPartituraBean.filtro.instrumentos}"
+								completeMethod="#{partituraBean.findInstrumentos}" var="i" itemLabel="#{i.nome}" itemValue="#{i.id}" converter="#{entityConverter}"
+								forceSelection="true" multiple="true" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Autores" for="autores" />
+						</p:column>
+						<p:column colspan="3">
+							<p:autoComplete id="autores" value="#{pesquisaPartituraBean.filtro.autores}" completeMethod="#{partituraBean.findAutores}" var="a"
+								itemLabel="#{a.nome}" itemValue="#{a.id}" converter="#{entityConverter}" forceSelection="true" multiple="true" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Arranjadores" for="arranjadores" />
+						</p:column>
+						<p:column>
+							<p:autoComplete id="arranjadores" value="#{pesquisaPartituraBean.filtro.arranjadores}"
+								completeMethod="#{partituraBean.findArranjadores}" var="a" itemLabel="#{a.nome}" itemValue="#{a.id}" converter="#{entityConverter}"
+								forceSelection="true" multiple="true" />
+						</p:column>
+						<p:column></p:column>
+						<p:column></p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton value="Buscar" icon="ui-icon-search" action="#{pesquisaPartituraBean.pesquisar}" update=":formTabela:tabela" />
+					</f:facet>
+				</p:toolbar>
+
+			</h:form>
+			<h:form id="formTabela">
+				<p:dataTable rows="20" paginator="false" paginatorPosition="bottom" id="tabela" value="#{pesquisaPartituraBean.partiturasFiltradas}"
+					var="partitura" emptyMessage="Nenhuma partitura Localizado">
+					<p:column headerText="Título">
+						<h:outputText value="#{partitura.titulo}" />
+					</p:column>
+					<p:column headerText="Subtítulo">
+						<h:outputText value="#{partitura.subtitulo}" />
+					</p:column>
+					<p:column headerText="Gênero" width="100">
+						<h:outputText value="#{partitura.genero.nome}" />
+					</p:column>
+					<p:column headerText="Idioma" width="60">
+						<h:outputText value="#{partitura.idioma.nome}" />
+					</p:column>
+					<p:column headerText="Editora">
+						<h:outputText value="#{partitura.editora.nome}" />
+					</p:column>
+					<p:column headerText="Local" width="100">
+						<h:outputText value="#{partitura.local.nome}" />
+					</p:column>
+					<p:column headerText="Autores">
+						<h:outputText value="#{partitura.autoresToString}" />
+					</p:column>
+					<p:column headerText="Arranjadores">
+						<h:outputText value="#{partitura.arranjadoresToString}" />
+					</p:column>
+					<p:column headerText="Assuntos">
+						<h:outputText value="#{partitura.assuntosToString}" />
+					</p:column>
+					<p:column headerText="Instrumentos">
+						<h:outputText value="#{partitura.instrumentosToString}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:fieldset>
+
+	</ui:define>
+</ui:composition>
+
+</html>

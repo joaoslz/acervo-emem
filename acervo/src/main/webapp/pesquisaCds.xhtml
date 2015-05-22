@@ -12,6 +12,16 @@
 				<p:panelGrid style="width:100%">
 					<p:row>
 						<p:column>
+							<p:outputLabel value="Mídia:" for="midia" />
+						</p:column>
+						<p:column colspan="6">
+							<p:selectManyCheckbox id="midia" value="#{pesquisaCDBean.filtro.midias}" converter="#{entityConverter}">
+								<f:selectItems value="#{cdBean.listaMidias}" var="midia" itemValue="#{midia}" itemLabel="#{midia.nome}" />
+							</p:selectManyCheckbox>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
 							<p:outputLabel value="Título" for="titulo" />
 						</p:column>
 						<p:column>
@@ -58,21 +68,12 @@
 											converter="#{entityConverter}" forceSelection="true" multiple="true" />
 						</p:column>
 					</p:row>
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Mídia:" for="midia" />
-						</p:column>
-						<p:column>
-							<p:selectManyCheckbox
-								value="#{pesquisaObraBean.filtro.tiposObra}" id="cbTipoObra"
-								converter="#{entityConverter}">
-								<f:selectItems value="#{obraBean.listaTiposObra}" var="tipoObra"
-									itemValue="#{tipoObra}" itemLabel="#{tipoObra.nome}" />
-							</p:selectManyCheckbox>
-						</p:column>
-					</p:row>
 				</p:panelGrid>
-				<p:commandButton value="Buscar" icon="ui-icon-search" action="#{pesquisaCDBean.pesquisar}" update=":formTabela:tabela" />
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton value="Buscar" icon="ui-icon-search" action="#{pesquisaCDBean.pesquisar}" update=":formTabela:tabela" />
+					</f:facet>
+				</p:toolbar>
 			</h:form>
 			<h:form id="formTabela">
 				<p:dataTable rows="20" paginator="false" paginatorPosition="bottom" id="tabela" value="#{pesquisaCDBean.CDsFiltrados}" var="cd"

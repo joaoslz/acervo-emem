@@ -12,9 +12,9 @@ import ma.cultura.emem.acervo.model.Obra;
 import ma.cultura.emem.acervo.model.auxiliar.Assunto;
 import ma.cultura.emem.acervo.model.auxiliar.Autor;
 import ma.cultura.emem.acervo.model.auxiliar.Editora;
+import ma.cultura.emem.acervo.repository.Pesquisas;
 import ma.cultura.emem.acervo.repository.dto.ObraFilter;
 import ma.cultura.emem.acervo.service.ItemAcervoService;
-import ma.cultura.emem.acervo.service.PesquisaService;
 
 @Named
 @ViewScoped
@@ -23,7 +23,7 @@ public class PesquisaObraBean implements Serializable {
 	private static final long serialVersionUID = -8379599414801598582L;
 	
 	@Inject
-	private PesquisaService service;
+	private Pesquisas pesquisas;
 	@Inject
 	private ItemAcervoService itemAcervoService;
 	
@@ -43,7 +43,7 @@ public class PesquisaObraBean implements Serializable {
 	}
 	
 	public void pesquisar() {
-		obrasFiltradas = service.filtrarObras(filtro);
+		obrasFiltradas = pesquisas.filtrarObras(filtro);
 	}
 	
 	public List<Editora> findEditoras(String nome) {

@@ -12,9 +12,9 @@ import ma.cultura.emem.acervo.model.CD;
 import ma.cultura.emem.acervo.model.auxiliar.Assunto;
 import ma.cultura.emem.acervo.model.auxiliar.Cantor;
 import ma.cultura.emem.acervo.model.auxiliar.Gravadora;
+import ma.cultura.emem.acervo.repository.Pesquisas;
 import ma.cultura.emem.acervo.repository.dto.CDFilter;
 import ma.cultura.emem.acervo.service.ItemAcervoService;
-import ma.cultura.emem.acervo.service.PesquisaService;
 
 @Named
 @ViewScoped
@@ -23,7 +23,7 @@ public class PesquisaCDBean implements Serializable {
 	private static final long serialVersionUID = -8379599414801598582L;
 	
 	@Inject
-	private PesquisaService service;
+	private Pesquisas pesquisas;
 	@Inject
 	private ItemAcervoService itemAcervoService;
 	
@@ -43,9 +43,11 @@ public class PesquisaCDBean implements Serializable {
 	}
 	
 	public void pesquisar() {
-		cdsFiltradas = service.filtrarCDs(filtro);
+		cdsFiltradas = pesquisas.filtrarCDs(filtro);
 	}
 	
+	//FIXME criar um ManagedBean para colocar todos estes métodos de autocomplete 
+	//para reutilização em todos os formularios. 
 	public List<Gravadora> findGravadoras(String nome) {
 		return itemAcervoService.findGravadoras(nome);
 	}

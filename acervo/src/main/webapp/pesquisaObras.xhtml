@@ -94,11 +94,15 @@
 							</p:autoComplete>
 						</p:column>
 						<p:column colspan="2">
-							<p:commandButton value="Buscar" icon="ui-icon-search"
-								action="#{pesquisaObraBean.pesquisar}" update=":formTabela:tabela" />
+							
 						</p:column>
 					</p:row>
 				</p:panelGrid>
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton value="Buscar" icon="ui-icon-search" action="#{pesquisaObraBean.pesquisar}" update=":formTabela:tabela" />
+					</f:facet>
+				</p:toolbar>
 			</h:form>
 			<h:form id="formTabela">
 				<p:dataTable rows="20" paginator="false" paginatorPosition="bottom"
