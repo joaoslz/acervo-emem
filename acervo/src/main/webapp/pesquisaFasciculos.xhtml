@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="WEB-INF/template/_template.xhtml">
+	<ui:define name="conteudo">
+
+		<p:fieldset>
+			<h:form id="form">
+				<p:panelGrid style="width:100%">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Título" for="titulo" />
+						</p:column>
+						<p:column>
+							<p:inputText id="titulo" value="#{pesquisaFasciculoBean.filtro.titulo}" size="53" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Subtítulo" for="subtitulo" />
+						</p:column>
+						<p:column>
+							<p:inputText id="subtitulo" value="#{pesquisaFasciculoBean.filtro.subtitulo}" size="53" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Assuntos" for="assuntos" />
+						</p:column>
+						<p:column>
+							<p:autoComplete id="assuntos" value="#{pesquisaFasciculoBean.filtro.assuntos}" completeMethod="#{fasciculoBean.findAssuntos}" var="a"
+								itemLabel="#{a.nome}" itemValue="#{a.id}" converter="#{entityConverter}" forceSelection="true" multiple="true" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Palavras nos Artigos" for="artigo" />
+						</p:column>
+						<p:column colspan="3">
+							<p:inputText id="artigo" value="#{pesquisaFasciculoBean.filtro.artigo}" size="53"/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+						</p:column>
+						<p:column>
+						</p:column>
+						<p:column></p:column>
+						<p:column></p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton value="Buscar" icon="ui-icon-search" action="#{pesquisaFasciculoBean.pesquisar}" update=":formTabela:tabela" />
+					</f:facet>
+				</p:toolbar>
+
+			</h:form>
+			<h:form id="formTabela">
+				<p:dataTable rows="20" paginator="false" paginatorPosition="bottom" id="tabela" value="#{pesquisaFasciculoBean.fasciculosFiltrados}"
+					var="fasciculo" emptyMessage="Nenhuma partitura Localizado">
+					<p:column headerText="Título">
+						<h:outputText value="#{fasciculo.titulo}" />
+					</p:column>
+					<p:column headerText="Subtítulo">
+						<h:outputText value="#{fasciculo.subtitulo}" />
+					</p:column>
+					<p:column headerText="Ano" width="30">
+						<h:outputText value="#{fasciculo.ano}" />
+					</p:column>
+					<p:column headerText="Mês" width="50">
+						<h:outputText value="#{fasciculo.mes}" />
+					</p:column>
+					<p:column headerText="Vol." width="20">
+						<h:outputText value="#{fasciculo.volume}" />
+					</p:column>
+					<p:column headerText="Assuntos">
+						<h:outputText value="#{fasciculo.assuntosToString}" />
+					</p:column>
+					<p:column headerText="Artigos">
+						<p:dataList value="#{fasciculo.artigos}" var="artigo" type="definition">
+							<h:outputText id="x" value="#{artigo.titulo}" style="cursor:default" />
+							<p:overlayPanel for="x" showEffect="fade" hideEffect="fade" showEvent="mouseover" hideEvent="mouseout" dismissable="false"
+								showCloseIcon="true" at="right top">
+								<p:dataList value="#{artigo.autores}" var="a" type="definition" emptyMessage="Não Cadastrado">
+									<f:facet name="header">Autores</f:facet>
+									<p:column>#{a.nome}</p:column>
+								</p:dataList>
+							</p:overlayPanel>
+						</p:dataList>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:fieldset>
+
+	</ui:define>
+</ui:composition>
+
+</html>
