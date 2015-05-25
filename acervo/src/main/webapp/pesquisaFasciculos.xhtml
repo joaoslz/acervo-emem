@@ -7,45 +7,91 @@
 <ui:composition template="WEB-INF/template/_template.xhtml">
 	<ui:define name="conteudo">
 
-		<p:fieldset>
+		<p:fieldset legend="Pesquisa de Revistas">
 			<h:form id="form">
 				<p:panelGrid style="width:100%">
 					<p:row>
 						<p:column>
 							<p:outputLabel value="Título" for="titulo" />
 						</p:column>
-						<p:column>
-							<p:inputText id="titulo" value="#{pesquisaFasciculoBean.filtro.titulo}" size="53" />
+						<p:column colspan="2">
+							<p:inputText id="titulo" value="#{pesquisaFasciculoBean.filtro.titulo}" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Subtítulo" for="subtitulo" />
 						</p:column>
-						<p:column>
-							<p:inputText id="subtitulo" value="#{pesquisaFasciculoBean.filtro.subtitulo}" size="53" />
+						<p:column colspan="2">
+							<p:inputText id="subtitulo" value="#{pesquisaFasciculoBean.filtro.subtitulo}" />
 						</p:column>
-					</p:row>
-					<p:row>
 						<p:column>
 							<p:outputLabel value="Assuntos" for="assuntos" />
 						</p:column>
-						<p:column>
-							<p:autoComplete id="assuntos" value="#{pesquisaFasciculoBean.filtro.assuntos}" completeMethod="#{fasciculoBean.findAssuntos}" var="a"
-								itemLabel="#{a.nome}" itemValue="#{a.id}" converter="#{entityConverter}" forceSelection="true" multiple="true" />
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Palavras nos Artigos" for="artigo" />
-						</p:column>
 						<p:column colspan="3">
-							<p:inputText id="artigo" value="#{pesquisaFasciculoBean.filtro.artigo}" size="53"/>
+							<p:autoComplete id="assuntos" value="#{pesquisaFasciculoBean.filtro.assuntos}" completeMethod="#{fasciculoBean.findAssuntos}" var="a"
+								itemLabel="#{a.nome}" itemValue="#{a.id}" converter="#{entityConverter}" forceSelection="true" multiple="true" size="57" />
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
+							<p:outputLabel value="Ano" />
 						</p:column>
 						<p:column>
+							<p:inputText size="2"
+								value="#{pesquisaFasciculoBean.filtro.anoInicio}" /> até
+	    					<p:inputText size="2" value="#{pesquisaFasciculoBean.filtro.anoFim}" />
 						</p:column>
-						<p:column></p:column>
-						<p:column></p:column>
+						<p:column>
+							<p:outputLabel value="Mês" for="mes"/>
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="mes" value="#{pesquisaFasciculoBean.filtro.mes}">
+								<f:selectItem itemLabel="------" itemValue="#{null}" />
+								<f:selectItems value="#{fasciculoBean.listaMeses}" var="m" itemLabel="#{m}" itemValue="#{m}" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Volume:" for="volume" />
+						</p:column>
+						<p:column>
+							<p:inputText id="volume" value="#{pesquisaFasciculoBean.filtro.volume}" size="2" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Artigos" for="artigo" />
+						</p:column>
+						<p:column colspan="5">
+							<p:inputText id="artigo" value="#{pesquisaFasciculoBean.filtro.artigo}" size="53"/>
+						</p:column>
+					</p:row>
+				
+					<p:row>
+						<p:column>
+							<p:outputLabel value="ISSN" for="issn"/>
+						</p:column>
+						<p:column>
+							<p:inputText id="issn" value="#{pesquisaFasciculoBean.filtro.issn}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="É assinado?" for="ehAssinado"/>
+						</p:column>
+						<p:column>
+							<p:selectBooleanCheckbox id="ehAssinado" value="#{pesquisaFasciculoBean.filtro.ehAssinado}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Editora" for="editora" />
+						</p:column>
+						<p:column>
+							<p:autoComplete id="editora" value="#{pesquisaFasciculoBean.filtro.editora}" 
+											completeMethod="#{fasciculoBean.findEditoras}" var="e" itemLabel="#{e.nome}" itemValue="#{e.id}" 
+											converter="#{entityConverter}"  multiple="false" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Local" for="local" />
+						</p:column>
+						<p:column colspan="5">
+							<p:autoComplete id="local" value="#{pesquisaFasciculoBean.filtro.local}" 
+											completeMethod="#{fasciculoBean.findLocais}" var="l" itemLabel="#{l.nome}" itemValue="#{l.id}" 
+											converter="#{entityConverter}"  multiple="false" />
+						</p:column>
 					</p:row>
 				</p:panelGrid>
 				<p:toolbar>
@@ -61,8 +107,14 @@
 					<p:column headerText="Título">
 						<h:outputText value="#{fasciculo.titulo}" />
 					</p:column>
-					<p:column headerText="Subtítulo">
-						<h:outputText value="#{fasciculo.subtitulo}" />
+					<p:column headerText="ISSN" width="90">
+						<h:outputText value="#{fasciculo.periodico.issn}" />
+					</p:column>
+					<p:column headerText="Assinado ?" width="90" style="text-align:center">
+						<h:outputText value="#{fasciculo.periodico.ehAssinado ? 'Sim' : 'Não'}" />
+					</p:column>
+					<p:column headerText="Editora">
+						<h:outputText value="#{fasciculo.periodico.editora}" />
 					</p:column>
 					<p:column headerText="Ano" width="30">
 						<h:outputText value="#{fasciculo.ano}" />

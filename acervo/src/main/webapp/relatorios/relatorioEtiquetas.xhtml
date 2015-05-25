@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/_template.xhtml">
+	<ui:define name="conteudo">
+		<p:fieldset legend="Relatório de Etiquetas">
+			<h:form id="frm" target="_blank">
+				<br/>
+				<p:panelGrid columns="10">
+					<h:panelGroup>
+						<p:inputText value="#{relatorioEtiquetaBean.idInicial}" placeholder="ID inicial" />
+						<p:spacer width="8" />
+						<h:outputText value="a" />
+						<p:spacer width="8" />
+						<p:inputText value="#{relatorioEtiquetaBean.idFinal}" placeholder="ID final" />
+						<p:spacer width="8" />
+						<p:commandButton value="Emitir Etiquetas de Obras" action="#{relatorioEtiquetaBean.emitirEtiquetasObras}" 
+											ajax="false"/>
+						<p:spacer width="8" />
+						<p:commandButton value="Emitir Etiquetas de CDs" action="#{relatorioEtiquetaBean.emitirEtiquetasCds}" 
+											ajax="false"/>
+					</h:panelGroup>
+				</p:panelGrid>
+			</h:form>
+		</p:fieldset>
+	</ui:define>
+</ui:composition>
+</html>

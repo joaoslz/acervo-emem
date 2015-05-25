@@ -1,45 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
 
 
 <ui:composition template="WEB-INF/template/_template.xhtml">
 	<ui:define name="conteudo">
 
 
-			<p:fieldset>
-		<h:form id="form">
+		<p:fieldset legend="Pesquisa de Obras">
+			<h:form id="form">
 				<p:panelGrid style="width:100%">
 					<p:row>
 						<p:column>
 							<p:outputLabel value="Título" for="titulo" />
 						</p:column>
 						<p:column>
-							<p:inputText id="titulo"
-								value="#{pesquisaObraBean.filtro.titulo}" />
+							<p:inputText id="titulo" value="#{pesquisaObraBean.filtro.titulo}" />
 
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Subtítulo" for="subtitulo" />
 						</p:column>
 						<p:column>
-							<p:inputText id="subtitulo"
-								value="#{pesquisaObraBean.filtro.subtitulo}" />
+							<p:inputText id="subtitulo" value="#{pesquisaObraBean.filtro.subtitulo}" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Autores:" for="autores" />
 						</p:column>
 						<p:column>
-							<p:autoComplete minQueryLength="2" id="autores"
-								value="#{pesquisaObraBean.filtro.autores}"
-								completeMethod="#{obraBean.findAutores}" var="a"
-								itemLabel="#{a.nome}" itemValue="#{a.id}"
-								converter="#{entityConverter}" forceSelection="true"
-								multiple="true" />
+							<p:autoComplete minQueryLength="2" id="autores" value="#{pesquisaObraBean.filtro.autores}" completeMethod="#{obraBean.findAutores}"
+								var="a" itemLabel="#{a.nome}" itemValue="#{a.id}" converter="#{entityConverter}" forceSelection="true" multiple="true" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -53,20 +44,16 @@
 							<p:outputLabel value="Ano" />
 						</p:column>
 						<p:column>
-							<p:inputText size="2"
-								value="#{pesquisaObraBean.filtro.anoInicio}" /> até
+							<p:inputText size="2" value="#{pesquisaObraBean.filtro.anoInicio}" /> até
 	    				<p:inputText size="2" value="#{pesquisaObraBean.filtro.anoFim}" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Assuntos:" for="assuntos" />
 						</p:column>
 						<p:column>
-							<p:autoComplete minQueryLength="2" id="assuntos"
-								value="#{pesquisaObraBean.filtro.assuntos}"
-								completeMethod="#{obraBean.findAssuntos}" var="a"
-								itemLabel="#{a.nome}" itemValue="#{a.id}"
-								converter="#{entityConverter}" forceSelection="true"
-								multiple="true" />
+							<p:autoComplete minQueryLength="2" id="assuntos" value="#{pesquisaObraBean.filtro.assuntos}"
+								completeMethod="#{obraBean.findAssuntos}" var="a" itemLabel="#{a.nome}" itemValue="#{a.id}" converter="#{entityConverter}"
+								forceSelection="true" multiple="true" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -75,26 +62,21 @@
 							<p:outputLabel value="Tipo:" for="cbTipoObra" />
 						</p:column>
 						<p:column>
-							<p:selectManyCheckbox
-								value="#{pesquisaObraBean.filtro.tiposObra}" id="cbTipoObra"
-								converter="#{entityConverter}">
-								<f:selectItems value="#{obraBean.listaTiposObra}" var="tipoObra"
-									itemValue="#{tipoObra}" itemLabel="#{tipoObra.nome}" />
+							<p:selectManyCheckbox value="#{pesquisaObraBean.filtro.tiposObra}" id="cbTipoObra" converter="#{entityConverter}">
+								<f:selectItems value="#{obraBean.listaTiposObra}" var="tipoObra" itemValue="#{tipoObra}" itemLabel="#{tipoObra.nome}" />
 							</p:selectManyCheckbox>
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Editora:" for="editora" />
 						</p:column>
 						<p:column>
-							<p:autoComplete minQueryLength="2" size="45"
-								value="#{pesquisaObraBean.filtro.editora}" id="editora"
-								completeMethod="#{pesquisaObraBean.findEditoras}"
-								var="e" itemLabel="#{e.nome}" itemValue="#{e}"
-								converter="#{entityConverter}" forceSelection="true">
+							<p:autoComplete minQueryLength="2" size="45" value="#{pesquisaObraBean.filtro.editora}" id="editora"
+								completeMethod="#{pesquisaObraBean.findEditoras}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" converter="#{entityConverter}"
+								forceSelection="true">
 							</p:autoComplete>
 						</p:column>
 						<p:column colspan="2">
-							
+
 						</p:column>
 					</p:row>
 				</p:panelGrid>
@@ -105,15 +87,12 @@
 				</p:toolbar>
 			</h:form>
 			<h:form id="formTabela">
-				<p:dataTable rows="20" paginator="false" paginatorPosition="bottom"
-					id="tabela" value="#{pesquisaObraBean.obrasFiltradas}"
-					var="obra" emptyMessage="Nenhuma Obra Localizada">
+				<p:dataTable rows="20" paginator="false" paginatorPosition="bottom" id="tabela" value="#{pesquisaObraBean.obrasFiltradas}" var="obra"
+					emptyMessage="Nenhuma Obra Localizada">
 
 					<p:column headerText="Expl." width="40">
-						<p:commandButton title="Gerenciar Exemplares"
-							oncomplete="PF('dlgExemplares').show()"  immediate="true"
-							value="#{obraBean.getQtdExemplares(obra)}"
-							update="@form :formExemplares" 
+						<p:commandButton title="Gerenciar Exemplares" oncomplete="PF('dlgExemplares').show()" immediate="true"
+							value="#{obraBean.getQtdExemplares(obra)}" update="@form :formExemplares"
 							style="background-image:none;background-color:#{obraBean.getCorBotaoExemplares(obra)};">
 							<f:setPropertyActionListener value="#{obra}" target="#{obraBean.entity}" />
 						</p:commandButton>
@@ -144,8 +123,8 @@
 					</p:column>
 
 				</p:dataTable>
-		</h:form>
-			</p:fieldset>
+			</h:form>
+		</p:fieldset>
 
 
 		<ui:include src="/WEB-INF/includes/dialogExemplaresView.xhtml">

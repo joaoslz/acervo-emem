@@ -19,7 +19,7 @@ import org.hibernate.Session;
 
 @Named
 @RequestScoped
-public class RelatorioEtiquetaObrasBean implements Serializable {
+public class RelatorioEtiquetaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
